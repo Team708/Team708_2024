@@ -4,10 +4,10 @@
 
 package frc.robot.commands.vision;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.vision.CANdleSystem;
 
-public class SetTargetLEDs extends CommandBase {
+public class SetTargetLEDs extends Command {
   private CANdleSystem m_candleSystem;
   private int red, green, blue;
 

@@ -11,12 +11,12 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
   /**
-   * Implements a DriveByController command which extends the CommandBase class
+   * Implements a DriveByController command which extends the Command class
    */
-public class DriveByController extends CommandBase {
+public class DriveByController extends Command {
   private final Drivetrain m_robotDrive;
 
   double autoAngle = 0.0;

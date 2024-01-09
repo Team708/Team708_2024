@@ -6,12 +6,12 @@ import frc.robot.subsystems.drive.Drivetrain;
 import frc.robot.subsystems.vision.CANdleSystem;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
   /**
-   * Implements a DriveByController command which extends the CommandBase class
+   * Implements a DriveByController command which extends the Command class
    */
-public class AlignWithReflectiveTape extends CommandBase {
+public class AlignWithReflectiveTape extends Command {
   
   private final Drivetrain m_robotDrive;
   private final CANdleSystem m_candleSystem;

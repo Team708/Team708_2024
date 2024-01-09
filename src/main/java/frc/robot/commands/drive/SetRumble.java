@@ -1,9 +1,9 @@
 package frc.robot.commands.drive;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.OI;
 
-public class SetRumble extends CommandBase {
+public class SetRumble extends Command {
 
 
   public SetRumble() {

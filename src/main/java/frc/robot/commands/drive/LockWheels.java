@@ -6,10 +6,10 @@ package frc.robot.commands.drive;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.drive.Drivetrain;
 
-public class LockWheels extends CommandBase {
+public class LockWheels extends Command {
   
   Drivetrain dr;
   SwerveModuleState[] preStates;

@@ -10,13 +10,14 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 
-import com.ctre.phoenix.sensors.AbsoluteSensorRange;
-import com.ctre.phoenix.sensors.CANCoder;
-import com.ctre.phoenix.sensors.CANCoderConfiguration;
+import com.ctre.phoenix6.hardware.CANcoder;
+import com.ctre.phoenix6.signals.AbsoluteSensorRangeValue;
+import com.ctre.phoenix6.signals.SensorDirectionValue;
+import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkBase.IdleMode;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -37,7 +38,7 @@ public class SwerveModule extends SubsystemBase {
   
   //Create a Potentiometer to store the output of the absolute encoder that tracks the angular position of the swerve module
   // private final AnalogPotentiometer m_turningEncoder;
-  private final CANCoder m_turningEncoder;
+  private final CANcoder m_turningEncoder;
 
   //Creates a variable to store the moduleID for various tuning and debugging (Currently not being used)
   //This value should be passed into the class contructor as part of the "tuningVals" array
@@ -93,13 +94,13 @@ public class SwerveModule extends SubsystemBase {
 
     //Creates the analog potentiometer for the tracking of the swerve module position converted to the range of 0-2*PI in radians offset by the tuned module offset
     // m_turningEncoder = new AnalogPotentiometer(turningEncoderChannel, 2.0 * Math.PI, angularOffset); 
-    m_turningEncoder = new CANCoder(turningEncoderChannel);
-    m_turningEncoder.setPositionToAbsolute();
-    CANCoderConfiguration config = new CANCoderConfiguration();
-    config.absoluteSensorRange = AbsoluteSensorRange.Signed_PlusMinus180;
-    config.sensorCoefficient = 0.087890625 *(Math.PI / 180);
-    config.magnetOffsetDegrees = angularOffset;
-    m_turningEncoder.configAllSettings(config);
+    m_turningEncoder = new CANcoder(turningEncoderChannel);
+
+    CANcoderConfiguration configs = new CANcoderConfiguration();
+    configs.MagnetSensor.AbsoluteSensorRange = AbsoluteSensorRangeValue.Signed_PlusMinusHalf;
+    configs.MagnetSensor.MagnetOffset = angularOffset;
+    configs.MagnetSensor.SensorDirection = SensorDirectionValue.Clockwise_Positive;
+    m_turningEncoder.getConfigurator().apply(configs);
 
     // Limit the PID Controller's input range between -pi and pi and set the input
     // to be continuous so the PID will command the shortest path.
@@ -208,6 +209,6 @@ public class SwerveModule extends SubsystemBase {
    * @return the modified absolute encoder value.
    */
   public double getTurnEncoder() {
-    return 1.0 * m_turningEncoder.getAbsolutePosition();
+    return 1.0 * m_turningEncoder.getAbsolutePosition().getValue();
   }
 }

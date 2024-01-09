@@ -1,9 +1,9 @@
 package frc.robot.commands.drive;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.drive.Drivetrain;
 
-public class DriveStraightCommand extends CommandBase{
+public class DriveStraightCommand extends Command{
   private final Drivetrain m_drivetrain;
 
   public DriveStraightCommand(Drivetrain subsystem) {

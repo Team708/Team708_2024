@@ -4,10 +4,10 @@
 
 package frc.robot.commands.drive;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.drive.Drivetrain;
 
-public class ToggleFieldOrient extends CommandBase {
+public class ToggleFieldOrient extends Command {
 
   Drivetrain m_drivetrain;
 

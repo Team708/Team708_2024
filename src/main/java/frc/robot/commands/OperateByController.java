@@ -4,12 +4,12 @@ package frc.robot.commands;
 // import frc.robot.Constants.*;
 // import frc.robot.utilities.MathUtils;
 // import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 
   /**
-   * Implements a OperateByController command which extends the CommandBase class
+   * Implements a OperateByController command which extends the Command class
    */
-public class OperateByController extends CommandBase {
+public class OperateByController extends Command {
   //private final Elevator m_elevator;
 
   /**
