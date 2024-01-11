@@ -99,7 +99,7 @@ public class SwerveModule extends SubsystemBase {
     CANcoderConfiguration configs = new CANcoderConfiguration();
     configs.MagnetSensor.AbsoluteSensorRange = AbsoluteSensorRangeValue.Signed_PlusMinusHalf;
     configs.MagnetSensor.MagnetOffset = angularOffset;
-    configs.MagnetSensor.SensorDirection = SensorDirectionValue.Clockwise_Positive;
+    configs.MagnetSensor.SensorDirection = SensorDirectionValue.CounterClockwise_Positive;
     m_turningEncoder.getConfigurator().apply(configs);
 
     // Limit the PID Controller's input range between -pi and pi and set the input
@@ -203,12 +203,11 @@ public class SwerveModule extends SubsystemBase {
   }
 
   /**
-   * Obtains the negative of the turning absolute encoder value as this encoder reads opposite of the module rotation on 
-   * 2910 MK2 swerve.
+   * Obtains the turning absolute encoder value.
    *
    * @return the modified absolute encoder value.
    */
   public double getTurnEncoder() {
-    return 1.0 * m_turningEncoder.getAbsolutePosition().getValue();
+    return m_turningEncoder.getAbsolutePosition().getValue();
   }
 }

@@ -58,22 +58,22 @@ import frc.robot.utilities.FieldRelativeSpeed;
   //Creates a swerveModule object for the front left swerve module feeding in parameters from the constants file
   private final SwerveModule m_frontLeft = new SwerveModule(DriveConstants.kFrontLeftDriveMotorPort,
       DriveConstants.kFrontLeftTurningMotorPort, DriveConstants.kFrontLeftTurningEncoderPort,
-      DriveConstants.kFrontLeftOffsetDegrees, DriveConstants.kFrontLeftTuningVals);
+      DriveConstants.kFrontLeftOffset, DriveConstants.kFrontLeftTuningVals);
 
   //Creates a swerveModule object for the front right swerve module feeding in parameters from the constants file
   private final SwerveModule m_frontRight = new SwerveModule(DriveConstants.kFrontRightDriveMotorPort,
       DriveConstants.kFrontRightTurningMotorPort, DriveConstants.kFrontRightTurningEncoderPort,
-      DriveConstants.kFrontRightOffsetDegrees, DriveConstants.kFrontRightTuningVals);
+      DriveConstants.kFrontRightOffset, DriveConstants.kFrontRightTuningVals);
 
   //Creates a swerveModule object for the back left swerve module feeding in parameters from the constants file
   private final SwerveModule m_backLeft = new SwerveModule(DriveConstants.kRearLeftDriveMotorPort,
       DriveConstants.kBackLeftTurningMotorPort, DriveConstants.kBackLeftTurningEncoderPort,
-      DriveConstants.kBackLeftOffsetDegrees, DriveConstants.kBackLeftTuningVals);
+      DriveConstants.kBackLeftOffset, DriveConstants.kBackLeftTuningVals);
 
   //Creates a swerveModule object for the back right swerve module feeding in parameters from the constants file
   private final SwerveModule m_backRight = new SwerveModule(DriveConstants.kRearRightDriveMotorPort,
       DriveConstants.kBackRightTurningMotorPort, DriveConstants.kBackRightTurningEncoderPort,
-      DriveConstants.kBackRightOffsetDegrees, DriveConstants.kBackRightTuningVals);
+      DriveConstants.kBackRightOffset, DriveConstants.kBackRightTuningVals);
   
   //Get pigeon gyro instance
   private static PigeonTwo pigeon = PigeonTwo.getInstance();
