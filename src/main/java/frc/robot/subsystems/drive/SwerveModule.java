@@ -208,6 +208,6 @@ public class SwerveModule extends SubsystemBase {
    * @return the modified absolute encoder value.
    */
   public double getTurnEncoder() {
-    return m_turningEncoder.getAbsolutePosition().getValue();
+    return m_turningEncoder.getAbsolutePosition().getValue()*Math.PI/.5;
   }
 }
