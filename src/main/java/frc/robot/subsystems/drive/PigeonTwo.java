@@ -2,7 +2,6 @@ package frc.robot.subsystems.drive;
 
 // import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix6.StatusCode;
-import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.configs.Pigeon2FeaturesConfigs;
 import com.ctre.phoenix6.hardware.Pigeon2;
 
@@ -34,7 +33,7 @@ public class PigeonTwo {
     // ErrorCode faults;
 
     //GravityVector object
-    private double[] a_gravityVector = new double[3];
+    // private double[] a_gravityVector = new double[3];
     
     private PigeonTwo(){
         try{
