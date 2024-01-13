@@ -9,7 +9,6 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -17,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj.Timer;
@@ -79,9 +79,9 @@ import frc.robot.utilities.FieldRelativeSpeed;
   private static PigeonTwo pigeon = PigeonTwo.getInstance();
 
   //Creates Odometry object to store the pose of the robot
-  private final SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(DriveConstants.kDriveKinematics, pigeon.getAngle(), getModulePositions());
+  private final SwerveDrivePoseEstimator m_PoseEstimator = new SwerveDrivePoseEstimator(DriveConstants.kDriveKinematics, pigeon.getAngle(), getModulePositions(), DriveConstants.kinitialPoseMeters);
 
-  private final SwerveDriveOdometry m_autoOdometry = new SwerveDriveOdometry(DriveConstants.kDriveKinematics, pigeon.getAngle(), getModulePositions());
+  private final SwerveDrivePoseEstimator m_AutoPoseEstimator = new SwerveDrivePoseEstimator(DriveConstants.kDriveKinematics, pigeon.getAngle(), getModulePositions(), DriveConstants.kinitialPoseMeters);
 
   ProfiledPIDController thetaController = new ProfiledPIDController(AutoConstants.kPThetaController, 0, 0,
     AutoConstants.kThetaControllerConstraints);
@@ -95,8 +95,8 @@ import frc.robot.utilities.FieldRelativeSpeed;
     keepAngleTimer.start();
     m_keepAnglePID.enableContinuousInput(-Math.PI, Math.PI);
     pigeon.reset();
-    // m_odometry.resetPosition(pigeon.getAngle().times(-1.0), getModulePositions(), new Pose2d()); //JNP 
-    m_odometry.resetPosition(pigeon.getAngle().times(1.0), getModulePositions(), new Pose2d()); //JNP 
+    // m_PoseEstimator.resetPosition(pigeon.getAngle().times(-1.0), getModulePositions(), new Pose2d()); //JNP 
+    m_PoseEstimator.resetPosition(pigeon.getAngle().times(1.0), getModulePositions(), new Pose2d()); //JNP 
     CommandScheduler.getInstance().registerSubsystem(this);
     thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
@@ -171,7 +171,7 @@ import frc.robot.utilities.FieldRelativeSpeed;
         SmartDashboard.putNumber("Balance Angle", pigeon.getRoll().getDegrees());
 
         //Update swerve drive odometry periodically so robot pose can be tracked
-        updateOdometry();    
+        updatePose();    
 
         //Calls get pose function which sends the Pose information to the SmartDashboard
         getPose();
@@ -220,12 +220,12 @@ import frc.robot.utilities.FieldRelativeSpeed;
    * Updates odometry for the swerve drivetrain. This should be called
    * once per loop to minimize error.
    */  
-  public void updateOdometry() {
-    m_odometry.update(pigeon.getAngle(), getModulePositions());
+  public void updatePose() {
+    m_PoseEstimator.update(pigeon.getAngle(), getModulePositions());
   }
 
-  public void updateAutoOdometry() {
-    m_autoOdometry.update(pigeon.getAngle(), getModulePositions());
+  public void updateAutoPose() {
+    m_AutoPoseEstimator.update(pigeon.getAngle(), getModulePositions());
   }
 
   /**
@@ -253,22 +253,22 @@ import frc.robot.utilities.FieldRelativeSpeed;
    * @return Pose2d object containing the X and Y position and the heading of the robot.
    */  
   public Pose2d getPose() {
-    Pose2d pose = m_odometry.getPoseMeters();
+    Pose2d pose = m_PoseEstimator.getEstimatedPosition();
     Translation2d position = pose.getTranslation();
     //Rotation2d heading = getGyro();
     SmartDashboard.putNumber("Robot X", position.getX());
     SmartDashboard.putNumber("Robot Y", position.getY());
     SmartDashboard.putNumber("Robot Gyro", getGyro().getRadians());
-    return m_odometry.getPoseMeters();
+    return m_PoseEstimator.getEstimatedPosition();
   }
 
   public Pose2d getAutoPose() {
-    updateAutoOdometry();
-    Pose2d pose = m_autoOdometry.getPoseMeters();
+    updateAutoPose();
+    Pose2d pose = m_AutoPoseEstimator.getEstimatedPosition();
     Translation2d position = pose.getTranslation();
     SmartDashboard.putNumber("Auto X", position.getX());
     SmartDashboard.putNumber("Auto Y", position.getY());
-    return m_autoOdometry.getPoseMeters();
+    return m_AutoPoseEstimator.getEstimatedPosition();
   }
 
   /**
@@ -281,12 +281,12 @@ import frc.robot.utilities.FieldRelativeSpeed;
     pigeon.setAngle(pose.getRotation().getDegrees());
     keepAngle = getGyro().getRadians();
 
-    m_odometry.resetPosition(pigeon.getAngle().times(-1.0), getModulePositions(), pose);
-    m_autoOdometry.resetPosition(pigeon.getAngle().times(-1.0), getModulePositions(), pose);
+    m_PoseEstimator.resetPosition(pigeon.getAngle().times(-1.0), getModulePositions(), pose);
+    m_AutoPoseEstimator.resetPosition(pigeon.getAngle().times(-1.0), getModulePositions(), pose);
   }
 
   public void setPose(Pose2d pose){
-    m_odometry.resetPosition(pigeon.getAngle().times(-1.0), getModulePositions(), pose);
+    m_PoseEstimator.resetPosition(pigeon.getAngle().times(-1.0), getModulePositions(), pose);
         keepAngle = getGyro().getRadians();
   }
 
@@ -301,7 +301,7 @@ import frc.robot.utilities.FieldRelativeSpeed;
     pigeon.reset();
     pigeon.setAngle(angle.getDegrees());
     keepAngle = getGyro().getRadians();
-    m_odometry.resetPosition(pigeon.getAngle().times(-1.0), getModulePositions(), pose);  }
+    m_PoseEstimator.resetPosition(pigeon.getAngle().times(-1.0), getModulePositions(), pose);  }
 
   /**
    * Converts the 4 swerve module states into a chassisSpeed by making use of the swerve drive kinematics.
