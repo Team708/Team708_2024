@@ -10,20 +10,20 @@ import edu.wpi.first.wpilibj2.command.Command;
    * Implements a OperateByController command which extends the Command class
    */
 public class OperateByController extends Command {
-  //private final Elevator m_elevator;
+  private final Shooter m_shooter;
 
   /**
    * Contructs a OperateByController object which applies the driver inputs from the
-   * controller to the elevator
+   * controller to the shooter
    * 
-   * @param elevator      is the elevator object which should be created in
+   * @param shooter      is the shooter object which should be created in
    *                   the RobotContainer class
    * @param controller is the user input controller object for controlling the
    *                   drivetrain
    */
-  // public OperateByController(Elevator elevator) {
-  //   //m_elevator = elevator; // Set the private member to the input elevator
-  //   //addRequirements(m_elevator); // Because this will be used as a default command, add the subsystem which will
+  // public OperateByController(Shooter shooter) {
+  //   m_shooter = shooter; // Set the private member to the input shooter
+  //   addRequirements(m_shooter); // Because this will be used as a default command, add the subsystem which will
   //                                  // use this as the default
   // }
 
@@ -37,7 +37,7 @@ public class OperateByController extends Command {
    */
   @Override
   public void execute() {
-    // double maxLinear = ElevatorConstants.kMaxSpeedMetersPerSecond;
+    // double maxLinear = shooterConstants.kMaxSpeedMetersPerSecond;
     // double desiredX = inputTransform(OI.getOperatorRightX())*maxLinear;
     // double desiredZ = -inputTransform(OI.getOperatorLeftY())*maxLinear;
     // Translation2d desiredTranslation = new Translation2d(desiredX, desiredZ);
@@ -47,7 +47,7 @@ public class OperateByController extends Command {
       // desiredTranslation.times(maxLinear/desiredMag);
     // }
 
-    // m_elevator.commandedVelocity(desiredTranslation.getX(), desiredTranslation.getY());
+    // m_shooter.commandedVelocity(desiredTranslation.getX(), desiredTranslation.getY());
   }
 
   @Override

@@ -17,7 +17,7 @@ import frc.robot.commands.DriveByController;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;
-
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.drive.Drivetrain;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -35,13 +35,14 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 public class RobotContainer {
 	// The robot's subsystems. Initialize subsystems here.
 	private final Drivetrain m_drive = new Drivetrain();
+	private final Shooter m_shooter = new Shooter();
 
 	// Initialize controllers
 	private final DriveByController m_driveByController
 	=  new DriveByController(m_drive);
 
 	// private final OperateByController m_operateByController
-	// = new OperateByController(/*Subsystem*/); // TODO Add operator controller
+	// = new OperateByController(m_shooter); 
 
 	// Autonomous Option
 	private final Command doNothin = new WaitCommand(5);
@@ -70,7 +71,7 @@ public class RobotContainer {
     // new POVButton(OI.driverController, 0)
     //     .onTrue(new InstantCommand(() -> m_drive.resetOdometry(new Rotation2d(0.0))));  //JNP
 
-    OI.configureButtonBindings(m_drive);
+    OI.configureButtonBindings(m_drive,m_shooter);
   }
 
 	private void configureAutoChooser(){
