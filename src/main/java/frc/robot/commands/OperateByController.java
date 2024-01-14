@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj2.command.Command;
    * Implements a OperateByController command which extends the Command class
    */
 public class OperateByController extends Command {
-  private final Shooter m_shooter;
 
   /**
    * Contructs a OperateByController object which applies the driver inputs from the

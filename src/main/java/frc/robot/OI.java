@@ -1,6 +1,7 @@
 package frc.robot;
 
 import frc.robot.Constants.ControllerConstants;
+import frc.robot.commands.shooter.ShootSpeaker;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -8,10 +9,6 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 //Subsysem Imports
 import frc.robot.subsystems.drive.Drivetrain;
 import frc.robot.subsystems.Shooter;
-
-//Command Imports
-// import frc.robot.commands.drive.DriveStraightCommand;
-import frc.robot.commands.Shoot;
 
 public class OI {
 
@@ -146,7 +143,7 @@ public class OI {
     // 		.onTrue(new /*Command*/);
     
     new JoystickButton(operatorController, Button.kRightBumper.value)
-    		.onTrue(new Shoot(m_shooter));
+    		.onTrue(new ShootSpeaker(m_shooter));
     
     // new JoystickButton(operatorController, Button.kLeftStick.value)
     // 		.onTrue(new /*Command*/);

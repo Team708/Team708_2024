@@ -150,6 +150,25 @@ public final class Constants {
     // public static final int kIntakeMotorID = 41;
   }
 
+ /**
+   * Shooter constants 
+   */
+  public static final class ShooterConstants  {    
+    public static final int kShooterMotorID = 30;
+
+    //speed constants
+    public static final double kShooterHighCloseMPS = 1500;
+    public static final double kP = 0.00015;
+    public static final double kI = 0.000001; 
+    public static final double kD = 0.006;
+    public static final double kFF = 0.0;
+    public static final double kIZone = 0;
+    public static final double kMin = -1;
+    public static final double kMax = 1;
+    public static final double kThreshhold = 0.75;
+  }
+
+
   /**
     * User Controller constants 
     */
