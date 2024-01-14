@@ -1,16 +1,18 @@
 package frc.robot.subsystems.vision;
 
+import frc.robot.Constants.VisionConstants;
 import frc.robot.Constants.VisionProcessorConstants;
-
+import frc.robot.subsystems.drive.Drivetrain;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.networktables.*;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class VisionProcessor extends SubsystemBase {
 
-  // public static Drivetrain drivetrain;
+  public static Drivetrain drivetrain;
   // private static Intake intake;
-
+  private Limelight limelight;
   private boolean led = false;
   // private boolean isAtY = false;
   public double robotSide;
@@ -28,34 +30,20 @@ public class VisionProcessor extends SubsystemBase {
   // private double area;
   // private double rotate = 0.0;
   // private double move = 0.0;
-
-  // Accessing the Limelight's Network Table
-  private NetworkTableInstance limeLightInstance = NetworkTableInstance.getDefault();
-  private NetworkTable limeLightTable = limeLightInstance.getTable("/limelight");
-
-  // Method for getting different data from a Network Table
-  public double getNTInfo(String tableInfo) {
-    NetworkTableEntry limeLightEntry = limeLightTable.getEntry(tableInfo);
-    return limeLightEntry.getDouble(0);
-  }
-
-  // Method for setting different data into a Network Table
-  public void setNTInfo(String tableInfo, int setValue) {
-    NetworkTableEntry limeLightEntry = limeLightTable.getEntry(tableInfo);
-    limeLightEntry.setNumber(setValue);
-  }
-
-  public VisionProcessor() {
+  
+  public VisionProcessor(Drivetrain m_drive) {
+    drivetrain = m_drive;
+    limelight = new Limelight();
     setName("Vision Processor");
   }
 
+  @Override
+  public void periodic() {
+    drivetrain.m_PoseEstimator.addVisionMeasurement(limelight.getBotPose2d(VisionConstants.klimelightName),(Timer.getFPGATimestamp()-(cl/1000)-(tl/1000)));
+  }
+
   public boolean seesTarget() {
-    tv = getNTInfo("tv");
-    if (tv != 0.0)
-      seesTarget = true;
-    else
-      seesTarget = false;
-    return seesTarget;
+    return Limelight.getTV(VisionConstants.klimelightName);
   }
 
   public void toggleLEDMode() {

@@ -16,10 +16,14 @@ import frc.robot.commands.DriveByController;
 // import frc.robot.commands.OperateByController; //TODO uncomment if using Operator Controller
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.RobotController;
-
+import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.subsystems.drive.Drivetrain;
-
+import frc.robot.subsystems.vision.Limelight;
+import frc.robot.subsystems.vision.VisionProcessor;
+import frc.robot.subsystems.vision.Limelight.LimelightTarget_Fiducial;
+import frc.robot.subsystems.vision.Limelight;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
@@ -35,6 +39,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 public class RobotContainer {
 	// The robot's subsystems. Initialize subsystems here.
 	private final Drivetrain m_drive = new Drivetrain();
+	private final VisionProcessor m_vision = new VisionProcessor(m_drive);
 
 	// Initialize controllers
 	private final DriveByController m_driveByController

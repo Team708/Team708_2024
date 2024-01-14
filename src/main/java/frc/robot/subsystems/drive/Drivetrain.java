@@ -79,7 +79,7 @@ import frc.robot.utilities.FieldRelativeSpeed;
   private static PigeonTwo pigeon = PigeonTwo.getInstance();
 
   //Creates Odometry object to store the pose of the robot
-  private final SwerveDrivePoseEstimator m_PoseEstimator = new SwerveDrivePoseEstimator(DriveConstants.kDriveKinematics, pigeon.getAngle(), getModulePositions(), DriveConstants.kinitialPoseMeters);
+  public final SwerveDrivePoseEstimator m_PoseEstimator = new SwerveDrivePoseEstimator(DriveConstants.kDriveKinematics, pigeon.getAngle(), getModulePositions(), DriveConstants.kinitialPoseMeters);
 
   private final SwerveDrivePoseEstimator m_AutoPoseEstimator = new SwerveDrivePoseEstimator(DriveConstants.kDriveKinematics, pigeon.getAngle(), getModulePositions(), DriveConstants.kinitialPoseMeters);
 
@@ -87,7 +87,8 @@ import frc.robot.utilities.FieldRelativeSpeed;
     AutoConstants.kThetaControllerConstraints);
 
   private final Field2d m_field;
-    /**
+
+  /**
    * Constructs a Drivetrain and resets the Gyro and Keep Angle parameters
    */
   public Drivetrain() {

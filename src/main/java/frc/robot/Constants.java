@@ -133,6 +133,9 @@ public final class Constants {
 
     public static final double kLineupSpeed = 0.3;
     public static final double kLineupAccuracy = 2.0;
+
+    public static final String klimelightName = "limelight-forward";
+
   }
 
   /**
