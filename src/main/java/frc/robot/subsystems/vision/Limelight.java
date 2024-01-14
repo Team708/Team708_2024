@@ -534,7 +534,7 @@ public class Limelight {
      * @param limelightName
      * @return
      */
-    public Pose2d getBotPose2d(String limelightName) {
+    public static Pose2d getBotPose2d(String limelightName) {
 
         double[] result = getBotPose(limelightName);
         return toPose2D(result);
