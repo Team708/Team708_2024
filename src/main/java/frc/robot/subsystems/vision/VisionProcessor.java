@@ -43,7 +43,7 @@ public class VisionProcessor extends SubsystemBase {
 
   @Override
   public void periodic() {
-    visionPose = Limelight.getBotPose2d(VisionConstants.klimelightName);
+    visionPose = Limelight.getBotPose2d_wpiBlue(VisionConstants.klimelightName);
     drivetrain.m_PoseEstimator.addVisionMeasurement(visionPose,(Timer.getFPGATimestamp()-(cl/1000)-(tl/1000)));
   }
 
