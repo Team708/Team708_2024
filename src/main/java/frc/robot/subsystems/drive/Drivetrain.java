@@ -88,6 +88,8 @@ import frc.robot.utilities.FieldRelativeSpeed;
 
   private final Field2d m_field;
 
+  private Pose2d currentPose = new Pose2d();
+
   /**
    * Constructs a Drivetrain and resets the Gyro and Keep Angle parameters
    */
@@ -103,7 +105,7 @@ import frc.robot.utilities.FieldRelativeSpeed;
 
     m_field = new Field2d();
 
-    // SmartDashboard.putData("Field", m_field);
+    SmartDashboard.putData("Field", m_field);
     }
 
   /**
@@ -175,9 +177,9 @@ import frc.robot.utilities.FieldRelativeSpeed;
         updatePose();    
 
         //Calls get pose function which sends the Pose information to the SmartDashboard
-        getPose();
-
-        m_field.getRobotObject().setPose(getPose());
+        currentPose = getPose();
+ 
+        m_field.getRobotObject().setPose(currentPose);
   }
 
   public void setFieldOrient(boolean fieldOrient){
@@ -260,7 +262,7 @@ import frc.robot.utilities.FieldRelativeSpeed;
     SmartDashboard.putNumber("Robot X", position.getX());
     SmartDashboard.putNumber("Robot Y", position.getY());
     SmartDashboard.putNumber("Robot Gyro", getGyro().getRadians());
-    return m_PoseEstimator.getEstimatedPosition();
+    return pose;
   }
 
   public Pose2d getAutoPose() {
@@ -269,7 +271,7 @@ import frc.robot.utilities.FieldRelativeSpeed;
     Translation2d position = pose.getTranslation();
     SmartDashboard.putNumber("Auto X", position.getX());
     SmartDashboard.putNumber("Auto Y", position.getY());
-    return m_AutoPoseEstimator.getEstimatedPosition();
+    return pose;
   }
 
   /**

@@ -3,12 +3,14 @@ package frc.robot.subsystems.vision;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.subsystems.drive.Drivetrain;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class VisionProcessor extends SubsystemBase {
   double tl, cl;
 
+  
   public static Drivetrain drivetrain;
   // private static Intake intake;
   private boolean led = false;
@@ -24,6 +26,7 @@ public class VisionProcessor extends SubsystemBase {
   // private double yAngle;
   // private double difference;
 
+  private Pose2d visionPose;
   // private double xAngle; //Get from Network Table
   // private double area;
   // private double rotate = 0.0;
@@ -37,9 +40,11 @@ public class VisionProcessor extends SubsystemBase {
     cl = Limelight.getLatency_Capture(VisionConstants.klimelightName);
   }
 
+
   @Override
   public void periodic() {
-    drivetrain.m_PoseEstimator.addVisionMeasurement(Limelight.getBotPose2d(VisionConstants.klimelightName),(Timer.getFPGATimestamp()-(cl/1000)-(tl/1000)));
+    visionPose = Limelight.getBotPose2d(VisionConstants.klimelightName);
+    drivetrain.m_PoseEstimator.addVisionMeasurement(visionPose,(Timer.getFPGATimestamp()-(cl/1000)-(tl/1000)));
   }
 
   public boolean seesTarget() {
