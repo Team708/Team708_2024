@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+
 import edu.wpi.first.math.geometry.Pose2d;
 
 // import edu.wpi.first.networktables.NetworkTableEntry;
@@ -12,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.Constants.FMSConstants;
 import frc.robot.commands.auto.doNothingCommand;
+import frc.robot.commands.auto.FiveBall;
 import frc.robot.commands.DriveByController;
 // import frc.robot.commands.OperateByController; //TODO uncomment if using Operator Controller
 
@@ -46,7 +49,8 @@ public class RobotContainer {
 
 	// Autonomous Option
 	private final Command doNothin = new WaitCommand(5);
-
+	private final Command FiveBall = new FiveBall(m_drive, 8);
+	
 	public static final SendableChooser<Command> m_chooser = new SendableChooser<>();
 
 	/** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -75,6 +79,7 @@ public class RobotContainer {
   }
 
 	private void configureAutoChooser(){
+		m_chooser.addOption("Five Ball",  FiveBall);
 		m_chooser.addOption("Do Nothing",     doNothin);
 		m_chooser.setDefaultOption("Do Nothing", doNothin);
 		SmartDashboard.putData(m_chooser);

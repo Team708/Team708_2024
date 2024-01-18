@@ -26,6 +26,10 @@ This method combines different sensors and algorithms to improve localization ac
 
 - [Pose Estimation](https://docs.wpilib.org/en/stable/docs/software/advanced-controls/state-space/state-space-pose-estimators.html)
 
+## Visualization 
+- [Advantage Scope](https://docs.wpilib.org/en/stable/docs/software/dashboards/advantagescope.html#advantagescope)
+    - [Github](https://github.com/Mechanical-Advantage/AdvantageScope/blob/main/docs/INDEX.md)
+
 ## Driving While Shooting
 
 1. Use pose estimation to get robot position relative to field
