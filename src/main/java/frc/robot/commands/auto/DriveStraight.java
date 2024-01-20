@@ -17,9 +17,9 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.drive.Drivetrain;
 // import frc.robot.subsystems.intake.Intake;
 
-public class FiveBall extends SequentialCommandGroup {
+public class DriveStraight extends SequentialCommandGroup {
 
-  public FiveBall(Drivetrain dr, double maxSpeed) {
+  public DriveStraight(Drivetrain dr, double maxSpeed) {
     // AutoFromPathPlanner path1 = new AutoFromPathPlanner(dr, "FiveBall", maxSpeed, true);
     // AutoFromPathPlanner path2 = new AutoFromPathPlanner(dr, "LeftSideDriveToPiece", maxSpeed, true);
     // AutoFromPathPlanner path3 = new AutoFromPathPlanner(dr, "LeftSideDriveToPieceBalance", maxSpeed, true);

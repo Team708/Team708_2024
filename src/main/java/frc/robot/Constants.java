@@ -58,18 +58,19 @@ public final class Constants {
     public static final double kBackLeftOffset = -.5*-1; //-0.5 to 0.5
     public static final double kBackRightOffset = -.1926*-1; //-0.5 to 0.5
 
+    
     //Drive motor PID is best done on the roboRIO currently as the SparkMAX does not allow for static gain values on the PID controller, 
     //    these are necessary to have high accuracy when moving at extremely low RPMs
     //public static final double[] kFrontLeftTuningVals   =   {0.0120,0.2892,0.25,0};   //{Static Gain, FeedForward, Proportional Gain, ModuleID for Tuning}
     //public static final double[] kFrontRightTuningVals  =   {0.0092,0.2835,0.25,1};   //{Static Gain, FeedForward, Proportional Gain, ModuleID for Tuning}
     //public static final double[] kBackLeftTuningVals    =   {0.0142,0.2901,0.25,2};   //{Static Gain, FeedForward, Proportional Gain, ModuleID for Tuning}
     //public static final double[] kBackRightTuningVals   =   {0.0108,0.2828,0.25,3};   //{Static Gain, FeedForward, Proportional Gain, ModuleID for Tuning}
-
+    
     public static final double[] kFrontLeftTuningVals   =   {0.001,0.2850,0.2,0};   //{Static Gain, FeedForward, Proportional Gain, ModuleID for Tuning}
     public static final double[] kFrontRightTuningVals  =   {0.001,0.2850,0.2,1};   //{Static Gain, FeedForward, Proportional Gain, ModuleID for Tuning}
     public static final double[] kBackLeftTuningVals    =   {0.001,0.2850,0.2,2};   //{Static Gain, FeedForward, Proportional Gain, ModuleID for Tuning}
     public static final double[] kBackRightTuningVals   =   {0.001,0.2850,0.2,3};   //{Static Gain, FeedForward, Proportional Gain, ModuleID for Tuning}
-
+    
     //.324 - sideways
     //.414 - longways
     public static final Translation2d kFrontLeftLocation = new Translation2d(0.414,0.324); // +X is forward, +Y is to the right 
@@ -80,10 +81,12 @@ public final class Constants {
     // public static final Translation2d kFrontRightLocation = new Translation2d(0.33,0.264); // +X is forward, +Y is to the right
     // public static final Translation2d kBackLeftLocation = new Translation2d(-0.376,-0.264); // +X is forward, +Y is to the right
     // public static final Translation2d kBackRightLocation = new Translation2d(-0.376,0.264); // +X is forward, +Y is to the right
-     
+    
+    public static final double kRadius = kFrontLeftLocation.getDistance(kBackRightLocation)/2;
+
     //Because the swerve modules poisition does not change, define a constant SwerveDriveKinematics for use throughout the code
     public static final SwerveDriveKinematics kDriveKinematics 
-      = new SwerveDriveKinematics(kFrontLeftLocation,kFrontRightLocation,kBackLeftLocation,kBackRightLocation);
+    = new SwerveDriveKinematics(kFrontLeftLocation,kFrontRightLocation,kBackLeftLocation,kBackRightLocation);
 
     public static final double kMaxAccelMetersPerSecSquared = 3.75;
     public static final double kMaxSpeedMetersPerSec = 3.5; //Maximum Sustainable Drivetrain Speed under Normal Conditions & Battery, Robot will not exceed this speed in closed loop control

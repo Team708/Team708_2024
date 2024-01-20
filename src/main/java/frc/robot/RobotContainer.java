@@ -5,6 +5,8 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.math.geometry.Pose2d;
 
@@ -15,6 +17,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.FMSConstants;
 import frc.robot.commands.auto.doNothingCommand;
 import frc.robot.commands.auto.FiveBall;
+import frc.robot.commands.auto.DriveStraight;
+
 import frc.robot.commands.DriveByController;
 // import frc.robot.commands.OperateByController; //TODO uncomment if using Operator Controller
 
@@ -50,19 +54,33 @@ public class RobotContainer {
 	// Autonomous Option
 	private final Command doNothin = new WaitCommand(5);
 	private final Command FiveBall = new FiveBall(m_drive, 8);
-	
-	public static final SendableChooser<Command> m_chooser = new SendableChooser<>();
+	private final Command DriveStraight = new DriveStraight(m_drive, 8);
+
+	// public static final SendableChooser<Command> m_chooser = new SendableChooser<>();
+    private final SendableChooser<Command> autoChooser;
 
 	/** The container for the robot. Contains subsystems, OI devices, and commands. */
 	public RobotContainer() {
 		// Configure the button bindings
 		configureButtonBindings();
-		configureAutoChooser();
-
+		
+		// configureAutoChooser();
+		// Build an auto chooser. This will use Commands.none() as the default option.
+		autoChooser = AutoBuilder.buildAutoChooser();
+		// autoChooser.addOption("Five Ball", FiveBall);
+		// autoChooser.addOption("Drive Straight", DriveStraight);
+		
+		// getAutonomousCommand();
 		m_drive.setDefaultCommand(m_driveByController);
 
+		SmartDashboard.putData("Auto Chooser", autoChooser);
 		m_drive.resetOdometry(new Pose2d()); //TODO need to test. Pigeon position does not reset on hardware
 	}
+
+    public Command getAutonomousCommand() {
+        // return new PathPlannerAuto("DriveStraight");
+		return autoChooser.getSelected();
+    }
 
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
@@ -78,25 +96,12 @@ public class RobotContainer {
     OI.configureButtonBindings(m_drive);
   }
 
-	private void configureAutoChooser(){
-		m_chooser.addOption("Five Ball",  FiveBall);
-		m_chooser.addOption("Do Nothing",     doNothin);
-		m_chooser.setDefaultOption("Do Nothing", doNothin);
-		SmartDashboard.putData(m_chooser);
-	}
-
-	/**
-	 * Use this to pass the autonomous command to the main {@link Robot} class.
-	 *
-	 * @return the command to run in autonomous
-	 */
-	public Command getAutonomousCommand() {
-		// this is where we run the initialization -see instantcommand: executes a
-		// single action on initialization, and then ends immediately (on page
-		// convenience features)
-		// or do we put it in the autonomousInit in robot.java?
-		return m_chooser.getSelected();
-	}
+	// private void configureAutoChooser(){
+	// 	m_chooser.addOption("Five Ball",  FiveBall);
+	// 	m_chooser.addOption("Do Nothing",     doNothin);
+	// 	m_chooser.setDefaultOption("Do Nothing", doNothin);
+	// 	SmartDashboard.putData(m_chooser);
+	// }
 
 	public Drivetrain getDrivetrain() {
 		return m_drive;
