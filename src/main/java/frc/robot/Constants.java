@@ -1,10 +1,14 @@
 package frc.robot;
 
+import com.pathplanner.lib.util.PIDConstants;
+
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 // import edu.wpi.first.math.util.Units;
+import edu.wpi.first.math.util.Units;
 
  /**
    * Static method containing all constant values for the robot in one location
@@ -104,6 +108,30 @@ public final class Constants {
     public static final double[] kKeepAnglePID = { 0.700, 0, 0 }; //Defines the PID values for the keep angle PID
 
     public static final Pose2d kinitialPoseMeters = new Pose2d();
+  
+    //Field poses. Blue side
+    public static final Pose2d kPoseSpeakerBumperTop  = new Pose2d(0.71, 6.74, new Rotation2d(Units.degreesToRadians(-120)));
+    public static final Pose2d kPoseBumperMiddle  = new Pose2d(1.37, 5.55, new Rotation2d(Units.degreesToRadians(180)));
+    public static final Pose2d kPoseSpeakerBumperBottom  = new Pose2d(0.69, 4.35, new Rotation2d(Units.degreesToRadians(120)));
+
+    public static final Pose2d kPoseAmpLocation  = new Pose2d(1.82, 7.59, new Rotation2d(Units.degreesToRadians(90)));
+    public static final Pose2d kPoseFeederLocationFar  = new Pose2d(15.89,1.36, new Rotation2d(Units.degreesToRadians(-60)));  
+    public static final Pose2d kPoseFeederLocationClose  = new Pose2d(15.08,0.82, new Rotation2d(Units.degreesToRadians(-60)));
+
+    //Game piece locations
+    public static final Translation2d kNoteCenterFar  = new Translation2d(8.27,7.465);
+    public static final Translation2d kNoteCenterFarMid  = new Translation2d(8.27,5.785);
+    public static final Translation2d kNoteCenterMid  = new Translation2d(8.27,4.105);
+    public static final Translation2d kNoteCenterMidClose  = new Translation2d(8.27,2.425);
+    public static final Translation2d kNoteCenterClose  = new Translation2d(8.27,0.745);
+
+    public static final Translation2d kNoteAllianceFar  = new Translation2d(2.90,7.005);
+    public static final Translation2d kNoteAllianceMid  = new Translation2d(2.90,5.555);
+    public static final Translation2d kNoteAllianceClose  = new Translation2d(2.90,4.105);
+
+    //Field Zones
+    public static final Double kZoneWingLine = 1.93;
+    public static final Double kZoneStartingLine = 0.61;
   }
 
   /**
@@ -193,6 +221,12 @@ public final class Constants {
     
     public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
       kMaxAngularSpeed, kMaxAngularAccel); //Creates a trapezoidal motion for the auto rotational commands
+  
+    public static final PIDConstants kTranslationPID = new PIDConstants(5.0, 0.0, 0.0); // Translation PID constants
+    public static final PIDConstants kRotationPID = new PIDConstants(5.0, 0.0, 0.0); // Rotation PID constants
+    public static final double kMaxModuleSpeedMetersPerSec = 4.5; // Max module speed, in m/s
+    public static final double 0.4, // Drive base radius in meters. Distance from robot center to furthest module.
+
   }
 
   public static final class VisionProcessorConstants {
@@ -213,15 +247,11 @@ public final class Constants {
   public static final class SimConstants {
     //Game Specific
   }
-  
+
   /**
   * FMS constants 
   */
   public static final class FMSConstants {
-    public static final int ALLIANCE_RED 	 		    = 1;
-    public static final int ALLIANCE_BLUE 	 		  = -1;
-    public static final int ALLIANCE_INITIALIZED  = 0;
-    public static final int ALLIANCE_NOT_ENABLED  = 20;
-    public static final int ALLIANCE_EXCEPTION    = 11;
+
   }
 }
