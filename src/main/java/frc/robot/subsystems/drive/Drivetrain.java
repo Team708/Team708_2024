@@ -97,7 +97,7 @@ import frc.robot.utilities.FieldRelativeSpeed;
     pigeon.reset();
     // m_odometry.resetPosition(pigeon.getAngle().times(-1.0), getModulePositions(), new Pose2d()); //JNP 
     m_odometry.resetPosition(pigeon.getAngle().times(1.0), getModulePositions(), new Pose2d()); //JNP 
-    CommandScheduler.getInstance().registerSubsystem(this);
+    //CommandScheduler.getInstance().registerSubsystem(this); //??is This commencted out JNP??/
     thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
     m_field = new Field2d();
