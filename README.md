@@ -9,6 +9,7 @@ Path Planner: https://github.com/mjansen4857/pathplanner
 ## Subsystem:
 
 - [Drivetrain](src/main/java/frc/robot/documentation/SubsystemDrivetrain.md)
+- [Intake](src/main/java/frc/robot/documentation/SubsystemIntake.md)
 
 ## Commands:
 
