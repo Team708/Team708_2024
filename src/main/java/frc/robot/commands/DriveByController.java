@@ -22,7 +22,7 @@ public class DriveByController extends Command {
   private final Drivetrain m_robotDrive;
 
   double autoAngle = 0.0;
-  boolean autoRotEnabled = false;
+  public static boolean autoRotEnabled = false;
   double lastSpeed = 0.0;
   double lastTime = Timer.getFPGATimestamp();
   ProfiledPIDController controller = new ProfiledPIDController(0.05, 0.00, 0.004, new Constraints(3000, 1500));
@@ -60,27 +60,22 @@ public class DriveByController extends Command {
     double desiredY = -inputTransform(OI.getDriverLeftX())*maxLinear;
     Translation2d desiredTranslation = new Translation2d(desiredX, desiredY);
     double desiredMag = desiredTranslation.getDistance(new Translation2d());
-    double dx = Constants.DriveConstants.kPoseSpeakerBumperBottom.getX() - m_robotDrive.getPose().getX();
-    double dy = Constants.DriveConstants.kPoseSpeakerBumperBottom.getY() - m_robotDrive.getPose().getY();
-    Rotation2d robotToTarget = new Rotation2d(dx, dy);
+    double desiredRot = -inputTransform(OI.getDriverRightX())* DriveConstants.kMaxAngularSpeedRadPerSec;
 
-    desiredRot = controller.calculate(m_robotDrive.getPose().getRotation().getDegrees(), robotToTarget.getDegrees());
 
     if(Math.abs(desiredRot) > 0.08){
       autoRotEnabled = false;
     }
     if(autoRotEnabled){
-        //double currPoseDegrees = MathUtil.inputModulus(m_robotDrive.getPose().getRotation().getDegrees(), 0, 360);
-        // double currPoseDegrees = m_robotDrive.getPose().getRotation().getDegrees();
-        double currDegrees = MathUtil.inputModulus(m_robotDrive.getGyroDegrees(),-180,180);
-        // System.out.println(currDegrees + "       " + autoAngle);
-        desiredRot = controller.calculate(currDegrees, autoAngle);
-        SmartDashboard.putNumber("currDegrees", currDegrees);
-        SmartDashboard.putNumber("autoAngle", autoAngle);
-        SmartDashboard.putNumber("RobotAngle", m_robotDrive.getPose().getRotation().getDegrees());
-        if(controller.atSetpoint()){
-          autoRotEnabled = false;
-        }
+        double dx = Constants.DriveConstants.kPoseSpeakerBumperBottom.getX() - m_robotDrive.getPose().getX();
+        double dy = Constants.DriveConstants.kPoseSpeakerBumperBottom.getY() - m_robotDrive.getPose().getY();
+        Rotation2d robotToTarget = new Rotation2d(dx, dy);
+        desiredRot = controller.calculate(m_robotDrive.getPose().getRotation().getDegrees(), robotToTarget.getDegrees());
+        SmartDashboard.putNumber("autoAngle", robotToTarget.getDegrees());
+        SmartDashboard.putBoolean("IsTargetingOn", autoRotEnabled);
+        // if(controller.atSetpoint()){
+        //   autoRotEnabled = false;
+        // }
     }
 
     // System.out.println(manualRotEnabled);
@@ -115,6 +110,16 @@ public class DriveByController extends Command {
   public void setAutoRotate(double angle){
     autoAngle = angle;
     autoRotEnabled = true;
+  }
+  
+  public static void enableAutoRot()
+  {
+    autoRotEnabled = true;
+  }
+
+  public static void disableAutoRot()
+  {
+    autoRotEnabled = false;
   }
 
 }

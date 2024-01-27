@@ -1,11 +1,13 @@
 package frc.robot;
 
 import frc.robot.Constants.ControllerConstants;
-
+import frc.robot.commands.DriveByController;
+import frc.robot.commands.drive.DisableAutoTargetSpeaker;
+import frc.robot.commands.drive.EnableAutoTargetSpeaker;
 import edu.wpi.first.wpilibj.XboxController;
-// import edu.wpi.first.wpilibj.XboxController.Button;
-// import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
+import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.Command;
 //Subsysem Imports
 import frc.robot.subsystems.drive.Drivetrain;
 
@@ -101,9 +103,10 @@ public class OI {
     // 		.whenPressed(new /*Command*/)
     // 		.whenPressed(new /*Command*/);
 
-    // new JoystickButton(driverController, Button.kLeftBumper.value)
-    // 		.whenPressed(() -> /*Command*/)
-    // 		.whenReleased(() -> /*Command*/);
+    new JoystickButton(driverController, Button.kLeftBumper.value)
+    		//.whileHeld((new AutoTargetSpeaker(m_drive)));
+        .whileTrue(new EnableAutoTargetSpeaker(m_drive))
+        .whileFalse(new DisableAutoTargetSpeaker(m_drive));
 
     // new JoystickButton(driverController, Button.kRightStick.value)
     // 		.whenPressed(new /*Command*/);
