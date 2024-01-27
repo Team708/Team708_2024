@@ -296,7 +296,8 @@ import frc.robot.utilities.FieldRelativeSpeed;
     //Rotation2d heading = getGyro();
     SmartDashboard.putNumber("Robot X", position.getX());
     SmartDashboard.putNumber("Robot Y", position.getY());
-    SmartDashboard.putNumber("Robot Gyro", getGyro().getRadians());
+    //SmartDashboard.putNumber("Robot Gyro", getGyro().getDegrees());
+    SmartDashboard.putNumber("Robot Angle", pose.getRotation().getDegrees());
     return pose;
   }
 

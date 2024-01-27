@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import frc.robot.Constants;
 import frc.robot.OI;
 import frc.robot.Constants.*;
 import frc.robot.subsystems.drive.Drivetrain;
@@ -7,6 +8,7 @@ import frc.robot.utilities.MathUtils;
 import edu.wpi.first.math.MathUtil;
 // import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj.Timer;
@@ -24,6 +26,7 @@ public class DriveByController extends Command {
   double lastSpeed = 0.0;
   double lastTime = Timer.getFPGATimestamp();
   ProfiledPIDController controller = new ProfiledPIDController(0.05, 0.00, 0.004, new Constraints(3000, 1500));
+  double desiredRot;
 
   /**
    * Contructs a DriveByController object which applys the driver inputs from the
@@ -57,7 +60,11 @@ public class DriveByController extends Command {
     double desiredY = -inputTransform(OI.getDriverLeftX())*maxLinear;
     Translation2d desiredTranslation = new Translation2d(desiredX, desiredY);
     double desiredMag = desiredTranslation.getDistance(new Translation2d());
-    double desiredRot = -inputTransform(OI.getDriverRightX())* DriveConstants.kMaxAngularSpeedRadPerSec;//desiredRot = 0.0;
+    double dx = Constants.DriveConstants.kPoseSpeakerBumperBottom.getX() - m_robotDrive.getPose().getX();
+    double dy = Constants.DriveConstants.kPoseSpeakerBumperBottom.getY() - m_robotDrive.getPose().getY();
+    Rotation2d robotToTarget = new Rotation2d(dx, dy);
+
+    desiredRot = controller.calculate(m_robotDrive.getPose().getRotation().getDegrees(), robotToTarget.getDegrees());
 
     if(Math.abs(desiredRot) > 0.08){
       autoRotEnabled = false;

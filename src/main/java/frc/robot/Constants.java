@@ -111,7 +111,7 @@ public final class Constants {
   
     //Field poses. Blue side
     public static final Pose2d kPoseSpeakerBumperTop  = new Pose2d(0.71, 6.74, new Rotation2d(Units.degreesToRadians(-120)));
-    public static final Pose2d kPoseBumperMiddle  = new Pose2d(1.37, 5.55, new Rotation2d(Units.degreesToRadians(180)));
+    public static final Pose2d kPoseSpeakerBumperMiddle  = new Pose2d(1.37, 5.55, new Rotation2d(Units.degreesToRadians(180)));
     public static final Pose2d kPoseSpeakerBumperBottom  = new Pose2d(0.69, 4.35, new Rotation2d(Units.degreesToRadians(120)));
 
     public static final Pose2d kPoseAmpLocation  = new Pose2d(1.82, 7.59, new Rotation2d(Units.degreesToRadians(90)));
@@ -165,7 +165,7 @@ public final class Constants {
     public static final double kLineupSpeed = 0.3;
     public static final double kLineupAccuracy = 2.0;
 
-    public static final String klimelightName = "limelight-forward";
+    public static final String klimelightName = "limelight";
 
   }
 
@@ -225,7 +225,7 @@ public final class Constants {
     public static final PIDConstants kTranslationPID = new PIDConstants(5.0, 0.0, 0.0); // Translation PID constants
     public static final PIDConstants kRotationPID = new PIDConstants(5.0, 0.0, 0.0); // Rotation PID constants
     public static final double kMaxModuleSpeedMetersPerSec = 4.5; // Max module speed, in m/s
-    public static final double 0.4, // Drive base radius in meters. Distance from robot center to furthest module.
+    // Drive base radius in meters. Distance from robot center to furthest module.
 
   }
 

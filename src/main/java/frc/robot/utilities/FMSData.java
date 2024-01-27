@@ -15,36 +15,36 @@ public class FMSData {
 
   // findColor - sets the global variable allianceColor based on the color of the
   // alliance coming from the fmsdata
-  public int getAllianceColor() {
-    try {
-      // robot is ENABLED
-      if (RobotController.isSysActive()) {
-        // connected to FMS
-        allianceColor = FMSConstants.ALLIANCE_INITIALIZED; // 0
-        alliance = DriverStation.getAlliance();
-        String gameData = DriverStation.getGameSpecificMessage();
-        SmartDashboard.putString("gameData", gameData);
-        if (alliance.isPresent()) {
-          if (alliance.get() == Alliance.Red) {
-            allianceColor = FMSConstants.ALLIANCE_RED; // 1
-          }
-          if (alliance.get() == Alliance.Blue) {
-          allianceColor = FMSConstants.ALLIANCE_BLUE; // -1
-          }
-        } else { // robot is NOT ENABLED
-        allianceColor = FMSConstants.ALLIANCE_NOT_ENABLED; // 20
-        }
-      }
-    } catch (Exception e) {
-      allianceColor = FMSConstants.ALLIANCE_EXCEPTION; // 11
-    }
+  // public int getAllianceColor() {
+  //   try {
+  //     // robot is ENABLED
+  //     if (RobotController.isSysActive()) {
+  //       // connected to FMS
+  //       allianceColor = FMSConstants.ALLIANCE_INITIALIZED; // 0
+  //       alliance = DriverStation.getAlliance();
+  //       String gameData = DriverStation.getGameSpecificMessage();
+  //       SmartDashboard.putString("gameData", gameData);
+  //       if (alliance.isPresent()) {
+  //         if (alliance.get() == Alliance.Red) {
+  //           allianceColor = FMSConstants.ALLIANCE_RED; // 1
+  //         }
+  //         if (alliance.get() == Alliance.Blue) {
+  //         allianceColor = FMSConstants.ALLIANCE_BLUE; // -1
+  //         }
+  //       } else { // robot is NOT ENABLED
+  //       allianceColor = FMSConstants.ALLIANCE_NOT_ENABLED; // 20
+  //       }
+  //     }
+  //   } catch (Exception e) {
+  //     allianceColor = FMSConstants.ALLIANCE_EXCEPTION; // 11
+  //   }
 
-    // example on updating the dashboard using the smart dashboard implementation
-    SmartDashboard.putNumber("Alliance", allianceColor);
+  //   // example on updating the dashboard using the smart dashboard implementation
+  //   SmartDashboard.putNumber("Alliance", allianceColor);
 
-    // exmaple on updating the dashboard using the Shuffleboard custom widget and
-    // the network table entry
-    // allianceColorEntry.setDouble(allianceColor);
-    return allianceColor;
-  }
+  //   // exmaple on updating the dashboard using the Shuffleboard custom widget and
+  //   // the network table entry
+  //   // allianceColorEntry.setDouble(allianceColor);
+  //   return allianceColor;
+  // }
 }
