@@ -190,7 +190,7 @@ public final class Constants {
   /**
    * Arm constants 
    */
-  public static final class ArmFeedforwardConstants  {
+  public static final class Arm  {
     public static final int kArmMaster1MotorID  = 61;
     public static final int kArmSlaveMotorID    = 62;
   }
