@@ -2,6 +2,7 @@ package frc.robot;
 
 import com.pathplanner.lib.util.PIDConstants;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -119,6 +120,11 @@ public final class Constants {
     public static final Pose2d kPoseAmpLocation  = new Pose2d(1.82, 7.59, new Rotation2d(Units.degreesToRadians(90)));
     public static final Pose2d kPoseFeederLocationFar  = new Pose2d(15.89,1.36, new Rotation2d(Units.degreesToRadians(-60)));  
     public static final Pose2d kPoseFeederLocationClose  = new Pose2d(15.08,0.82, new Rotation2d(Units.degreesToRadians(-60)));
+
+    //Auto Rotate PID
+    public static final PIDController kAutoRotatePID = new PIDController(0.06, 0.0001, 0.0025);//, //new Constraints(300000, 150000));
+
+
 
     //Game piece locations
     public static final Translation2d kNoteCenterFar  = new Translation2d(8.27,7.465);

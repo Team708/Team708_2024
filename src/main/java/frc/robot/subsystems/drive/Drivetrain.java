@@ -30,9 +30,11 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants;
 import frc.robot.Constants.*;
+import frc.robot.OI;
 import frc.robot.commands.DriveByController;
 import frc.robot.utilities.FieldRelativeAccel;
 import frc.robot.utilities.FieldRelativeSpeed;
+import frc.robot.utilities.MathUtils;
 
   /**
    * Implements a swerve Drivetrain Subsystem for the Robot
@@ -449,6 +451,40 @@ import frc.robot.utilities.FieldRelativeSpeed;
     m_backRight.setDesiredState(swerveModuleStates[3]);
   }
   
+  public Translation2d getDriverXAndY()
+  {
+    double maxLinear = DriveConstants.kMaxSpeedMetersPerSec;
+    double desiredX = -inputTransform(OI.getDriverLeftY())*maxLinear;
+    double desiredY = -inputTransform(OI.getDriverLeftX())*maxLinear;
+    Translation2d desiredTranslation = new Translation2d(desiredX, desiredY);
+    double desiredMag = desiredTranslation.getDistance(new Translation2d());
+    if(desiredMag >= maxLinear){
+      desiredTranslation.times(maxLinear/desiredMag);
+    }
+    return desiredTranslation;
+  }
+
+  public double getDriverRot()
+  {
+    return -inputTransform(OI.getDriverRightX())* DriveConstants.kMaxAngularSpeedRadPerSec;
+  }
+
+  private double inputTransform(double input){
+    //return MathUtils.singedSquare(MathUtils.applyDeadband(input));
+    return MathUtils.cubicLinear(MathUtils.applyDeadband(input), 0.9, 0.1);
+  }
+
+  public void makeRobotDrive()
+  {
+    PIDController controller = Constants.DriveConstants.kAutoRotatePID;//, //new Constraints(300000, 150000));
+    double desiredRot = findAutoRotate(controller, getDriverRot());
+    this.drive(getDriverXAndY().getX(), 
+                       getDriverXAndY().getY(),
+                       desiredRot,
+                       getFieldOrient(),
+                       true);
+  }
+
   public void enableAutoRot()
   {
     autoRotEnabled = true;
