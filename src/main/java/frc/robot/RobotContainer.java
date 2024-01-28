@@ -16,7 +16,10 @@ import frc.robot.commands.DriveByController;
 // import frc.robot.commands.OperateByController; //TODO uncomment if using Operator Controller
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.drive.Drivetrain;
 
@@ -35,12 +38,11 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 public class RobotContainer {
 	// The robot's subsystems. Initialize subsystems here.
 	private final Drivetrain m_drive = new Drivetrain();
+	public static Intake m_intakeSubsystem = new Intake();
 	private final Shooter m_shooter = new Shooter();
 
 	// Initialize controllers
-	private final DriveByController m_driveByController
-	=  new DriveByController(m_drive);
-
+	private final DriveByController m_driveByController =  new DriveByController(m_drive);
 	// private final OperateByController m_operateByController
 	// = new OperateByController(m_shooter); 
 
@@ -56,6 +58,7 @@ public class RobotContainer {
 		configureAutoChooser();
 
 		m_drive.setDefaultCommand(m_driveByController);
+		m_intakeSubsystem.setDefaultCommand(m_driveByController);
 
 		m_drive.resetOdometry(new Pose2d()); //TODO need to test. Pigeon position does not reset on hardware
 	}
@@ -97,6 +100,10 @@ public class RobotContainer {
 		return m_drive;
 	}
 
+	public Intake getIntake() {
+		return m_intakeSubsystem;
+	}
+
 	public void simulationInit(){
 	//   m_elevator.simulationInit();
 	}
@@ -108,6 +115,7 @@ public class RobotContainer {
 
 	public void sendToDashboard() {
 		m_drive.sendToDashboard();
+		m_intakeSubsystem.sendToDashboard();
 		// m_shooter.sendToDashboard();
 		// m_climber.sendToDashboard();
 		// m_intakeFeeder.sendToDashboard();

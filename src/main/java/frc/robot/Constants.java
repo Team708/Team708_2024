@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -20,8 +21,11 @@ public final class Constants {
   }
 
   public static final class CurrentLimit{
-    // public static final int kIntake = 25;
-    // public static final int kElevator = 40;
+    public static final int kIntake = 25;
+
+    public static final int kArm = 40;
+    public static final int kFeeder = 40;
+
     public static final int kTranslationAmps = 40;
     public static final int kRotationAmps = 25;
   }
@@ -37,20 +41,20 @@ public final class Constants {
    * Drivetrain constants 
    */
   public static final class DriveConstants {
-    public static final int kFrontLeftDriveMotorPort = 25;   //CANID of the Translation SparkMAX
-    public static final int kFrontRightDriveMotorPort = 27;  //CANID of the Translation SparkMAX
-    public static final int kRearLeftDriveMotorPort = 21;    //CANID of the Translation SparkMAX
-    public static final int kRearRightDriveMotorPort = 23;   //CANID of the Translation SparkMAX
+    public static final int kFrontLeftDriveMotorPort = 11;   //CANID of the Translation SparkMAX
+    public static final int kFrontRightDriveMotorPort = 13;  //CANID of the Translation SparkMAX
+    public static final int kRearLeftDriveMotorPort = 15;    //CANID of the Translation SparkMAX
+    public static final int kRearRightDriveMotorPort = 17;   //CANID of the Translation SparkMAX
 
-    public static final int kFrontLeftTurningMotorPort = 26;   //CANID of the Rotation SparkMAX
-    public static final int kFrontRightTurningMotorPort = 28;  //CANID of the Rotation SparkMAX
-    public static final int kBackLeftTurningMotorPort = 22;    //CANID of the Rotation SparkMAX
-    public static final int kBackRightTurningMotorPort = 24;   //CANID of the Rotation SparkMAX
+    public static final int kFrontLeftTurningMotorPort = 12;   //CANID of the Rotation SparkMAX
+    public static final int kFrontRightTurningMotorPort = 14;  //CANID of the Rotation SparkMAX
+    public static final int kBackLeftTurningMotorPort = 16;    //CANID of the Rotation SparkMAX
+    public static final int kBackRightTurningMotorPort = 18;   //CANID of the Rotation SparkMAX
 
-    public static final int kFrontLeftTurningEncoderPort = 12;   //Analog Port of the Module Absolute Encoder
-    public static final int kFrontRightTurningEncoderPort = 14;  //Analog Port of the Module Absolute Encoder
-    public static final int kBackLeftTurningEncoderPort = 13;    //Analog Port of the Module Absolute Encoder
-    public static final int kBackRightTurningEncoderPort = 11;   //Analog Port of the Module Absolute Encoder
+    public static final int kFrontLeftTurningEncoderPort = 4;   //Analog Port of the Module Absolute Encoder
+    public static final int kFrontRightTurningEncoderPort = 5;  //Analog Port of the Module Absolute Encoder
+    public static final int kBackLeftTurningEncoderPort = 6;    //Analog Port of the Module Absolute Encoder
+    public static final int kBackRightTurningEncoderPort = 7;   //Analog Port of the Module Absolute Encoder
 
     public static final double kFrontLeftOffset = -.2189*-1; //-0.5 to 0.5
     public static final double kFrontRightOffset = -.1585*-1; //-0.5 to 0.5
@@ -146,8 +150,49 @@ public final class Constants {
   /**
    * Intake constants 
    */
-  public static final class IntakeConstants  {
-    // public static final int kIntakeMotorID = 41;
+    public static final class IntakeConstants  {
+
+    public static final int kIntakeEncoderCPR = 42;
+
+    public static final int kRollerGearRatio = 3; // 54 / 18
+    public static final double kRollerIntakeSpeed = 1.0;
+    
+    public static final double kCamGearRatio = 47915 / 486; // 12/74, 18/74, 18/70
+    public static final double kCamOpenPose = 2265.0;
+    public static final double kCamClosedPose = 0.0;
+    public static final double kIntakeSpeed = 1.0;
+    
+    public static final int kIntakeMode = 1; //0 = Roller, 1 = Clamp
+
+    public static final int kIntakeMotorFrontID = 21;
+    public static final int kIntakeMotorBackID  = 23;
+    public static final int kIntakeMotorRightID = 25;
+    public static final int kIntakeMotorLeftID  = 27;
+
+  }
+
+  /**
+   * Shooter constants 
+   */
+  public static final class ShooterConstants  {
+    public static final int kShooterSpeakerMotorID  = 31;
+    public static final int kShooteAmpMotorID       = 41;
+  }
+
+  /**
+   * feeder constants 
+   */
+  public static final class FeederConstants  {
+    public static final int kFeederStage1MotorID  = 31;
+    public static final int kFeederStage2MotorID  = 41;
+  }
+
+  /**
+   * Arm constants 
+   */
+  public static final class Arm  {
+    public static final int kArmMaster1MotorID  = 61;
+    public static final int kArmSlaveMotorID    = 62;
   }
 
  /**
