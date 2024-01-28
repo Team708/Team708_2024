@@ -4,6 +4,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.CurrentLimit;
@@ -15,20 +16,22 @@ public class Intake extends SubsystemBase{
     private CANSparkMax m_intakeMotorFront;
     private CANSparkMax m_intakeMotorBack;
 
+    private String intakeDirection;
+
     // private RelativeEncoder m_intakeEncoder;
     
     // private boolean isReversed = false;
 
     // private DigitalInput m_dIOSensor;
 
-    public Intake(DigitalInput m_dIOSensor){
+    public Intake(){
 
         // this.m_dIOSensor = m_dIOSensor;
 
-        m_intakeMotorRight = new CANSparkMax(IntakeConstants.kIntakeMotorID, MotorType.kBrushless);
-        m_intakeMotorLeft = new CANSparkMax(IntakeConstants.kIntakeMotorID, MotorType.kBrushless);
-        m_intakeMotorFront = new CANSparkMax(IntakeConstants.kIntakeMotorID, MotorType.kBrushless);
-        m_intakeMotorBack = new CANSparkMax(IntakeConstants.kIntakeMotorID, MotorType.kBrushless);
+        m_intakeMotorRight = new CANSparkMax(IntakeConstants.kIntakeMotorRightID, MotorType.kBrushless);
+        m_intakeMotorLeft = new CANSparkMax(IntakeConstants.kIntakeMotorFrontID, MotorType.kBrushless);
+        m_intakeMotorFront = new CANSparkMax(IntakeConstants.kIntakeMotorFrontID, MotorType.kBrushless);
+        m_intakeMotorBack = new CANSparkMax(IntakeConstants.kIntakeMotorBackID, MotorType.kBrushless);
 
         m_intakeMotorRight.setSmartCurrentLimit(CurrentLimit.kIntake);
         m_intakeMotorRight.setInverted(false);
@@ -57,6 +60,7 @@ public class Intake extends SubsystemBase{
         m_intakeMotorLeft.set(IntakeConstants.kIntakeSpeed);
         m_intakeMotorFront.set(IntakeConstants.kIntakeSpeed);
         m_intakeMotorBack.set(IntakeConstants.kIntakeSpeed);
+        intakeDirection = "All On";
         // isReversed = false;
     }
 
@@ -65,6 +69,8 @@ public class Intake extends SubsystemBase{
         m_intakeMotorLeft.set(0);
         m_intakeMotorFront.set(0);
         m_intakeMotorBack.set(0);
+        intakeDirection = "All Off";
+
     }
 
     public void intakeReverse(){
@@ -72,6 +78,8 @@ public class Intake extends SubsystemBase{
         m_intakeMotorLeft.set(-IntakeConstants.kIntakeSpeed);
         m_intakeMotorFront.set(-IntakeConstants.kIntakeSpeed);
         m_intakeMotorBack.set(-IntakeConstants.kIntakeSpeed);
+        intakeDirection = "All Reverse";
+
         // isReversed = true;
     }
 
@@ -80,6 +88,8 @@ public class Intake extends SubsystemBase{
         m_intakeMotorLeft.set(IntakeConstants.kIntakeSpeed);
         m_intakeMotorFront.set(-IntakeConstants.kIntakeSpeed);
         m_intakeMotorBack.set(IntakeConstants.kIntakeSpeed);
+        intakeDirection = "eject Front";
+
     }
 
     public void ejectBack(){
@@ -87,6 +97,8 @@ public class Intake extends SubsystemBase{
         m_intakeMotorLeft.set(IntakeConstants.kIntakeSpeed);
         m_intakeMotorFront.set(IntakeConstants.kIntakeSpeed);
         m_intakeMotorBack.set(-IntakeConstants.kIntakeSpeed);
+        intakeDirection = "eject Back";
+
     }
 
 
@@ -97,6 +109,8 @@ public class Intake extends SubsystemBase{
     public void sendToDashboard(){
         // SmartDashboard.putNumber("intake speed", getRollerSpeed());
         // SmartDashboard.putNumber("intake Position", getRollerPosition());
+        SmartDashboard.putString("intake Direction", intakeDirection);
+
     }
 
 }

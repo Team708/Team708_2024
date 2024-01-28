@@ -37,7 +37,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 public class RobotContainer {
 	// The robot's subsystems. Initialize subsystems here.
 	private final Drivetrain m_drive = new Drivetrain();
-	public static Intake m_intakeSubsystem = new Intake(null);
+	public static Intake m_intakeSubsystem = new Intake();
 	// Initialize controllers
 	private final DriveByController m_driveByController =  new DriveByController(m_drive);
 	// private final OperateByController m_operateByController
