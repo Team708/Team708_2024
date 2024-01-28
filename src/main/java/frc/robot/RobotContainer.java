@@ -41,6 +41,7 @@ public class RobotContainer {
 	public static Intake m_intakeSubsystem = new Intake();
 	private final Shooter m_shooter = new Shooter();
 
+	public static Intake m_intake = new Intake();
 	// Initialize controllers
 	private final DriveByController m_driveByController =  new DriveByController(m_drive);
 	// private final OperateByController m_operateByController
@@ -58,7 +59,7 @@ public class RobotContainer {
 		configureAutoChooser();
 
 		m_drive.setDefaultCommand(m_driveByController);
-		m_intakeSubsystem.setDefaultCommand(m_driveByController);
+		m_intake.setDefaultCommand(m_driveByController);
 
 		m_drive.resetOdometry(new Pose2d()); //TODO need to test. Pigeon position does not reset on hardware
 	}
@@ -101,7 +102,7 @@ public class RobotContainer {
 	}
 
 	public Intake getIntake() {
-		return m_intakeSubsystem;
+		return m_intake;
 	}
 
 	public void simulationInit(){
@@ -115,7 +116,7 @@ public class RobotContainer {
 
 	public void sendToDashboard() {
 		m_drive.sendToDashboard();
-		m_intakeSubsystem.sendToDashboard();
+		m_intake.sendToDashboard();
 		// m_shooter.sendToDashboard();
 		// m_climber.sendToDashboard();
 		// m_intakeFeeder.sendToDashboard();

@@ -9,9 +9,9 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.Intake;
 
 public class IntakeOff extends Command {
-  public IntakeOff(Intake intakeSubsystem) {
-    RobotContainer.m_intakeSubsystem = intakeSubsystem;
-    addRequirements(intakeSubsystem);
+  public IntakeOff(Intake intake) {
+    RobotContainer.m_intake = intake;
+    addRequirements(intake);
     //TODO Command, Intake 
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -23,7 +23,7 @@ public class IntakeOff extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.m_intakeSubsystem.intakeOff(); 
+    RobotContainer.m_intake.intakeOff(); 
   }
 
   // Called once the command ends or is interrupted.

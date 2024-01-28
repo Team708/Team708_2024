@@ -12,7 +12,7 @@ public class IntakeAllIn extends Command{
     
 
     public IntakeAllIn(Intake intakeSubsystem) {
-        RobotContainer.m_intakeSubsystem = intakeSubsystem;
+        RobotContainer.m_intake = intakeSubsystem;
         addRequirements(intakeSubsystem); // This is important to inform the scheduler about the subsystem usage
     }
 
@@ -26,7 +26,7 @@ public class IntakeAllIn extends Command{
     @Override
     public void execute() {
         // Call the method from the Intake subsystem to intake all
-        RobotContainer.m_intakeSubsystem.intakeAll();
+        RobotContainer.m_intake.intakeAll();
     }
 
     // Called once the command ends or is interrupted.
