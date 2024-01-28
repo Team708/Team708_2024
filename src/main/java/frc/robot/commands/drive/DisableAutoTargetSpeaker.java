@@ -25,8 +25,8 @@ public class DisableAutoTargetSpeaker extends InstantCommand {
   @Override
   public void initialize() 
   {
-    DriveByController.disableAutoRot();
+    dr.disableAutoRot();
   }
 
-  
+
 }

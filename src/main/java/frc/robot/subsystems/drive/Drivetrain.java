@@ -28,6 +28,7 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
+import frc.robot.Constants;
 import frc.robot.Constants.*;
 import frc.robot.commands.DriveByController;
 import frc.robot.utilities.FieldRelativeAccel;
@@ -47,7 +48,7 @@ import frc.robot.utilities.FieldRelativeSpeed;
   private double lastRotTime = 0.0;     //Double to store the time of the last rotation command
   private double timeSinceDrive = 0.0;  //Double to store the time since last translation command
   private double lastDriveTime = 0.0;   //Double to store the time of the last translation command
-
+  
   private double radius = 1;//0.450;
 
   private boolean m_readyToShoot = false;
@@ -63,6 +64,8 @@ import frc.robot.utilities.FieldRelativeSpeed;
   private FieldRelativeAccel m_fieldRelAccel = new FieldRelativeAccel();
 
   private final Timer keepAngleTimer = new Timer(); //Creates timer used in the perform keep angle function
+
+  private boolean autoRotEnabled = false;
 
   //Creates a swerveModule object for the front left swerve module feeding in parameters from the constants file
   private final SwerveModule m_frontLeft = new SwerveModule(DriveConstants.kFrontLeftDriveMotorPort,
@@ -445,8 +448,27 @@ import frc.robot.utilities.FieldRelativeSpeed;
     m_backLeft.setDesiredState(swerveModuleStates[2]);
     m_backRight.setDesiredState(swerveModuleStates[3]);
   }
-
   
+  public void enableAutoRot()
+  {
+    autoRotEnabled = true;
+  }
+
+  public void disableAutoRot()
+  {
+    autoRotEnabled = false;
+  }
+
+  public double findAutoRotate(PIDController controller, double defaultRot)
+  {
+      if(autoRotEnabled){
+        double dx = Constants.DriveConstants.kBlueSpeaker.getX() - getPose().getX();
+        double dy = Constants.DriveConstants.kBlueSpeaker.getY() - getPose().getY();
+        Rotation2d robotToTarget = new Rotation2d(dx, dy);
+        return controller.calculate(getPose().getRotation().getDegrees(), robotToTarget.getDegrees());
+      }
+      return defaultRot;  
+  }
 
   public void sendToDashboard() {
   }

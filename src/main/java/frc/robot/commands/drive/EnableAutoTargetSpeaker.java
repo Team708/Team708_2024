@@ -25,6 +25,6 @@ public class EnableAutoTargetSpeaker extends InstantCommand {
   @Override
   public void initialize() 
   {
-    DriveByController.enableAutoRot();
+    dr.enableAutoRot();
   }
 }

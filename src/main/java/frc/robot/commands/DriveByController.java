@@ -6,6 +6,7 @@ import frc.robot.Constants.*;
 import frc.robot.subsystems.drive.Drivetrain;
 import frc.robot.utilities.MathUtils;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
 // import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -22,10 +23,9 @@ public class DriveByController extends Command {
   private final Drivetrain m_robotDrive;
 
   double autoAngle = 0.0;
-  public static boolean autoRotEnabled = false;
   double lastSpeed = 0.0;
   double lastTime = Timer.getFPGATimestamp();
-  ProfiledPIDController controller = new ProfiledPIDController(0.05, 0.00, 0.004, new Constraints(3000, 1500));
+  PIDController controller = new PIDController(0.06, 0.0001, 0.0025);//, //new Constraints(300000, 150000));
   double desiredRot;
 
   /**
@@ -60,23 +60,22 @@ public class DriveByController extends Command {
     double desiredY = -inputTransform(OI.getDriverLeftX())*maxLinear;
     Translation2d desiredTranslation = new Translation2d(desiredX, desiredY);
     double desiredMag = desiredTranslation.getDistance(new Translation2d());
-    double desiredRot = -inputTransform(OI.getDriverRightX())* DriveConstants.kMaxAngularSpeedRadPerSec;
-
-
-    if(Math.abs(desiredRot) > 0.08){
-      autoRotEnabled = false;
-    }
-    if(autoRotEnabled){
-        double dx = Constants.DriveConstants.kPoseSpeakerBumperBottom.getX() - m_robotDrive.getPose().getX();
-        double dy = Constants.DriveConstants.kPoseSpeakerBumperBottom.getY() - m_robotDrive.getPose().getY();
-        Rotation2d robotToTarget = new Rotation2d(dx, dy);
-        desiredRot = controller.calculate(m_robotDrive.getPose().getRotation().getDegrees(), robotToTarget.getDegrees());
-        SmartDashboard.putNumber("autoAngle", robotToTarget.getDegrees());
-        SmartDashboard.putBoolean("IsTargetingOn", autoRotEnabled);
-        // if(controller.atSetpoint()){
-        //   autoRotEnabled = false;
-        // }
-    }
+    double desiredRot = m_robotDrive.findAutoRotate(controller, -inputTransform(OI.getDriverRightX())* DriveConstants.kMaxAngularSpeedRadPerSec);
+  
+    // if(Math.abs(desiredRot) > 0.08){
+    //   autoRotEnabled = false;
+    // }
+    // if(autoRotEnabled){
+    //     double dx = Constants.DriveConstants.kPoseSpeakerBumperBottom.getX() - m_robotDrive.getPose().getX();
+    //     double dy = Constants.DriveConstants.kPoseSpeakerBumperBottom.getY() - m_robotDrive.getPose().getY();
+    //     Rotation2d robotToTarget = new Rotation2d(dx, dy);
+    //     desiredRot = controller.calculate(m_robotDrive.getPose().getRotation().getDegrees(), robotToTarget.getDegrees());
+    //     SmartDashboard.putNumber("autoAngle", robotToTarget.getDegrees());
+    //     SmartDashboard.putBoolean("IsTargetingOn", autoRotEnabled);
+    //     // if(controller.atSetpoint()){
+    //     //   autoRotEnabled = false;
+    //     // }
+    //}
 
     // System.out.println(manualRotEnabled);
     
@@ -107,19 +106,5 @@ public class DriveByController extends Command {
     return MathUtils.cubicLinear(MathUtils.applyDeadband(input), 0.9, 0.1);
   }
 
-  public void setAutoRotate(double angle){
-    autoAngle = angle;
-    autoRotEnabled = true;
-  }
-  
-  public static void enableAutoRot()
-  {
-    autoRotEnabled = true;
-  }
-
-  public static void disableAutoRot()
-  {
-    autoRotEnabled = false;
-  }
 
 }
