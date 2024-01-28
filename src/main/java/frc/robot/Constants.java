@@ -20,7 +20,7 @@ public final class Constants {
   }
 
   public static final class CurrentLimit{
-    // public static final int kIntake = 25;
+    public static final int kIntake = 25;
     // public static final int kElevator = 40;
     public static final int kTranslationAmps = 40;
     public static final int kRotationAmps = 25;
@@ -147,7 +147,18 @@ public final class Constants {
    * Intake constants 
    */
   public static final class IntakeConstants  {
-    // public static final int kIntakeMotorID = 41;
+    public static final int kIntakeMotorID = 41;
+    public static final int kIntakeEncoderCPR = 42;
+
+    public static final int kRollerGearRatio = 3; // 54 / 18
+    public static final double kRollerIntakeSpeed = 1.0;
+    
+    public static final double kCamGearRatio = 47915 / 486; // 12/74, 18/74, 18/70
+    public static final double kCamOpenPose = 2265.0;
+    public static final double kCamClosedPose = 0.0;
+    public static final double kIntakeSpeed = 1.0;
+    
+    public static final int kIntakeMode = 1; //0 = Roller, 1 = Clamp
   }
 
   /**
