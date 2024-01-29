@@ -12,7 +12,7 @@ public class IntakeEjectBack extends Command {
   /** Creates a new IntakeRejectBack. */
 
   public IntakeEjectBack(Intake intakeSubsystem) {
-    RobotContainer.m_intakeSubsystem = intakeSubsystem;
+    RobotContainer.m_intake = intakeSubsystem;
     addRequirements(intakeSubsystem);
     //TODO Command, Intake 
     // Use addRequirements() here to declare subsystem dependencies.
@@ -25,7 +25,7 @@ public class IntakeEjectBack extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.m_intakeSubsystem.ejectBack();
+    RobotContainer.m_intake.ejectBack();
   }
   // Called once the command ends or is interrupted.
   @Override

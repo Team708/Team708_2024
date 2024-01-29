@@ -12,7 +12,7 @@ public class IntakeEjectFront extends Command {
 
   /** Creates a new IntakeRejectFront. */
   public IntakeEjectFront(Intake intakeSubsystem) {
-    RobotContainer.m_intakeSubsystem = intakeSubsystem;
+    RobotContainer.m_intake = intakeSubsystem;
     addRequirements(intakeSubsystem);
     //TODO Command, Intake 
     // Use addRequirements() here to declare subsystem dependencies.
@@ -25,7 +25,7 @@ public class IntakeEjectFront extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.m_intakeSubsystem.ejectFront();
+    RobotContainer.m_intake.ejectFront();
   }
   @Override
   public void end(boolean interrupted) {}
