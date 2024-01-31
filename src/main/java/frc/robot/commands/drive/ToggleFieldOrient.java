@@ -8,11 +8,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.drive.Drivetrain;
 
 public class ToggleFieldOrient extends Command {
-
   Drivetrain m_drivetrain;
 
-  public ToggleFieldOrient(Drivetrain m_drivetrain) {
-    this.m_drivetrain = m_drivetrain;
+  public ToggleFieldOrient(Drivetrain drivetrain) {
+    m_drivetrain = drivetrain;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

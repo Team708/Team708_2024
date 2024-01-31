@@ -10,19 +10,19 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.drive.Drivetrain;
 
 public class LockWheels extends Command {
-  
-  Drivetrain dr;
+  private final Drivetrain m_drivetrain;
+
   SwerveModuleState[] preStates;
 
-  public LockWheels(Drivetrain dr) {
-    this.dr = dr;
-    addRequirements(dr);
+  public LockWheels(Drivetrain drivetrain) {
+    m_drivetrain = drivetrain;
+    addRequirements(m_drivetrain);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    preStates = dr.getModuleStates();
+    preStates = m_drivetrain.getModuleStates();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -34,13 +34,13 @@ public class LockWheels extends Command {
       new SwerveModuleState(0, new Rotation2d(Math.PI / 4)), //LR
       new SwerveModuleState(0, new Rotation2d(-Math.PI / 4)) //RR
     };
-    dr.setModuleStates(states);
+    m_drivetrain.setModuleStates(states);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    dr.setModuleStates(preStates);
+    m_drivetrain.setModuleStates(preStates);
   }
 
   // Returns true when the command should end.

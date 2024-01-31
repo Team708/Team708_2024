@@ -4,11 +4,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.drive.Drivetrain;
 
 public class InvertDriveCommand extends Command {
-
 	private final Drivetrain m_DriveSubsystem;
 
-	public InvertDriveCommand(Drivetrain subsystem) {
-		m_DriveSubsystem = subsystem;
+	public InvertDriveCommand(Drivetrain drivetrain) {
+		m_DriveSubsystem = drivetrain;
 		addRequirements(m_DriveSubsystem);
 	}
 
