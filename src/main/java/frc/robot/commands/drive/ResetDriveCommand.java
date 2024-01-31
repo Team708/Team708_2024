@@ -10,21 +10,20 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.drive.Drivetrain;
 
 public class ResetDriveCommand extends Command {
-  
-  private final Drivetrain dr;
-  private final Rotation2d orientation;
+  private final Drivetrain m_drivetrain;
+  private final Rotation2d m_orientation;
 
-  public ResetDriveCommand(Drivetrain dr, Rotation2d orientation) {
-    this.dr = dr;
-    this.orientation = orientation;
+  public ResetDriveCommand(Drivetrain drivetrain, Rotation2d orientation) {
+    m_drivetrain = drivetrain;
+    m_orientation = orientation;
 
-    addRequirements(dr);
+    addRequirements(m_drivetrain);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    dr.resetOdometry(new Pose2d(0.0,0.0,orientation));
+    m_drivetrain.resetOdometry(new Pose2d(0.0,0.0,m_orientation));
   }
 
   // Called every time the scheduler runs while the command is scheduled.

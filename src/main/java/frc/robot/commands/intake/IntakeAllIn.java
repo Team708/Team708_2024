@@ -5,15 +5,15 @@
 package frc.robot.commands.intake;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.Intake;
 
 public class IntakeAllIn extends Command{
-    
+    private final Intake m_intake;
 
-    public IntakeAllIn(Intake intakeSubsystem) {
-        RobotContainer.m_intake = intakeSubsystem;
-        addRequirements(intakeSubsystem); // This is important to inform the scheduler about the subsystem usage
+    /** Creates a new IntakeOut. */
+    public IntakeAllIn(Intake intake) {
+        m_intake = intake;
+        addRequirements(m_intake); // This is important to inform the scheduler about the subsystem usage
     }
 
     // Called when the command is initially scheduled.
@@ -26,7 +26,7 @@ public class IntakeAllIn extends Command{
     @Override
     public void execute() {
         // Call the method from the Intake subsystem to intake all
-        RobotContainer.m_intake.intakeAll();
+        m_intake.intakeAll();
     }
 
     // Called once the command ends or is interrupted.

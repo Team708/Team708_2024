@@ -11,17 +11,17 @@ public class TurnToCommand extends PIDCommand {
    * Turns to robot to the specified angle.
    *
    * @param targetAngleDegrees The angle to turn to
-   * @param drive The drive subsystem sto use
+   * @param drivetrain The drive subsystem sto use
    */
   
 
-  public TurnToCommand(double targetAngleDegrees, Drivetrain drive) {
+  public TurnToCommand(double targetAngleDegrees, Drivetrain drivetrain) {
     super(
       new PIDController(0.04, 0.01, 0),
-      drive::getGyroDegrees,
+      drivetrain::getGyroDegrees,
       targetAngleDegrees,
-      output -> drive.drive(0, 0, output, true, true),
-      drive);
+      output -> drivetrain.drive(0, 0, output, true, true),
+      drivetrain);
 
       getController().enableContinuousInput(-180, 180);
     // getController().setTolerance(1.5, 10);

@@ -6,8 +6,8 @@ import frc.robot.subsystems.drive.Drivetrain;
 public class DriveStraightCommand extends Command{
   private final Drivetrain m_drivetrain;
 
-  public DriveStraightCommand(Drivetrain subsystem) {
-    m_drivetrain = subsystem;
+  public DriveStraightCommand(Drivetrain drivetrain) {
+    m_drivetrain = drivetrain;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_drivetrain);
   }
