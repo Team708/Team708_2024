@@ -4,6 +4,8 @@ import frc.robot.Constants.ControllerConstants;
 import frc.robot.commands.DriveByController;
 import frc.robot.commands.drive.DisableAutoTargetSpeaker;
 import frc.robot.commands.drive.EnableAutoTargetSpeaker;
+import frc.robot.commands.drive.DriveToAmp;
+import frc.robot.commands.drive.DriveToAmp;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -92,9 +94,8 @@ public class OI {
     // new JoystickButton(driverController, Button.kY.value)
     // 		.whenPressed(new /*Command*/);
 
-    // new JoystickButton(driverController, Button.kRightBumper.value)
-    // 		.whenPressed(() -> /*Command*/)
-    // 		.whenReleased(() -> /*Command*/);
+    new JoystickButton(driverController, Button.kRightBumper.value)
+     		.toggleOnTrue(new DriveToAmp(m_drive));
     
     // new JoystickButton(driverController, Button.kStart.value)
     // 		.whenPressed(new /*Command*/);

@@ -40,3 +40,5 @@ This method combines different sensors and algorithms to improve localization ac
 4. Robot calculates game peice trajectory and shoots when the shot in line with with target.
     - targeting class accesses shooter subsystem
 
+## Pathfinding
+Using AprilTags and PathPlannerLib, the robot is able to do on-the-fly pathfinding and automatically go to a desired pose. To do this, the robot first generates a path, then follows it, which uses the PathPlannerPath class and followpath Command, respectively. 

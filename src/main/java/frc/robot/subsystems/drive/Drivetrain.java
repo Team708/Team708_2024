@@ -11,11 +11,20 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.FollowPathHolonomic;
+import com.pathplanner.lib.commands.PathfindHolonomic;
+import com.pathplanner.lib.path.GoalEndState;
+import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
@@ -68,6 +77,8 @@ import frc.robot.utilities.MathUtils;
   private final Timer keepAngleTimer = new Timer(); //Creates timer used in the perform keep angle function
 
   private boolean autoRotEnabled = false;
+
+  private PathConstraints trajectoryConstraints;
 
   //Creates a swerveModule object for the front left swerve module feeding in parameters from the constants file
   private final SwerveModule m_frontLeft = new SwerveModule(DriveConstants.kFrontLeftDriveMotorPort,
@@ -504,6 +515,36 @@ import frc.robot.utilities.MathUtils;
         return controller.calculate(getPose().getRotation().getDegrees(), robotToTarget.getDegrees());
       }
       return defaultRot;  
+  }
+
+  public Trajectory createTrajectory(Pose2d desiredPose)
+  {
+    TrajectoryConfig config = new TrajectoryConfig(Constants.DriveConstants.kMaxSpeedMetersPerSec, Constants.DriveConstants.kMaxAccelMetersPerSecSquared);
+    ArrayList<Pose2d> waypoints = new ArrayList<Pose2d>();
+    waypoints.add(getPose());
+    waypoints.add(desiredPose);
+    return TrajectoryGenerator.generateTrajectory(waypoints, config);
+  }
+
+  public void driveToPoint(Pose2d desiredLocation) {
+    trajectoryConstraints = new PathConstraints(
+    DriveConstants.kMaxSpeedMetersPerSec,
+    DriveConstants.kMaxAccelMetersPerSecSquared, 
+    DriveConstants.kMaxAngularSpeedRadPerSec, 
+    DriveConstants.kMaxAngularAccel);
+    
+    List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(getPose(), desiredLocation);
+    PathPlannerPath path = new PathPlannerPath(
+      bezierPoints, 
+      trajectoryConstraints,  
+      new GoalEndState(0.0, DriveConstants.kRobotToAmp.getRotation())
+    );
+
+    // Prevent this path from being flipped on the red alliance, since the given positions are already correct
+    path.preventFlipping = true;
+
+    AutoBuilder.followPath(path).schedule();
+    System.out.println("ran init");
   }
 
   public void sendToDashboard() {

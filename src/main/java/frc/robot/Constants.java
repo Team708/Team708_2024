@@ -1,11 +1,17 @@
 package frc.robot;
 
+import javax.crypto.spec.ChaCha20ParameterSpec;
+
+import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.ReplanningConfig;
 import com.pathplanner.lib.util.PIDConstants;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 // import edu.wpi.first.math.util.Units;
@@ -121,6 +127,14 @@ public final class Constants {
     public static final Pose2d kPoseFeederLocationFar  = new Pose2d(15.89,1.36, new Rotation2d(Units.degreesToRadians(-60)));  
     public static final Pose2d kPoseFeederLocationClose  = new Pose2d(15.08,0.82, new Rotation2d(Units.degreesToRadians(-60)));
 
+    //Holonomic Drivretrain Configuration
+    public static final HolonomicPathFollowerConfig pathFollowingConfig = new HolonomicPathFollowerConfig(kMaxSpeedMetersPerSec, kRadius, new ReplanningConfig());
+
+
+    //PathPlanner Ending Points
+    public static final Pose2d kRobotToAmp = new Pose2d(1.82, 7.59 - Units.inchesToMeters(20), new Rotation2d(Units.degreesToRadians(-90)));
+
+
     //Auto Rotate PID
     public static final PIDController kAutoRotatePID = new PIDController(0.06, 0.0001, 0.0025);//, //new Constraints(300000, 150000));
 
@@ -140,6 +154,19 @@ public final class Constants {
     //Field Zones
     public static final Double kZoneWingLine = 1.93;
     public static final Double kZoneStartingLine = 0.61;
+  
+    //On-the-fly Trajectory Generation
+
+
+    //Tolerance offests
+    public static final Pose2d kPositionTolerance= new Pose2d(Units.feetToMeters(1),Units.feetToMeters(1),new Rotation2d(3));
+    
+    
+  
+  
+  
+  
+
   }
 
   /**
