@@ -38,10 +38,11 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 public class RobotContainer {
 	// The robot's subsystems. Initialize subsystems here.
 	private final Drivetrain m_drive = new Drivetrain();
-	public static Intake m_intakeSubsystem = new Intake();
+	private final Intake m_intake = new Intake();
 	private final Shooter m_shooter = new Shooter();
 
-	public static Intake m_intake = new Intake();
+
+
 	// Initialize controllers
 	private final DriveByController m_driveByController =  new DriveByController(m_drive);
 	// private final OperateByController m_operateByController
@@ -59,8 +60,7 @@ public class RobotContainer {
 		configureAutoChooser();
 
 		m_drive.setDefaultCommand(m_driveByController);
-		m_intake.setDefaultCommand(m_driveByController);
-
+		
 		m_drive.resetOdometry(new Pose2d()); //TODO need to test. Pigeon position does not reset on hardware
 	}
 
@@ -75,7 +75,7 @@ public class RobotContainer {
     // new POVButton(OI.driverController, 0)
     //     .onTrue(new InstantCommand(() -> m_drive.resetOdometry(new Rotation2d(0.0))));  //JNP
 
-    OI.configureButtonBindings(m_drive,m_shooter);
+    OI.configureButtonBindings(m_drive, m_intake, m_shooter);
   }
 
 	private void configureAutoChooser(){
@@ -119,7 +119,6 @@ public class RobotContainer {
 		m_intake.sendToDashboard();
 		// m_shooter.sendToDashboard();
 		// m_climber.sendToDashboard();
-		// m_intakeFeeder.sendToDashboard();
 		// m_limelight.sendToDashboard();
 		// m_candleSystem.sendToDashboard();
 	}

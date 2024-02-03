@@ -5,15 +5,15 @@
 package frc.robot.commands.intake;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.Intake;
 
 public class IntakeEjectFront extends Command {
+  private final Intake m_intake;
 
   /** Creates a new IntakeRejectFront. */
-  public IntakeEjectFront(Intake intakeSubsystem) {
-    RobotContainer.m_intake = intakeSubsystem;
-    addRequirements(intakeSubsystem);
+  public IntakeEjectFront(Intake intake) {
+    m_intake = intake;
+    addRequirements(m_intake);
     //TODO Command, Intake 
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -25,7 +25,7 @@ public class IntakeEjectFront extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.m_intake.ejectFront();
+    m_intake.ejectFront();
   }
   @Override
   public void end(boolean interrupted) {}

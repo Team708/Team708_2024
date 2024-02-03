@@ -5,13 +5,15 @@
 package frc.robot.commands.intake;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.Intake;
 
 public class IntakeOff extends Command {
+  private final Intake m_intake;
+
   public IntakeOff(Intake intake) {
-    RobotContainer.m_intake = intake;
-    addRequirements(intake);
+    m_intake = intake;
+
+    addRequirements(m_intake);
     //TODO Command, Intake 
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -23,7 +25,7 @@ public class IntakeOff extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.m_intake.intakeOff(); 
+    m_intake.intakeOff(); 
   }
 
   // Called once the command ends or is interrupted.

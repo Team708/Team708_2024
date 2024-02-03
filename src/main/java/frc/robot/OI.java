@@ -3,6 +3,9 @@ package frc.robot;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.commands.shooter.ShootSpeaker;
 import edu.wpi.first.wpilibj.XboxController;
+// import edu.wpi.first.wpilibj.XboxController.Button;
+// import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -71,7 +74,7 @@ public class OI {
   // 	return deadBand(climberController.getRightY(), ControllerConstants.kClimberDeadBandRightY);
   // }
 
-  public static void configureButtonBindings(Drivetrain m_drive, Shooter m_shooter) {
+  public static void configureButtonBindings(Drivetrain m_drive, Intake m_intake, Shooter m_shooter) {
 
     //DRIVER//
 
