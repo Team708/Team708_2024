@@ -1,13 +1,17 @@
 package frc.robot;
 
 import frc.robot.Constants.ControllerConstants;
-
+import frc.robot.commands.intake.IntakeAllIn;
+import frc.robot.commands.intake.IntakeAllOut;
+import frc.robot.commands.intake.IntakeEjectBack;
+import frc.robot.commands.intake.IntakeOff;
 import edu.wpi.first.wpilibj.XboxController;
-// import edu.wpi.first.wpilibj.XboxController.Button;
-// import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.subsystems.Intake;
+import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+
 //Subsysem Imports
 import frc.robot.subsystems.drive.Drivetrain;
+import frc.robot.subsystems.Intake;
 
 public class OI {
 
@@ -74,15 +78,17 @@ public class OI {
 
     //DRIVER//
 
-    // new JoystickButton(driverController, Button.kA.value)
-    // 		.whenPressed(new /*Command*/);	
+    new JoystickButton(driverController, Button.kA.value) //TODO Change these buttons, current commands only for testing
+    		.whileTrue(new IntakeAllOut(m_intake))
+    		.whileFalse(new IntakeOff(m_intake));
 
-    // new JoystickButton(driverController, Button.kB.value)
-    // 		.whileHeld(new /*Command*/)
-    // 		.whenReleased(new /*Command*/);
+    new JoystickButton(driverController, Button.kB.value) //TODO Change these buttons, current commands only for testing
+    		.whileTrue(new IntakeAllIn(m_intake))
+    		.whileFalse(new IntakeOff(m_intake));
 
-    // new JoystickButton(driverController, Button.kX.value)
-    // 		.whenPressed(new /*Command*/);
+    new JoystickButton(driverController, Button.kX.value) //TODO Change these buttons, current commands only for testing
+    		.whileTrue(new IntakeEjectBack(m_intake))
+    		.whileFalse(new IntakeOff(m_intake));
 
     // new JoystickButton(driverController, Button.kY.value)
     // 		.whenPressed(new /*Command*/);

@@ -102,12 +102,12 @@ public class RobotContainer {
 	}
 
 	public void simulationInit(){
-	//   m_elevator.simulationInit();
+	  m_intake.simulationInit();
 	}
 
 	/** This function is called periodically whilst in simulation. */
 	public void simulationPeriodic() {
-	//   m_elevator.simulationPeriodic();
+	  m_intake.simulationPeriodic();
 	}
 
 	public void sendToDashboard() {
@@ -118,5 +118,4 @@ public class RobotContainer {
 		// m_limelight.sendToDashboard();
 		// m_candleSystem.sendToDashboard();
 	}
-
 }
