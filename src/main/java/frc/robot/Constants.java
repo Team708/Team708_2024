@@ -183,11 +183,21 @@ public final class Constants {
    * Arm constants 
    */
   public static final class ArmConstants  {
-    public static final int kArmMaster1MotorID  = 30;
+    public static final int kArmMasterMotorID  = 30;
     public static final int kArmSlaveMotorID    = 42;
     public static final double kSetPoint1 = 20.5;
     public static final double kSetPoint2 = 60.5;
     public static final double kThresholdArm = 0.5;
+
+    public static final double kPivotArm_P = 0.00015;
+    public static final double kPivotArm_I = 0.000001; 
+    public static final double kPivotArm_D = 0.006;
+    public static final double kPivotArm_FF = 0.0;
+    public static final double kPivotArm_IZone = 0;
+    public static final double kPivotArm_Min = -1;
+    public static final double kPivotArm_Max = 1;
+    public static final double[] kPivotArmPIDList = {kPivotArm_P,kPivotArm_I,kPivotArm_D,
+                                        kPivotArm_FF,kPivotArm_IZone,kPivotArm_Min,kPivotArm_Max};    
     
   }
 

@@ -27,7 +27,7 @@ public class armToPositionSetPoint1 extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute(){
-    m_shooter.setAngle(ArmConstants.kSetPoint1);
+    m_shooter.setAngle(ArmConstants.kPodiumShotAngle);
   }
 
   // Called once the command ends or is interrupted.
@@ -38,6 +38,6 @@ public class armToPositionSetPoint1 extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (Math.abs(m_shooter.findDisplacement(ArmConstants.kSetPoint1)) < ArmConstants.kThresholdArm);
+    return (Math.abs(m_shooter.findDisplacement(ArmConstants.kPodiumShotAngle)) < ArmConstants.kThresholdArm);
   }
 }

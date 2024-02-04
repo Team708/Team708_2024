@@ -28,8 +28,6 @@ public class Shooter extends SubsystemBase {
 
   private double targetSpeed = 0; 
   private double pivotTargetSpeed = 0;
-  private double currentArmPosition;
-  private double setPoint;
 
   /** Creates a new Shooter. */
   public Shooter() {
@@ -53,27 +51,17 @@ public class Shooter extends SubsystemBase {
     shooterEncoderAmp = m_shooterMotorAmp.getEncoder();
     
     shooterAmpPIDController = m_shooterMotorAmp.getPIDController();
-    shooterAmpPIDController.setP(ShooterConstants.kP);
-    shooterAmpPIDController.setI(ShooterConstants.kI);
-    shooterAmpPIDController.setD(ShooterConstants.kD);
-    shooterAmpPIDController.setFF(ShooterConstants.kFF);
-    shooterAmpPIDController.setIZone(ShooterConstants.kIZone);
-    shooterAmpPIDController.setOutputRange(ShooterConstants.kMin, ShooterConstants.kMax);
+    Helper.setupPIDController(shooterAmpPIDController, ShooterConstants.kShooterAmpPIDList);
 
     //now create arm master stuff
-    m_PivotArmLeftLeader = new CANSparkMax(ArmConstants.kArmMaster1MotorID, MotorType.kBrushless);
+    m_PivotArmLeftLeader = new CANSparkMax(ArmConstants.kArmMasterMotorID, MotorType.kBrushless);
     m_PivotArmLeftLeader.setIdleMode(IdleMode.kCoast);
     m_PivotArmLeftLeader.setInverted(false);
 
     PivotArmEncoder = m_PivotArmLeftLeader.getEncoder();
-
+    
     PivotArmPIDController = m_PivotArmLeftLeader.getPIDController();
-    PivotArmPIDController.setP(ShooterConstants.kP);
-    PivotArmPIDController.setI(ShooterConstants.kI);
-    PivotArmPIDController.setD(ShooterConstants.kD);
-    PivotArmPIDController.setFF(ShooterConstants.kFF);
-    PivotArmPIDController.setIZone(ShooterConstants.kIZone);
-    PivotArmPIDController.setOutputRange(ShooterConstants.kMin, ShooterConstants.kMax);
+    Helper.setupPIDController(PivotArmPIDController, ArmConstants.kPivotArmPIDList);
 
     //now create arm slave stuff
     
