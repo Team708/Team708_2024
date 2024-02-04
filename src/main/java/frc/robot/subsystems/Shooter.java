@@ -26,7 +26,7 @@ public class Shooter extends SubsystemBase {
   private CANSparkMax m_FeederStage1Motor, m_FeederStage2Motor;
 
   private RelativeEncoder shooterEncoderTop, shooterEncoderAmp, PivotArmEncoder, FeederStage1Encoder, FeederStage2Encoder;
-  private SparkPIDController shooterPIDController, shooterAmpPIDController, PivotArmPIDController, FeederStage1PIDController, FeederStage2PIDController;
+  private SparkPIDController shooterSpeakerPIDController, shooterAmpPIDController, PivotArmPIDController, FeederStage1PIDController, FeederStage2PIDController;
 
   private double targetSpeed = 0; 
   private double pivotTargetSpeed = 0;
@@ -36,12 +36,11 @@ public class Shooter extends SubsystemBase {
     //Top shooter motor
     m_shooterMotorTopLeader = new CANSparkMax(ShooterConstants.kShooterMotorTopID, MotorType.kBrushless);
     m_shooterMotorTopLeader.setIdleMode(IdleMode.kCoast);
-    m_shooterMotorTopLeader.setInverted(false);
 
     shooterEncoderTop = m_shooterMotorTopLeader.getEncoder();
     
-    shooterPIDController = m_shooterMotorTopLeader.getPIDController();
-    Helper.setupPIDController(shooterPIDController, ShooterConstants.kShooterTopPIDList);
+    shooterSpeakerPIDController = m_shooterMotorTopLeader.getPIDController();
+    Helper.setupPIDController(shooterSpeakerPIDController, ShooterConstants.kShooterTopPIDList);
 
     //Bottom shooter motor
     m_shooterMotorBottomFollower = new CANSparkMax(ShooterConstants.kShooterMotorBottomID, MotorType.kBrushless);
@@ -100,29 +99,33 @@ public class Shooter extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void setShooterSpeedSpeaker(double speed) {
-    shooterAmpPIDController.setReference(speed, CANSparkMax.ControlType.kVelocity); 
-    shooterPIDController.setReference(speed, CANSparkMax.ControlType.kVelocity);
+  public void setShooterSpeedSpeaker(double speed) { 
+    shooterSpeakerPIDController.setReference(speed, CANSparkMax.ControlType.kVelocity);
   }
 
   public void setShooterSpeedAmp(double speed){
     shooterAmpPIDController.setReference(-speed, CANSparkMax.ControlType.kVelocity);
-    shooterPIDController.setReference(speed, CANSparkMax.ControlType.kVelocity);
+    shooterSpeakerPIDController.setReference(speed, CANSparkMax.ControlType.kVelocity);
   }
 
   public void off(){
     shooterAmpPIDController.setReference(0, CANSparkMax.ControlType.kVelocity);
-    shooterPIDController.setReference(0, CANSparkMax.ControlType.kVelocity);
+    shooterSpeakerPIDController.setReference(0, CANSparkMax.ControlType.kVelocity);
   }
 
-  public boolean isShooterAtSpeed() {
+  public boolean isShooterSpeakerAtSpeed() {
     if ((Math.abs(shooterEncoderTop.getVelocity()) > (targetSpeed) * ShooterConstants.kThreshhold)){
       return true;
-    }else{
-      return false;
     }
+    return false;
   }
 
+  public boolean isShooterAmpAtSpeed() {
+    if ((Math.abs(PivotArmEncoder.getVelocity()) > (targetSpeed) * ShooterConstants.kThreshhold)){
+      return true;
+    }
+    return false;
+  }
   //Now we want to get arm from current position to target setpoint
   public double findDisplacement(double setPoint) {
     double currentArmPosition = PivotArmEncoder.getPosition();
@@ -132,9 +135,4 @@ public class Shooter extends SubsystemBase {
   public void setAngle(double angle) {
     PivotArmPIDController.setReference(angle, CANSparkBase.ControlType.kPosition);
   }
-
-  public void sendToDashboard() {
-    SmartDashboard.putNumber("displacement values", findDisplacement(ArmConstants.kSetPoint1));
-  }
-
 }

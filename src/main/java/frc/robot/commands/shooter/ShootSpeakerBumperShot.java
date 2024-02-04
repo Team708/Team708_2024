@@ -11,15 +11,16 @@ import frc.robot.subsystems.Shooter;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ShootSpeaker extends Command {
+public class ShootSpeakerBumperShot extends Command {
   private Shooter m_shooter;
 
   /** Creates a new Shoot. */
   //we need a feeder system created and implemented
 
 
-  public ShootSpeaker(Shooter shooter) {
-    m_shooter = shooter;
+  public ShootSpeakerBumperShot(Shooter shooter) {
+    this.m_shooter = shooter;
+
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addRequirements(m_shooter);
@@ -27,11 +28,15 @@ public class ShootSpeaker extends Command {
 
   @Override
   public void initialize(){
+    
+  }
+
+  public void execute(){
     m_shooter.setShooterSpeedSpeaker(Constants.ShooterConstants.kShooterHighCloseMPS);
   }
   
   @Override
   public boolean isFinished(){
-    return m_shooter.isShooterAtSpeed();
+    return m_shooter.isShooterSpeakerAtSpeed();
   }
 }

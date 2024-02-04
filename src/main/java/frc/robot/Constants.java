@@ -206,12 +206,17 @@ public final class Constants {
    * Arm constants 
    */
   public static final class ArmConstants  {
+    //arm motor ids
     public static final int kArmMasterMotorID  = 30;
     public static final int kArmSlaveMotorID    = 42;
-    public static final double kSetPoint1 = 20.5;
-    public static final double kSetPoint2 = 60.5;
-    public static final double kThresholdArm = 0.5;
 
+    //arm angles for different shots
+    public static final double kBumperShotAngle = 60;
+    public static final double kPodiumAngle = 50;
+    public static final double kFartherShotAngle = 30;
+    public static final double kThresholdArm = 0.5;
+    
+    //PID values for arm motors
     public static final double kPivotArm_P = 0.00015;
     public static final double kPivotArm_I = 0.000001; 
     public static final double kPivotArm_D = 0.006;

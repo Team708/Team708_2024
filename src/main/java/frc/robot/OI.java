@@ -1,10 +1,11 @@
 package frc.robot;
 
 import frc.robot.Constants.ControllerConstants;
-import frc.robot.Constants.ArmConstants;
-import frc.robot.commands.shooter.ShootSpeaker;
-import frc.robot.commands.shooter.armToPositionSetPoint1;
-import frc.robot.commands.shooter.armToPositionSetPoint2;
+import frc.robot.commands.shooter.ShootSpeakerBumperShot;
+import frc.robot.commands.shooter.armToBumperShotAngle;
+import frc.robot.commands.shooter.armToFartherShotAngle;
+import frc.robot.commands.shooter.armToPodiumShotAngle;
+import frc.robot.commands.shooter.ShooterOff;
 import edu.wpi.first.wpilibj.XboxController;
 // import edu.wpi.first.wpilibj.XboxController.Button;
 // import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -148,14 +149,25 @@ public class OI {
     // new JoystickButton(operatorController, Button.kLeftBumper.value)
     // 		.onTrue(new /*Command*/);
     
+    //testing button
     new JoystickButton(operatorController, Button.kRightBumper.value)
-    		.onTrue(new ShootSpeaker(m_shooter));
+    		.onTrue(new ShootSpeakerBumperShot(m_shooter));
     
+    //testing button
     new JoystickButton(operatorController, Button.kA.value)
-    		.onTrue(new armToPositionSetPoint1(m_shooter));
+    		.onTrue(new armToBumperShotAngle(m_shooter));
 
+    //testing button
     new JoystickButton(operatorController, Button.kB.value)
-    		.onTrue(new armToPositionSetPoint2(m_shooter));
+    		.onTrue(new armToFartherShotAngle(m_shooter));
+
+    //testing button
+    new JoystickButton(operatorController, Button.kY.value)
+    		.onTrue(new armToPodiumShotAngle(m_shooter));  
+    
+    //testing button
+    new JoystickButton(operatorController, Button.kX.value)
+    		.onTrue(new ShooterOff(m_shooter));
     // new JoystickButton(operatorController, Button.kRightStick.value)
     // 		.onTrue(new /*Command*/);
     
