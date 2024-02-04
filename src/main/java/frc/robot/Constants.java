@@ -204,14 +204,28 @@ public final class Constants {
 
     //speed constants
     public static final double kShooterHighCloseMPS = 1500;
-    public static final double kP = 0.00015;
-    public static final double kI = 0.000001; 
-    public static final double kD = 0.006;
-    public static final double kFF = 0.0;
-    public static final double kIZone = 0;
-    public static final double kMin = -1;
-    public static final double kMax = 1;
+    
     public static final double kThreshhold = 0.75;
+    //PID constants
+    public static final double kShooterTop_P = 0.00015;
+    public static final double kShooterTop_I = 0.000001; 
+    public static final double kShooterTop_D = 0.006;
+    public static final double kShooterTop_FF = 0.0;
+    public static final double kShooterTop_IZone = 0;
+    public static final double kShooterTop_Min = -1;
+    public static final double kShooterTop_Max = 1;
+    public static final double[] kShooterTopPIDList = {kShooterTop_P,kShooterTop_I,kShooterTop_D,
+                                        kShooterTop_FF,kShooterTop_IZone,kShooterTop_Min,kShooterTop_Max};
+    public static final double kShooterAmp_P = 0.00015;
+    public static final double kShooterAmp_I = 0.000001; 
+    public static final double kShooterAmp_D = 0.006;
+    public static final double kShooterAmp_FF = 0.0;
+    public static final double kShooterAmp_IZone = 0;
+    public static final double kShooterAmp_Min = -1;
+    public static final double kShooterAmp_Max = 1;
+    public static final double[] kShooterAmpPIDList = {kShooterAmp_P,kShooterAmp_I,kShooterAmp_D,
+                                        kShooterAmp_FF,kShooterAmp_IZone,kShooterAmp_Min,kShooterAmp_Max};
+    
   }
 
   /**

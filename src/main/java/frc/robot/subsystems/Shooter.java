@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.ArmConstants;
+import frc.robot.utilities.Helper;
 
 public class Shooter extends SubsystemBase {
   private CANSparkMax m_shooterMotorTopLeader, m_shooterMotorBottomFollower, m_shooterMotorAmp;
@@ -39,12 +40,7 @@ public class Shooter extends SubsystemBase {
     shooterEncoderTop = m_shooterMotorTopLeader.getEncoder();
     
     shooterPIDController = m_shooterMotorTopLeader.getPIDController();
-    shooterPIDController.setP(ShooterConstants.kP);
-    shooterPIDController.setI(ShooterConstants.kI);
-    shooterPIDController.setD(ShooterConstants.kD);
-    shooterPIDController.setFF(ShooterConstants.kFF);
-    shooterPIDController.setIZone(ShooterConstants.kIZone);
-    shooterPIDController.setOutputRange(ShooterConstants.kMin, ShooterConstants.kMax);
+    Helper.setupPIDController(shooterPIDController, ShooterConstants.kShooterTopPIDList);
 
     m_shooterMotorBottomFollower = new CANSparkMax(ShooterConstants.kShooterMotorBottomID, MotorType.kBrushless);
     m_shooterMotorBottomFollower.setIdleMode(IdleMode.kCoast);
