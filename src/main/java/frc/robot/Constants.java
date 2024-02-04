@@ -164,42 +164,42 @@ public final class Constants {
     
     public static final int kIntakeMode = 1; //0 = Roller, 1 = Clamp
 
-    public static final int kIntakeMotorFrontID = 21;
+    public static final int kIntakeMotorFrontID = 22;
     public static final int kIntakeMotorBackID  = 23;
     public static final int kIntakeMotorRightID = 25;
     public static final int kIntakeMotorLeftID  = 27;
 
   }
 
-  /**
-   * Shooter constants 
-   */
-  public static final class ShooterConstants  {
-    public static final int kShooterSpeakerMotorID  = 31;
-    public static final int kShooteAmpMotorID       = 41;
-  }
-
+  
   /**
    * feeder constants 
    */
   public static final class FeederConstants  {
     public static final int kFeederStage1MotorID  = 31;
-    public static final int kFeederStage2MotorID  = 41;
+    public static final int kFeederStage2MotorID  = 32;
   }
 
   /**
    * Arm constants 
    */
-  public static final class Arm  {
-    public static final int kArmMaster1MotorID  = 61;
-    public static final int kArmSlaveMotorID    = 62;
+  public static final class ArmConstants  {
+    public static final int kArmMaster1MotorID  = 30;
+    public static final int kArmSlaveMotorID    = 42;
+    public static final double kSetPoint1 = 20.5;
+    public static final double kSetPoint2 = 60.5;
+    public static final double kThresholdArm = 0.5;
+    
   }
 
  /**
    * Shooter constants 
    */
   public static final class ShooterConstants  {    
-    public static final int kShooterMotorID = 30;
+    // public static final int kShooterMotorID = 30; //keep as 30 once move arm testing is done
+    public static final int kShooterMotorTopID = 51;
+    public static final int kShooterMotorBottomID = 52;
+    public static final int kShooterTargetSpeed = 1000;
 
     //speed constants
     public static final double kShooterHighCloseMPS = 1500;

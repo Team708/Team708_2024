@@ -40,9 +40,7 @@ public class RobotContainer {
 	private final Drivetrain m_drive = new Drivetrain();
 	private final Intake m_intake = new Intake();
 	private final Shooter m_shooter = new Shooter();
-
-
-
+	
 	// Initialize controllers
 	private final DriveByController m_driveByController =  new DriveByController(m_drive);
 	// private final OperateByController m_operateByController
@@ -75,7 +73,7 @@ public class RobotContainer {
     // new POVButton(OI.driverController, 0)
     //     .onTrue(new InstantCommand(() -> m_drive.resetOdometry(new Rotation2d(0.0))));  //JNP
 
-    OI.configureButtonBindings(m_drive, m_intake, m_shooter);
+    OI.configureButtonBindings(m_drive,m_intake,m_shooter);
   }
 
 	private void configureAutoChooser(){
@@ -101,8 +99,12 @@ public class RobotContainer {
 		return m_drive;
 	}
 
-	public Intake getIntake() {
-		return m_intake;
+	// public Intake getIntake() {
+	// 	return m_intake;
+	// }
+
+	public Shooter getShooter() {
+		return m_shooter;
 	}
 
 	public void simulationInit(){
@@ -116,8 +118,8 @@ public class RobotContainer {
 
 	public void sendToDashboard() {
 		m_drive.sendToDashboard();
-		m_intake.sendToDashboard();
-		// m_shooter.sendToDashboard();
+		// m_intake.sendToDashboard();
+		m_shooter.sendToDashboardSetPoint1();
 		// m_climber.sendToDashboard();
 		// m_limelight.sendToDashboard();
 		// m_candleSystem.sendToDashboard();

@@ -1,7 +1,10 @@
 package frc.robot;
 
 import frc.robot.Constants.ControllerConstants;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.commands.shooter.ShootSpeaker;
+import frc.robot.commands.shooter.armToPositionSetPoint1;
+import frc.robot.commands.shooter.armToPositionSetPoint2;
 import edu.wpi.first.wpilibj.XboxController;
 // import edu.wpi.first.wpilibj.XboxController.Button;
 // import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -12,6 +15,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 //Subsysem Imports
 import frc.robot.subsystems.drive.Drivetrain;
 import frc.robot.subsystems.Shooter;
+
+
 
 public class OI {
 
@@ -125,9 +130,7 @@ public class OI {
     // 		.onTrue(new /*Command*/)
     // 		.whenReleased(new /*Command*/);
 
-    // new JoystickButton(operatorController, Button.kB.value)
-    // 		.onTrue(new /*Command*/)
-    // 		.onTrue(new /*Command*/);
+    
 
     // new JoystickButton(operatorController, Button.kX.value)
     // 		.onTrue(new /*Command*/)
@@ -148,12 +151,14 @@ public class OI {
     new JoystickButton(operatorController, Button.kRightBumper.value)
     		.onTrue(new ShootSpeaker(m_shooter));
     
-    // new JoystickButton(operatorController, Button.kLeftStick.value)
-    // 		.onTrue(new /*Command*/);
+    new JoystickButton(operatorController, Button.kA.value)
+    		.onTrue(new armToPositionSetPoint1(m_shooter));
 
+    new JoystickButton(operatorController, Button.kB.value)
+    		.onTrue(new armToPositionSetPoint2(m_shooter));
     // new JoystickButton(operatorController, Button.kRightStick.value)
     // 		.onTrue(new /*Command*/);
-
+    
     //Climber//
 
     // new JoystickButton(climberController, Button.kY.value)

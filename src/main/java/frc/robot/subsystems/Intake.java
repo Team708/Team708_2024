@@ -29,7 +29,7 @@ public class Intake extends SubsystemBase{
         // this.m_dIOSensor = m_dIOSensor;
 
         m_intakeMotorRight = new CANSparkMax(IntakeConstants.kIntakeMotorRightID, MotorType.kBrushless);
-        m_intakeMotorLeft = new CANSparkMax(IntakeConstants.kIntakeMotorFrontID, MotorType.kBrushless);
+        m_intakeMotorLeft = new CANSparkMax(IntakeConstants.kIntakeMotorLeftID, MotorType.kBrushless);
         m_intakeMotorFront = new CANSparkMax(IntakeConstants.kIntakeMotorFrontID, MotorType.kBrushless);
         m_intakeMotorBack = new CANSparkMax(IntakeConstants.kIntakeMotorBackID, MotorType.kBrushless);
 

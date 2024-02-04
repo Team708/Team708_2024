@@ -11,16 +11,16 @@ import frc.robot.subsystems.Shooter;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ShooterOff extends InstantCommand {
-  private Shooter m_shooter;
-  public ShooterOff(Shooter shooter) {
-    m_shooter = shooter;
+  private Shooter m_shooterMotorTop;
+  public ShooterOff(Shooter shootersubsystem) {
+    m_shooterMotorTop = shootersubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_shooter);
+    addRequirements(m_shooterMotorTop);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_shooter.shooterOff();
+    m_shooterMotorTop.stopShooter();
   }
 }

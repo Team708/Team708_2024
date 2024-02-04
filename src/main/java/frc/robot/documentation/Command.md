@@ -32,14 +32,14 @@
 - FeederReverse
 
 ## Shooter
-- ShooterShootSpeaker
+- ShooterShootSpeaker 
     - Shooter.SetSpeedSpeaker(), Return OK to shoot
     - FeederFeedShooter
 - ShooterShootAmp
     - ShooterArmToAmp
     - Shooter.SetSpeedAmp(), Return OK to shoot
     - FeederFeedShooter
-- ShooterOff
+- ShooterOff //created
     - Shooter.Off()
 - ShooterClearJam
     - Shooter.Reverse()
