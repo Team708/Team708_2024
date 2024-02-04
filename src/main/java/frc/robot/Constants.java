@@ -176,7 +176,30 @@ public final class Constants {
    */
   public static final class FeederConstants  {
     public static final int kFeederStage1MotorID  = 31;
+    
+    public static final double kFeederStage1Motor_P = 0.00015;
+    public static final double kFeederStage1Motor_I = 0.000001; 
+    public static final double kFeederStage1Motor_D = 0.006;
+    public static final double kFeederStage1Motor_FF = 0.0;
+    public static final double kFeederStage1Motor_IZone = 0;
+    public static final double kFeederStage1Motor_Min = -1;
+    public static final double kFeederStage1Motor_Max = 1;
+    public static final double[] kFeederStage1PIDList = {kFeederStage1Motor_P,kFeederStage1Motor_I,kFeederStage1Motor_D,
+                                        kFeederStage1Motor_FF,kFeederStage1Motor_IZone,kFeederStage1Motor_Min,kFeederStage1Motor_Max};
+
+
     public static final int kFeederStage2MotorID  = 32;
+
+    public static final double kFeederStage2Motor_P = 0.00015;
+    public static final double kFeederStage2Motor_I = 0.000001; 
+    public static final double kFeederStage2Motor_D = 0.006;
+    public static final double kFeederStage2Motor_FF = 0.0;
+    public static final double kFeederStage2Motor_IZone = 0;
+    public static final double kFeederStage2Motor_Min = -1;
+    public static final double kFeederStage2Motor_Max = 1;
+    public static final double[] kFeederStage2PIDList = {kFeederStage2Motor_P,kFeederStage2Motor_I,kFeederStage2Motor_D,
+                                        kFeederStage2Motor_FF,kFeederStage2Motor_IZone,kFeederStage2Motor_Min,kFeederStage2Motor_Max};
+
   }
 
   /**
