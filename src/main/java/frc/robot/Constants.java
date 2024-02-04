@@ -171,7 +171,6 @@ public final class Constants {
 
   }
 
-  
   /**
    * feeder constants 
    */
@@ -199,6 +198,8 @@ public final class Constants {
     // public static final int kShooterMotorID = 30; //keep as 30 once move arm testing is done
     public static final int kShooterMotorTopID = 51;
     public static final int kShooterMotorBottomID = 52;
+    public static final int kShooterMotorAmpID = 53;
+
     public static final int kShooterTargetSpeed = 1000;
 
     //speed constants
@@ -212,7 +213,6 @@ public final class Constants {
     public static final double kMax = 1;
     public static final double kThreshhold = 0.75;
   }
-
 
   /**
     * User Controller constants 

@@ -27,7 +27,7 @@ public class armToPositionSetPoint1 extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute(){
-    m_shooter.moveArm(ArmConstants.kSetPoint1);
+    m_shooter.setAngle(ArmConstants.kSetPoint1);
   }
 
   // Called once the command ends or is interrupted.
