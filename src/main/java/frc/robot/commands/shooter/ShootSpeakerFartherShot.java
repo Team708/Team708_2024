@@ -5,28 +5,37 @@
 package frc.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
+import frc.robot.subsystems.Shooter;
 
+// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
+// information, see:
+// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ShootSpeakerFartherShot extends Command {
-  /** Creates a new ShootSpeakerFartherShot. */
-  public ShootSpeakerFartherShot() {
-    // Use addRequirements() here to declare subsystem dependencies.
+  private Shooter m_shooter;
+
+  /** Creates a new Shoot. */
+
+
+  public ShootSpeakerFartherShot(Shooter shooter) {
+    this.m_shooter = shooter;
+
+    // Add your commands in the addCommands() call, e.g.
+    // addCommands(new FooCommand(), new BarCommand());
+    addRequirements(m_shooter);
   }
 
-  // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize(){
+    
+  }
 
-  // Called every time the scheduler runs while the command is scheduled.
+  public void execute(){
+    m_shooter.setShooterSpeedSpeaker(Constants.ShooterConstants.kShooterFartherShotMPS);
+  }
+  
   @Override
-  public void execute() {}
-
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {}
-
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
+  public boolean isFinished(){
+    return m_shooter.isShooterSpeakerAtSpeed();
   }
 }

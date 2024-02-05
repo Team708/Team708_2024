@@ -2,44 +2,42 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.shooter;
+package frc.robot.commands.PivotArm;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.PivotArm;
 import frc.robot.Constants.ArmConstants;
 
-public class armToPodiumShotAngle extends Command {
+public class armToBumperShotAngle extends Command {
   /** Creates a new moveArm. */
-  Shooter m_shooter;
+  PivotArm m_PivotArm;
   
 
-  public armToPodiumShotAngle(Shooter m_shooter) {
-    this.m_shooter = m_shooter;
+  public armToBumperShotAngle(PivotArm m_PivotArm) {
+    this.m_PivotArm = m_PivotArm;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_shooter);
+    addRequirements(m_PivotArm);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute(){
-    m_shooter.setAngle(ArmConstants.kPodiumAngle);
+    m_PivotArm.setArmAngle(ArmConstants.kBumperShotAngle);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (Math.abs(m_shooter.findDisplacement(ArmConstants.kPodiumAngle)) < ArmConstants.kThresholdArm);
+    return (Math.abs(m_PivotArm.findDisplacement(ArmConstants.kBumperShotAngle)) < ArmConstants.kThresholdArm);
   }
 }

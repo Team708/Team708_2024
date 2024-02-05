@@ -119,7 +119,6 @@ public class RobotContainer {
 	public void sendToDashboard() {
 		m_drive.sendToDashboard();
 		// m_intake.sendToDashboard();
-		m_shooter.sendToDashboard();
 		// m_climber.sendToDashboard();
 		// m_limelight.sendToDashboard();
 		// m_candleSystem.sendToDashboard();

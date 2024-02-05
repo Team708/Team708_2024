@@ -27,7 +27,7 @@ public class ShootAmp extends InstantCommand {
   }
 
   public void execute() {
-    m_shooter.setShooterSpeedAmp(ShooterConstants.kShooterAmpMPS);
+    m_shooter.setShooterSpeedAmp(ShooterConstants.kAmpMPS);
   }
 
   public boolean isFinished() {

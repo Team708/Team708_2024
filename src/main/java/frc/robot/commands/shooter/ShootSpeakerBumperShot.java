@@ -28,11 +28,11 @@ public class ShootSpeakerBumperShot extends Command {
 
   @Override
   public void initialize(){
-    
+    m_shooter.setShooterSpeedSpeaker(Constants.ShooterConstants.kShooterBumperShotMPS);
   }
 
   public void execute(){
-    m_shooter.setShooterSpeedSpeaker(Constants.ShooterConstants.kShooterHighCloseMPS);
+    
   }
   
   @Override

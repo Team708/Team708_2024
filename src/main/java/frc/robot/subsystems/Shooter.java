@@ -36,6 +36,7 @@ public class Shooter extends SubsystemBase {
     //Top shooter motor
     m_shooterMotorTopLeader = new CANSparkMax(ShooterConstants.kShooterMotorTopID, MotorType.kBrushless);
     m_shooterMotorTopLeader.setIdleMode(IdleMode.kCoast);
+    m_shooterMotorTopLeader.setInverted(false);
 
     shooterEncoderTop = m_shooterMotorTopLeader.getEncoder();
     
@@ -100,6 +101,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setShooterSpeedSpeaker(double speed) { 
+    shooterAmpPIDController.setReference(speed, CANSparkMax.ControlType.kVelocity);
     shooterSpeakerPIDController.setReference(speed, CANSparkMax.ControlType.kVelocity);
   }
 
@@ -121,18 +123,9 @@ public class Shooter extends SubsystemBase {
   }
 
   public boolean isShooterAmpAtSpeed() {
-    if ((Math.abs(PivotArmEncoder.getVelocity()) > (targetSpeed) * ShooterConstants.kThreshhold)){
+    if ((Math.abs(shooterEncoderAmp.getVelocity()) > (targetSpeed) * ShooterConstants.kThreshhold)){
       return true;
     }
     return false;
-  }
-  //Now we want to get arm from current position to target setpoint
-  public double findDisplacement(double setPoint) {
-    double currentArmPosition = PivotArmEncoder.getPosition();
-    return (setPoint - currentArmPosition);
-  }
-
-  public void setAngle(double angle) {
-    PivotArmPIDController.setReference(angle, CANSparkBase.ControlType.kPosition);
   }
 }

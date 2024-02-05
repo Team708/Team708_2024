@@ -213,6 +213,7 @@ public final class Constants {
     //arm angles for different shots
     public static final double kBumperShotAngle = 60;
     public static final double kPodiumAngle = 50;
+    public static final double kAmpAngle = 55;
     public static final double kFartherShotAngle = 30;
     public static final double kThresholdArm = 0.5;
     
@@ -238,10 +239,15 @@ public final class Constants {
     public static final int kShooterMotorBottomID = 52;
     public static final int kShooterMotorAmpID = 53;
 
+    //speeds for different shots
     public static final int kShooterTargetSpeed = 1000;
 
+    
     //speed constants
-    public static final double kShooterHighCloseMPS = 1500;
+    public static final double kShooterBumperShotMPS = 1000;
+    public static final double kShooterPodiumShotMPS = 1250;
+    public static final double kShooterFartherShotMPS = 1500;
+    public static final double kAmpMPS = 500;
     
     public static final double kThreshhold = 0.75;
     //PID constants
