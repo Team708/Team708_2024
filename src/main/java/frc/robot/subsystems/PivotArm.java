@@ -51,4 +51,6 @@ public class PivotArm extends SubsystemBase {
   public void setArmAngle(double angle) {
     PivotArmPIDController.setReference(angle, CANSparkBase.ControlType.kPosition);
   }
+
+
 }

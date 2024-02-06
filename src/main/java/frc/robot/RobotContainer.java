@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.PivotArm;
 import frc.robot.subsystems.drive.Drivetrain;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -40,6 +41,7 @@ public class RobotContainer {
 	private final Drivetrain m_drive = new Drivetrain();
 	private final Intake m_intake = new Intake();
 	private final Shooter m_shooter = new Shooter();
+	private final PivotArm m_PivotArm = new PivotArm();
 	
 	// Initialize controllers
 	private final DriveByController m_driveByController =  new DriveByController(m_drive);
@@ -73,7 +75,7 @@ public class RobotContainer {
     // new POVButton(OI.driverController, 0)
     //     .onTrue(new InstantCommand(() -> m_drive.resetOdometry(new Rotation2d(0.0))));  //JNP
 
-    OI.configureButtonBindings(m_drive,m_intake,m_shooter);
+    OI.configureButtonBindings(m_drive,m_intake,m_shooter,m_PivotArm);
   }
 
 	private void configureAutoChooser(){

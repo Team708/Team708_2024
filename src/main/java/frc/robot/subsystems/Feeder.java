@@ -45,4 +45,16 @@ public class Feeder extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
   }
+
+  
+  public void feederThroughStage1() {
+    m_FeederStage1Motor.set(1);
+  }
+
+  //ultimately check if sensor input is true for whether note has passed through stage 2
+  public void feederThroughStage2() {
+    m_FeederStage2Motor.set(1.0);
+  }
+
+
 }

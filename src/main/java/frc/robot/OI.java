@@ -1,15 +1,17 @@
 package frc.robot;
 
 import frc.robot.Constants.ControllerConstants;
-import frc.robot.commands.shooter.ShootSpeakerBumperShot;
-import frc.robot.commands.shooter.armToBumperShotAngle;
-import frc.robot.commands.shooter.armToFartherShotAngle;
-import frc.robot.commands.shooter.armToPodiumShotAngle;
+import frc.robot.commands.shooter.SetShooterSpeedBumperShot;
+import frc.robot.commands.PivotArm.armToBumperShotAngle;
+import frc.robot.commands.PivotArm.armToFartherShotAngle;
+import frc.robot.commands.PivotArm.armToPodiumShotAngle;
+import frc.robot.commands.PivotArm.armToAmpShotAngle;
 import frc.robot.commands.shooter.ShooterOff;
 import edu.wpi.first.wpilibj.XboxController;
 // import edu.wpi.first.wpilibj.XboxController.Button;
 // import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.PivotArm;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -80,7 +82,7 @@ public class OI {
   // 	return deadBand(climberController.getRightY(), ControllerConstants.kClimberDeadBandRightY);
   // }
 
-  public static void configureButtonBindings(Drivetrain m_drive, Intake m_intake, Shooter m_shooter) {
+  public static void configureButtonBindings(Drivetrain m_drive, Intake m_intake, Shooter m_shooter, PivotArm m_PivotArm) {
 
     //DRIVER//
 
@@ -151,23 +153,27 @@ public class OI {
     
     //testing button
     new JoystickButton(operatorController, Button.kRightBumper.value)
-    		.onTrue(new ShootSpeakerBumperShot(m_shooter));
+    		.onTrue(new SetShooterSpeedBumperShot(m_shooter));
     
     //testing button
     new JoystickButton(operatorController, Button.kA.value)
-    		.onTrue(new armToBumperShotAngle(m_shooter));
+    		.onTrue(new armToBumperShotAngle(m_PivotArm));
 
     //testing button
     new JoystickButton(operatorController, Button.kB.value)
-    		.onTrue(new armToFartherShotAngle(m_shooter));
+    		.onTrue(new armToFartherShotAngle(m_PivotArm));
 
     //testing button
     new JoystickButton(operatorController, Button.kY.value)
-    		.onTrue(new armToPodiumShotAngle(m_shooter));  
+    		.onTrue(new armToPodiumShotAngle(m_PivotArm));  
     
     //testing button
     new JoystickButton(operatorController, Button.kX.value)
     		.onTrue(new ShooterOff(m_shooter));
+
+    //testing button
+    new JoystickButton(operatorController, Button.kRightBumper.value)
+    		.onTrue(new armToAmpShotAngle(m_PivotArm));
     // new JoystickButton(operatorController, Button.kRightStick.value)
     // 		.onTrue(new /*Command*/);
     

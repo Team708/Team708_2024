@@ -11,14 +11,13 @@ import frc.robot.subsystems.Shooter;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ShootSpeakerPodiumShot extends Command {
+public class SetShooterSpeedFartherShot extends Command {
   private Shooter m_shooter;
 
   /** Creates a new Shoot. */
-  //we need a feeder system created and implemented
 
 
-  public ShootSpeakerPodiumShot(Shooter shooter) {
+  public SetShooterSpeedFartherShot(Shooter shooter) {
     this.m_shooter = shooter;
 
     // Add your commands in the addCommands() call, e.g.
@@ -32,7 +31,7 @@ public class ShootSpeakerPodiumShot extends Command {
   }
 
   public void execute(){
-    m_shooter.setShooterSpeedSpeaker(Constants.ShooterConstants.kShooterPodiumShotMPS);
+    m_shooter.setShooterSpeedSpeaker(Constants.ShooterConstants.kShooterFartherShotMPS);
   }
   
   @Override
