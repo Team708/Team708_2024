@@ -18,8 +18,8 @@ public class SetShooterSpeedBumperShot extends Command {
   //we need a feeder system created and implemented
 
 
-  public SetShooterSpeedBumperShot(Shooter shooter) {
-    this.m_shooter = shooter;
+  public SetShooterSpeedBumperShot(Shooter m_shooter) {
+    m_shooter = new Shooter();
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());

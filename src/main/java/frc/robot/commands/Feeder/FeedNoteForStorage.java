@@ -8,10 +8,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Feeder;
 
 public class FeedNoteForStorage extends Command {
-  private final Feeder m_feeder;
+  Feeder m_feeder;
 
-  public FeedNoteForStorage(Feeder feeder) {
-    m_feeder = feeder;
+  public FeedNoteForStorage(Feeder m_feeder) {
+    m_feeder = new Feeder();
     addRequirements(m_feeder);
   }
 

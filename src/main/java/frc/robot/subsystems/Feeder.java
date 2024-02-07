@@ -56,5 +56,5 @@ public class Feeder extends SubsystemBase {
     m_FeederStage2Motor.set(1.0);
   }
 
-
+  
 }

@@ -19,6 +19,10 @@ public class armToBumperShotAngle extends Command {
     addRequirements(m_PivotArm);
   }
 
+  public armToBumperShotAngle() {
+    //TODO Auto-generated constructor stub
+  }
+
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {

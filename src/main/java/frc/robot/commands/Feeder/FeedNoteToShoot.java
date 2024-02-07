@@ -5,11 +5,15 @@
 package frc.robot.commands.Feeder;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.Feeder;
 
 public class FeedNoteToShoot extends Command {
-  /** Creates a new FeedNoteToShoot. */
-  public FeedNoteToShoot() {
-    // Use addRequirements() here to declare subsystem dependencies.
+  private Feeder m_feeder;
+
+  public FeedNoteToShoot(Feeder m_feeder) {
+    m_feeder = new Feeder();
+
+    addRequirements(m_feeder);
   }
 
   // Called when the command is initially scheduled.
@@ -18,7 +22,9 @@ public class FeedNoteToShoot extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    m_feeder.feederThroughStage2();
+  }
 
   // Called once the command ends or is interrupted.
   @Override
