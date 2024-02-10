@@ -109,13 +109,13 @@ public class RobotContainer {
 		return m_shooter;
 	}
 
-	public void simulationInit(){
-	//   m_elevator.simulationInit();
+	public void simulationInit() {
+		m_shooter.simulationInit();
 	}
 
 	/** This function is called periodically whilst in simulation. */
 	public void simulationPeriodic() {
-	//   m_elevator.simulationPeriodic();
+	  	m_shooter.simulationPeriodic();
 	}
 
 	public void sendToDashboard() {

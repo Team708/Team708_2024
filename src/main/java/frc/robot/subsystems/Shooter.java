@@ -16,15 +16,19 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.utilities.Helper;
+import frc.robot.subsystems.ShooterSimulation;
+
 
 public class Shooter extends SubsystemBase {
   private CANSparkMax m_shooterMotorTopLeader, m_shooterMotorBottomFollower, m_shooterMotorAmp;
 
-  private RelativeEncoder shooterEncoderTop, shooterEncoderAmp;
+  private RelativeEncoder shooterEncoderTop, shooterEncoderBottom, shooterEncoderAmp;
   private SparkPIDController shooterSpeakerPIDController, shooterAmpPIDController;
 
-  private double targetSpeed = 0; 
+  private double targetSpeed = 0;
 
+  ShooterSimulation m_shootersim;
+  
   /** Creates a new Shooter. */
   public Shooter() {
     //Top shooter motor
@@ -41,6 +45,8 @@ public class Shooter extends SubsystemBase {
     m_shooterMotorBottomFollower = new CANSparkMax(ShooterConstants.kShooterMotorBottomID, MotorType.kBrushless);
     m_shooterMotorBottomFollower.setIdleMode(IdleMode.kCoast);
     m_shooterMotorBottomFollower.follow(m_shooterMotorTopLeader, true);
+
+    shooterEncoderBottom = m_shooterMotorBottomFollower.getEncoder();
 
     //Amp shooter motor
     m_shooterMotorAmp = new CANSparkMax(ShooterConstants.kShooterMotorAmpID, MotorType.kBrushless);
@@ -87,4 +93,15 @@ public class Shooter extends SubsystemBase {
     }
     return false;
   }
+
+  // public void simulationInit() {
+	//   //Setup the simulation
+  //   m_shootersim = new ShooterSimulation(this, m_shooterMotorTopLeader, m_shooterMotorBottomFollower, m_shooterMotorAmp);
+	// }
+
+	// public void simulationPeriodic() {
+  //   //Update elevator simulation
+  //   m_shootersim.update();
+	// }
+    
 }

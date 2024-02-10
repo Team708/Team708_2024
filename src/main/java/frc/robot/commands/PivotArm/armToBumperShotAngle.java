@@ -13,25 +13,23 @@ public class armToBumperShotAngle extends Command {
   PivotArm m_PivotArm;
   
 
-  public armToBumperShotAngle(PivotArm m_PivotArm) {
-    this.m_PivotArm = m_PivotArm;
+  public armToBumperShotAngle(PivotArm pivotArm) {
+    m_PivotArm = pivotArm;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_PivotArm);
-  }
-
-  public armToBumperShotAngle() {
-    //TODO Auto-generated constructor stub
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    //
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute(){
-    m_PivotArm.setArmAngle(ArmConstants.kBumperShotAngle);
+    m_PivotArm.setArmAngle(m_PivotArm.findArmAngle(0));  //replace constant with method from pivotArm subsystem
+    //method would take parameter of distance from speaker, then use regression to get arm angle
   }
 
   // Called once the command ends or is interrupted.
@@ -42,6 +40,6 @@ public class armToBumperShotAngle extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (Math.abs(m_PivotArm.findDisplacement(ArmConstants.kBumperShotAngle)) < ArmConstants.kThresholdArm);
+    return (m_PivotArm.findDisplacement(ArmConstants.kBumperShotAngle) < ArmConstants.kThresholdArm);
   }
 }

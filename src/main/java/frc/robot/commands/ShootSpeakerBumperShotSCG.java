@@ -31,12 +31,13 @@ public class ShootSpeakerBumperShotSCG extends SequentialCommandGroup {
 
     
     addCommands(
-      //command here for if robot has note ready to shoot
+      
       new ParallelCommandGroup(
           new armToBumperShotAngle(PivotArm), 
           new SetShooterSpeedBumperShot(m_shooter)
+          //add autoturning command
       ),
-      new FeedNoteToShoot(m_feeder)
+      new FeedNoteToShoot(m_feeder) //keep aiming while shooting, 
     );
   }
 }

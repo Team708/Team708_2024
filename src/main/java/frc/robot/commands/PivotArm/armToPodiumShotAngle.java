@@ -39,6 +39,6 @@ public class armToPodiumShotAngle extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (Math.abs(m_PivotArm.findDisplacement(ArmConstants.kPodiumAngle)) < ArmConstants.kThresholdArm);
+    return (m_PivotArm.findDisplacement(ArmConstants.kPodiumAngle) < ArmConstants.kThresholdArm);
   }
 }

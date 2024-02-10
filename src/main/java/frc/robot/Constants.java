@@ -176,6 +176,9 @@ public final class Constants {
    */
   public static final class FeederConstants  {
     public static final int kFeederStage1MotorID  = 31;
+
+    //PID values
+    //make sure the PID values get tuned
     
     public static final double kFeederStage1Motor_P = 0.00015;
     public static final double kFeederStage1Motor_I = 0.000001; 
@@ -189,6 +192,9 @@ public final class Constants {
 
 
     public static final int kFeederStage2MotorID  = 32;
+    
+    //PID values
+    //make sure the PID values get tuned
 
     public static final double kFeederStage2Motor_P = 0.00015;
     public static final double kFeederStage2Motor_I = 0.000001; 
@@ -210,6 +216,9 @@ public final class Constants {
     public static final int kArmMasterMotorID  = 30;
     public static final int kArmSlaveMotorID    = 42;
 
+    //gearbox ratios
+    public static final int kPivotArmGearRatio = 45;
+
     //arm angles for different shots
     public static final double kBumperShotAngle = 60;
     public static final double kPodiumAngle = 50;
@@ -218,6 +227,7 @@ public final class Constants {
     public static final double kThresholdArm = 0.5;
     
     //PID values for arm motors
+    //make sure the PID values get tuned
     public static final double kPivotArm_P = 0.00015;
     public static final double kPivotArm_I = 0.000001; 
     public static final double kPivotArm_D = 0.006;
@@ -242,6 +252,8 @@ public final class Constants {
     //speeds for different shots
     public static final int kShooterTargetSpeed = 1000;
 
+    //gearbox ratios
+    public static final int kShooterGearRatio = 1;
     
     //speed constants
     public static final double kShooterBumperShotMPS = 1000;
@@ -250,7 +262,10 @@ public final class Constants {
     public static final double kAmpMPS = 500;
     
     public static final double kThreshhold = 0.75;
+    
     //PID constants
+    //make sure the PID values get tuned
+
     public static final double kShooterTop_P = 0.00015;
     public static final double kShooterTop_I = 0.000001; 
     public static final double kShooterTop_D = 0.006;

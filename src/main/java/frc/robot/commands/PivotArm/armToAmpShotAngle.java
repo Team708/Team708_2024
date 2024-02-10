@@ -27,7 +27,8 @@ public class armToAmpShotAngle extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute(){
-    m_PivotArm.setArmAngle(ArmConstants.kAmpAngle);
+    m_PivotArm.setArmAngle(ArmConstants.kAmpAngle); //replace constant with method from pivotArm subsystem
+    //method would take parameter of distance from speaker, then use regression to get arm angle
   }
 
   // Called once the command ends or is interrupted.
@@ -38,6 +39,6 @@ public class armToAmpShotAngle extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (Math.abs(m_PivotArm.findDisplacement(ArmConstants.kAmpAngle)) < ArmConstants.kThresholdArm);
+    return (m_PivotArm.findDisplacement(ArmConstants.kAmpAngle) < ArmConstants.kThresholdArm);
   }
 }
