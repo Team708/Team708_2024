@@ -9,20 +9,41 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.FollowPathHolonomic;
+import com.pathplanner.lib.commands.PathfindHolonomic;
+import com.pathplanner.lib.path.GoalEndState;
+import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.ReplanningConfig;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.*;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
+import frc.robot.Constants;
 import frc.robot.Constants.*;
+import frc.robot.OI;
+import frc.robot.commands.DriveByController;
 import frc.robot.utilities.FieldRelativeAccel;
 import frc.robot.utilities.FieldRelativeSpeed;
+import frc.robot.utilities.MathUtils;
 
   /**
    * Implements a swerve Drivetrain Subsystem for the Robot
@@ -38,7 +59,7 @@ import frc.robot.utilities.FieldRelativeSpeed;
   private double lastRotTime = 0.0;     //Double to store the time of the last rotation command
   private double timeSinceDrive = 0.0;  //Double to store the time since last translation command
   private double lastDriveTime = 0.0;   //Double to store the time of the last translation command
-
+  
   private double radius = 1;//0.450;
 
   private boolean m_readyToShoot = false;
@@ -54,6 +75,10 @@ import frc.robot.utilities.FieldRelativeSpeed;
   private FieldRelativeAccel m_fieldRelAccel = new FieldRelativeAccel();
 
   private final Timer keepAngleTimer = new Timer(); //Creates timer used in the perform keep angle function
+
+  private boolean autoRotEnabled = false;
+
+  private PathConstraints trajectoryConstraints;
 
   //Creates a swerveModule object for the front left swerve module feeding in parameters from the constants file
   private final SwerveModule m_frontLeft = new SwerveModule(DriveConstants.kFrontLeftDriveMotorPort,
@@ -79,15 +104,18 @@ import frc.robot.utilities.FieldRelativeSpeed;
   private static PigeonTwo pigeon = PigeonTwo.getInstance();
 
   //Creates Odometry object to store the pose of the robot
-  private final SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(DriveConstants.kDriveKinematics, pigeon.getAngle(), getModulePositions());
+  public final SwerveDrivePoseEstimator m_PoseEstimator = new SwerveDrivePoseEstimator(DriveConstants.kDriveKinematics, pigeon.getAngle(), getModulePositions(), DriveConstants.kinitialPoseMeters);
 
-  private final SwerveDriveOdometry m_autoOdometry = new SwerveDriveOdometry(DriveConstants.kDriveKinematics, pigeon.getAngle(), getModulePositions());
+  private final SwerveDrivePoseEstimator m_AutoPoseEstimator = new SwerveDrivePoseEstimator(DriveConstants.kDriveKinematics, pigeon.getAngle(), getModulePositions(), DriveConstants.kinitialPoseMeters);
 
   ProfiledPIDController thetaController = new ProfiledPIDController(AutoConstants.kPThetaController, 0, 0,
     AutoConstants.kThetaControllerConstraints);
 
   private final Field2d m_field;
-    /**
+
+  private Pose2d currentPose = new Pose2d();
+
+  /**
    * Constructs a Drivetrain and resets the Gyro and Keep Angle parameters
    */
   public Drivetrain() {
@@ -95,15 +123,42 @@ import frc.robot.utilities.FieldRelativeSpeed;
     keepAngleTimer.start();
     m_keepAnglePID.enableContinuousInput(-Math.PI, Math.PI);
     pigeon.reset();
-    // m_odometry.resetPosition(pigeon.getAngle().times(-1.0), getModulePositions(), new Pose2d()); //JNP 
-    m_odometry.resetPosition(pigeon.getAngle().times(1.0), getModulePositions(), new Pose2d()); //JNP 
-    //CommandScheduler.getInstance().registerSubsystem(this); //??is This commencted out JNP??/
+    // m_PoseEstimator.resetPosition(pigeon.getAngle().times(-1.0), getModulePositions(), new Pose2d()); //JNP 
+    m_PoseEstimator.resetPosition(pigeon.getAngle().times(1.0), getModulePositions(), new Pose2d()); //JNP 
+    CommandScheduler.getInstance().registerSubsystem(this);
     thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
     m_field = new Field2d();
 
-    // SmartDashboard.putData("Field", m_field);
-    }
+    SmartDashboard.putData("Field", m_field);
+
+    // Configure AutoBuilder last
+    AutoBuilder.configureHolonomic(
+            this::getPose, // Robot pose supplier
+            this::resetOdometry, // Method to reset odometry (will be called if your auto has a starting pose)
+            this::getChassisSpeed, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+            this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
+            new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
+                    new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
+                    new PIDConstants(5.0, 0.0, 0.0), // Rotation PID constants
+                    4.5, // Max module speed, in m/s
+                    0.4, // Drive base radius in meters. Distance from robot center to furthest module.
+                    new ReplanningConfig() // Default path replanning config. See the API for the options here
+            ),
+            () -> {
+                // Boolean supplier that controls when the path will be mirrored for the red alliance
+                // This will flip the path being followed to the red side of the field.
+                // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+
+                var alliance = DriverStation.getAlliance();
+                if (alliance.isPresent()) {
+                    return alliance.get() == DriverStation.Alliance.Red;
+                }
+                return false;
+            },
+            this // Reference to this subsystem to set requirements
+    );
+  }
 
   /**
    * Method to drive the robot using joystick info.
@@ -171,12 +226,12 @@ import frc.robot.utilities.FieldRelativeSpeed;
         SmartDashboard.putNumber("Balance Angle", pigeon.getRoll().getDegrees());
 
         //Update swerve drive odometry periodically so robot pose can be tracked
-        updateOdometry();    
+        updatePose();    
 
         //Calls get pose function which sends the Pose information to the SmartDashboard
-        getPose();
-
-        m_field.getRobotObject().setPose(getPose());
+        currentPose = getPose();
+ 
+        m_field.getRobotObject().setPose(currentPose);
   }
 
   public void setFieldOrient(boolean fieldOrient){
@@ -220,12 +275,12 @@ import frc.robot.utilities.FieldRelativeSpeed;
    * Updates odometry for the swerve drivetrain. This should be called
    * once per loop to minimize error.
    */  
-  public void updateOdometry() {
-    m_odometry.update(pigeon.getAngle(), getModulePositions());
+  public void updatePose() {
+    m_PoseEstimator.update(pigeon.getAngle(), getModulePositions());
   }
 
-  public void updateAutoOdometry() {
-    m_autoOdometry.update(pigeon.getAngle(), getModulePositions());
+  public void updateAutoPose() {
+    m_AutoPoseEstimator.update(pigeon.getAngle(), getModulePositions());
   }
 
   /**
@@ -253,22 +308,23 @@ import frc.robot.utilities.FieldRelativeSpeed;
    * @return Pose2d object containing the X and Y position and the heading of the robot.
    */  
   public Pose2d getPose() {
-    Pose2d pose = m_odometry.getPoseMeters();
+    Pose2d pose = m_PoseEstimator.getEstimatedPosition();
     Translation2d position = pose.getTranslation();
     //Rotation2d heading = getGyro();
     SmartDashboard.putNumber("Robot X", position.getX());
     SmartDashboard.putNumber("Robot Y", position.getY());
-    SmartDashboard.putNumber("Robot Gyro", getGyro().getRadians());
-    return m_odometry.getPoseMeters();
+    //SmartDashboard.putNumber("Robot Gyro", getGyro().getDegrees());
+    SmartDashboard.putNumber("Robot Angle", pose.getRotation().getDegrees());
+    return pose;
   }
 
   public Pose2d getAutoPose() {
-    updateAutoOdometry();
-    Pose2d pose = m_autoOdometry.getPoseMeters();
+    updateAutoPose();
+    Pose2d pose = m_AutoPoseEstimator.getEstimatedPosition();
     Translation2d position = pose.getTranslation();
     SmartDashboard.putNumber("Auto X", position.getX());
     SmartDashboard.putNumber("Auto Y", position.getY());
-    return m_autoOdometry.getPoseMeters();
+    return pose;
   }
 
   /**
@@ -277,16 +333,16 @@ import frc.robot.utilities.FieldRelativeSpeed;
    * @param pose in which to set the odometry and gyro.
    */
   public void resetOdometry(Pose2d pose) {
-    pigeon.reset();
-    pigeon.setAngle(pose.getRotation().getDegrees());
+    // pigeon.reset();
+    // pigeon.setAngle(pose.getRotation().getDegrees());
     keepAngle = getGyro().getRadians();
 
-    m_odometry.resetPosition(pigeon.getAngle().times(-1.0), getModulePositions(), pose);
-    m_autoOdometry.resetPosition(pigeon.getAngle().times(-1.0), getModulePositions(), pose);
+    m_PoseEstimator.resetPosition(pigeon.getAngle().times(-1.0), getModulePositions(), pose);
+    m_AutoPoseEstimator.resetPosition(pigeon.getAngle().times(-1.0), getModulePositions(), pose);
   }
 
   public void setPose(Pose2d pose){
-    m_odometry.resetPosition(pigeon.getAngle().times(-1.0), getModulePositions(), pose);
+    m_PoseEstimator.resetPosition(pigeon.getAngle().times(-1.0), getModulePositions(), pose);
         keepAngle = getGyro().getRadians();
   }
 
@@ -301,7 +357,7 @@ import frc.robot.utilities.FieldRelativeSpeed;
     pigeon.reset();
     pigeon.setAngle(angle.getDegrees());
     keepAngle = getGyro().getRadians();
-    m_odometry.resetPosition(pigeon.getAngle().times(-1.0), getModulePositions(), pose);  }
+    m_PoseEstimator.resetPosition(pigeon.getAngle().times(-1.0), getModulePositions(), pose);  }
 
   /**
    * Converts the 4 swerve module states into a chassisSpeed by making use of the swerve drive kinematics.
@@ -363,6 +419,132 @@ import frc.robot.utilities.FieldRelativeSpeed;
     m_frontRight.invertDrive();
     m_backLeft.invertDrive();
     m_backRight.invertDrive();
+  }
+
+  public Command followPathCommand(String pathName) {
+    PathPlannerPath path = PathPlannerPath.fromPathFile(pathName);
+
+    return new FollowPathHolonomic(
+      path,
+      this::getPose, // Robot pose supplier
+      this::getChassisSpeed, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+      this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
+      new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
+        new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
+        new PIDConstants(5.0, 0.0, 0.0), // Rotation PID constants
+        4.5, // Max module speed, in m/s
+        0.4, // Drive base radius in meters. Distance from robot center to furthest module.
+        new ReplanningConfig() // Default path replanning config. See the API for the options here
+      ),
+      () -> {
+        // Boolean supplier that controls when the path will be mirrored for the red alliance
+        // This will flip the path being followed to the red side of the field.
+        // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+
+        var alliance = DriverStation.getAlliance();
+        if (alliance.isPresent()) {
+            return alliance.get() == DriverStation.Alliance.Red;
+        }
+        return false;
+      },
+      this // Reference to this subsystem to set requirements
+    );
+  }
+
+  public void driveRobotRelative(ChassisSpeeds chassisSpeeds)
+  {
+    var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
+    SwerveDriveKinematics.desaturateWheelSpeeds(
+        swerveModuleStates, DriveConstants.kMaxSpeedMetersPerSec);
+    m_frontLeft.setDesiredState(swerveModuleStates[0]);
+    m_frontRight.setDesiredState(swerveModuleStates[1]);
+    m_backLeft.setDesiredState(swerveModuleStates[2]);
+    m_backRight.setDesiredState(swerveModuleStates[3]);
+  }
+  
+  public Translation2d getDriverXAndY()
+  {
+    double maxLinear = DriveConstants.kMaxSpeedMetersPerSec;
+    double desiredX = -inputTransform(OI.getDriverLeftY())*maxLinear;
+    double desiredY = -inputTransform(OI.getDriverLeftX())*maxLinear;
+    Translation2d desiredTranslation = new Translation2d(desiredX, desiredY);
+    double desiredMag = desiredTranslation.getDistance(new Translation2d());
+    if(desiredMag >= maxLinear){
+      desiredTranslation.times(maxLinear/desiredMag);
+    }
+    return desiredTranslation;
+  }
+
+  public double getDriverRot()
+  {
+    return -inputTransform(OI.getDriverRightX())* DriveConstants.kMaxAngularSpeedRadPerSec;
+  }
+
+  private double inputTransform(double input){
+    //return MathUtils.singedSquare(MathUtils.applyDeadband(input));
+    return MathUtils.cubicLinear(MathUtils.applyDeadband(input), 0.9, 0.1);
+  }
+
+  public void makeRobotDrive()
+  {
+    PIDController controller = Constants.DriveConstants.kAutoRotatePID;//, //new Constraints(300000, 150000));
+    double desiredRot = findAutoRotate(controller, getDriverRot());
+    this.drive(getDriverXAndY().getX(), 
+                       getDriverXAndY().getY(),
+                       desiredRot,
+                       getFieldOrient(),
+                       true);
+  }
+
+  public void enableAutoRot()
+  {
+    autoRotEnabled = true;
+  }
+
+  public void disableAutoRot()
+  {
+    autoRotEnabled = false;
+  }
+
+  public double findAutoRotate(PIDController controller, double defaultRot)
+  {
+      if(autoRotEnabled){
+        double dx = Constants.DriveConstants.kBlueSpeaker.getX() - getPose().getX();
+        double dy = Constants.DriveConstants.kBlueSpeaker.getY() - getPose().getY();
+        Rotation2d robotToTarget = new Rotation2d(dx, dy);
+        return controller.calculate(getPose().getRotation().getDegrees(), robotToTarget.getDegrees());
+      }
+      return defaultRot;  
+  }
+
+  public Trajectory createTrajectory(Pose2d desiredPose)
+  {
+    TrajectoryConfig config = new TrajectoryConfig(Constants.DriveConstants.kMaxSpeedMetersPerSec, Constants.DriveConstants.kMaxAccelMetersPerSecSquared);
+    ArrayList<Pose2d> waypoints = new ArrayList<Pose2d>();
+    waypoints.add(getPose());
+    waypoints.add(desiredPose);
+    return TrajectoryGenerator.generateTrajectory(waypoints, config);
+  }
+
+  public void driveToPoint(Pose2d desiredLocation) {
+    trajectoryConstraints = new PathConstraints(
+    DriveConstants.kMaxSpeedMetersPerSec,
+    DriveConstants.kMaxAccelMetersPerSecSquared, 
+    DriveConstants.kMaxAngularSpeedRadPerSec, 
+    DriveConstants.kMaxAngularAccel);
+    
+    List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(getPose(), desiredLocation);
+    PathPlannerPath path = new PathPlannerPath(
+      bezierPoints, 
+      trajectoryConstraints,  
+      new GoalEndState(0.0, DriveConstants.kRobotToAmp.getRotation())
+    );
+
+    // Prevent this path from being flipped on the red alliance, since the given positions are already correct
+    path.preventFlipping = true;
+
+    AutoBuilder.followPath(path).schedule();
+    System.out.println("ran init");
   }
 
   public void sendToDashboard() {

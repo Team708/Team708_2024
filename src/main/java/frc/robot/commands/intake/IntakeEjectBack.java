@@ -14,8 +14,6 @@ public class IntakeEjectBack extends Command {
   public IntakeEjectBack(Intake intake) {
     m_intake = intake;
     addRequirements(intake);
-    //TODO Command, Intake 
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.

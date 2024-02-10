@@ -27,6 +27,7 @@ public class IntakeAllIn extends Command{
     public void execute() {
         // Call the method from the Intake subsystem to intake all
         m_intake.intakeAll();
+        System.out.println("Running");
     }
 
     // Called once the command ends or is interrupted.

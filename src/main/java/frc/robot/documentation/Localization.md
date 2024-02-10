@@ -25,3 +25,20 @@ This method combines different sensors and algorithms to improve localization ac
 ## Pose Estimation
 
 - [Pose Estimation](https://docs.wpilib.org/en/stable/docs/software/advanced-controls/state-space/state-space-pose-estimators.html)
+
+## Visualization 
+- [Advantage Scope](https://docs.wpilib.org/en/stable/docs/software/dashboards/advantagescope.html#advantagescope)
+    - [Github](https://github.com/Mechanical-Advantage/AdvantageScope/blob/main/docs/INDEX.md)
+
+## Driving While Shooting
+
+1. Use pose estimation to get robot position relative to field
+2. Allow driver to translate robot but give control to targeting software for controlling rotation for aiming
+3. Driver allows the robot to shoot when ready using a controller button. Robot use position on the field to determine whether the amp or the speaker is closer and locks onto the respective target.
+    - This allows for using the same button press for aligning to both targets.
+    - Provide haptic feedback for when the targeting is enabled.
+4. Robot calculates game peice trajectory and shoots when the shot in line with with target.
+    - targeting class accesses shooter subsystem
+
+## Pathfinding
+Using AprilTags and PathPlannerLib, the robot is able to do on-the-fly pathfinding and automatically go to a desired pose. To do this, the robot first generates a path, then follows it, which uses the PathPlannerPath class and followpath Command, respectively. 

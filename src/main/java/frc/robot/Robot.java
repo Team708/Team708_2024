@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.subsystems.vision.Limelight;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -51,10 +50,6 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
     m_robotContainer.sendToDashboard();
     CommandScheduler.getInstance().run();
-
-    if (SmartDashboard.getBoolean("Limelight", false)) {
-      Limelight.enable();
-    }
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
