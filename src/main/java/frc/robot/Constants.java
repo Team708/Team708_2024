@@ -1,10 +1,21 @@
 package frc.robot;
 
-import edu.wpi.first.math.controller.ArmFeedforward;
+import javax.crypto.spec.ChaCha20ParameterSpec;
+
+import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.ReplanningConfig;
+import com.pathplanner.lib.util.PIDConstants;
+
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 // import edu.wpi.first.math.util.Units;
+import edu.wpi.first.math.util.Units;
 
  /**
    * Static method containing all constant values for the robot in one location
@@ -61,18 +72,19 @@ public final class Constants {
     public static final double kBackLeftOffset = -.5*-1; //-0.5 to 0.5
     public static final double kBackRightOffset = -.1926*-1; //-0.5 to 0.5
 
+    
     //Drive motor PID is best done on the roboRIO currently as the SparkMAX does not allow for static gain values on the PID controller, 
     //    these are necessary to have high accuracy when moving at extremely low RPMs
     //public static final double[] kFrontLeftTuningVals   =   {0.0120,0.2892,0.25,0};   //{Static Gain, FeedForward, Proportional Gain, ModuleID for Tuning}
     //public static final double[] kFrontRightTuningVals  =   {0.0092,0.2835,0.25,1};   //{Static Gain, FeedForward, Proportional Gain, ModuleID for Tuning}
     //public static final double[] kBackLeftTuningVals    =   {0.0142,0.2901,0.25,2};   //{Static Gain, FeedForward, Proportional Gain, ModuleID for Tuning}
     //public static final double[] kBackRightTuningVals   =   {0.0108,0.2828,0.25,3};   //{Static Gain, FeedForward, Proportional Gain, ModuleID for Tuning}
-
+    
     public static final double[] kFrontLeftTuningVals   =   {0.001,0.2850,0.2,0};   //{Static Gain, FeedForward, Proportional Gain, ModuleID for Tuning}
     public static final double[] kFrontRightTuningVals  =   {0.001,0.2850,0.2,1};   //{Static Gain, FeedForward, Proportional Gain, ModuleID for Tuning}
     public static final double[] kBackLeftTuningVals    =   {0.001,0.2850,0.2,2};   //{Static Gain, FeedForward, Proportional Gain, ModuleID for Tuning}
     public static final double[] kBackRightTuningVals   =   {0.001,0.2850,0.2,3};   //{Static Gain, FeedForward, Proportional Gain, ModuleID for Tuning}
-
+    
     //.324 - sideways
     //.414 - longways
     public static final Translation2d kFrontLeftLocation = new Translation2d(0.414,0.324); // +X is forward, +Y is to the right 
@@ -83,10 +95,12 @@ public final class Constants {
     // public static final Translation2d kFrontRightLocation = new Translation2d(0.33,0.264); // +X is forward, +Y is to the right
     // public static final Translation2d kBackLeftLocation = new Translation2d(-0.376,-0.264); // +X is forward, +Y is to the right
     // public static final Translation2d kBackRightLocation = new Translation2d(-0.376,0.264); // +X is forward, +Y is to the right
-     
+    
+    public static final double kRadius = kFrontLeftLocation.getDistance(kBackRightLocation)/2;
+
     //Because the swerve modules poisition does not change, define a constant SwerveDriveKinematics for use throughout the code
     public static final SwerveDriveKinematics kDriveKinematics 
-      = new SwerveDriveKinematics(kFrontLeftLocation,kFrontRightLocation,kBackLeftLocation,kBackRightLocation);
+    = new SwerveDriveKinematics(kFrontLeftLocation,kFrontRightLocation,kBackLeftLocation,kBackRightLocation);
 
     public static final double kMaxAccelMetersPerSecSquared = 3.75;
     public static final double kMaxSpeedMetersPerSec = 3.5; //Maximum Sustainable Drivetrain Speed under Normal Conditions & Battery, Robot will not exceed this speed in closed loop control
@@ -102,6 +116,59 @@ public final class Constants {
     public static final double kMinTranslationCommandMetersPerSec = DriveConstants.kMaxSpeedMetersPerSec * Math.pow(DriveConstants.kInnerDeadband,2);
 
     public static final double[] kKeepAnglePID = { 0.700, 0, 0 }; //Defines the PID values for the keep angle PID
+
+    public static final Pose2d kinitialPoseMeters = new Pose2d();
+  
+    //Field poses. Blue side
+    public static final Pose2d kBluePoseSpeakerBumperTop  = new Pose2d(0.71, 6.74, new Rotation2d(Units.degreesToRadians(-120)));
+    public static final Pose2d kBluePoseSpeakerBumperMiddle  = new Pose2d(1.37, 5.55, new Rotation2d(Units.degreesToRadians(180)));
+    public static final Pose2d kBluePoseSpeakerBumperBottom  = new Pose2d(0.69, 4.35, new Rotation2d(Units.degreesToRadians(120)));
+    public static final Pose2d kBlueSpeaker = new Pose2d(-0.381, 5.55, new Rotation2d(180));
+    public static final Pose2d kTestPoint = new Pose2d(2.831, 5.55, new Rotation2d(180));
+
+    public static final Pose2d kPoseAmpLocation  = new Pose2d(1.82, 7.59, new Rotation2d(Units.degreesToRadians(90)));
+    public static final Pose2d kPoseFeederLocationFar  = new Pose2d(15.89,1.36, new Rotation2d(Units.degreesToRadians(-60)));  
+    public static final Pose2d kPoseFeederLocationClose  = new Pose2d(15.08,0.82, new Rotation2d(Units.degreesToRadians(-60)));
+
+    //Holonomic Drivretrain Configuration
+    public static final HolonomicPathFollowerConfig pathFollowingConfig = new HolonomicPathFollowerConfig(kMaxSpeedMetersPerSec, kRadius, new ReplanningConfig());
+
+
+    //PathPlanner Ending Points
+    public static final Pose2d kRobotToAmp = new Pose2d(1.82, 7.59 - Units.inchesToMeters(20), new Rotation2d(Units.degreesToRadians(-90)));
+
+
+    //Auto Rotate PID
+    public static final PIDController kAutoRotatePID = new PIDController(0.06, 0.0001, 0.0025);//, //new Constraints(300000, 150000));
+
+
+
+    //Game piece locations
+    public static final Translation2d kNoteCenterFar  = new Translation2d(8.27,7.465);
+    public static final Translation2d kNoteCenterFarMid  = new Translation2d(8.27,5.785);
+    public static final Translation2d kNoteCenterMid  = new Translation2d(8.27,4.105);
+    public static final Translation2d kNoteCenterMidClose  = new Translation2d(8.27,2.425);
+    public static final Translation2d kNoteCenterClose  = new Translation2d(8.27,0.745);
+
+    public static final Translation2d kNoteAllianceFar  = new Translation2d(2.90,7.005);
+    public static final Translation2d kNoteAllianceMid  = new Translation2d(2.90,5.555);
+    public static final Translation2d kNoteAllianceClose  = new Translation2d(2.90,4.105);
+
+    //Field Zones
+    public static final Double kZoneWingLine = 1.93;
+    public static final Double kZoneStartingLine = 0.61;
+  
+    //On-the-fly Trajectory Generation
+
+
+    //Tolerance offests
+    public static final Pose2d kPositionTolerance= new Pose2d(Units.feetToMeters(1),Units.feetToMeters(1),new Rotation2d(3));
+    
+    
+  
+  
+  
+  
 
   }
 
@@ -135,6 +202,9 @@ public final class Constants {
 
     public static final double kLineupSpeed = 0.3;
     public static final double kLineupAccuracy = 2.0;
+
+    public static final String klimelightName = "limelight";
+
   }
 
   /**
@@ -160,7 +230,7 @@ public final class Constants {
     public static final double kCamGearRatio = 47915 / 486; // 12/74, 18/74, 18/70
     public static final double kCamOpenPose = 2265.0;
     public static final double kCamClosedPose = 0.0;
-    public static final double kIntakeSpeed = 1.0;
+    public static final double kIntakeSpeed = 12.0;
     
     public static final int kIntakeMode = 1; //0 = Roller, 1 = Clamp
 
@@ -322,6 +392,12 @@ public final class Constants {
     
     public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
       kMaxAngularSpeed, kMaxAngularAccel); //Creates a trapezoidal motion for the auto rotational commands
+  
+    public static final PIDConstants kTranslationPID = new PIDConstants(5.0, 0.0, 0.0); // Translation PID constants
+    public static final PIDConstants kRotationPID = new PIDConstants(5.0, 0.0, 0.0); // Rotation PID constants
+    public static final double kMaxModuleSpeedMetersPerSec = 4.5; // Max module speed, in m/s
+    // Drive base radius in meters. Distance from robot center to furthest module.
+
   }
 
   public static final class VisionProcessorConstants {
@@ -342,15 +418,11 @@ public final class Constants {
   public static final class SimConstants {
     //Game Specific
   }
-  
+
   /**
   * FMS constants 
   */
   public static final class FMSConstants {
-    public static final int ALLIANCE_RED 	 		    = 1;
-    public static final int ALLIANCE_BLUE 	 		  = -1;
-    public static final int ALLIANCE_INITIALIZED  = 0;
-    public static final int ALLIANCE_NOT_ENABLED  = 20;
-    public static final int ALLIANCE_EXCEPTION    = 11;
+
   }
 }

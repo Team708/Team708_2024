@@ -14,9 +14,7 @@ public class IntakeEjectFront extends Command {
   public IntakeEjectFront(Intake intake) {
     m_intake = intake;
     addRequirements(m_intake);
-    //TODO Command, Intake 
-    // Use addRequirements() here to declare subsystem dependencies.
-  }
+    }
 
   // Called when the command is initially scheduled.
   @Override
