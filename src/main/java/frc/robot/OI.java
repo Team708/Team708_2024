@@ -79,16 +79,16 @@ public class OI {
     //DRIVER//
 
     new JoystickButton(driverController, Button.kA.value) //TODO Change these buttons, current commands only for testing
-    		.whileTrue(new IntakeAllOut(m_intake))
-    		.whileFalse(new IntakeOff(m_intake));
+    		.onTrue(new IntakeAllOut(m_intake))
+    		.onFalse(new IntakeOff(m_intake));
 
     new JoystickButton(driverController, Button.kB.value) //TODO Change these buttons, current commands only for testing
-    		.whileTrue(new IntakeAllIn(m_intake))
-    		.whileFalse(new IntakeOff(m_intake));
+    		.onTrue(new IntakeAllIn(m_intake))
+    		.onFalse(new IntakeOff(m_intake));
 
     new JoystickButton(driverController, Button.kX.value) //TODO Change these buttons, current commands only for testing
-    		.whileTrue(new IntakeEjectBack(m_intake))
-    		.whileFalse(new IntakeOff(m_intake));
+    		.onTrue(new IntakeEjectBack(m_intake))
+    		.onFalse(new IntakeOff(m_intake));
 
     // new JoystickButton(driverController, Button.kY.value)
     // 		.whenPressed(new /*Command*/);

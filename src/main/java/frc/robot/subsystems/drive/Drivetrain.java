@@ -87,7 +87,7 @@ import frc.robot.utilities.FieldRelativeSpeed;
     AutoConstants.kThetaControllerConstraints);
 
   private final Field2d m_field;
-    /**
+  /**
    * Constructs a Drivetrain and resets the Gyro and Keep Angle parameters
    */
   public Drivetrain() {
@@ -102,7 +102,7 @@ import frc.robot.utilities.FieldRelativeSpeed;
 
     m_field = new Field2d();
 
-    // SmartDashboard.putData("Field", m_field);
+    SmartDashboard.putData("Field", m_field);
     }
 
   /**
