@@ -14,17 +14,17 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import frc.robot.Constants.FMSConstants;
-import frc.robot.commands.auto.doNothingCommand;
 import frc.robot.commands.auto.FiveBall;
 import frc.robot.commands.auto.DriveStraight;
 
 import frc.robot.commands.DriveByController;
 // import frc.robot.commands.OperateByController; //TODO uncomment if using Operator Controller
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+// import frc.robot.commands.OperateByController; //TODO uncomment if using Operator Controller
+
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.drive.Drivetrain;
 import frc.robot.subsystems.vision.VisionProcessor;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -43,11 +43,10 @@ public class RobotContainer {
 	// The robot's subsystems. Initialize subsystems here.
 	private final Drivetrain m_drive = new Drivetrain();
 	private final VisionProcessor m_vision = new VisionProcessor(m_drive);
+	private final Intake m_intake = new Intake();
 
 	// Initialize controllers
-	private final DriveByController m_driveByController
-	=  new DriveByController(m_drive);
-
+	private final DriveByController m_driveByController =  new DriveByController(m_drive);
 	// private final OperateByController m_operateByController
 	// = new OperateByController(/*Subsystem*/); // TODO Add operator controller
 
@@ -74,6 +73,7 @@ public class RobotContainer {
 		m_drive.setDefaultCommand(m_driveByController);
 
 		SmartDashboard.putData("Auto Chooser", autoChooser);
+		
 		m_drive.resetOdometry(new Pose2d()); //TODO need to test. Pigeon position does not reset on hardware
 	}
 
@@ -93,7 +93,7 @@ public class RobotContainer {
     // new POVButton(OI.driverController, 0)
     //     .onTrue(new InstantCommand(() -> m_drive.resetOdometry(new Rotation2d(0.0))));  //JNP
 
-    OI.configureButtonBindings(m_drive);
+    OI.configureButtonBindings(m_drive, m_intake);
   }
 
 	// private void configureAutoChooser(){
@@ -107,22 +107,25 @@ public class RobotContainer {
 		return m_drive;
 	}
 
+	public Intake getIntake() {
+		return m_intake;
+	}
+
 	public void simulationInit(){
-	//   m_elevator.simulationInit();
+	  //m_intake.simulationInit();
 	}
 
 	/** This function is called periodically whilst in simulation. */
 	public void simulationPeriodic() {
-	//   m_elevator.simulationPeriodic();
+	  //m_intake.simulationPeriodic();
 	}
 
 	public void sendToDashboard() {
 		m_drive.sendToDashboard();
+		m_intake.sendToDashboard();
 		// m_shooter.sendToDashboard();
 		// m_climber.sendToDashboard();
-		// m_intakeFeeder.sendToDashboard();
 		// m_limelight.sendToDashboard();
 		// m_candleSystem.sendToDashboard();
 	}
-
 }

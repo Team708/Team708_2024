@@ -1,20 +1,17 @@
 package frc.robot;
 
 import frc.robot.Constants.ControllerConstants;
-import frc.robot.commands.DriveByController;
-import frc.robot.commands.drive.DisableAutoTargetSpeaker;
-import frc.robot.commands.drive.EnableAutoTargetSpeaker;
-import frc.robot.commands.drive.DriveToAmp;
-import frc.robot.commands.drive.DriveToAmp;
+import frc.robot.commands.intake.IntakeAllIn;
+import frc.robot.commands.intake.IntakeAllOut;
+import frc.robot.commands.intake.IntakeEjectBack;
+import frc.robot.commands.intake.IntakeOff;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.Command;
+
 //Subsysem Imports
 import frc.robot.subsystems.drive.Drivetrain;
-
-//Command Imports
-// import frc.robot.commands.drive.DriveStraightCommand;
+import frc.robot.subsystems.Intake;
 
 public class OI {
 
@@ -77,19 +74,21 @@ public class OI {
   // 	return deadBand(climberController.getRightY(), ControllerConstants.kClimberDeadBandRightY);
   // }
 
-  public static void configureButtonBindings(Drivetrain m_drive) {
+  public static void configureButtonBindings(Drivetrain m_drive, Intake m_intake) {
 
     //DRIVER//
 
-    // new JoystickButton(driverController, Button.kA.value)
-    // 		.whenPressed(new /*Command*/);	
+    new JoystickButton(driverController, Button.kA.value) //TODO Change these buttons, current commands only for testing
+    		.onTrue(new IntakeAllOut(m_intake))
+    		.onFalse(new IntakeOff(m_intake));
 
-    // new JoystickButton(driverController, Button.kB.value)
-    // 		.whileHeld(new /*Command*/)
-    // 		.whenReleased(new /*Command*/);
+    new JoystickButton(driverController, Button.kB.value) //TODO Change these buttons, current commands only for testing
+    		.onTrue(new IntakeAllIn(m_intake))
+    		.onFalse(new IntakeOff(m_intake));
 
-    // new JoystickButton(driverController, Button.kX.value)
-    // 		.whenPressed(new /*Command*/);
+    new JoystickButton(driverController, Button.kX.value) //TODO Change these buttons, current commands only for testing
+    		.onTrue(new IntakeEjectBack(m_intake))
+    		.onFalse(new IntakeOff(m_intake));
 
     // new JoystickButton(driverController, Button.kY.value)
     // 		.whenPressed(new /*Command*/);
