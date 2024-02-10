@@ -51,6 +51,7 @@ public class Intake extends SubsystemBase{
 		m_intakeMotorBack.setSmartCurrentLimit(CurrentLimit.kIntake);
 		m_intakeMotorBack.setInverted(false);
 		m_intakeMotorBack.setIdleMode(IdleMode.kCoast);
+		intakeDirection = "";
 	}
 
 	@Override
@@ -122,7 +123,7 @@ public class Intake extends SubsystemBase{
 	public void sendToDashboard(){
 		// SmartDashboard.putNumber("intake speed", getRollerSpeed());
 		// SmartDashboard.putNumber("intake Position", getRollerPosition());
-		// SmartDashboard.putString("intake Direction", intakeDirection);
+		SmartDashboard.putString("intake Direction", intakeDirection);
 
 	}
 

@@ -22,7 +22,7 @@ import frc.robot.subsystems.Intake;
 public class IntakeSimulation {
 
   private final DCMotor intakeGearbox = DCMotor.getNEO(1);
-
+  
   private CANSparkMax m_frontMotor, m_backMotor, m_leftMotor, m_rightMotor;
   private RelativeEncoder m_frontEncoder, m_backEncoder, m_leftEncoder, m_rightEncoder;
 

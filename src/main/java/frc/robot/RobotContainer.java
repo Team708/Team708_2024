@@ -10,14 +10,10 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import frc.robot.Constants.FMSConstants;
-import frc.robot.commands.auto.doNothingCommand;
 import frc.robot.commands.DriveByController;
 // import frc.robot.commands.OperateByController; //TODO uncomment if using Operator Controller
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.drive.Drivetrain;
@@ -102,12 +98,12 @@ public class RobotContainer {
 	}
 
 	public void simulationInit(){
-	  m_intake.simulationInit();
+	  //m_intake.simulationInit();
 	}
 
 	/** This function is called periodically whilst in simulation. */
 	public void simulationPeriodic() {
-	  m_intake.simulationPeriodic();
+	  //m_intake.simulationPeriodic();
 	}
 
 	public void sendToDashboard() {
