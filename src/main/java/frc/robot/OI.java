@@ -1,6 +1,9 @@
 package frc.robot;
 
 import frc.robot.Constants.ControllerConstants;
+import frc.robot.commands.drive.DisableAutoTargetSpeaker;
+import frc.robot.commands.drive.DriveToAmp;
+import frc.robot.commands.drive.EnableAutoTargetSpeaker;
 import frc.robot.commands.intake.IntakeAllIn;
 import frc.robot.commands.intake.IntakeAllOut;
 import frc.robot.commands.intake.IntakeEjectBack;

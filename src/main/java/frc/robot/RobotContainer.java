@@ -62,7 +62,7 @@ public class RobotContainer {
 	public RobotContainer() {
 		// Configure the button bindings
 		configureButtonBindings();
-		
+	
 		// configureAutoChooser();
 		// Build an auto chooser. This will use Commands.none() as the default option.
 		autoChooser = AutoBuilder.buildAutoChooser();
