@@ -139,7 +139,7 @@ public final class Constants {
 
 
     //Auto Rotate PID
-    public static final PIDController kAutoRotatePID = new PIDController(0.06, 0.0001, 0.0025);//, //new Constraints(300000, 150000));
+    public static final PIDController kAutoRotatePID = new PIDController(0.07, 0.0001,.005);//(0.06, 0.0001, 0.0025);//, //new Constraints(300000, 150000));
 
 
 
