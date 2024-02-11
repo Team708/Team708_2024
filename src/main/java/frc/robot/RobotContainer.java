@@ -112,12 +112,12 @@ public class RobotContainer {
 	}
 
 	public void simulationInit(){
-	  //m_intake.simulationInit();
+	  m_intake.simulationInit();
 	}
 
 	/** This function is called periodically whilst in simulation. */
 	public void simulationPeriodic() {
-	  //m_intake.simulationPeriodic();
+	  m_intake.simulationPeriodic();
 	}
 
 	public void sendToDashboard() {

@@ -14,11 +14,13 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.math.trajectory.Trajectory.State;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.FollowPathHolonomic;
@@ -37,6 +39,7 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import frc.robot.Constants;
 import frc.robot.Constants.*;
 import frc.robot.OI;
@@ -129,8 +132,10 @@ import frc.robot.utilities.MathUtils;
     thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
     m_field = new Field2d();
-
     SmartDashboard.putData("Field", m_field);
+    m_field.getObject("trajectory").setTrajectory(new Trajectory());;
+    m_field.getObject("Desired Pose").setPose(new Pose2d());;
+    m_field.getObject("Desired Target").setPose(new Pose2d());
 
     // Configure AutoBuilder last
     AutoBuilder.configureHolonomic(
@@ -187,11 +192,12 @@ import frc.robot.utilities.MathUtils;
     // SmartDashboard.putNumber("rot Commanded", rot);
 
     //creates an array of the desired swerve module states based on driver command and if the commands are field relative or not
+    // TODO change field relative angle to use robot pose and not pigeon
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
-        fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, pigeon.getAngle())
+        fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, getPose().getRotation())
             : new ChassisSpeeds(xSpeed * pigeon.getAngle().getCos() + ySpeed * pigeon.getAngle().getSin(), 
             (-xSpeed * pigeon.getAngle().getSin() + ySpeed * pigeon.getAngle().getCos()) - (radius * rot), 
-            rot));
+            rot)); 
 
     //normalize wheel speeds so all individual states are scaled to achievable velocities
     SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, DriveConstants.kMaxSpeedMetersPerSec); 
@@ -232,6 +238,7 @@ import frc.robot.utilities.MathUtils;
         currentPose = getPose();
  
         m_field.getRobotObject().setPose(currentPose);
+
   }
 
   public void setFieldOrient(boolean fieldOrient){
@@ -433,7 +440,7 @@ import frc.robot.utilities.MathUtils;
         new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
         new PIDConstants(5.0, 0.0, 0.0), // Rotation PID constants
         4.5, // Max module speed, in m/s
-        0.4, // Drive base radius in meters. Distance from robot center to furthest module.
+        DriveConstants.kRadius, // Drive base radius in meters. Distance from robot center to furthest module.
         new ReplanningConfig() // Default path replanning config. See the API for the options here
       ),
       () -> {
@@ -488,6 +495,8 @@ import frc.robot.utilities.MathUtils;
   public void makeRobotDrive()
   {
     PIDController controller = Constants.DriveConstants.kAutoRotatePID;//, //new Constraints(300000, 150000));
+    controller.setTolerance(1);
+
     double desiredRot = findAutoRotate(controller, getDriverRot());
     this.drive(getDriverXAndY().getX(), 
                        getDriverXAndY().getY(),
@@ -509,16 +518,21 @@ import frc.robot.utilities.MathUtils;
   public double findAutoRotate(PIDController controller, double defaultRot)
   {
       if(autoRotEnabled){
-        double dx = Constants.DriveConstants.kBlueSpeaker.getX() - getPose().getX();
-        double dy = Constants.DriveConstants.kBlueSpeaker.getY() - getPose().getY();
+        double dx = DriveConstants.kBlueSpeaker.getX() - getPose().getX();
+        double dy = DriveConstants.kBlueSpeaker.getY() - getPose().getY();
         Rotation2d robotToTarget = new Rotation2d(dx, dy);
-        return controller.calculate(getPose().getRotation().getDegrees(), robotToTarget.getDegrees());
+        m_field.getObject("Desired Target").setPose(DriveConstants.kBlueSpeaker);
+        double output =  controller.calculate(getPose().getRotation().getDegrees(), robotToTarget.getDegrees());
+        if(!controller.atSetpoint()){
+          return output;
+        }else{
+          return 0.0;
+        }
       }
-      return defaultRot;  
+      return defaultRot;
   }
 
-  public Trajectory createTrajectory(Pose2d desiredPose)
-  {
+  public Trajectory createTrajectory(Pose2d desiredPose){
     TrajectoryConfig config = new TrajectoryConfig(Constants.DriveConstants.kMaxSpeedMetersPerSec, Constants.DriveConstants.kMaxAccelMetersPerSecSquared);
     ArrayList<Pose2d> waypoints = new ArrayList<Pose2d>();
     waypoints.add(getPose());
@@ -540,9 +554,23 @@ import frc.robot.utilities.MathUtils;
       new GoalEndState(0.0, DriveConstants.kRobotToAmp.getRotation())
     );
 
+    Trajectory trajectory = new Trajectory(bezierPoints.stream().map(
+      translation2d ->
+          new State(
+              1,
+              1,
+              1,
+              new Pose2d(translation2d, new Rotation2d()),
+              .01))
+          .collect(Collectors.toList()));
+    
+    // Push the trajectory to Field2d.    
+    m_field.getObject("trajectory").setTrajectory(trajectory);
+    m_field.getObject("Desired Pose").setPose(desiredLocation);
+    
     // Prevent this path from being flipped on the red alliance, since the given positions are already correct
     path.preventFlipping = true;
-
+    
     AutoBuilder.followPath(path).schedule();
     System.out.println("ran init");
   }
