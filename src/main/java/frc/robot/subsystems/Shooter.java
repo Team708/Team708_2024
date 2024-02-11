@@ -80,14 +80,14 @@ public class Shooter extends SubsystemBase {
     shooterSpeakerPIDController.setReference(0, CANSparkMax.ControlType.kVelocity);
   }
 
-  public boolean isShooterSpeakerAtSpeed() {
+  public boolean isShooterSpeakerAtSpeed(double targetSpeed) {
     if ((Math.abs(shooterEncoderTop.getVelocity()) > (targetSpeed) * ShooterConstants.kThreshhold)){
       return true;
     }
     return false;
   }
 
-  public boolean isShooterAmpAtSpeed() {
+  public boolean isShooterAmpAtSpeed(double targetSpeed) {
     if ((Math.abs(shooterEncoderAmp.getVelocity()) > (targetSpeed) * ShooterConstants.kThreshhold)){
       return true;
     }

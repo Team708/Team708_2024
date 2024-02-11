@@ -39,6 +39,6 @@ public class armToAmpShotAngle extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (m_PivotArm.findDisplacement(ArmConstants.kAmpAngle) < ArmConstants.kThresholdArm);
+    return (m_PivotArm.isArmAtPosition());
   }
 }

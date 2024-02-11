@@ -5,21 +5,21 @@
 package frc.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.Shooter;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class SetShooterSpeedBumperShot extends Command {
-  private Shooter m_shooter;
+  Shooter m_shooter;
 
   /** Creates a new Shoot. */
   //we need a feeder system created and implemented
 
 
-  public SetShooterSpeedBumperShot(Shooter m_shooter) {
-    m_shooter = new Shooter();
+  public SetShooterSpeedBumperShot(Shooter shooter) {
+    m_shooter = shooter;
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
@@ -32,11 +32,11 @@ public class SetShooterSpeedBumperShot extends Command {
   }
 
   public void execute(){
-    m_shooter.setShooterSpeedSpeaker(Constants.ShooterConstants.kShooterBumperShotMPS);
+    m_shooter.setShooterSpeedSpeaker(ShooterConstants.kShooterBumperShotMPS);
   }
   
   @Override
   public boolean isFinished(){
-    return m_shooter.isShooterSpeakerAtSpeed();
+    return m_shooter.isShooterSpeakerAtSpeed(ShooterConstants.kShooterBumperShotMPS);
   }
 }

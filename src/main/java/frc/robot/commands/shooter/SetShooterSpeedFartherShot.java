@@ -5,7 +5,7 @@
 package frc.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.Shooter;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -31,11 +31,11 @@ public class SetShooterSpeedFartherShot extends Command {
   }
 
   public void execute(){
-    m_shooter.setShooterSpeedSpeaker(Constants.ShooterConstants.kShooterFartherShotMPS);
+    m_shooter.setShooterSpeedSpeaker(ShooterConstants.kShooterFartherShotMPS);
   }
   
   @Override
   public boolean isFinished(){
-    return m_shooter.isShooterSpeakerAtSpeed();
+    return m_shooter.isShooterSpeakerAtSpeed(ShooterConstants.kShooterFartherShotMPS);
   }
 }

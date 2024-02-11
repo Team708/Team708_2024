@@ -235,10 +235,9 @@ public final class Constants {
     public static final int kIntakeMode = 1; //0 = Roller, 1 = Clamp
 
     public static final int kIntakeMotorFrontID = 22;
-    public static final int kIntakeMotorBackID  = 23;
+    public static final int kIntakeMotorBackID  = 29; //change back to 23
     public static final int kIntakeMotorRightID = 25;
     public static final int kIntakeMotorLeftID  = 27;
-
   }
 
   /**
@@ -283,22 +282,22 @@ public final class Constants {
    */
   public static final class ArmConstants  {
     //arm motor ids
-    public static final int kArmMasterMotorID  = 30;
+    public static final int kArmMasterMotorID  = 23;
     public static final int kArmSlaveMotorID    = 42;
 
     //gearbox ratios
-    public static final int kPivotArmGearRatio = 45;
+    public static final double kPivotArmGearRatio = 360/45; //42*45;
 
     //arm angles for different shots
-    public static final double kBumperShotAngle = 60;
-    public static final double kPodiumAngle = 50;
-    public static final double kAmpAngle = 55;
-    public static final double kFartherShotAngle = 30;
+    public static final double kBumperShotAngle = 75;
+    public static final double kParkAngle = -10;
+    public static final double kAmpAngle = 90;
+    public static final double kFartherShotAngle = 45;
     public static final double kThresholdArm = 0.5;
     
     //PID values for arm motors
     //make sure the PID values get tuned
-    public static final double kPivotArm_P = 0.00015;
+    public static final double kPivotArm_P = 0.015;
     public static final double kPivotArm_I = 0.000001; 
     public static final double kPivotArm_D = 0.006;
     public static final double kPivotArm_FF = 0.0;
@@ -306,8 +305,10 @@ public final class Constants {
     public static final double kPivotArm_Min = -1;
     public static final double kPivotArm_Max = 1;
     public static final double[] kPivotArmPIDList = {kPivotArm_P,kPivotArm_I,kPivotArm_D,
-                                        kPivotArm_FF,kPivotArm_IZone,kPivotArm_Min,kPivotArm_Max};    
-    
+                                        kPivotArm_FF,kPivotArm_IZone,kPivotArm_Min,kPivotArm_Max};
+
+    public static final double kArmScalingFactor = -360;
+    public static final double kArmAbsEncoderOffset = -107.0;
   }
 
  /**

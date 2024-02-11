@@ -6,13 +6,11 @@ package frc.robot.commands.PivotArm;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.PivotArm;
-import frc.robot.Constants.ArmConstants;
 
 public class armToBumperShotAngle extends Command {
   /** Creates a new moveArm. */
   PivotArm m_PivotArm;
   
-
   public armToBumperShotAngle(PivotArm pivotArm) {
     m_PivotArm = pivotArm;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -28,7 +26,7 @@ public class armToBumperShotAngle extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute(){
-    m_PivotArm.setArmAngle(m_PivotArm.findArmAngle(0));  //replace constant with method from pivotArm subsystem
+    m_PivotArm.setArmAngle(m_PivotArm.findArmAngle());  //replace constant with method from pivotArm subsystem
     //method would take parameter of distance from speaker, then use regression to get arm angle
   }
 
@@ -40,6 +38,7 @@ public class armToBumperShotAngle extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (m_PivotArm.findDisplacement(ArmConstants.kBumperShotAngle) < ArmConstants.kThresholdArm);
+    return (m_PivotArm.isArmAtPosition());
   }
+  
 }

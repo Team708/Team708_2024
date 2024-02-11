@@ -4,7 +4,7 @@ import frc.robot.Constants.ControllerConstants;
 import frc.robot.commands.shooter.SetShooterSpeedBumperShot;
 import frc.robot.commands.PivotArm.armToBumperShotAngle;
 import frc.robot.commands.PivotArm.armToFartherShotAngle;
-import frc.robot.commands.PivotArm.armToPodiumShotAngle;
+import frc.robot.commands.PivotArm.armToParkShotAngle;
 import frc.robot.commands.PivotArm.armToAmpShotAngle;
 import frc.robot.commands.shooter.ShooterOff;
 import edu.wpi.first.wpilibj.XboxController;
@@ -165,7 +165,7 @@ public class OI {
     
     //testing button
     new JoystickButton(operatorController, Button.kA.value)
-    		.onTrue(new armToBumperShotAngle(m_PivotArm));
+    		.onTrue(new armToParkShotAngle(m_PivotArm));
 
     //testing button
     new JoystickButton(operatorController, Button.kB.value)
@@ -173,11 +173,11 @@ public class OI {
 
     //testing button
     new JoystickButton(operatorController, Button.kY.value)
-    		.onTrue(new armToPodiumShotAngle(m_PivotArm));  
+    		.onTrue(new armToBumperShotAngle(m_PivotArm));  
     
     //testing button
     new JoystickButton(operatorController, Button.kX.value)
-    		.onTrue(new ShooterOff(m_shooter));
+    		.onTrue(new armToAmpShotAngle(m_PivotArm));
 
     //testing button
     new JoystickButton(operatorController, Button.kRightBumper.value)

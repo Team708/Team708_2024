@@ -9,9 +9,11 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.PivotArm.armToBumperShotAngle;
 import frc.robot.commands.shooter.SetShooterSpeedBumperShot;
 import frc.robot.commands.Feeder.FeedNoteToShoot;
+import frc.robot.commands.drive.EnableAutoTargetSpeaker;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.PivotArm;
 import frc.robot.subsystems.Feeder;
+import frc.robot.subsystems.drive.Drivetrain;
 
 
 
@@ -23,9 +25,10 @@ public class ShootSpeakerBumperShotSCG extends SequentialCommandGroup {
   /** Creates a new ShootSpeakerBumperShotSCG. 
    * @param PivotArm 
    * @param m_shooter
-   * @param m_feeder */
+   * @param m_feeder
+   * @param m_drive */
 
-  public ShootSpeakerBumperShotSCG(PivotArm PivotArm, Shooter m_shooter, Feeder m_feeder) {
+  public ShootSpeakerBumperShotSCG(PivotArm PivotArm, Shooter m_shooter, Feeder m_feeder, Drivetrain m_drive) {
     
     //
 
@@ -33,11 +36,17 @@ public class ShootSpeakerBumperShotSCG extends SequentialCommandGroup {
     addCommands(
       
       new ParallelCommandGroup(
-          new armToBumperShotAngle(PivotArm), 
-          new SetShooterSpeedBumperShot(m_shooter)
-          //add autoturning command
+        new armToBumperShotAngle(PivotArm), 
+        new SetShooterSpeedBumperShot(m_shooter),
+        new EnableAutoTargetSpeaker(m_drive)
       ),
-      new FeedNoteToShoot(m_feeder) //keep aiming while shooting, 
+       //keep aiming while shooting
+      new ParallelCommandGroup(
+        new armToBumperShotAngle(PivotArm), 
+        new SetShooterSpeedBumperShot(m_shooter),
+        new EnableAutoTargetSpeaker(m_drive),
+        new FeedNoteToShoot(m_feeder)
+      )
     );
   }
 }

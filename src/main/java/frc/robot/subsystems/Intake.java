@@ -33,11 +33,6 @@ public class Intake extends SubsystemBase{
         m_intakeMotorFront = new CANSparkMax(IntakeConstants.kIntakeMotorFrontID, MotorType.kBrushless);
         m_intakeMotorBack = new CANSparkMax(IntakeConstants.kIntakeMotorBackID, MotorType.kBrushless);
 
-		m_intakeMotorRight = new CANSparkMax(IntakeConstants.kIntakeMotorRightID, MotorType.kBrushless);
-		m_intakeMotorLeft = new CANSparkMax(IntakeConstants.kIntakeMotorLeftID, MotorType.kBrushless);
-		m_intakeMotorFront = new CANSparkMax(IntakeConstants.kIntakeMotorFrontID, MotorType.kBrushless);
-		m_intakeMotorBack = new CANSparkMax(IntakeConstants.kIntakeMotorBackID, MotorType.kBrushless);
-
 		m_intakeMotorRight.setSmartCurrentLimit(CurrentLimit.kIntake);
 		m_intakeMotorRight.setInverted(false);
 		m_intakeMotorRight.setIdleMode(IdleMode.kCoast);
