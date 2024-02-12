@@ -14,3 +14,7 @@ Path Planner: https://github.com/mjansen4857/pathplanner
 ## Commands:
 
 - [All Commands](src/main/java/frc/robot/documentation/Command.md)
+
+## Robot Bring-Up:
+
+- [Check List](src/main/java/frc/robot/documentation/RobotBringUp.md)
