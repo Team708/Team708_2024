@@ -83,16 +83,16 @@ public class PivotArm extends SubsystemBase {
   }
 
   //make sure units are correct
-  public double findDisplacement() {
-    return (findArmAngle() - getPosition());
+  public double findDisplacement(double angle) {
+    return (angle - getPosition());
   }
 
   public double encoderRotationsToRadians(double armRadians) {
     return Units.radiansToRotations(armRadians);
   }
 
-  public boolean isArmAtPosition() {
-    return (findDisplacement() < ArmConstants.kThresholdArm);
+  public boolean isArmAtPosition(double angle) {
+    return (findDisplacement(angle) < ArmConstants.kThresholdArm);
   }
 
   public void sendToDashboard() {
