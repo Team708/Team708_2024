@@ -5,11 +5,13 @@ import frc.robot.commands.shooter.SetShooterSpeedBumperShot;
 import frc.robot.commands.PivotArm.armToBumperShotAngle;
 import frc.robot.commands.PivotArm.armToFartherShotAngle;
 import frc.robot.commands.PivotArm.armToParkShotAngle;
+import frc.robot.commands.ShootSpeakerBumperShotSCG;
 import frc.robot.commands.PivotArm.armToAmpShotAngle;
 import frc.robot.commands.shooter.ShooterOff;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.PivotArm;
+import frc.robot.subsystems.Feeder;
 import frc.robot.commands.drive.DisableAutoTargetSpeaker;
 import frc.robot.commands.drive.DriveToAmp;
 import frc.robot.commands.drive.EnableAutoTargetSpeaker;
@@ -17,7 +19,6 @@ import frc.robot.commands.intake.IntakeAllIn;
 import frc.robot.commands.intake.IntakeAllOut;
 import frc.robot.commands.intake.IntakeEjectBack;
 import frc.robot.commands.intake.IntakeOff;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -89,7 +90,7 @@ public class OI {
   // 	return deadBand(climberController.getRightY(), ControllerConstants.kClimberDeadBandRightY);
   // }
 
-  public static void configureButtonBindings(Drivetrain m_drive, Intake m_intake, Shooter m_shooter, PivotArm m_PivotArm) {
+  public static void configureButtonBindings(Drivetrain m_drive, Intake m_intake, Feeder m_feeder, Shooter m_shooter, PivotArm m_PivotArm) {
 
     //DRIVER//
     new JoystickButton(driverController, Button.kA.value) //TODO Change these buttons, current commands only for testing
@@ -119,8 +120,8 @@ public class OI {
 
     new JoystickButton(driverController, Button.kLeftBumper.value)
     		//.whileHeld((new AutoTargetSpeaker(m_drive)));
-        .whileTrue(new EnableAutoTargetSpeaker(m_drive))
-        .whileFalse(new DisableAutoTargetSpeaker(m_drive));
+        .whileTrue(new ShootSpeakerBumperShotSCG(m_drive, m_feeder, m_shooter, m_PivotArm));
+        // .whileFalse(new DisableAutoTargetSpeaker(m_drive));
 
     // new JoystickButton(driverController, Button.kRightStick.value)
     // 		.onTrue(new /*Command*/);

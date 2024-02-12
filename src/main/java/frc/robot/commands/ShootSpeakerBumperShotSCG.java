@@ -23,26 +23,22 @@ import frc.robot.subsystems.drive.Drivetrain;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ShootSpeakerBumperShotSCG extends SequentialCommandGroup {
   /** Creates a new ShootSpeakerBumperShotSCG. 
-   * @param PivotArm 
+   * @param m_PivotArm 
    * @param m_shooter
    * @param m_feeder
    * @param m_drive */
 
-  public ShootSpeakerBumperShotSCG(PivotArm PivotArm, Shooter m_shooter, Feeder m_feeder, Drivetrain m_drive) {
-    
-    //
+  public ShootSpeakerBumperShotSCG(Drivetrain m_drive, Feeder m_feeder, Shooter m_shooter, PivotArm m_PivotArm) {
 
-    
     addCommands(
-      
       new ParallelCommandGroup(
-        new armToBumperShotAngle(PivotArm), 
+        new armToBumperShotAngle(m_PivotArm), 
         new SetShooterSpeedBumperShot(m_shooter),
         new EnableAutoTargetSpeaker(m_drive)
       ),
        //keep aiming while shooting
       new ParallelCommandGroup(
-        new armToBumperShotAngle(PivotArm), 
+        new armToBumperShotAngle(m_PivotArm), 
         new SetShooterSpeedBumperShot(m_shooter),
         new EnableAutoTargetSpeaker(m_drive),
         new FeedNoteToShoot(m_feeder)

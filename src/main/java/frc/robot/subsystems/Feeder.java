@@ -48,7 +48,7 @@ public class Feeder extends SubsystemBase {
 
   
   public void feederThroughStage1() {
-    m_FeederStage1Motor.set(1);
+    m_FeederStage1Motor.set(1.0);
   }
 
   //ultimately check if sensor input is true for whether note has passed through stage 2

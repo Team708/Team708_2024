@@ -34,8 +34,8 @@ public final class Constants {
   public static final class CurrentLimit{
     public static final int kIntake = 25;
 
-    public static final int kArm = 40;
-    public static final int kFeeder = 40;
+    public static final int kArmAmps = 40;
+    public static final int kFeederAmps = 40;
 
     public static final int kTranslationAmps = 40;
     public static final int kRotationAmps = 25;
@@ -245,6 +245,7 @@ public final class Constants {
    */
   public static final class FeederConstants  {
     public static final int kFeederStage1MotorID  = 31;
+    public static final int kFeederStage2MotorID  = 32;
 
     //PID values
     //make sure the PID values get tuned
@@ -260,7 +261,7 @@ public final class Constants {
                                         kFeederStage1Motor_FF,kFeederStage1Motor_IZone,kFeederStage1Motor_Min,kFeederStage1Motor_Max};
 
 
-    public static final int kFeederStage2MotorID  = 32;
+    
     
     //PID values
     //make sure the PID values get tuned

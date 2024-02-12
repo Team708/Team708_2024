@@ -11,9 +11,8 @@ public class FeedNoteToShoot extends Command {
   private Feeder m_feeder;
 
   public FeedNoteToShoot(Feeder m_feeder) {
-    m_feeder = new Feeder();
-
-    addRequirements(m_feeder);
+    
+    // addRequirements(m_feeder);
   }
 
   // Called when the command is initially scheduled.
