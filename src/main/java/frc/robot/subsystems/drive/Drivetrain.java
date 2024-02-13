@@ -114,6 +114,7 @@ import frc.robot.utilities.MathUtils;
   private final Field2d m_field;
 
   private Pose2d currentPose = new Pose2d();
+  private Pose2d targetPose = new Pose2d();
 
   /**
    * Constructs a Drivetrain and resets the Gyro and Keep Angle parameters
@@ -509,12 +510,23 @@ import frc.robot.utilities.MathUtils;
   public double findAutoRotate(PIDController controller, double defaultRot)
   {
       if(autoRotEnabled){
-        double dx = Constants.DriveConstants.kBlueSpeaker.getX() - getPose().getX();
-        double dy = Constants.DriveConstants.kBlueSpeaker.getY() - getPose().getY();
+        targetPose = DriveConstants.kBlueSpeaker;
+        double dx = targetPose.getX() - getPose().getX();
+        double dy = targetPose.getY() - getPose().getY();
         Rotation2d robotToTarget = new Rotation2d(dx, dy);
-        return controller.calculate(getPose().getRotation().getDegrees(), robotToTarget.getDegrees());
+        m_field.getObject("Desired Target").setPose(targetPose);
+        double output =  controller.calculate(getPose().getRotation().getDegrees(), robotToTarget.getDegrees());
+        if(!controller.atSetpoint()){
+          return output;
+        }else{
+          return 0.0;
+        }
       }
       return defaultRot;  
+  }
+
+  public double getDistanceToTarget() {
+    return getPose().getTranslation().getDistance(DriveConstants.kBlueSpeaker.getTranslation());
   }
 
   public Trajectory createTrajectory(Pose2d desiredPose)
