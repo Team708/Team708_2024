@@ -287,7 +287,7 @@ public final class Constants {
    */
   public static final class ArmConstants  {
     //arm motor ids
-    public static final int kArmMasterMotorID  = 23;
+    public static final int kArmMasterMotorID  = 41;
     public static final int kArmSlaveMotorID    = 42;
 
     //gearbox ratios
