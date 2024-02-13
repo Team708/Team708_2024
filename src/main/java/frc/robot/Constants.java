@@ -34,8 +34,8 @@ public final class Constants {
   public static final class CurrentLimit{
     public static final int kIntake = 25;
 
-    public static final int kArm = 40;
-    public static final int kFeeder = 40;
+    public static final int kArmAmps = 40;
+    public static final int kFeederAmps = 40;
 
     public static final int kTranslationAmps = 40;
     public static final int kRotationAmps = 25;
@@ -234,19 +234,10 @@ public final class Constants {
     
     public static final int kIntakeMode = 1; //0 = Roller, 1 = Clamp
 
-    public static final int kIntakeMotorFrontID = 21;
-    public static final int kIntakeMotorBackID  = 23;
+    public static final int kIntakeMotorFrontID = 22;
+    public static final int kIntakeMotorBackID  = 29; //change back to 23
     public static final int kIntakeMotorRightID = 25;
     public static final int kIntakeMotorLeftID  = 27;
-
-  }
-
-  /**
-   * Shooter constants 
-   */
-  public static final class ShooterConstants  {
-    public static final int kShooterSpeakerMotorID  = 31;
-    public static final int kShooteAmpMotorID       = 41;
   }
 
   /**
@@ -254,15 +245,118 @@ public final class Constants {
    */
   public static final class FeederConstants  {
     public static final int kFeederStage1MotorID  = 31;
-    public static final int kFeederStage2MotorID  = 41;
+    public static final int kFeederStage2MotorID  = 32;
+
+    //PID values
+    //make sure the PID values get tuned
+    
+    public static final double kFeederStage1Motor_P = 0.00015;
+    public static final double kFeederStage1Motor_I = 0.000001; 
+    public static final double kFeederStage1Motor_D = 0.006;
+    public static final double kFeederStage1Motor_FF = 0.0;
+    public static final double kFeederStage1Motor_IZone = 0;
+    public static final double kFeederStage1Motor_Min = -1;
+    public static final double kFeederStage1Motor_Max = 1;
+    public static final double[] kFeederStage1PIDList = {kFeederStage1Motor_P,kFeederStage1Motor_I,kFeederStage1Motor_D,
+                                        kFeederStage1Motor_FF,kFeederStage1Motor_IZone,kFeederStage1Motor_Min,kFeederStage1Motor_Max};
+
+
+    
+    
+    //PID values
+    //make sure the PID values get tuned
+
+    public static final double kFeederStage2Motor_P = 0.00015;
+    public static final double kFeederStage2Motor_I = 0.000001; 
+    public static final double kFeederStage2Motor_D = 0.006;
+    public static final double kFeederStage2Motor_FF = 0.0;
+    public static final double kFeederStage2Motor_IZone = 0;
+    public static final double kFeederStage2Motor_Min = -1;
+    public static final double kFeederStage2Motor_Max = 1;
+    public static final double[] kFeederStage2PIDList = {kFeederStage2Motor_P,kFeederStage2Motor_I,kFeederStage2Motor_D,
+                                        kFeederStage2Motor_FF,kFeederStage2Motor_IZone,kFeederStage2Motor_Min,kFeederStage2Motor_Max};
+
   }
 
   /**
    * Arm constants 
    */
-  public static final class Arm  {
-    public static final int kArmMaster1MotorID  = 61;
-    public static final int kArmSlaveMotorID    = 62;
+  public static final class ArmConstants  {
+    //arm motor ids
+    public static final int kArmMasterMotorID  = 23;
+    public static final int kArmSlaveMotorID    = 42;
+
+    //gearbox ratios
+    public static final double kPivotArmGearRatio = 360/45; //42*45;
+
+    //arm angles for different shots
+    public static final double kBumperShotAngle = 75;
+    public static final double kParkAngle = -10;
+    public static final double kAmpAngle = 90;
+    public static final double kFartherShotAngle = 45;
+    public static final double kThresholdArm = 0.5;
+    
+    //PID values for arm motors
+    //make sure the PID values get tuned
+    public static final double kPivotArm_P = 0.015;
+    public static final double kPivotArm_I = 0.000001; 
+    public static final double kPivotArm_D = 0.006;
+    public static final double kPivotArm_FF = 0.0;
+    public static final double kPivotArm_IZone = 0;
+    public static final double kPivotArm_Min = -1;
+    public static final double kPivotArm_Max = 1;
+    public static final double[] kPivotArmPIDList = {kPivotArm_P,kPivotArm_I,kPivotArm_D,
+                                        kPivotArm_FF,kPivotArm_IZone,kPivotArm_Min,kPivotArm_Max};
+
+    public static final double kArmScalingFactor = -360;
+    public static final double kArmAbsEncoderOffset = -107.0;
+  }
+
+ /**
+   * Shooter constants 
+   */
+  public static final class ShooterConstants  {    
+    // public static final int kShooterMotorID = 30; //keep as 30 once move arm testing is done
+    public static final int kShooterMotorTopID = 51;
+    public static final int kShooterMotorBottomID = 52;
+    public static final int kShooterMotorAmpID = 53;
+
+    //speeds for different shots
+    public static final int kShooterTargetSpeed = 1000;
+
+    //gearbox ratios
+    public static final int kShooterGearRatio = 1;
+    
+    //speed constants
+    public static final double kShooterBumperShotMPS = 1000;
+    public static final double kShooterPodiumShotMPS = 1250;
+    public static final double kShooterFartherShotMPS = 1500;
+    public static final double kAmpMPS = 500;
+    
+    public static final double kThreshhold = 0.75;
+    
+    //PID constants
+    //make sure the PID values get tuned
+
+    public static final double kShooterTop_P = 0.00015;
+    public static final double kShooterTop_I = 0.000001; 
+    public static final double kShooterTop_D = 0.006;
+    public static final double kShooterTop_FF = 0.0;
+    public static final double kShooterTop_IZone = 0;
+    public static final double kShooterTop_Min = -1;
+    public static final double kShooterTop_Max = 1;
+    public static final double[] kShooterTopPIDList = {kShooterTop_P,kShooterTop_I,kShooterTop_D,
+                                        kShooterTop_FF,kShooterTop_IZone,kShooterTop_Min,kShooterTop_Max};
+    public static final double kShooterAmp_P = 0.00015;
+    public static final double kShooterAmp_I = 0.000001; 
+    public static final double kShooterAmp_D = 0.006;
+    public static final double kShooterAmp_FF = 0.0;
+    public static final double kShooterAmp_IZone = 0;
+    public static final double kShooterAmp_Min = -1;
+    public static final double kShooterAmp_Max = 1;
+    public static final double[] kShooterAmpPIDList = {kShooterAmp_P,kShooterAmp_I,kShooterAmp_D,
+                                        kShooterAmp_FF,kShooterAmp_IZone,kShooterAmp_Min,kShooterAmp_Max};
+    
   }
 
   /**
