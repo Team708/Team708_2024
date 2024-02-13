@@ -12,8 +12,8 @@ public class armToFartherShotAngle extends Command {
   /** Creates a new moveArm. */
   PivotArm m_PivotArm;
   
-  public armToFartherShotAngle(PivotArm m_PivotArm) {
-    this.m_PivotArm = m_PivotArm;
+  public armToFartherShotAngle(PivotArm PivotArm) {
+    m_PivotArm = PivotArm;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_PivotArm);
   }

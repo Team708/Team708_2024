@@ -6,7 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.PivotArm.armToBumperShotAngle;
+import frc.robot.commands.PivotArm.EnableArmAutoAim;
 import frc.robot.commands.shooter.SetShooterSpeedBumperShot;
 import frc.robot.commands.Feeder.FeedNoteToShoot;
 import frc.robot.commands.drive.EnableAutoTargetSpeaker;
@@ -32,16 +32,16 @@ public class ShootSpeakerBumperShotSCG extends SequentialCommandGroup {
 
     addCommands(
       new ParallelCommandGroup(
-        new armToBumperShotAngle(m_PivotArm), 
-        new SetShooterSpeedBumperShot(m_shooter),
-        new EnableAutoTargetSpeaker(m_drive)
-      ),
-       //keep aiming while shooting
-      new ParallelCommandGroup(
-        new armToBumperShotAngle(m_PivotArm), 
-        new SetShooterSpeedBumperShot(m_shooter),
         new EnableAutoTargetSpeaker(m_drive),
-        new FeedNoteToShoot(m_feeder)
+        new EnableArmAutoAim(m_PivotArm, m_drive)//, 
+        // new SetShooterSpeedBumperShot(m_shooter)
+      // ), 
+      //  //keep aiming while shooting
+      // new ParallelCommandGroup(
+      //   new armToAnyShotAngle(m_PivotArm, m_drive), 
+      //   new SetShooterSpeedBumperShot(m_shooter),
+      //   new EnableAutoTargetSpeaker(m_drive),
+      //   new FeedNoteToShoot(m_feeder)
       )
     );
   }

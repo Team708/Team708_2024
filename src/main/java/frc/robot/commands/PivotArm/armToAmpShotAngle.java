@@ -13,8 +13,8 @@ public class armToAmpShotAngle extends Command {
   PivotArm m_PivotArm;
   
 
-  public armToAmpShotAngle(PivotArm m_PivotArm) {
-    this.m_PivotArm = m_PivotArm;
+  public armToAmpShotAngle(PivotArm PivotArm) {
+    m_PivotArm = PivotArm;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_PivotArm);
   }

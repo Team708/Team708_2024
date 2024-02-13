@@ -533,11 +533,12 @@ import frc.robot.utilities.MathUtils;
       }
       return defaultRot;
   }
-  
+
   public double getDistanceToTarget() {
-    return getPose().getTranslation().getDistance(targetPose.getTranslation());
+    return getPose().getTranslation().getDistance(DriveConstants.kBlueSpeaker.getTranslation());
   }
-  
+
+
 
   public Trajectory createTrajectory(Pose2d desiredPose){
     TrajectoryConfig config = new TrajectoryConfig(Constants.DriveConstants.kMaxSpeedMetersPerSec, Constants.DriveConstants.kMaxAccelMetersPerSecSquared);
