@@ -20,7 +20,7 @@ public class SetShooterSpeedBumperShot extends Command {
 
   public SetShooterSpeedBumperShot(Shooter shooter) {
     m_shooter = shooter;
-
+    
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addRequirements(m_shooter);

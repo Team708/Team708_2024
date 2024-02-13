@@ -9,7 +9,9 @@ import com.pathplanner.lib.util.PIDConstants;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -125,6 +127,8 @@ public final class Constants {
     public static final Pose2d kBluePoseSpeakerBumperBottom  = new Pose2d(0.69, 4.35, new Rotation2d(Units.degreesToRadians(120)));
     public static final Pose2d kBlueSpeaker = new Pose2d(-0.381, 5.55, new Rotation2d(180));
     public static final Pose2d kTestPoint = new Pose2d(2.831, 5.55, new Rotation2d(180));
+    public static final Pose3d kBluePoseSpeaker = new Pose3d(kBlueSpeaker.getX(), kBlueSpeaker.getY(), 1.7272, new Rotation3d(0,0,kBlueSpeaker.getRotation().getRadians()));
+
 
     public static final Pose2d kPoseAmpLocation  = new Pose2d(1.82, 7.59, new Rotation2d(Units.degreesToRadians(90)));
     public static final Pose2d kPoseFeederLocationFar  = new Pose2d(15.89,1.36, new Rotation2d(Units.degreesToRadians(-60)));  

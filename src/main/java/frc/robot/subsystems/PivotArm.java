@@ -66,8 +66,7 @@ public class PivotArm extends SubsystemBase {
   public double getAbsolutePosition() {
     return (absEncoder.getAbsolutePosition()*ArmConstants.kArmScalingFactor-ArmConstants.kArmAbsEncoderOffset);
   }
-
-    
+      
 
   //Determine units for arm as it's not completely tested
   public void setArmAngle(double angle) {
@@ -85,10 +84,6 @@ public class PivotArm extends SubsystemBase {
   //make sure units are correct
   public double findDisplacement(double angle) {
     return (angle - getPosition());
-  }
-
-  public double encoderRotationsToRadians(double armRadians) {
-    return Units.radiansToRotations(armRadians);
   }
 
   public boolean isArmAtPosition(double angle) {

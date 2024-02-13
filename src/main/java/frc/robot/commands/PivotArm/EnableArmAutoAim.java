@@ -4,46 +4,51 @@
 
 package frc.robot.commands.PivotArm;
 
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.PivotArm;
 import frc.robot.subsystems.drive.Drivetrain;
 
 
-public class armToBumperShotAngle extends Command {
-  /** Creates a new moveArm. */
-  PivotArm m_PivotArm;
-  Drivetrain m_Drive;
+public class EnableArmAutoAim extends Command {
+  
+  PivotArm m_pivotArm;
+  Drivetrain m_drive;
   double angle;
   
-  public armToBumperShotAngle(PivotArm pivotArm) {
-    m_PivotArm = pivotArm;
+  public EnableArmAutoAim(PivotArm pivotArm, Drivetrain drive) {
+    m_pivotArm = pivotArm;
+    m_drive = drive;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_PivotArm);
+    addRequirements(m_pivotArm);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    angle = Math.atan2(2.5, m_Drive.getDistanceToTarget());
   }
-
+  
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute(){
-   
-    m_PivotArm.setArmAngle(angle);  //replace constant with method from pivotArm subsystem
+    angle = Units.radiansToDegrees(Math.atan2(1.7272, m_drive.getDistanceToTarget()));
+    m_pivotArm.setArmAngle(angle);
+    SmartDashboard.putNumber("commanded angle", angle);
+      //replace constant with method from pivotArm subsystem
     //method would take parameter of distance from speaker, then use regression to get arm angle
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    // m_drive.disableAutoRot();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (m_PivotArm.isArmAtPosition(angle));
+    return false;
   }
-  
+
 }
