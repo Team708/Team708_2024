@@ -1,6 +1,7 @@
 package frc.robot;
 
 import frc.robot.Constants.ControllerConstants;
+import frc.robot.commands.shooter.SetShooterSpeedAmp;
 import frc.robot.commands.shooter.SetShooterSpeedBumperShot;
 import frc.robot.commands.PivotArm.EnableArmAutoAim;
 import frc.robot.commands.PivotArm.armToFartherShotAngle;
@@ -163,6 +164,9 @@ public class OI {
     //testing button
     new JoystickButton(operatorController, Button.kRightBumper.value)
     		.onTrue(new SetShooterSpeedBumperShot(m_shooter));
+    
+    new JoystickButton(operatorController, Button.kRightStick.value)
+    		.onTrue(new SetShooterSpeedAmp(m_shooter));
     
     //testing button
     new JoystickButton(operatorController, Button.kA.value)

@@ -322,7 +322,7 @@ public final class Constants {
    */
   public static final class ShooterConstants  {    
     // public static final int kShooterMotorID = 30; //keep as 30 once move arm testing is done
-    public static final int kShooterMotorTopID = 51;
+    public static final int kShooterMotorTopID = 23;
     public static final int kShooterMotorBottomID = 52;
     public static final int kShooterMotorAmpID = 53;
 
@@ -333,9 +333,9 @@ public final class Constants {
     public static final int kShooterGearRatio = 1;
     
     //speed constants
-    public static final double kShooterBumperShotMPS = 1000;
-    public static final double kShooterPodiumShotMPS = 1250;
-    public static final double kShooterFartherShotMPS = 1500;
+    public static final double kShooterBumperShotMPS = 2000;
+    public static final double kShooterPodiumShotMPS = 2000;
+    public static final double kShooterAmpShotMPS = 2000;
     public static final double kAmpMPS = 500;
     
     public static final double kThreshhold = 0.75;

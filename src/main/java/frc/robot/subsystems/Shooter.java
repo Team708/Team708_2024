@@ -57,6 +57,10 @@ public class Shooter extends SubsystemBase {
     
     shooterAmpPIDController = m_shooterMotorAmp.getPIDController();
     Helper.setupPIDController(shooterAmpPIDController, ShooterConstants.kShooterAmpPIDList);
+
+    m_shooterMotorTopLeader.setSmartCurrentLimit(20);
+    m_shooterMotorBottomFollower.setSmartCurrentLimit(20);
+    m_shooterMotorAmp.setSmartCurrentLimit(20);
   }
 
 
