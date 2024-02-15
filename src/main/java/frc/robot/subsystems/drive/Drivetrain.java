@@ -18,8 +18,10 @@ import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import java.sql.Driver;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.FollowPathHolonomic;
@@ -36,14 +38,17 @@ import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants;
 import frc.robot.Constants.*;
 import frc.robot.OI;
 import frc.robot.commands.DriveByController;
+import frc.robot.utilities.FMSData;
 import frc.robot.utilities.FieldRelativeAccel;
 import frc.robot.utilities.FieldRelativeSpeed;
 import frc.robot.utilities.MathUtils;
+import com.pathplanner.lib.util.GeometryUtil;
 
   /**
    * Implements a swerve Drivetrain Subsystem for the Robot
@@ -151,11 +156,7 @@ import frc.robot.utilities.MathUtils;
                 // This will flip the path being followed to the red side of the field.
                 // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
 
-                var alliance = DriverStation.getAlliance();
-                if (alliance.isPresent()) {
-                    return alliance.get() == DriverStation.Alliance.Red;
-                }
-                return false;
+                return FMSData.allianceIsRed();
             },
             this // Reference to this subsystem to set requirements
     );
@@ -507,10 +508,14 @@ import frc.robot.utilities.MathUtils;
     autoRotEnabled = false;
   }
 
-  public double findAutoRotate(PIDController controller, double defaultRot)
-  {
+  public double findAutoRotate(PIDController controller, double defaultRot){ 
       if(autoRotEnabled){
-        targetPose = DriveConstants.kBlueSpeaker;
+        if(FMSData.allianceIsRed()){
+          targetPose = GeometryUtil.flipFieldPose(DriveConstants.kBlueSpeaker);
+        }
+        else{
+          targetPose = DriveConstants.kBlueSpeaker;
+        }
         double dx = targetPose.getX() - getPose().getX();
         double dy = targetPose.getY() - getPose().getY();
         Rotation2d robotToTarget = new Rotation2d(dx, dy);
@@ -559,8 +564,6 @@ import frc.robot.utilities.MathUtils;
       new GoalEndState(0.0, trueEndingLocation.getRotation())
     );
 
-    // Prevent this path from being flipped on the red alliance, since the given positions are already correct
-    path.preventFlipping = true;
 
     AutoBuilder.followPath(path).schedule();
     AutoBuilder.followPath(path2).schedule();

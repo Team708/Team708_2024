@@ -11,8 +11,17 @@ import frc.robot.Constants.FMSConstants;
 public class FMSData {
     
   private int allianceColor;
-  private Optional<Alliance> alliance;
-
+  private static Optional<Alliance> alliance;
+  
+  public static boolean allianceIsRed(){
+    alliance = DriverStation.getAlliance();
+    if (alliance.isPresent()) {
+      return alliance.get() == DriverStation.Alliance.Red;
+    }
+    else{
+      return false;
+    }
+  }
   // findColor - sets the global variable allianceColor based on the color of the
   // alliance coming from the fmsdata
   // public int getAllianceColor() {
