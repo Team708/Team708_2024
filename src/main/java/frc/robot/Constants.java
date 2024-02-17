@@ -69,10 +69,10 @@ public final class Constants {
     public static final int kBackLeftTurningEncoderPort = 6;    //Analog Port of the Module Absolute Encoder
     public static final int kBackRightTurningEncoderPort = 7;   //Analog Port of the Module Absolute Encoder
 
-    public static final double kFrontLeftOffset = -.2189*-1; //-0.5 to 0.5
-    public static final double kFrontRightOffset = -.1585*-1; //-0.5 to 0.5
-    public static final double kBackLeftOffset = -.5*-1; //-0.5 to 0.5
-    public static final double kBackRightOffset = -.1926*-1; //-0.5 to 0.5
+    public static final double kFrontLeftOffset = 0.0; //-.2189*-1; //-0.5 to 0.5
+    public static final double kFrontRightOffset = -1.0042; //0.0; //-.1585*-1; //-0.5 to 0.5
+    public static final double kBackLeftOffset = -3.08; //-.5*-1; //-0.5 to 0.5
+    public static final double kBackRightOffset = 1.1540; //0.0 //-.1926*-1; //-0.5 to 0.5
 
     
     //Drive motor PID is best done on the roboRIO currently as the SparkMAX does not allow for static gain values on the PID controller, 
@@ -242,10 +242,10 @@ public final class Constants {
     
     public static final int kIntakeMode = 1; //0 = Roller, 1 = Clamp
 
-    public static final int kIntakeMotorFrontID = 22;
-    public static final int kIntakeMotorBackID  = 29; //change back to 23
-    public static final int kIntakeMotorRightID = 25;
-    public static final int kIntakeMotorLeftID  = 27;
+    public static final int kIntakeMotorFrontID = 21;
+    public static final int kIntakeMotorBackID  = 23; //change back to 23
+    public static final int kIntakeMotorLeftID  = 25;
+    public static final int kIntakeMotorRightID = 27;
   }
 
   /**
@@ -291,8 +291,8 @@ public final class Constants {
    */
   public static final class ArmConstants  {
     //arm motor ids
-    public static final int kArmMasterMotorID  = 41;
-    public static final int kArmSlaveMotorID    = 42;
+    public static final int kArmMasterMotorID  = 99;//41;
+    public static final int kArmSlaveMotorID    = 98;//42;
 
     //gearbox ratios
     public static final double kPivotArmGearRatio = 360/45; //42*45;
@@ -325,9 +325,9 @@ public final class Constants {
    */
   public static final class ShooterConstants  {    
     // public static final int kShooterMotorID = 30; //keep as 30 once move arm testing is done
-    public static final int kShooterMotorTopID = 23;
-    public static final int kShooterMotorBottomID = 52;
-    public static final int kShooterMotorAmpID = 53;
+    public static final int kShooterMotorTopID = 70;//51;
+    public static final int kShooterMotorBottomID = 71;//52;
+    public static final int kShooterMotorAmpID = 72; //53;
 
     //speeds for different shots
     public static final int kShooterTargetSpeed = 1000;
