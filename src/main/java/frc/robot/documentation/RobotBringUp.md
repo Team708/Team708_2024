@@ -4,11 +4,11 @@
 # Robot Bring Up
 
 ### Drivetrain:
-- [ ] 1. Verify SparkMax CAN IDs and settings
-- [ ] 2. Verify CANCoder CAN IDs and settings
-- [ ] 3. Verify swerve module drive and turn gear ratios
-- [ ] 4. Set turn offsets 
-- [ ] 5. while robot is off the ground, verify motor directions and wheels steer correctly
+- [x] 1. Verify SparkMax CAN IDs and settings
+- [x] 2. Verify CANCoder CAN IDs and settings
+- [x] 3. Verify swerve module drive and turn gear ratios
+- [x] 4. Set turn offsets 
+- [x] 5. while robot is off the ground, verify motor directions and wheels steer correctly
 - [ ] 6. Verify drivebase drives on carpet without issue
 - [ ] 7. Verify robot pose matches the physical robot
 - [ ] 8. Verify the Pigeon is working correctly

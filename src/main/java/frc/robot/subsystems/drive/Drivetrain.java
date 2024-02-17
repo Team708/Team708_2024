@@ -364,7 +364,7 @@ import com.pathplanner.lib.util.GeometryUtil;
     m_PoseEstimator.resetPosition(pigeon.getAngle().times(-1.0), getModulePositions(), pose);  }
 
   /**
-   * Converts the 4 swerve module states into a chassisSpeed by making use of the swerve drive kinematics.
+   * Converts the 4 phswerve module states into a chassisSpeed by making use of the swerve drive kinematics.
    * @return ChassisSpeeds object containing robot X, Y, and Angular velocity 
    */  
   public ChassisSpeeds getChassisSpeed(){
