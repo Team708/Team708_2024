@@ -30,6 +30,6 @@ public class ShootAmp extends Command {
   }
 
   public boolean isFinished() {
-    return m_shooter.isShooterAmpAtSpeed(ShooterConstants.kShooterBumperShotMPS);
+    return m_shooter.isAtSpeed();
   }
 }

@@ -13,6 +13,8 @@ public class IntakeEjectFront extends Command {
   /** Creates a new IntakeRejectFront. */
   public IntakeEjectFront(Intake intake) {
     m_intake = intake;
+    
+    // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_intake);
     }
 

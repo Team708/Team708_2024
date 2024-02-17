@@ -23,16 +23,14 @@ public class EnableAutoTargetSpeaker extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_drive.enableAutoRot();
-    SmartDashboard.putString("Command", "EnableAutoTargetSpeaker");
+    m_drive.setAutoRot(true);
+    SmartDashboard.putString("Command", this.getName() + ": Init");
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_drive.disableAutoRot();
-    SmartDashboard.putString("Command", "EnableAutoTargetSpeaker: End");
-    SmartDashboard.putString("Command", "None");
-
+    m_drive.setAutoRot(false);
+    SmartDashboard.putString("Command", this.getName() + ": End");
   }
 }

@@ -26,16 +26,16 @@ public class SetShooterSpeedPodiumShot extends Command {
   }
 
   @Override
-  public void initialize(){
+  public void initialize() {
     
   }
 
-  public void execute(){
+  public void execute() {
     m_shooter.setShooterSpeedSpeaker(ShooterConstants.kShooterPodiumShotMPS);
   }
   
   @Override
-  public boolean isFinished(){
-    return m_shooter.isShooterSpeakerAtSpeed(ShooterConstants.kShooterPodiumShotMPS);
+  public boolean isFinished() {
+    return m_shooter.isAtSpeed();
   }
 }

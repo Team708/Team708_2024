@@ -27,16 +27,16 @@ public class SetShooterSpeedBumperShot extends Command {
   }
 
   @Override
-  public void initialize(){
+  public void initialize() {
     
   }
 
-  public void execute(){
+  public void execute() {
     m_shooter.setShooterSpeedSpeaker(ShooterConstants.kShooterBumperShotMPS);
   }
   
   @Override
-  public boolean isFinished(){
-    return m_shooter.isShooterSpeakerAtSpeed(ShooterConstants.kShooterBumperShotMPS);
+  public boolean isFinished() {
+    return m_shooter.isAtSpeed();
   }
 }

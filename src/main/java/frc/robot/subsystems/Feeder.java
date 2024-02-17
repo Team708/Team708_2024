@@ -22,7 +22,7 @@ public class Feeder extends SubsystemBase {
   public Feeder() {
     //Feeder motor 1
     m_FeederStage1Motor = new CANSparkMax(FeederConstants.kFeederStage1MotorID, MotorType.kBrushless);
-    m_FeederStage1Motor.setIdleMode(IdleMode.kBrake);
+    m_FeederStage1Motor.setIdleMode(IdleMode.kCoast);
     m_FeederStage1Motor.setInverted(false);
     
     FeederStage1Encoder = m_FeederStage1Motor.getEncoder();
@@ -32,7 +32,7 @@ public class Feeder extends SubsystemBase {
 
     //Feeder motor 2
     m_FeederStage2Motor = new CANSparkMax(FeederConstants.kFeederStage2MotorID, MotorType.kBrushless);
-    m_FeederStage2Motor.setIdleMode(IdleMode.kBrake);
+    m_FeederStage2Motor.setIdleMode(IdleMode.kCoast);
     m_FeederStage2Motor.setInverted(false);
     
     FeederStage2Encoder = m_FeederStage2Motor.getEncoder();
@@ -45,7 +45,6 @@ public class Feeder extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
   }
-
   
   public void feederThroughStage1() {
     m_FeederStage1Motor.set(1.0);
@@ -55,5 +54,4 @@ public class Feeder extends SubsystemBase {
   public void feederThroughStage2() {
     m_FeederStage2Motor.set(1.0);
   }
-  
 }

@@ -1,44 +1,44 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
+// // Copyright (c) FIRST and other WPILib contributors.
+// // Open Source Software; you can modify and/or share it under the terms of
+// // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.auto;
+// package frc.robot.commands.auto;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-// import frc.robot.utilities.AutoFromPathPlanner;
+// import edu.wpi.first.wpilibj2.command.InstantCommand;
+// import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+// import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+// import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+// import edu.wpi.first.wpilibj2.command.WaitCommand;
+// // import frc.robot.utilities.AutoFromPathPlanner;
 
-import frc.robot.subsystems.drive.Drivetrain;
-// import frc.robot.subsystems.intake.Intake;
+// import frc.robot.subsystems.drive.Drivetrain;
+// // import frc.robot.subsystems.intake.Intake;
 
-public class DriveStraight extends SequentialCommandGroup {
+// public class DriveStraight extends SequentialCommandGroup {
 
-  public DriveStraight(Drivetrain dr, double maxSpeed) {
-    // AutoFromPathPlanner path1 = new AutoFromPathPlanner(dr, "DriveStraight", maxSpeed, true);
+//   public DriveStraight(Drivetrain dr, double maxSpeed) {
+//     // AutoFromPathPlanner path1 = new AutoFromPathPlanner(dr, "DriveStraight", maxSpeed, true);
     
-    addCommands(
-      // new InstantCommand(() -> dr.resetOdometry(path1.getInitialPose())),
-      // new IntakeOn(m_intake),
-      // new WaitCommand(0.2),
-      // new IntakeOut(m_intake).withTimeout(.2),
-      // new WaitCommand(0.2),
-      // new IntakeOff(m_intake),
-      // path1 //,
+//     addCommands(
+//       // new InstantCommand(() -> dr.setPose(path1.getInitialPose())),
+//       // new IntakeOn(m_intake),
+//       // new WaitCommand(0.2),
+//       // new IntakeOut(m_intake).withTimeout(.2),
+//       // new WaitCommand(0.2),
+//       // new IntakeOff(m_intake),
+//       // path1 //,
 
-      // new WaitCommand(.2),
-      // path2,
-      // new IntakeOut(m_intake, m_candle).withTimeout(.2),
-      // new WaitCommand(0.2),
-      // new IntakeOff(m_intake),
-      // new WaitCommand(0.2),
-      // path3,
+//       // new WaitCommand(.2),
+//       // path2,
+//       // new IntakeOut(m_intake, m_candle).withTimeout(.2),
+//       // new WaitCommand(0.2),
+//       // new IntakeOff(m_intake),
+//       // new WaitCommand(0.2),
+//       // path3,
 
-      // new WaitCommand(0.2),
-      // new InstantCommand(() -> dr.resetOdometry(path1.getInitialPose()))
-      );
-  }
+//       // new WaitCommand(0.2),
+//       // new InstantCommand(() -> dr.setPose(path1.getInitialPose()))
+//       );
+//   }
     
-}
+// }

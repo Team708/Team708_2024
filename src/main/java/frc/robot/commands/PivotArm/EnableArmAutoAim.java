@@ -27,12 +27,12 @@ public class EnableArmAutoAim extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    SmartDashboard.putString("Command", "EnableArmAutoAim");
+    SmartDashboard.putString("Command", this.getName() + ": Init");
   }
   
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute(){
+  public void execute() {
     angle = Units.radiansToDegrees(Math.atan2(1.7272, m_drive.getDistanceToTarget()));
     m_pivotArm.setArmAngle(angle);
     SmartDashboard.putNumber("commanded angle", angle);
@@ -43,10 +43,8 @@ public class EnableArmAutoAim extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    // m_drive.disableAutoRot();
-    SmartDashboard.putString("Command", "EnableArmAutoAim: End");
-    SmartDashboard.putString("Command", "None");
-
+    // m_drive.setAutoRot(false);
+    SmartDashboard.putString("Command", this.getName() + ": End");
   }
 
   // Returns true when the command should end.

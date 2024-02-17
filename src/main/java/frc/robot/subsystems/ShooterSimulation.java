@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.GlobalConstants;
-import frc.robot.subsystems.Shooter;
+// import frc.robot.subsystems.Shooter;
 
 /** Add your docs here. */
 public class ShooterSimulation {

@@ -18,14 +18,11 @@ import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import java.sql.Driver;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.FollowPathHolonomic;
-import com.pathplanner.lib.commands.PathfindHolonomic;
 import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
@@ -38,16 +35,16 @@ import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants;
 import frc.robot.Constants.*;
 import frc.robot.OI;
-import frc.robot.commands.DriveByController;
 import frc.robot.utilities.FMSData;
 import frc.robot.utilities.FieldRelativeAccel;
 import frc.robot.utilities.FieldRelativeSpeed;
 import frc.robot.utilities.MathUtils;
+import frc.robot.utilities.PigeonTwo;
+
 import com.pathplanner.lib.util.GeometryUtil;
 
   /**
@@ -68,8 +65,8 @@ import com.pathplanner.lib.util.GeometryUtil;
   private double radius = 1;//0.450;
 
   private boolean m_readyToShoot = false;
-
   private boolean fieldOrient = true;
+  private boolean m_autoRotEnabled = false;
 
   private final SlewRateLimiter m_slewX = new SlewRateLimiter(12.0);
   private final SlewRateLimiter m_slewY = new SlewRateLimiter(12.0);
@@ -80,8 +77,6 @@ import com.pathplanner.lib.util.GeometryUtil;
   private FieldRelativeAccel m_fieldRelAccel = new FieldRelativeAccel();
 
   private final Timer keepAngleTimer = new Timer(); //Creates timer used in the perform keep angle function
-
-  private boolean autoRotEnabled = false;
 
   private PathConstraints trajectoryConstraints;
 
@@ -96,12 +91,12 @@ import com.pathplanner.lib.util.GeometryUtil;
       DriveConstants.kFrontRightOffset, DriveConstants.kFrontRightTuningVals);
 
   //Creates a swerveModule object for the back left swerve module feeding in parameters from the constants file
-  private final SwerveModule m_backLeft = new SwerveModule(DriveConstants.kRearLeftDriveMotorPort,
+  private final SwerveModule m_backLeft = new SwerveModule(DriveConstants.kBackLeftDriveMotorPort,
       DriveConstants.kBackLeftTurningMotorPort, DriveConstants.kBackLeftTurningEncoderPort,
       DriveConstants.kBackLeftOffset, DriveConstants.kBackLeftTuningVals);
 
   //Creates a swerveModule object for the back right swerve module feeding in parameters from the constants file
-  private final SwerveModule m_backRight = new SwerveModule(DriveConstants.kRearRightDriveMotorPort,
+  private final SwerveModule m_backRight = new SwerveModule(DriveConstants.kBackRightDriveMotorPort,
       DriveConstants.kBackRightTurningMotorPort, DriveConstants.kBackRightTurningEncoderPort,
       DriveConstants.kBackRightOffset, DriveConstants.kBackRightTuningVals);
   
@@ -110,7 +105,6 @@ import com.pathplanner.lib.util.GeometryUtil;
 
   //Creates Odometry object to store the pose of the robot
   public final SwerveDrivePoseEstimator m_PoseEstimator = new SwerveDrivePoseEstimator(DriveConstants.kDriveKinematics, pigeon.getAngle(), getModulePositions(), DriveConstants.kinitialPoseMeters);
-
   private final SwerveDrivePoseEstimator m_AutoPoseEstimator = new SwerveDrivePoseEstimator(DriveConstants.kDriveKinematics, pigeon.getAngle(), getModulePositions(), DriveConstants.kinitialPoseMeters);
 
   ProfiledPIDController thetaController = new ProfiledPIDController(AutoConstants.kPThetaController, 0, 0,
@@ -141,7 +135,7 @@ import com.pathplanner.lib.util.GeometryUtil;
     // Configure AutoBuilder last
     AutoBuilder.configureHolonomic(
             this::getPose, // Robot pose supplier
-            this::resetOdometry, // Method to reset odometry (will be called if your auto has a starting pose)
+            this::setPose, // Method to reset odometry (will be called if your auto has a starting pose)
             this::getChassisSpeed, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
             this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
             new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
@@ -176,11 +170,11 @@ import com.pathplanner.lib.util.GeometryUtil;
     // SmartDashboard.putBoolean("fieldRelative", fieldRelative);
     // SmartDashboard.putBoolean("keepAngle", keepAngle);
 
-    // if(keepAngle){
-    //   rot = performKeepAngle(xSpeed,ySpeed,rot); //Calls the keep angle function to update the keep angle or rotate depending on driver input
-    // }
+    if(keepAngle){
+      rot = performKeepAngle(xSpeed,ySpeed,rot); //Calls the keep angle function to update the keep angle or rotate depending on driver input
+    }
 
-    rot = findAutoRotate(rot);
+    rot = rotateToTarget(rot);
     
     xSpeed = m_slewX.calculate(xSpeed);
     ySpeed = m_slewY.calculate(ySpeed);
@@ -192,50 +186,50 @@ import com.pathplanner.lib.util.GeometryUtil;
 
     //creates an array of the desired swerve module states based on driver command and if the commands are field relative or not
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
-        fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, pigeon.getAngle())
-            : new ChassisSpeeds(xSpeed * pigeon.getAngle().getCos() + ySpeed * pigeon.getAngle().getSin(), 
+        fieldRelative ?
+        ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, pigeon.getAngle()) :
+        new ChassisSpeeds(xSpeed * pigeon.getAngle().getCos() + ySpeed * pigeon.getAngle().getSin(), 
             (-xSpeed * pigeon.getAngle().getSin() + ySpeed * pigeon.getAngle().getCos()) - (radius * rot), 
-            rot));
+            rot)
+        );
 
-    //normalize wheel speeds so all individual states are scaled to achievable velocities
-    SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, DriveConstants.kMaxSpeedMetersPerSec); 
-
+    // SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, DriveConstants.kMaxSpeedMetersPerSec); //dupicated -RM
     setModuleStates(swerveModuleStates);
   }
 
   @Override
-  public void periodic(){
-      m_fieldRelVel = new FieldRelativeSpeed(getChassisSpeed(), getGyro());
-      m_fieldRelAccel = new FieldRelativeAccel(m_fieldRelVel, m_lastFieldRelVel, GlobalConstants.kLoopTime);
-      //m_fieldRelJerk = new FieldRelativeJerk(m_fieldRelAccel, m_lastFieldRelAccel, GlobalConstants.kLoopTime);
-      //m_lastFieldRelAccel = m_fieldRelAccel;
-      m_lastFieldRelVel = m_fieldRelVel;
+  public void periodic() {
+    m_fieldRelVel = new FieldRelativeSpeed(getChassisSpeed(), getGyro());
+    m_fieldRelAccel = new FieldRelativeAccel(m_fieldRelVel, m_lastFieldRelVel, GlobalConstants.kLoopTime);
+    //m_fieldRelJerk = new FieldRelativeJerk(m_fieldRelAccel, m_lastFieldRelAccel, GlobalConstants.kLoopTime);
+    //m_lastFieldRelAccel = m_fieldRelAccel;
+    m_lastFieldRelVel = m_fieldRelVel;
 
-      // SmartDashboard.putNumber("RobotSpeedX", getChassisSpeed().vxMetersPerSecond);
-      // SmartDashboard.putNumber("RobotSpeedY", getChassisSpeed().vyMetersPerSecond);
-      // SmartDashboard.putNumber("RobotOmega", getChassisSpeed().omegaRadiansPerSecond);
+    // SmartDashboard.putNumber("RobotSpeedX", getChassisSpeed().vxMetersPerSecond);
+    // SmartDashboard.putNumber("RobotSpeedY", getChassisSpeed().vyMetersPerSecond);
+    // SmartDashboard.putNumber("RobotOmega", getChassisSpeed().omegaRadiansPerSecond);
 
-      // SmartDashboard.putNumber("Robot pitch degrees", pigeon.getPitch().getDegrees());
-      // SmartDashboard.putNumber("Robot roll degrees", pigeon.getRoll().getDegrees());
+    // SmartDashboard.putNumber("Robot pitch degrees", pigeon.getPitch().getDegrees());
+    // SmartDashboard.putNumber("Robot roll degrees", pigeon.getRoll().getDegrees());
 
-      // SmartDashboard.putNumber("Accel X", m_fieldRelAccel.ax);
-      // SmartDashboard.putNumber("Accel Y", m_fieldRelAccel.ay);
-      // SmartDashboard.putNumber("Alpha", m_fieldRelAccel.alpha);
+    // SmartDashboard.putNumber("Accel X", m_fieldRelAccel.ax);
+    // SmartDashboard.putNumber("Accel Y", m_fieldRelAccel.ay);
+    // SmartDashboard.putNumber("Alpha", m_fieldRelAccel.alpha);
 
-        SmartDashboard.putNumber("Front Left Encoder", m_frontLeft.getTurnEncoder());
-        SmartDashboard.putNumber("Front Right Encoder", m_frontRight.getTurnEncoder());
-        SmartDashboard.putNumber("Back Left Encoder", m_backLeft.getTurnEncoder());
-        SmartDashboard.putNumber("Back Right Encoder", m_backRight.getTurnEncoder());
+    SmartDashboard.putNumber("Front Left Encoder", m_frontLeft.getTurnEncoder());
+    SmartDashboard.putNumber("Front Right Encoder", m_frontRight.getTurnEncoder());
+    SmartDashboard.putNumber("Back Left Encoder", m_backLeft.getTurnEncoder());
+    SmartDashboard.putNumber("Back Right Encoder", m_backRight.getTurnEncoder());
 
-        SmartDashboard.putNumber("Balance Angle", pigeon.getRoll().getDegrees());
+    SmartDashboard.putNumber("Balance Angle", pigeon.getRoll().getDegrees());
 
-        //Update swerve drive odometry periodically so robot pose can be tracked
-        updatePose();    
+    //Update swerve drive odometry periodically so robot pose can be tracked
+    updatePose();    
 
-        //Calls get pose function which sends the Pose information to the SmartDashboard
-        currentPose = getPose();
- 
-        m_field.getRobotObject().setPose(currentPose);
+    //Calls get pose function which sends the Pose information to the SmartDashboard
+    currentPose = getPose();
+
+    m_field.getRobotObject().setPose(currentPose);
   }
 
   public void setFieldOrient(boolean fieldOrient){
@@ -251,7 +245,8 @@ import com.pathplanner.lib.util.GeometryUtil;
    *
    * @param desiredStates The desired SwerveModule states.
    */
-  public void setModuleStates(SwerveModuleState[] desiredStates) {
+  private void setModuleStates(SwerveModuleState[] desiredStates) {
+    //normalize wheel speeds so all individual states are scaled to achievable velocities
     SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, DriveConstants.kMaxSpeedMetersPerSec);
     m_frontLeft.setDesiredState(desiredStates[0]);
     m_frontRight.setDesiredState(desiredStates[1]);
@@ -259,7 +254,12 @@ import com.pathplanner.lib.util.GeometryUtil;
     m_backRight.setDesiredState(desiredStates[3]);
   }
 
-  public SwerveModuleState[] getModuleStates(){
+  /**
+   * Gets the swerve ModuleStates.
+   *
+   * @return The current state of the swerve modules
+   */
+  public SwerveModuleState[] getModuleStates() {
     return new SwerveModuleState[]{
       m_frontLeft.getState(),
       m_frontRight.getState(),
@@ -268,7 +268,30 @@ import com.pathplanner.lib.util.GeometryUtil;
     };
   }
 
-  public void stop(){
+  public void lockWheels(boolean enable){
+    if (enable == true){
+      setModuleStates(new SwerveModuleState[]{
+        new SwerveModuleState(0, new Rotation2d(-Math.PI / 4)), //LF
+        new SwerveModuleState(0, new Rotation2d(Math.PI / 4)), //RF
+        new SwerveModuleState(0, new Rotation2d(Math.PI / 4)), //LR
+        new SwerveModuleState(0, new Rotation2d(-Math.PI / 4)) //RR
+        }
+      );
+    }else{
+      setModuleStates(new SwerveModuleState[]{
+        new SwerveModuleState(0, new Rotation2d(0)), //LF
+        new SwerveModuleState(0, new Rotation2d(0)), //RF
+        new SwerveModuleState(0, new Rotation2d(0)), //LR
+        new SwerveModuleState(0, new Rotation2d(0)) //RR
+        }
+      );
+    }
+  }
+
+  /**
+   * Stops the swerve modules.
+   */
+  public void stop() {
     m_frontLeft.stop();
     m_frontRight.stop();
     m_backLeft.stop();
@@ -295,19 +318,23 @@ import com.pathplanner.lib.util.GeometryUtil;
     return pigeon.getAngle();
   }
 
+  /**
+   * Function to retrieve latest robot gyro angle.
+   * @return double object containing Gyro angle in degrees
+   */ 
   public double getGyroDegrees() {
     return pigeon.getAngle().getDegrees();
   }
 
-  public FieldRelativeSpeed getFieldRelativeSpeed(){
+  public FieldRelativeSpeed getFieldRelativeSpeed() {
     return m_fieldRelVel;
   }
 
-  public FieldRelativeAccel getFieldRelativeAccel(){
+  public FieldRelativeAccel getFieldRelativeAccel() {
     return m_fieldRelAccel;
   }
 
-    /**
+  /**
    * Function created to retreieve and push the robot pose to the SmartDashboard for diagnostics
    * @return Pose2d object containing the X and Y position and the heading of the robot.
    */  
@@ -332,39 +359,38 @@ import com.pathplanner.lib.util.GeometryUtil;
   }
 
   /**
-   * Resets the odometry and gyro to the specified pose.
+   * Resets the pose estimator.
+   */
+  public void resetOdometry() {
+    setPose(new Pose2d());
+  }
+  
+  /**
+   * Sets the pose estimator to the specified pose.
    *
    * @param pose in which to set the odometry and gyro.
    */
-  public void resetOdometry(Pose2d pose) {
-    // pigeon.reset();
-    // pigeon.setAngle(pose.getRotation().getDegrees());
+  public void setPose(Pose2d pose) {
     keepAngle = getGyro().getRadians();
 
     m_PoseEstimator.resetPosition(pigeon.getAngle().times(-1.0), getModulePositions(), pose);
     m_AutoPoseEstimator.resetPosition(pigeon.getAngle().times(-1.0), getModulePositions(), pose);
   }
 
-  public void setPose(Pose2d pose){
-    m_PoseEstimator.resetPosition(pigeon.getAngle().times(-1.0), getModulePositions(), pose);
-        keepAngle = getGyro().getRadians();
-  }
-
-
-    /**
+  /**
    * Resets the gyro to the given angle
    * 
    * @param angle the angle of the robot to reset to
    */
-  public void resetOdometry(Rotation2d angle) {
+  public void setPose(Rotation2d angle) {
     Pose2d pose = new Pose2d(getPose().getTranslation(), angle);
-    pigeon.reset();
-    pigeon.setAngle(angle.getDegrees());
-    keepAngle = getGyro().getRadians();
-    m_PoseEstimator.resetPosition(pigeon.getAngle().times(-1.0), getModulePositions(), pose);  }
+    pigeon.reset(); //TODO is this needed
+    pigeon.setAngle(angle.getDegrees()); //TODO is this needed
+    setPose(pose); 
+  }
 
   /**
-   * Converts the 4 phswerve module states into a chassisSpeed by making use of the swerve drive kinematics.
+   * Converts the 4 swerve module states into a chassisSpeed by making use of the swerve drive kinematics.
    * @return ChassisSpeeds object containing robot X, Y, and Angular velocity 
    */  
   public ChassisSpeeds getChassisSpeed(){
@@ -405,20 +431,20 @@ import com.pathplanner.lib.util.GeometryUtil;
     keepAngle = getGyro().getRadians();
   }
 
-  public void setReadytoShoot(){
-    m_readyToShoot = true;
+  public void setReadytoShoot(boolean readyToShoot) {
+    m_readyToShoot = readyToShoot;
   }
 
-  public boolean isReadyToShoot(){
+  public boolean isReadyToShoot() {
     return m_readyToShoot;
   }
 
-  private SwerveModulePosition[] getModulePositions(){
+  private SwerveModulePosition[] getModulePositions() {
     return new SwerveModulePosition[] {m_frontLeft.getPosition(), m_frontRight.getPosition(), m_backLeft.getPosition(),
       m_backRight.getPosition()};
   }
 
-  public void invertDrive(){
+  public void invertDrive() {
     m_frontLeft.invertDrive();
     m_frontRight.invertDrive();
     m_backLeft.invertDrive();
@@ -455,7 +481,7 @@ import com.pathplanner.lib.util.GeometryUtil;
     );
   }
 
-  public void driveRobotRelative(ChassisSpeeds chassisSpeeds){
+  public void driveRobotRelative(ChassisSpeeds chassisSpeeds) {
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
     SwerveDriveKinematics.desaturateWheelSpeeds(
         swerveModuleStates, DriveConstants.kMaxSpeedMetersPerSec);
@@ -465,8 +491,12 @@ import com.pathplanner.lib.util.GeometryUtil;
     m_backRight.setDesiredState(swerveModuleStates[3]);
   }
   
-  public Translation2d getDriverXAndY()
-  {
+  private double inputTransform(double input) {
+    //return MathUtils.singedSquare(MathUtils.applyDeadband(input));
+    return MathUtils.cubicLinear(MathUtils.applyDeadband(input), 0.9, 0.1);
+  }
+  
+  public void driveByController() {
     double maxLinear = DriveConstants.kMaxSpeedMetersPerSec;
     double desiredX = -inputTransform(OI.getDriverLeftY())*maxLinear;
     double desiredY = -inputTransform(OI.getDriverLeftX())*maxLinear;
@@ -475,45 +505,24 @@ import com.pathplanner.lib.util.GeometryUtil;
     if(desiredMag >= maxLinear){
       desiredTranslation.times(maxLinear/desiredMag);
     }
-    return desiredTranslation;
-  }
-
-  public double getDriverRot()
-  {
-    return -inputTransform(OI.getDriverRightX())* DriveConstants.kMaxAngularSpeedRadPerSec;
-  }
-
-  private double inputTransform(double input){
-    //return MathUtils.singedSquare(MathUtils.applyDeadband(input));
-    return MathUtils.cubicLinear(MathUtils.applyDeadband(input), 0.9, 0.1);
-  }
-
-  public void makeRobotDrive()
-  {
-    this.drive(getDriverXAndY().getX(), 
-    getDriverXAndY().getY(),
-    getDriverRot(),
+    
+    this.drive(desiredTranslation.getX(),
+    desiredTranslation.getY(),
+    -inputTransform(OI.getDriverRightX())* DriveConstants.kMaxAngularSpeedRadPerSec,
     getFieldOrient(),
-    true);
+    false);
   }
   
-  public void enableAutoRot()
-  {
-    autoRotEnabled = true;
+  public void setAutoRot(boolean autoRotEnabled) {
+    m_autoRotEnabled = autoRotEnabled;
   }
   
-  public void disableAutoRot()
-  {
-    autoRotEnabled = false;
-  }
-  
-  public double findAutoRotate(double defaultRot){
+  public double rotateToTarget(double defaultRot) {
     PIDController controller = Constants.DriveConstants.kAutoRotatePID;//, //new Constraints(300000, 150000));
-    if(autoRotEnabled){
+    if(m_autoRotEnabled){
       if(FMSData.allianceIsRed()){
         targetPose = GeometryUtil.flipFieldPose(DriveConstants.kBlueSpeaker);
-      }
-      else{
+      }else{
         targetPose = DriveConstants.kBlueSpeaker;
       }
       double dx = targetPose.getX() - getPose().getX();
@@ -534,8 +543,7 @@ import com.pathplanner.lib.util.GeometryUtil;
     return getPose().getTranslation().getDistance(DriveConstants.kBlueSpeaker.getTranslation());
   }
 
-  public Trajectory createTrajectory(Pose2d desiredPose)
-  {
+  public Trajectory createTrajectory(Pose2d desiredPose) {
     TrajectoryConfig config = new TrajectoryConfig(Constants.DriveConstants.kMaxSpeedMetersPerSec, Constants.DriveConstants.kMaxAccelMetersPerSecSquared);
     ArrayList<Pose2d> waypoints = new ArrayList<Pose2d>();
     waypoints.add(getPose());
@@ -543,7 +551,7 @@ import com.pathplanner.lib.util.GeometryUtil;
     return TrajectoryGenerator.generateTrajectory(waypoints, config);
   }
 
-  public void driveToPoint(Pose2d desiredLocation, Pose2d trueEndingLocation) {
+  public void driveToPose(Pose2d desiredLocation, Pose2d trueEndingLocation) {
     trajectoryConstraints = new PathConstraints(
     DriveConstants.kMaxSpeedMetersPerSec,
     DriveConstants.kMaxAccelMetersPerSecSquared, 
@@ -564,7 +572,6 @@ import com.pathplanner.lib.util.GeometryUtil;
       new GoalEndState(0.0, trueEndingLocation.getRotation())
     );
 
-
     AutoBuilder.followPath(path).schedule();
     AutoBuilder.followPath(path2).schedule();
     System.out.println("ran init");
@@ -572,5 +579,4 @@ import com.pathplanner.lib.util.GeometryUtil;
 
   public void sendToDashboard() {
   }
-  
 }

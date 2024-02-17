@@ -3,14 +3,12 @@ package frc.robot.utilities;
 import java.util.Optional;
 
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Constants.FMSConstants;
+// import frc.robot.Constants.FMSConstants;
 
 public class FMSData {
     
-  private int allianceColor;
+  // private int allianceColor;
   private static Optional<Alliance> alliance;
   
   public static boolean allianceIsRed(){

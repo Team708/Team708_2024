@@ -6,17 +6,15 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
-import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkMax;
 
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
-import com.revrobotics.CANSparkBase.IdleMode;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.utilities.Helper;
-import frc.robot.subsystems.ShooterSimulation;
+// import frc.robot.subsystems.ShooterSimulation;
 
 
 public class Shooter extends SubsystemBase {
@@ -70,11 +68,13 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setShooterSpeedSpeaker(double speed) { 
+    targetSpeed = speed;
     shooterAmpPIDController.setReference(speed, CANSparkMax.ControlType.kVelocity);
     shooterSpeakerPIDController.setReference(speed, CANSparkMax.ControlType.kVelocity);
   }
 
   public void setShooterSpeedAmp(double speed){
+    targetSpeed = speed;
     shooterAmpPIDController.setReference(-speed, CANSparkMax.ControlType.kVelocity);
     shooterSpeakerPIDController.setReference(speed, CANSparkMax.ControlType.kVelocity);
   }
@@ -84,15 +84,11 @@ public class Shooter extends SubsystemBase {
     shooterSpeakerPIDController.setReference(0, CANSparkMax.ControlType.kVelocity);
   }
 
-  public boolean isShooterSpeakerAtSpeed(double targetSpeed) {
-    if ((Math.abs(shooterEncoderTop.getVelocity()) > (targetSpeed) * ShooterConstants.kThreshhold)){
-      return true;
-    }
-    return false;
-  }
-
-  public boolean isShooterAmpAtSpeed(double targetSpeed) {
-    if ((Math.abs(shooterEncoderAmp.getVelocity()) > (targetSpeed) * ShooterConstants.kThreshhold)){
+  public boolean isAtSpeed() {
+    if (Math.abs(shooterEncoderTop.getVelocity()) > (targetSpeed) * ShooterConstants.kThreshhold &&
+        Math.abs(shooterEncoderBottom.getVelocity()) > (targetSpeed) * ShooterConstants.kThreshhold &&
+        Math.abs(shooterEncoderAmp.getVelocity()) > (targetSpeed) * ShooterConstants.kThreshhold
+        ){
       return true;
     }
     return false;
@@ -107,5 +103,4 @@ public class Shooter extends SubsystemBase {
   //   //Update elevator simulation
   //   m_shootersim.update();
 	// }
-    
 }

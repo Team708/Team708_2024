@@ -1,8 +1,5 @@
 package frc.robot;
 
-import javax.crypto.spec.ChaCha20ParameterSpec;
-
-import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.ReplanningConfig;
 import com.pathplanner.lib.util.PIDConstants;
@@ -13,7 +10,6 @@ import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 // import edu.wpi.first.math.util.Units;
@@ -33,8 +29,8 @@ public final class Constants {
     public static final double kLoopTime = 0.020;
   }
 
-  public static final class CurrentLimit{
-    public static final int kIntake = 25;
+  public static final class CurrentLimit {
+    public static final int kIntakeAmps = 25;
 
     public static final int kArmAmps = 40;
     public static final int kFeederAmps = 40;
@@ -56,8 +52,8 @@ public final class Constants {
   public static final class DriveConstants {
     public static final int kFrontLeftDriveMotorPort = 11;   //CANID of the Translation SparkMAX
     public static final int kFrontRightDriveMotorPort = 13;  //CANID of the Translation SparkMAX
-    public static final int kRearLeftDriveMotorPort = 15;    //CANID of the Translation SparkMAX
-    public static final int kRearRightDriveMotorPort = 17;   //CANID of the Translation SparkMAX
+    public static final int kBackLeftDriveMotorPort = 15;    //CANID of the Translation SparkMAX
+    public static final int kBackRightDriveMotorPort = 17;   //CANID of the Translation SparkMAX
 
     public static final int kFrontLeftTurningMotorPort = 12;   //CANID of the Rotation SparkMAX
     public static final int kFrontRightTurningMotorPort = 14;  //CANID of the Rotation SparkMAX
@@ -73,7 +69,6 @@ public final class Constants {
     public static final double kFrontRightOffset = -0.334473;//-1.0042; //0.0; //-.1585*-1; //-0.5 to 0.5
     public static final double kBackLeftOffset = 0.496559;//-3.08; //-.5*-1; //-0.5 to 0.5
     public static final double kBackRightOffset = -0.189941;//1.1540; //0.0 //-.1926*-1; //-0.5 to 0.5
-
     
     //Drive motor PID is best done on the roboRIO currently as the SparkMAX does not allow for static gain values on the PID controller, 
     //    these are necessary to have high accuracy when moving at extremely low RPMs
@@ -87,16 +82,12 @@ public final class Constants {
     public static final double[] kBackLeftTuningVals    =   {0.001,0.2850,0.2,2};   //{Static Gain, FeedForward, Proportional Gain, ModuleID for Tuning}
     public static final double[] kBackRightTuningVals   =   {0.001,0.2850,0.2,3};   //{Static Gain, FeedForward, Proportional Gain, ModuleID for Tuning}
     
-    //.324 - sideways
-    //.414 - longways
-    public static final Translation2d kFrontLeftLocation = new Translation2d(0.414,0.324); // +X is forward, +Y is to the right 
-    public static final Translation2d kFrontRightLocation = new Translation2d(0.414,-0.324); // +X is forward, +Y is to the right
-    public static final Translation2d kBackLeftLocation = new Translation2d(-0.414,0.324); // +X is forward, +Y is to the right
-    public static final Translation2d kBackRightLocation = new Translation2d(-0.414,-0.324); // +X is forward, +Y is to the right
-    // public static final Translation2d kFrontLeftLocation = new Translation2d(0.33,-0.264); // +X is forward, +Y is to the right 
-    // public static final Translation2d kFrontRightLocation = new Translation2d(0.33,0.264); // +X is forward, +Y is to the right
-    // public static final Translation2d kBackLeftLocation = new Translation2d(-0.376,-0.264); // +X is forward, +Y is to the right
-    // public static final Translation2d kBackRightLocation = new Translation2d(-0.376,0.264); // +X is forward, +Y is to the right
+    //0.301625 - sideways
+    //0.301625 - longways
+    public static final Translation2d kFrontLeftLocation = new Translation2d(0.301625,0.301625); // +X is forward, +Y is to the right 
+    public static final Translation2d kFrontRightLocation = new Translation2d(0.301625,-0.301625); // +X is forward, +Y is to the right
+    public static final Translation2d kBackLeftLocation = new Translation2d(-0.301625,0.301625); // +X is forward, +Y is to the right
+    public static final Translation2d kBackRightLocation = new Translation2d(-0.301625,-0.301625); // +X is forward, +Y is to the right
     
     public static final double kRadius = kFrontLeftLocation.getDistance(kBackRightLocation)/2;
 
@@ -129,13 +120,9 @@ public final class Constants {
     public static final Pose2d kTestPoint = new Pose2d(2.831, 5.55, new Rotation2d(180));
     public static final Pose3d kBluePoseSpeaker = new Pose3d(kBlueSpeaker.getX(), kBlueSpeaker.getY(), 1.7272, new Rotation3d(0,0,kBlueSpeaker.getRotation().getRadians()));
 
-
     public static final Pose2d kPoseAmpLocation  = new Pose2d(1.82, 7.59, new Rotation2d(Units.degreesToRadians(90)));
     public static final Pose2d kPoseFeederLocationFar  = new Pose2d(15.89,1.36, new Rotation2d(Units.degreesToRadians(-60)));  
     public static final Pose2d kPoseFeederLocationClose  = new Pose2d(15.08,0.82, new Rotation2d(Units.degreesToRadians(-60)));
-
-
-
 
     //Holonomic Drivretrain Configuration
     public static final HolonomicPathFollowerConfig pathFollowingConfig = new HolonomicPathFollowerConfig(kMaxSpeedMetersPerSec, kRadius, new ReplanningConfig());
@@ -145,11 +132,8 @@ public final class Constants {
     public static final Pose2d kRobotToAmp = new Pose2d(1.82, 7.59 - Units.inchesToMeters(30), new Rotation2d(Units.degreesToRadians(-90)));
     public static final Pose2d kAmpScoringPose = new Pose2d(1.82, 7.59 - Units.inchesToMeters(8), new Rotation2d(Units.degreesToRadians(-90)));
 
-
     //Auto Rotate PID
     public static final PIDController kAutoRotatePID = new PIDController(0.07, 0.0001,.005);//(0.06, 0.0001, 0.0025);//, //new Constraints(300000, 150000));
-
-
 
     //Game piece locations
     public static final Translation2d kNoteCenterFar  = new Translation2d(8.27,7.465);
@@ -168,16 +152,8 @@ public final class Constants {
   
     //On-the-fly Trajectory Generation
 
-
     //Tolerance offests
     public static final Pose2d kPositionTolerance= new Pose2d(Units.feetToMeters(1),Units.feetToMeters(1),new Rotation2d(3));
-    
-    
-  
-  
-  
-  
-
   }
 
   /**
@@ -212,7 +188,6 @@ public final class Constants {
     public static final double kLineupAccuracy = 2.0;
 
     public static final String klimelightName = "limelight";
-
   }
 
   /**
@@ -228,7 +203,7 @@ public final class Constants {
   /**
    * Intake constants 
    */
-    public static final class IntakeConstants  {
+    public static final class IntakeConstants {
 
     public static final int kIntakeEncoderCPR = 42;
 
@@ -251,7 +226,7 @@ public final class Constants {
   /**
    * feeder constants 
    */
-  public static final class FeederConstants  {
+  public static final class FeederConstants {
     public static final int kFeederStage1MotorID  = 31;
     public static final int kFeederStage2MotorID  = 32;
 
@@ -268,9 +243,6 @@ public final class Constants {
     public static final double[] kFeederStage1PIDList = {kFeederStage1Motor_P,kFeederStage1Motor_I,kFeederStage1Motor_D,
                                         kFeederStage1Motor_FF,kFeederStage1Motor_IZone,kFeederStage1Motor_Min,kFeederStage1Motor_Max};
 
-
-    
-    
     //PID values
     //make sure the PID values get tuned
 
@@ -289,7 +261,7 @@ public final class Constants {
   /**
    * Arm constants 
    */
-  public static final class ArmConstants  {
+  public static final class ArmConstants {
     //arm motor ids
     public static final int kArmMasterMotorID  = 99;//41;
     public static final int kArmSlaveMotorID    = 98;//42;
@@ -323,7 +295,7 @@ public final class Constants {
  /**
    * Shooter constants 
    */
-  public static final class ShooterConstants  {    
+  public static final class ShooterConstants {    
     // public static final int kShooterMotorID = 30; //keep as 30 once move arm testing is done
     public static final int kShooterMotorTopID = 70;//51;
     public static final int kShooterMotorBottomID = 71;//52;

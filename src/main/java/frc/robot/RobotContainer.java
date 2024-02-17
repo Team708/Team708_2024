@@ -6,8 +6,6 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.commands.PathPlannerAuto;
-import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.math.geometry.Pose2d;
 
@@ -15,8 +13,8 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import frc.robot.commands.auto.FiveBall;
-import frc.robot.commands.auto.DriveStraight;
+// import frc.robot.commands.auto.FiveBall;
+// import frc.robot.commands.auto.DriveStraight;
 import frc.robot.commands.ShootSpeakerBumperShotSCG;
 
 import frc.robot.commands.DriveByController;
@@ -29,11 +27,10 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.VisionProcessor;
 import frc.robot.subsystems.PivotArm;
 import frc.robot.subsystems.drive.Drivetrain;
-import frc.robot.subsystems.vision.VisionProcessor;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -60,9 +57,9 @@ public class RobotContainer {
 	// = new OperateByController(m_shooter); 
 
 	// Autonomous Option
-	private final Command doNothin = new WaitCommand(5);
-	private final Command FiveBall = new FiveBall(m_drive, 8);
-	private final Command DriveStraight = new DriveStraight(m_drive, 8);
+	// private final Command doNothin = new WaitCommand(5);
+	// private final Command FiveBall = new FiveBall(m_drive, 8);
+	// private final Command DriveStraight = new DriveStraight(m_drive, 8);
 
 	// public static final SendableChooser<Command> m_chooser = new SendableChooser<>();
     private final SendableChooser<Command> autoChooser;
@@ -83,9 +80,8 @@ public class RobotContainer {
 		m_drive.setDefaultCommand(m_driveByController);
 
 		SmartDashboard.putData("Auto Chooser", autoChooser);
-
 		
-		m_drive.resetOdometry(new Pose2d()); //TODO need to test. Pigeon position does not reset on hardware
+		m_drive.setPose(new Pose2d()); //TODO need to test. Pigeon position does not reset on hardware
 	}
 
     public Command getAutonomousCommand() {

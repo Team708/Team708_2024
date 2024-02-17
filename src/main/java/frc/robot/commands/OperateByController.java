@@ -27,7 +27,7 @@ public class OperateByController extends Command {
   // }
 
   @Override
-  public void initialize(){
+  public void initialize() {
   }
 
   /**
@@ -50,7 +50,7 @@ public class OperateByController extends Command {
   }
 
   @Override
-  public void end(boolean interrupted){
+  public void end(boolean interrupted) {
 
   }
 

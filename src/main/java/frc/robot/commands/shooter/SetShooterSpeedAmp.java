@@ -26,16 +26,16 @@ public class SetShooterSpeedAmp extends Command {
   }
 
   @Override
-  public void initialize(){
+  public void initialize() {
     
   }
 
-  public void execute(){
+  public void execute() {
     m_shooter.setShooterSpeedAmp(ShooterConstants.kShooterAmpShotMPS);
   }
   
   @Override
-  public boolean isFinished(){
-    return m_shooter.isShooterAmpAtSpeed(ShooterConstants.kShooterAmpShotMPS);
+  public boolean isFinished() {
+    return m_shooter.isAtSpeed();
   }
 }

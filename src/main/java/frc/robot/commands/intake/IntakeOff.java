@@ -13,9 +13,8 @@ public class IntakeOff extends Command {
   public IntakeOff(Intake intake) {
     m_intake = intake;
 
-    addRequirements(m_intake);
-    //TODO Command, Intake 
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(m_intake);
   }
 
   // Called when the command is initially scheduled.

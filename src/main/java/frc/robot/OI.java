@@ -1,34 +1,30 @@
 package frc.robot;
 
 import frc.robot.Constants.ControllerConstants;
-import frc.robot.commands.shooter.SetShooterSpeedAmp;
-import frc.robot.commands.shooter.SetShooterSpeedBumperShot;
-import frc.robot.commands.PivotArm.EnableArmAutoAim;
-import frc.robot.commands.PivotArm.armToFartherShotAngle;
-import frc.robot.commands.PivotArm.armToParkShotAngle;
-import frc.robot.commands.ShootSpeakerBumperShotSCG;
-import frc.robot.commands.PivotArm.armToAmpShotAngle;
-import frc.robot.commands.shooter.ShooterOff;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.PivotArm;
-import frc.robot.subsystems.Feeder;
-import frc.robot.commands.drive.DisableAutoTargetSpeaker;
+import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+
+//Command Imports
 import frc.robot.commands.drive.DriveToAmp;
-import frc.robot.commands.drive.EnableAutoTargetSpeaker;
 import frc.robot.commands.intake.IntakeAllIn;
 import frc.robot.commands.intake.IntakeAllOut;
 import frc.robot.commands.intake.IntakeEjectBack;
 import frc.robot.commands.intake.IntakeOff;
-import edu.wpi.first.wpilibj.XboxController.Button;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.PivotArm.EnableArmAutoAim;
+import frc.robot.commands.PivotArm.armToFartherShotAngle;
+import frc.robot.commands.PivotArm.armToParkShotAngle;
+import frc.robot.commands.PivotArm.armToAmpShotAngle;
+import frc.robot.commands.shooter.SetShooterSpeedAmp;
+import frc.robot.commands.shooter.SetShooterSpeedBumperShot;
+import frc.robot.commands.ShootSpeakerBumperShotSCG;
 
 //Subsysem Imports
 import frc.robot.subsystems.drive.Drivetrain;
-import frc.robot.subsystems.Shooter;
-
-
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Feeder;
+import frc.robot.subsystems.PivotArm;
+import frc.robot.subsystems.Shooter;
 
 public class OI {
 

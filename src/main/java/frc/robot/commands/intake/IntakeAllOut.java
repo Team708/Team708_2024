@@ -14,6 +14,8 @@ public class IntakeAllOut extends Command {
   /** Creates a new IntakeOut. */
   public IntakeAllOut(Intake intake) {
     m_intake = intake;
+    // Use addRequirements() here to declare subsystem dependencies.
+
     addRequirements(m_intake);
   }
 

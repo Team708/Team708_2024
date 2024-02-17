@@ -9,7 +9,7 @@ import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.CurrentLimit;
 import frc.robot.subsystems.sim.IntakeSimulation;
 
-public class Intake extends SubsystemBase{
+public class Intake extends SubsystemBase {
 	
 	private CANSparkMax m_intakeMotorRight;
 	private CANSparkMax m_intakeMotorLeft;
@@ -26,26 +26,26 @@ public class Intake extends SubsystemBase{
 
   IntakeSimulation m_intakeSim;
 
-	public Intake(){
+	public Intake() {
 
         m_intakeMotorRight = new CANSparkMax(IntakeConstants.kIntakeMotorRightID, MotorType.kBrushless);
         m_intakeMotorLeft = new CANSparkMax(IntakeConstants.kIntakeMotorLeftID, MotorType.kBrushless);
         m_intakeMotorFront = new CANSparkMax(IntakeConstants.kIntakeMotorFrontID, MotorType.kBrushless);
         m_intakeMotorBack = new CANSparkMax(IntakeConstants.kIntakeMotorBackID, MotorType.kBrushless);
 
-		m_intakeMotorRight.setSmartCurrentLimit(CurrentLimit.kIntake);
+		m_intakeMotorRight.setSmartCurrentLimit(CurrentLimit.kIntakeAmps);
 		m_intakeMotorRight.setInverted(false);
 		m_intakeMotorRight.setIdleMode(IdleMode.kCoast);
 
-		m_intakeMotorLeft.setSmartCurrentLimit(CurrentLimit.kIntake);
+		m_intakeMotorLeft.setSmartCurrentLimit(CurrentLimit.kIntakeAmps);
 		m_intakeMotorLeft.setInverted(false);
 		m_intakeMotorLeft.setIdleMode(IdleMode.kCoast);
 
-		m_intakeMotorFront.setSmartCurrentLimit(CurrentLimit.kIntake);
+		m_intakeMotorFront.setSmartCurrentLimit(CurrentLimit.kIntakeAmps);
 		m_intakeMotorFront.setInverted(false);
 		m_intakeMotorFront.setIdleMode(IdleMode.kCoast);
 
-		m_intakeMotorBack.setSmartCurrentLimit(CurrentLimit.kIntake);
+		m_intakeMotorBack.setSmartCurrentLimit(CurrentLimit.kIntakeAmps);
 		m_intakeMotorBack.setInverted(false);
 		m_intakeMotorBack.setIdleMode(IdleMode.kCoast);
 		intakeDirection = "";
@@ -56,7 +56,7 @@ public class Intake extends SubsystemBase{
 	  // This method will be called once per scheduler run
 	}
 
-	public void intakeAll(){
+	public void intakeAll() {
 		m_intakeMotorRight.setVoltage(IntakeConstants.kIntakeSpeed);
 		m_intakeMotorLeft.setVoltage(IntakeConstants.kIntakeSpeed);
 		m_intakeMotorFront.setVoltage(IntakeConstants.kIntakeSpeed);
@@ -65,7 +65,7 @@ public class Intake extends SubsystemBase{
 		// isReversed = false;
 	}
 
-	public void intakeOff(){
+	public void intakeOff() {
 		m_intakeMotorRight.setVoltage(0);
 		m_intakeMotorLeft.setVoltage(0);
 		m_intakeMotorFront.setVoltage(0);
@@ -74,7 +74,7 @@ public class Intake extends SubsystemBase{
 
 	}
 
-	public void intakeReverse(){
+	public void intakeReverse() {
 		m_intakeMotorRight.setVoltage(-IntakeConstants.kIntakeSpeed);
 		m_intakeMotorLeft.setVoltage(-IntakeConstants.kIntakeSpeed);
 		m_intakeMotorFront.setVoltage(-IntakeConstants.kIntakeSpeed);
@@ -84,7 +84,7 @@ public class Intake extends SubsystemBase{
 		// isReversed = true;
 	}
 
-	public void ejectFront(){
+	public void ejectFront() {
 		m_intakeMotorRight.setVoltage(IntakeConstants.kIntakeSpeed);
 		m_intakeMotorLeft.setVoltage(IntakeConstants.kIntakeSpeed);
 		m_intakeMotorFront.setVoltage(-IntakeConstants.kIntakeSpeed);
@@ -93,7 +93,7 @@ public class Intake extends SubsystemBase{
 
 	}
 
-	public void ejectBack(){
+	public void ejectBack() {
 		m_intakeMotorRight.setVoltage(IntakeConstants.kIntakeSpeed);
 		m_intakeMotorLeft.setVoltage(IntakeConstants.kIntakeSpeed);
 		m_intakeMotorFront.setVoltage(IntakeConstants.kIntakeSpeed);
@@ -102,7 +102,7 @@ public class Intake extends SubsystemBase{
 
 	}
 
-	// public boolean sensorDetected(){
+	// public boolean sensorDetected() {
 	// return !m_dIOSensor.get();
 	// }
 
@@ -117,7 +117,7 @@ public class Intake extends SubsystemBase{
     m_intakeSim.update();
 	}
 
-	public void sendToDashboard(){
+	public void sendToDashboard() {
 		// SmartDashboard.putNumber("intake speed", getRollerSpeed());
 		// SmartDashboard.putNumber("intake Position", getRollerPosition());
 		SmartDashboard.putString("intake Direction", intakeDirection);

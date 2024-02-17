@@ -23,7 +23,7 @@ public class TurnToCommand extends PIDCommand {
       output -> drivetrain.drive(0, 0, output, true, true),
       drivetrain);
 
-      getController().enableContinuousInput(-180, 180);
+    getController().enableContinuousInput(-180, 180);
     // getController().setTolerance(1.5, 10);
   }
 

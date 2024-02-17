@@ -13,7 +13,7 @@ public class IntakeAllIn extends Command{
     /** Creates a new IntakeOut. */
     public IntakeAllIn(Intake intake) {
         m_intake = intake;
-        addRequirements(m_intake); // This is important to inform the scheduler about the subsystem usage
+        addRequirements(m_intake);
     }
 
     // Called when the command is initially scheduled.
