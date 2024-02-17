@@ -179,6 +179,8 @@ import com.pathplanner.lib.util.GeometryUtil;
     // if(keepAngle){
     //   rot = performKeepAngle(xSpeed,ySpeed,rot); //Calls the keep angle function to update the keep angle or rotate depending on driver input
     // }
+
+    rot = findAutoRotate(rot);
     
     xSpeed = m_slewX.calculate(xSpeed);
     ySpeed = m_slewY.calculate(ySpeed);
@@ -453,8 +455,7 @@ import com.pathplanner.lib.util.GeometryUtil;
     );
   }
 
-  public void driveRobotRelative(ChassisSpeeds chassisSpeeds)
-  {
+  public void driveRobotRelative(ChassisSpeeds chassisSpeeds){
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
     SwerveDriveKinematics.desaturateWheelSpeeds(
         swerveModuleStates, DriveConstants.kMaxSpeedMetersPerSec);
@@ -489,45 +490,44 @@ import com.pathplanner.lib.util.GeometryUtil;
 
   public void makeRobotDrive()
   {
-    PIDController controller = Constants.DriveConstants.kAutoRotatePID;//, //new Constraints(300000, 150000));
-    double desiredRot = findAutoRotate(controller, getDriverRot());
     this.drive(getDriverXAndY().getX(), 
-                       getDriverXAndY().getY(),
-                       desiredRot,
-                       getFieldOrient(),
-                       true);
+    getDriverXAndY().getY(),
+    getDriverRot(),
+    getFieldOrient(),
+    true);
   }
-
+  
   public void enableAutoRot()
   {
     autoRotEnabled = true;
   }
-
+  
   public void disableAutoRot()
   {
     autoRotEnabled = false;
   }
-
-  public double findAutoRotate(PIDController controller, double defaultRot){ 
-      if(autoRotEnabled){
-        if(FMSData.allianceIsRed()){
-          targetPose = GeometryUtil.flipFieldPose(DriveConstants.kBlueSpeaker);
-        }
-        else{
-          targetPose = DriveConstants.kBlueSpeaker;
-        }
-        double dx = targetPose.getX() - getPose().getX();
-        double dy = targetPose.getY() - getPose().getY();
-        Rotation2d robotToTarget = new Rotation2d(dx, dy);
-        m_field.getObject("Desired Target").setPose(targetPose);
-        double output =  controller.calculate(getPose().getRotation().getDegrees(), robotToTarget.getDegrees());
-        if(!controller.atSetpoint()){
-          return output;
-        }else{
-          return 0.0;
-        }
+  
+  public double findAutoRotate(double defaultRot){
+    PIDController controller = Constants.DriveConstants.kAutoRotatePID;//, //new Constraints(300000, 150000));
+    if(autoRotEnabled){
+      if(FMSData.allianceIsRed()){
+        targetPose = GeometryUtil.flipFieldPose(DriveConstants.kBlueSpeaker);
       }
-      return defaultRot;  
+      else{
+        targetPose = DriveConstants.kBlueSpeaker;
+      }
+      double dx = targetPose.getX() - getPose().getX();
+      double dy = targetPose.getY() - getPose().getY();
+      Rotation2d robotToTarget = new Rotation2d(dx, dy);
+      m_field.getObject("Desired Target").setPose(targetPose);
+      double output =  controller.calculate(getPose().getRotation().getDegrees(), robotToTarget.getDegrees());
+      if(!controller.atSetpoint()){
+        return output;
+      }else{
+        return 0.0;
+      }
+    }
+    return defaultRot;
   }
 
   public double getDistanceToTarget() {

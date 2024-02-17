@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.PivotArm.EnableArmAutoAim;
@@ -29,7 +30,6 @@ public class ShootSpeakerBumperShotSCG extends SequentialCommandGroup {
    * @param m_drive */
 
   public ShootSpeakerBumperShotSCG(Drivetrain m_drive, Feeder m_feeder, Shooter m_shooter, PivotArm m_PivotArm) {
-
     addCommands(
       new ParallelCommandGroup(
         new EnableAutoTargetSpeaker(m_drive),

@@ -27,6 +27,7 @@ public class EnableArmAutoAim extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    SmartDashboard.putString("Command", "EnableArmAutoAim");
   }
   
   // Called every time the scheduler runs while the command is scheduled.
@@ -43,6 +44,9 @@ public class EnableArmAutoAim extends Command {
   @Override
   public void end(boolean interrupted) {
     // m_drive.disableAutoRot();
+    SmartDashboard.putString("Command", "EnableArmAutoAim: End");
+    SmartDashboard.putString("Command", "None");
+
   }
 
   // Returns true when the command should end.

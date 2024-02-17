@@ -4,6 +4,7 @@
 
 package frc.robot.commands.drive;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.drive.Drivetrain;
 
@@ -23,11 +24,15 @@ public class EnableAutoTargetSpeaker extends Command {
   @Override
   public void initialize() {
     m_drive.enableAutoRot();
+    SmartDashboard.putString("Command", "EnableAutoTargetSpeaker");
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     m_drive.disableAutoRot();
+    SmartDashboard.putString("Command", "EnableAutoTargetSpeaker: End");
+    SmartDashboard.putString("Command", "None");
+
   }
 }
