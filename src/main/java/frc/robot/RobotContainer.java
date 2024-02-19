@@ -69,7 +69,7 @@ public class RobotContainer {
 		// Configure the button bindings
 		configureButtonBindings();
 		
-		NamedCommands.registerCommand("ShootSpeakerBumperShotSCG", new ShootSpeakerBumperShotSCG(m_drive, m_feeder, m_shooter, m_PivotArm));
+		NamedCommands.registerCommand("ShootSpeakerBumperShotSCG", new ShootSpeakerBumperShotSCG(m_drive, m_feeder, m_shooter, m_PivotArm, m_intake));
 		// configureAutoChooser();
 		// Build an auto chooser. This will use Commands.none() as the default option.
 		autoChooser = AutoBuilder.buildAutoChooser();

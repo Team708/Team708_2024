@@ -63,25 +63,26 @@ public class Feeder extends SubsystemBase {
   public void feedNotesToStow(boolean enable){
     if (enable){
       if (!feeder2NotePresent.get()){
-        setFeeder1Motor(.5);
+        setFeeder1Motor(.3);
         setFeeder2Motor(.2);
         // runForward(.2);
-      }else{
+      }else{ 
        stop();
       }
     }else{
+      setFeeder2Distance();
       stop();
     }
   }
 
   public void runForward(double speed){
-    setFeeder1Motor(speed);
-    setFeeder2Motor(speed);
+    m_FeederStage1Motor.set(speed);
+    m_FeederStage2Motor.set(speed);
   }
 
   public void runReverse(double speed){
-    setFeeder1Motor(-speed);
-    setFeeder2Motor(-speed);
+    m_FeederStage1Motor.set(-speed);
+    m_FeederStage2Motor.set(-speed);
   }
 
   public void stop(){
@@ -99,7 +100,7 @@ public class Feeder extends SubsystemBase {
 
   public void setFeeder2Distance(){
     feederStage2Encoder.setPosition(0);
-    feederStage2PIDController.setReference(5.0, ControlType.kPosition);
+    //feederStage2PIDController.setReference(5.0, ControlType.kPosition);
 
   }
 
@@ -118,6 +119,7 @@ public class Feeder extends SubsystemBase {
   public void sendToDashboard() {
 		SmartDashboard.putBoolean("feeder1NotePresent", feeder1NotePresent.get());
     SmartDashboard.putBoolean("feeder2NotePresent", feeder2NotePresent.get());
+    SmartDashboard.putNumber("Feeder Encoder", feederStage1Encoder.getPosition());
     SmartDashboard.putBoolean("feederIsEmpty", isEmpty());
 	}
 }

@@ -19,7 +19,7 @@ import frc.robot.commands.PivotArm.armToParkShotAngle;
 import frc.robot.commands.PivotArm.armToAmpShotAngle;
 import frc.robot.commands.shooter.ShooterOff;
 import frc.robot.commands.shooter.SetShooterSpeedAmp;
-import frc.robot.commands.shooter.SetShooterSpeedBumperShot;
+import frc.robot.commands.shooter.SetShooterSpeedSpeaker;
 import frc.robot.commands.ShootAmpSequence;
 import frc.robot.commands.ShootSpeakerBumperShotSCG;
 import frc.robot.commands.Feeder.FeedNoteForStorage;
@@ -97,8 +97,7 @@ public class OI {
 
     //DRIVER//
     new JoystickButton(driverController, Button.kA.value) //TODO Change these buttons, current commands only for testing
-    		.onTrue(new IntakeNote(m_intake, m_feeder).andThen(new SetRumble().withTimeout(.1)))
-    		.onFalse(new IntakeOff(m_intake));
+    		.onTrue(new IntakeNote(m_intake, m_feeder).andThen(new SetRumble().withTimeout(.1)));
 
     new JoystickButton(driverController, Button.kB.value) //TODO Change these buttons, current commands only for testing
     		.onTrue(new IntakeAllOut(m_intake))
@@ -122,7 +121,7 @@ public class OI {
 
     new JoystickButton(driverController, Button.kLeftBumper.value)
     		//.whileHeld((new AutoTargetSpeaker(m_drive)));
-        .whileTrue(new ShootSpeakerBumperShotSCG(m_drive, m_feeder, m_shooter, m_PivotArm));
+        .onTrue(new ShootSpeakerBumperShotSCG(m_drive, m_feeder, m_shooter, m_PivotArm, m_intake));
         // .whileFalse(new DisableAutoTargetSpeaker(m_drive));
     
     
@@ -144,7 +143,7 @@ public class OI {
     
     //testing button
     new JoystickButton(operatorController, Button.kA.value)
-    .onTrue(new SetShooterSpeedBumperShot(m_shooter))
+    .onTrue(new SetShooterSpeedSpeaker(m_shooter))
     .onFalse(new ShooterOff(m_shooter));
 
     // //testing button

@@ -22,12 +22,14 @@ public class FeedNoteToShoot extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_feeder.runForward(1.0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    //if(m_pivotArm.isArmAtPosition()) {
+      m_feeder.runForward(1.0);
+    //}
   }
 
 
@@ -38,7 +40,7 @@ public class FeedNoteToShoot extends Command {
   }
   @Override
   public boolean isFinished() {
-    return m_feeder.isEmpty() && m_pivotArm.isArmAtPosition();
+    return m_feeder.isEmpty();
   }
 
 }

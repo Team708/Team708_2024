@@ -525,21 +525,21 @@ rotateToTarget(chassisSpeeds.omegaRadiansPerSecond));
   public double rotateToTarget(double defaultRot) {
     PIDController controller = Constants.DriveConstants.kAutoRotatePID;//, //new Constraints(300000, 150000));
     if(m_autoRotEnabled){
-      if(FMSData.allianceIsRed()){
-        targetPose = GeometryUtil.flipFieldPose(DriveConstants.kBlueSpeaker);
-      }else{
-        targetPose = DriveConstants.kBlueSpeaker;
-      }
-      double dx = targetPose.getX() - getPose().getX();
-      double dy = targetPose.getY() - getPose().getY();
-      Rotation2d robotToTarget = new Rotation2d(dx, dy);
-      m_field.getObject("Desired Target").setPose(targetPose);
-      double output =  controller.calculate(getPose().getRotation().getDegrees(), robotToTarget.getDegrees());
-      if(!controller.atSetpoint()){
-        return output;
-      }else{
-        return 0.0;
-      }
+        if(FMSData.allianceIsRed()){
+          targetPose = GeometryUtil.flipFieldPose(DriveConstants.kBlueSpeaker);
+        }else{
+          targetPose = DriveConstants.kBlueSpeaker;
+        }
+        double dx = targetPose.getX() - getPose().getX();
+        double dy = targetPose.getY() - getPose().getY();
+        Rotation2d robotToTarget = new Rotation2d(dx, dy);
+        m_field.getObject("Desired Target").setPose(targetPose);
+        double output =  controller.calculate(getPose().getRotation().getDegrees(), robotToTarget.getDegrees());
+        if(!controller.atSetpoint()){
+          return output;
+        }else{
+          return 0.0;
+        }
     }
     return defaultRot;
   }

@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.PivotArm.armToAmpShotAngle;
 import frc.robot.commands.shooter.SetShooterSpeedAmp;
-import frc.robot.commands.shooter.SetShooterSpeedBumperShot;
+import frc.robot.commands.shooter.SetShooterSpeedSpeaker;
 import frc.robot.commands.shooter.ShooterOff;
 import frc.robot.commands.Feeder.FeedNoteToShoot;
 import frc.robot.commands.drive.DriveToAmp;

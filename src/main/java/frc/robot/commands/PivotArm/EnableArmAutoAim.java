@@ -21,7 +21,7 @@ public class EnableArmAutoAim extends Command {
     m_pivotArm = pivotArm;
     m_drive = drive;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_pivotArm);
+    //addRequirements(m_pivotArm);
   }
 
   // Called when the command is initially scheduled.
