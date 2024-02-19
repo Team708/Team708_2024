@@ -23,6 +23,7 @@ import frc.robot.commands.ShootAmpSequence;
 import frc.robot.commands.ShootSpeakerBumperShotSCG;
 import frc.robot.commands.Feeder.FeedNoteForStorage;
 import frc.robot.commands.Feeder.FeedNoteToShoot;
+import frc.robot.commands.Feeder.ClearJamb;
 //Subsysem Imports
 import frc.robot.subsystems.drive.Drivetrain;
 import frc.robot.subsystems.Intake;
@@ -95,7 +96,8 @@ public class OI {
 
     //DRIVER//
     new JoystickButton(driverController, Button.kA.value) //TODO Change these buttons, current commands only for testing
-    		.onTrue(new IntakeNote(m_intake, m_feeder));
+    		.onTrue(new IntakeNote(m_intake, m_feeder))
+    		.onFalse(new IntakeOff(m_intake));
 
     new JoystickButton(driverController, Button.kB.value) //TODO Change these buttons, current commands only for testing
     		.onTrue(new IntakeAllOut(m_intake))
@@ -170,6 +172,8 @@ public class OI {
 
     // new JoystickButton(operatorController, Button.kBack.value)
     // 		.whileTrue(new /*Command*/);
+    new JoystickButton(operatorController, Button.kX.value)
+    		.whileTrue(new ClearJamb(m_feeder));
 
     //testing button
     new JoystickButton(operatorController, Button.kLeftBumper.value)
@@ -181,6 +185,8 @@ public class OI {
     
     new JoystickButton(operatorController, Button.kRightStick.value)
     		.onTrue(new SetShooterSpeedAmp(m_shooter));
+
+    
 
     //testing button
     // new JoystickButton(operatorController, Button.kRightStick.value)

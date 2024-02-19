@@ -4,13 +4,13 @@
 
 package frc.robot.commands.Feeder;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Feeder;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ClearJamb extends InstantCommand {
+public class ClearJamb extends Command {
   Feeder m_feeder;
 
   public ClearJamb(Feeder feeder) {
@@ -22,5 +22,19 @@ public class ClearJamb extends InstantCommand {
   @Override
   public void initialize() {
     m_feeder.runReverse(.2);
+  }
+
+  // Called every time the scheduler runs while the command is scheduled.
+  @Override
+  public void execute() {
+  }
+
+  // Called once the command ends or is interrupted.
+  @Override
+  public void end(boolean interrupted) {
+    m_feeder.stop();
+  }
+  public boolean isFinished() {
+    return false;
   }
 }

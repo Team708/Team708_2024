@@ -59,7 +59,7 @@ public class Intake extends SubsystemBase {
 	public void intakeAll() {
 		m_intakeMotorRight.setVoltage(IntakeConstants.kIntakeSpeed);
 		m_intakeMotorLeft.setVoltage(IntakeConstants.kIntakeSpeed);
-		m_intakeMotorFront.setVoltage(IntakeConstants.kIntakeSpeed*.8);
+		m_intakeMotorFront.setVoltage(IntakeConstants.kIntakeSpeed);
 		m_intakeMotorBack.setVoltage(IntakeConstants.kIntakeSpeed);
 		intakeDirection = "All On";
 		// isReversed = false;

@@ -80,6 +80,8 @@ import com.pathplanner.lib.util.GeometryUtil;
 
   private PathConstraints trajectoryConstraints;
 
+  private ChassisSpeeds modifiedChassisSpeeds;
+
   //Creates a swerveModule object for the front left swerve module feeding in parameters from the constants file
   private final SwerveModule m_frontLeft = new SwerveModule(DriveConstants.kFrontLeftDriveMotorPort,
       DriveConstants.kFrontLeftTurningMotorPort, DriveConstants.kFrontLeftTurningEncoderPort,
@@ -483,10 +485,12 @@ import com.pathplanner.lib.util.GeometryUtil;
   }
 
   public void driveRobotRelative(ChassisSpeeds chassisSpeeds) {
-    var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
+    modifiedChassisSpeeds = new ChassisSpeeds(chassisSpeeds.vxMetersPerSecond, chassisSpeeds.vyMetersPerSecond,
+rotateToTarget(chassisSpeeds.omegaRadiansPerSecond));
+    var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(modifiedChassisSpeeds);
     SwerveDriveKinematics.desaturateWheelSpeeds(
         swerveModuleStates, DriveConstants.kMaxSpeedMetersPerSec);
-    m_frontLeft.setDesiredState(swerveModuleStates[0]);
+    m_frontLeft.setDesiredState(swerveModuleStates[0]); 
     m_frontRight.setDesiredState(swerveModuleStates[1]);
     m_backLeft.setDesiredState(swerveModuleStates[2]);
     m_backRight.setDesiredState(swerveModuleStates[3]);
