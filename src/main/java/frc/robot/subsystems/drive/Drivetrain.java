@@ -345,8 +345,8 @@ import com.pathplanner.lib.util.GeometryUtil;
     Pose2d pose = m_PoseEstimator.getEstimatedPosition();
     Translation2d position = pose.getTranslation();
     //Rotation2d heading = getGyro();
-    SmartDashboard.putNumber("Robot X", position.getX());
-    SmartDashboard.putNumber("Robot Y", position.getY());
+    //SmartDashboard.putNumber("Robot X", position.getX());
+    //SmartDashboard.putNumber("Robot Y", position.getY());
     //SmartDashboard.putNumber("Robot Gyro", getGyro().getDegrees());
     SmartDashboard.putNumber("Robot Angle", pose.getRotation().getDegrees());
     return pose;
@@ -356,8 +356,8 @@ import com.pathplanner.lib.util.GeometryUtil;
     updateAutoPose();
     Pose2d pose = m_AutoPoseEstimator.getEstimatedPosition();
     Translation2d position = pose.getTranslation();
-    SmartDashboard.putNumber("Auto X", position.getX());
-    SmartDashboard.putNumber("Auto Y", position.getY());
+    // SmartDashboard.putNumber("Auto X", position.getX());
+    // SmartDashboard.putNumber("Auto Y", position.getY());
     return pose;
   }
 

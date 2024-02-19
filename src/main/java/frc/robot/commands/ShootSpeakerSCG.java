@@ -18,39 +18,28 @@ import frc.robot.subsystems.PivotArm;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.drive.Drivetrain;
 import frc.robot.subsystems.Intake;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ShootSpeakerBumperShotSCG extends SequentialCommandGroup {
-  /** Creates a new ShootSpeakerBumperShotSCG. 
-   * @param PivotArm
-   * @param Shooter
-   * @param Feeder
-   * @param Drivetrain */
-
-  public ShootSpeakerBumperShotSCG(Drivetrain m_drive, Feeder m_feeder, Shooter m_shooter, PivotArm m_PivotArm, Intake m_intake) {
+public class ShootSpeakerSCG extends ParallelDeadlineGroup {
+  /** Creates a new Test_ShootSpeakerSCG. */
+  public ShootSpeakerSCG(Drivetrain m_drive, Feeder m_feeder, Shooter m_shooter, PivotArm m_PivotArm, Intake m_intake) {
+    // Add the deadline command in the super() call. Add other commands using
+    // addCommands().
+    super(new EnableAutoTargetSpeaker(m_drive));
+    // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ParallelCommandGroup(
-        new EnableAutoTargetSpeaker(m_drive),
         new EnableArmAutoAim(m_PivotArm, m_drive),
-         
         new SequentialCommandGroup(
           new SetShooterSpeedSpeaker(m_shooter),
           new FeedNoteToShoot(m_feeder, m_PivotArm).withTimeout(2.0),
           new ShooterOff(m_shooter),
           new IntakeNote(m_intake, m_feeder)
         )
-        
-
       )
-      //  //keep aiming while shooting
-      // new ParallelCommandGroup(
-      //   new EnableAutoTargetSpeaker(m_drive),
-      //   new EnableArmAutoAim(m_PivotArm, m_drive), 
-      //   new SetShooterSpeedBumperShot(m_shooter),
-      //   new FeedNoteToShoot(m_feeder)
-      // ),
     );
   }
 }

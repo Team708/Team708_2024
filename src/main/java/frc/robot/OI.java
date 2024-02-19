@@ -21,7 +21,7 @@ import frc.robot.commands.shooter.ShooterOff;
 import frc.robot.commands.shooter.SetShooterSpeedAmp;
 import frc.robot.commands.shooter.SetShooterSpeedSpeaker;
 import frc.robot.commands.ShootAmpSequence;
-import frc.robot.commands.ShootSpeakerBumperShotSCG;
+import frc.robot.commands.ShootSpeakerSCG;
 import frc.robot.commands.Feeder.FeedNoteForStorage;
 import frc.robot.commands.Feeder.FeedNoteToShoot;
 import frc.robot.commands.Feeder.ClearJamb;
@@ -109,8 +109,8 @@ public class OI {
     new JoystickButton(driverController, Button.kY.value)
         .whileTrue(new FeedNoteToShoot(m_feeder, m_PivotArm));
 
-    new JoystickButton(driverController, Button.kRightBumper.value)
-     		.toggleOnTrue(new DriveToAmp(m_drive));
+    // new JoystickButton(driverController, Button.kRightBumper.value)
+    //  		.toggleOnTrue(new DriveToAmp(m_drive));
     
     new JoystickButton(driverController, Button.kStart.value)
     		.onTrue(new SetRumble().withTimeout(.1));
@@ -121,7 +121,7 @@ public class OI {
 
     new JoystickButton(driverController, Button.kLeftBumper.value)
     		//.whileHeld((new AutoTargetSpeaker(m_drive)));
-        .onTrue(new ShootSpeakerBumperShotSCG(m_drive, m_feeder, m_shooter, m_PivotArm, m_intake));
+        .onTrue(new ShootSpeakerSCG(m_drive, m_feeder, m_shooter, m_PivotArm, m_intake));
         // .whileFalse(new DisableAutoTargetSpeaker(m_drive));
     
     

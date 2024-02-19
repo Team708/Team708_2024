@@ -361,6 +361,7 @@ public final class Constants {
     public static final double kDriverDeadBandRightX  = 0.2;
     public static final double kDriverDeadBandLeftY   = 0.1;
     public static final double kDriverDeadBandRightY  = 0.2;
+    public static final double kDriverDisableAutoTargeting = 0.5;
 
     // Operator
     // public static final double kOperatorDeadBandLeftX   = 0.1;

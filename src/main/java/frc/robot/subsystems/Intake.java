@@ -76,10 +76,6 @@ public class Intake extends SubsystemBase {
 		backSparkPIDController.setReference(IntakeConstants.kIntakeRPM, CANSparkMax.ControlType.kVelocity);
 		rightSparkPIDController.setReference(IntakeConstants.kIntakeRPM, CANSparkMax.ControlType.kVelocity);
 		leftSparkPIDController.setReference(IntakeConstants.kIntakeRPM, CANSparkMax.ControlType.kVelocity);
-		// m_intakeMotorRight.setVoltage(IntakeConstants.kIntakeSpeed);
-		// m_intakeMotorLeft.setVoltage(IntakeConstants.kIntakeSpeed);
-		// m_intakeMotorFront.setVoltage(IntakeConstants.kIntakeSpeed);
-		// m_intakeMotorBack.setVoltage(IntakeConstants.kIntakeSpeed);
 		intakeDirection = "All On";
 		// isReversed = false;
 	}
@@ -89,10 +85,6 @@ public class Intake extends SubsystemBase {
 		backSparkPIDController.setReference(0, CANSparkMax.ControlType.kVelocity);
 		rightSparkPIDController.setReference(0, CANSparkMax.ControlType.kVelocity);
 		leftSparkPIDController.setReference(0, CANSparkMax.ControlType.kVelocity);
-		// m_intakeMotorRight.setVoltage(0);
-		// m_intakeMotorLeft.setVoltage(0);
-		// m_intakeMotorFront.setVoltage(0);
-		// m_intakeMotorBack.setVoltage(0);
 		intakeDirection = "All Off";
 
 	}
@@ -102,10 +94,6 @@ public class Intake extends SubsystemBase {
 		backSparkPIDController.setReference(-IntakeConstants.kIntakeRPM, CANSparkMax.ControlType.kVelocity);
 		rightSparkPIDController.setReference(-IntakeConstants.kIntakeRPM, CANSparkMax.ControlType.kVelocity);
 		leftSparkPIDController.setReference(-IntakeConstants.kIntakeRPM, CANSparkMax.ControlType.kVelocity);
-		// m_intakeMotorRight.setVoltage(-IntakeConstants.kIntakeSpeed);
-		// m_intakeMotorLeft.setVoltage(-IntakeConstants.kIntakeSpeed);
-		// m_intakeMotorFront.setVoltage(-IntakeConstants.kIntakeSpeed);
-		// m_intakeMotorBack.setVoltage(-IntakeConstants.kIntakeSpeed);
 		intakeDirection = "All Reverse";
 
 		// isReversed = true;
@@ -116,10 +104,6 @@ public class Intake extends SubsystemBase {
 		backSparkPIDController.setReference(IntakeConstants.kIntakeRPM, CANSparkMax.ControlType.kVelocity);
 		rightSparkPIDController.setReference(IntakeConstants.kIntakeRPM, CANSparkMax.ControlType.kVelocity);
 		leftSparkPIDController.setReference(IntakeConstants.kIntakeRPM, CANSparkMax.ControlType.kVelocity);
-		// m_intakeMotorRight.setVoltage(IntakeConstants.kIntakeSpeed);
-		// m_intakeMotorLeft.setVoltage(IntakeConstants.kIntakeSpeed);
-		// m_intakeMotorFront.setVoltage(-IntakeConstants.kIntakeSpeed);
-		// m_intakeMotorBack.setVoltage(IntakeConstants.kIntakeSpeed);
 		intakeDirection = "eject Front";
 
 	}
@@ -129,10 +113,6 @@ public class Intake extends SubsystemBase {
 		backSparkPIDController.setReference(-IntakeConstants.kIntakeRPM, CANSparkMax.ControlType.kVelocity);
 		rightSparkPIDController.setReference(IntakeConstants.kIntakeRPM, CANSparkMax.ControlType.kVelocity);
 		leftSparkPIDController.setReference(IntakeConstants.kIntakeRPM, CANSparkMax.ControlType.kVelocity);
-		// m_intakeMotorRight.setVoltage(IntakeConstants.kIntakeSpeed);
-		// m_intakeMotorLeft.setVoltage(IntakeConstants.kIntakeSpeed);
-		// m_intakeMotorFront.setVoltage(IntakeConstants.kIntakeSpeed);
-		// m_intakeMotorBack.setVoltage(-IntakeConstants.kIntakeSpeed);
 		intakeDirection = "eject Back";
 
 	}
@@ -157,7 +137,7 @@ public class Intake extends SubsystemBase {
 	public void sendToDashboard() {
 		// SmartDashboard.putNumber("intake speed", getRollerSpeed());
 		// SmartDashboard.putNumber("intake Position", getRollerPosition());
-		SmartDashboard.putString("intake Direction", intakeDirection);
+		// SmartDashboard.putString("intake Direction", intakeDirection);
 
 	}
 

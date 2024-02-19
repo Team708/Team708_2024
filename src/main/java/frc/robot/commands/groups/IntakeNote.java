@@ -23,7 +23,6 @@ public class IntakeNote extends ParallelDeadlineGroup {
     // Add the deadline command in the super() call. Add other commands using
     // addCommands().
     super(new FeedNoteForStorage(m_feeder));
-    // addCommands(new FooCommand(), new BarCommand());
     addCommands(new IntakeAllIn(m_intake));
   }
 }

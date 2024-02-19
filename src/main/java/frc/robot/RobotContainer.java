@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 // import frc.robot.commands.auto.FiveBall;
 // import frc.robot.commands.auto.DriveStraight;
-import frc.robot.commands.ShootSpeakerBumperShotSCG;
+import frc.robot.commands.ShootSpeakerSCG;
 
 import frc.robot.commands.DriveByController;
 // import frc.robot.commands.OperateByController; //TODO uncomment if using Operator Controller
@@ -69,7 +69,7 @@ public class RobotContainer {
 		// Configure the button bindings
 		configureButtonBindings();
 		
-		NamedCommands.registerCommand("ShootSpeakerBumperShotSCG", new ShootSpeakerBumperShotSCG(m_drive, m_feeder, m_shooter, m_PivotArm, m_intake));
+		NamedCommands.registerCommand("ShootSpeakerBumperShotSCG", new ShootSpeakerSCG(m_drive, m_feeder, m_shooter, m_PivotArm, m_intake));
 		// configureAutoChooser();
 		// Build an auto chooser. This will use Commands.none() as the default option.
 		autoChooser = AutoBuilder.buildAutoChooser();
