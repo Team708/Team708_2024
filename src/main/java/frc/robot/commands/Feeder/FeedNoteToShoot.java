@@ -6,33 +6,39 @@ package frc.robot.commands.Feeder;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Feeder;
+import frc.robot.subsystems.PivotArm;
 
 public class FeedNoteToShoot extends Command {
   private Feeder m_feeder;
+  private PivotArm m_pivotArm;
 
-  public FeedNoteToShoot(Feeder m_feeder) {
-    
-    // addRequirements(m_feeder);
+  public FeedNoteToShoot(Feeder feeder, PivotArm pivotArm) {
+    m_feeder = feeder;
+    m_pivotArm = pivotArm;
+
+    addRequirements(m_feeder);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_feeder.runForward(1.0);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
-    m_feeder.feederThroughStage2();
   }
+
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
-
-  // Returns true when the command should end.
+  public void end(boolean interrupted) {
+    m_feeder.stop();
+  }
   @Override
   public boolean isFinished() {
-    return false;
+    return m_feeder.isEmpty() && m_pivotArm.isArmAtPosition();
   }
+
 }

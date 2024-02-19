@@ -59,7 +59,7 @@ public class Intake extends SubsystemBase {
 	public void intakeAll() {
 		m_intakeMotorRight.setVoltage(IntakeConstants.kIntakeSpeed);
 		m_intakeMotorLeft.setVoltage(IntakeConstants.kIntakeSpeed);
-		m_intakeMotorFront.setVoltage(IntakeConstants.kIntakeSpeed);
+		m_intakeMotorFront.setVoltage(IntakeConstants.kIntakeSpeed*.8);
 		m_intakeMotorBack.setVoltage(IntakeConstants.kIntakeSpeed);
 		intakeDirection = "All On";
 		// isReversed = false;
@@ -111,6 +111,8 @@ public class Intake extends SubsystemBase {
     m_intakeSim = new IntakeSimulation(this, m_intakeMotorFront, m_intakeMotorBack, m_intakeMotorLeft, m_intakeMotorRight);
   
 	}
+
+	
 
 	public void simulationPeriodic() {
     //Update elevator simulation

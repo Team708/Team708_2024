@@ -32,7 +32,7 @@ public class SetShooterSpeedBumperShot extends Command {
   }
 
   public void execute() {
-    m_shooter.setShooterSpeedSpeaker(ShooterConstants.kShooterBumperShotMPS);
+    m_shooter.setShooterSpeedSpeaker(ShooterConstants.kShooterBumperShotRPM);
   }
   
   @Override

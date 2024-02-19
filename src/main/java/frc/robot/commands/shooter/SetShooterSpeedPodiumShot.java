@@ -31,7 +31,7 @@ public class SetShooterSpeedPodiumShot extends Command {
   }
 
   public void execute() {
-    m_shooter.setShooterSpeedSpeaker(ShooterConstants.kShooterPodiumShotMPS);
+    m_shooter.setShooterSpeedSpeaker(ShooterConstants.kShooterBumperShotRPM);
   }
   
   @Override

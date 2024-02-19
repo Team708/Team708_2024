@@ -31,7 +31,7 @@ public class SetShooterSpeedAmp extends Command {
   }
 
   public void execute() {
-    m_shooter.setShooterSpeedAmp(ShooterConstants.kShooterAmpShotMPS);
+    m_shooter.setShooterSpeedAmp(ShooterConstants.kShooterAmpShotRPM);
   }
   
   @Override

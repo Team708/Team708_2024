@@ -230,6 +230,7 @@ import com.pathplanner.lib.util.GeometryUtil;
     currentPose = getPose();
 
     m_field.getRobotObject().setPose(currentPose);
+    
   }
 
   public void setFieldOrient(boolean fieldOrient){

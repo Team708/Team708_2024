@@ -2,34 +2,25 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.shooter;
+package frc.robot.commands.Feeder;
 
-import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.ShooterConstants;
-import frc.robot.subsystems.Shooter;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.subsystems.Feeder;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ShootAmp extends Command {
-  private Shooter m_shooter;
+public class ClearJamb extends InstantCommand {
+  Feeder m_feeder;
 
-  public ShootAmp(Shooter shooter) {
-    m_shooter = shooter;
+  public ClearJamb(Feeder feeder) {
+    m_feeder = feeder;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_shooter);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-  }
-
-  public void execute() {
-    m_shooter.setShooterSpeedAmp(ShooterConstants.kAmpMPS);
-  }
-
-  public boolean isFinished() {
-    return m_shooter.isAtSpeed();
+    m_feeder.runReverse(.2);
   }
 }

@@ -33,7 +33,8 @@ public class EnableArmAutoAim extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    angle = Units.radiansToDegrees(Math.atan2(1.7272, m_drive.getDistanceToTarget()));
+    angle = Units.radiansToDegrees(Math.atan2(1.778, m_drive.getDistanceToTarget()));
+    m_pivotArm.findArmAngle();
     m_pivotArm.setArmAngle(angle);
     SmartDashboard.putNumber("commanded angle", angle);
       //replace constant with method from pivotArm subsystem
@@ -47,10 +48,10 @@ public class EnableArmAutoAim extends Command {
     SmartDashboard.putString("Command", this.getName() + ": End");
   }
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
+  // // Returns true when the command should end.
+  // @Override
+  // public boolean isFinished() {
+  //   return false;
+  // }
 
 }

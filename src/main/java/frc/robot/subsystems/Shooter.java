@@ -11,7 +11,9 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.CurrentLimit;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.utilities.Helper;
 // import frc.robot.subsystems.ShooterSimulation;
@@ -32,7 +34,8 @@ public class Shooter extends SubsystemBase {
     //Top shooter motor
     m_shooterMotorTopLeader = new CANSparkMax(ShooterConstants.kShooterMotorTopID, MotorType.kBrushless);
     m_shooterMotorTopLeader.setIdleMode(IdleMode.kCoast);
-    m_shooterMotorTopLeader.setInverted(false);
+    m_shooterMotorTopLeader.setSmartCurrentLimit(CurrentLimit.kShooterAmps);
+    m_shooterMotorTopLeader.setInverted(true);
 
     shooterEncoderTop = m_shooterMotorTopLeader.getEncoder();
     
@@ -42,23 +45,21 @@ public class Shooter extends SubsystemBase {
     //Bottom shooter motor
     m_shooterMotorBottomFollower = new CANSparkMax(ShooterConstants.kShooterMotorBottomID, MotorType.kBrushless);
     m_shooterMotorBottomFollower.setIdleMode(IdleMode.kCoast);
-    m_shooterMotorBottomFollower.follow(m_shooterMotorTopLeader, true);
+    m_shooterMotorBottomFollower.setSmartCurrentLimit(CurrentLimit.kShooterAmps);
+    m_shooterMotorBottomFollower.follow(m_shooterMotorTopLeader, false);
 
     shooterEncoderBottom = m_shooterMotorBottomFollower.getEncoder();
 
     //Amp shooter motor
     m_shooterMotorAmp = new CANSparkMax(ShooterConstants.kShooterMotorAmpID, MotorType.kBrushless);
     m_shooterMotorAmp.setIdleMode(IdleMode.kCoast);
+    m_shooterMotorAmp.setSmartCurrentLimit(CurrentLimit.kShooterAmps);
     m_shooterMotorAmp.setInverted(false);
 
     shooterEncoderAmp = m_shooterMotorAmp.getEncoder();
     
     shooterAmpPIDController = m_shooterMotorAmp.getPIDController();
     Helper.setupPIDController(shooterAmpPIDController, ShooterConstants.kShooterAmpPIDList);
-
-    m_shooterMotorTopLeader.setSmartCurrentLimit(20);
-    m_shooterMotorBottomFollower.setSmartCurrentLimit(20);
-    m_shooterMotorAmp.setSmartCurrentLimit(20);
   }
 
 
@@ -94,6 +95,11 @@ public class Shooter extends SubsystemBase {
     return false;
   }
 
+  public void sendToDashboard() {
+    SmartDashboard.putNumber("Shooter Top Velocity", shooterEncoderTop.getVelocity());
+    SmartDashboard.putNumber("Shooter Bottom Velocity", shooterEncoderBottom.getVelocity());
+  }
+  
   // public void simulationInit() {
 	//   //Setup the simulation
   //   m_shootersim = new ShooterSimulation(this, m_shooterMotorTopLeader, m_shooterMotorBottomFollower, m_shooterMotorAmp);
