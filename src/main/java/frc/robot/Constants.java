@@ -213,7 +213,8 @@ public final class Constants {
     public static final double kCamGearRatio = 47915 / 486; // 12/74, 18/74, 18/70
     public static final double kCamOpenPose = 2265.0;
     public static final double kCamClosedPose = 0.0;
-    public static final double kIntakeSpeed = 12.0*.8;
+    // public static final double kIntakeSpeed = 12.0*.8;
+    public static final double kIntakeRPM = 1000;
     
     public static final int kIntakeMode = 1; //0 = Roller, 1 = Clamp
 
@@ -221,6 +222,16 @@ public final class Constants {
     public static final int kIntakeMotorBackID  = 23; //change back to 23
     public static final int kIntakeMotorLeftID  = 25;
     public static final int kIntakeMotorRightID = 27;
+
+    public static final double kIntake_P = 0.00005;
+    public static final double kIntake_I = 0.000001; 
+    public static final double kIntake_D = 0.0004;
+    public static final double kIntake_FF = 0.0;
+    public static final double kIntake_IZone = 0;
+    public static final double kIntake_Min = -1;
+    public static final double kIntake_Max = 1;
+    public static final double[] kIntakePIDList = {kIntake_P,kIntake_I,kIntake_D,
+                                        kIntake_FF,kIntake_IZone,kIntake_Min,kIntake_Max};
   }
 
   /**
