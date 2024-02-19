@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 //Command Imports
 import frc.robot.commands.drive.DriveToAmp;
+import frc.robot.commands.drive.SetRumble;
 import frc.robot.commands.groups.IntakeNote;
 import frc.robot.commands.intake.IntakeAllIn;
 import frc.robot.commands.intake.IntakeAllOut;
@@ -96,7 +97,7 @@ public class OI {
 
     //DRIVER//
     new JoystickButton(driverController, Button.kA.value) //TODO Change these buttons, current commands only for testing
-    		.onTrue(new IntakeNote(m_intake, m_feeder))
+    		.onTrue(new IntakeNote(m_intake, m_feeder).andThen(new SetRumble().withTimeout(.1)))
     		.onFalse(new IntakeOff(m_intake));
 
     new JoystickButton(driverController, Button.kB.value) //TODO Change these buttons, current commands only for testing
@@ -112,8 +113,8 @@ public class OI {
     new JoystickButton(driverController, Button.kRightBumper.value)
      		.toggleOnTrue(new DriveToAmp(m_drive));
     
-    // new JoystickButton(driverController, Button.kStart.value)
-    // 		.onTrue(new /*Command*/);
+    new JoystickButton(driverController, Button.kStart.value)
+    		.onTrue(new SetRumble().withTimeout(.1));
 
     // new JoystickButton(driverController, Button.kBack.value)
     // 		.onTrue(new /*Command*/)

@@ -30,7 +30,6 @@ public class FeedNoteForStorage extends Command {
   @Override
   public void end(boolean interrupted) {
     m_feeder.feedNotesToStow(false);
-
   }
 
   // Returns true when the command should end.

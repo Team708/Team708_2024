@@ -56,6 +56,18 @@
       }
     }
   },
+  "NetworkTables": {
+    "retained": {
+      "SmartDashboard": {
+        "open": true
+      }
+    },
+    "transitory": {
+      "SmartDashboard": {
+        "open": true
+      }
+    }
+  },
   "NetworkTables Info": {
     "visible": true
   },
