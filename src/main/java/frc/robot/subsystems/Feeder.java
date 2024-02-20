@@ -26,6 +26,9 @@ public class Feeder extends SubsystemBase {
   private DigitalInput feeder1NotePresent,feeder2NotePresent;
 
   public Feeder() {
+    feeder1NotePresent = new DigitalInput(1);
+    feeder2NotePresent = new DigitalInput(2);
+
     //Feeder motor 1
     m_FeederStage1Motor = new CANSparkMax(FeederConstants.kFeederStage1MotorID, MotorType.kBrushless);
     m_FeederStage1Motor.setIdleMode(IdleMode.kBrake);
@@ -33,8 +36,8 @@ public class Feeder extends SubsystemBase {
     m_FeederStage1Motor.setInverted(false);
     
     feederStage1Encoder = m_FeederStage1Motor.getEncoder();
-    
     feederStage1PIDController = m_FeederStage1Motor.getPIDController();
+    Helper.setupPIDController(feederStage1PIDController, FeederConstants.kFeederStage1PIDList);
 
     //Feeder motor 2
     m_FeederStage2Motor = new CANSparkMax(FeederConstants.kFeederStage2MotorID, MotorType.kBrushless);
@@ -43,15 +46,9 @@ public class Feeder extends SubsystemBase {
     m_FeederStage2Motor.setInverted(false);
     
     feederStage2Encoder = m_FeederStage2Motor.getEncoder();
-    feederStage2Encoder.setPositionConversionFactor(48);//TODO
-    
-    feeder1NotePresent = new DigitalInput(1);
-    feeder2NotePresent = new DigitalInput(2);
 
     feederStage2PIDController = m_FeederStage2Motor.getPIDController();
-    feederStage2PIDController.setP(.01);
-    feederStage2PIDController.setD(.001);
-    feederStage2PIDController.setI(0);
+    Helper.setupPIDController(feederStage2PIDController, FeederConstants.kFeederStage2PIDList);
   }
 
   @Override
@@ -63,9 +60,8 @@ public class Feeder extends SubsystemBase {
   public void feedNotesToStow(boolean enable){
     if (enable){
       if (!feeder2NotePresent.get()){
-        setFeeder1Motor(.3);
-        setFeeder2Motor(.2);
-        // runForward(.2);
+        feederStage1PIDController.setReference(FeederConstants.kFeederLoadRPM, CANSparkMax.ControlType.kVelocity);
+        feederStage2PIDController.setReference(FeederConstants.kFeederLoadRPM, CANSparkMax.ControlType.kVelocity);
       }else{ 
        stop();
       }
@@ -76,31 +72,23 @@ public class Feeder extends SubsystemBase {
   }
 
   public void runForward(double speed){
-    m_FeederStage1Motor.set(speed);
-    m_FeederStage2Motor.set(speed);
+    feederStage1PIDController.setReference(FeederConstants.kFeederShootRPM, CANSparkMax.ControlType.kVelocity);
+    feederStage2PIDController.setReference(FeederConstants.kFeederShootRPM, CANSparkMax.ControlType.kVelocity);
   }
 
-  public void runReverse(double speed){
-    m_FeederStage1Motor.set(-speed);
-    m_FeederStage2Motor.set(-speed);
+  public void runReverse(){
+    feederStage1PIDController.setReference(-FeederConstants.kFeederLoadRPM, CANSparkMax.ControlType.kVelocity);
+    feederStage2PIDController.setReference(-FeederConstants.kFeederLoadRPM, CANSparkMax.ControlType.kVelocity);
   }
 
   public void stop(){
-    setFeeder1Motor(0);
-    setFeeder2Motor(0);
-  }
-
-  public void setFeeder1Motor(double speed){
-    m_FeederStage1Motor.set(speed);
-  }
-
-  public void setFeeder2Motor(double speed){
-    m_FeederStage2Motor.set(speed);
+    feederStage1PIDController.setReference(0, CANSparkMax.ControlType.kVelocity);
+    feederStage2PIDController.setReference(0, CANSparkMax.ControlType.kVelocity);
   }
 
   public void setFeeder2Distance(){
     feederStage2Encoder.setPosition(0);
-    //feederStage2PIDController.setReference(5.0, ControlType.kPosition);
+    feederStage2PIDController.setReference(5, ControlType.kPosition);
 
   }
 
@@ -121,5 +109,7 @@ public class Feeder extends SubsystemBase {
     SmartDashboard.putBoolean("feeder2NotePresent", feeder2NotePresent.get());
     SmartDashboard.putNumber("Feeder Encoder", feederStage1Encoder.getPosition());
     SmartDashboard.putBoolean("feederIsEmpty", isEmpty());
+    SmartDashboard.putNumber("Feeder 1 RPM", feederStage1Encoder.getVelocity());  
+    SmartDashboard.putNumber("Feeder 2 RPM", feederStage2Encoder.getVelocity());
 	}
 }

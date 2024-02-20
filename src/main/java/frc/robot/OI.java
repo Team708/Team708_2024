@@ -97,7 +97,7 @@ public class OI {
 
     //DRIVER//
     new JoystickButton(driverController, Button.kA.value) //TODO Change these buttons, current commands only for testing
-    		.onTrue(new IntakeNote(m_intake, m_feeder).andThen(new SetRumble().withTimeout(.1)));
+    		.onTrue(new IntakeNote(m_intake, m_feeder).andThen(new SetRumble().withTimeout(.2)));
 
     new JoystickButton(driverController, Button.kB.value) //TODO Change these buttons, current commands only for testing
     		.onTrue(new IntakeAllOut(m_intake))

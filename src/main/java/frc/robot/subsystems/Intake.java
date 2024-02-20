@@ -55,7 +55,7 @@ public class Intake extends SubsystemBase {
 		m_intakeMotorBack.setIdleMode(IdleMode.kCoast);
 		intakeDirection = "";
 
-		frontSparkPIDController = m_intakeMotorBack.getPIDController();
+		frontSparkPIDController = m_intakeMotorFront.getPIDController();
 		backSparkPIDController = m_intakeMotorBack.getPIDController();
 		rightSparkPIDController = m_intakeMotorRight.getPIDController();
 		leftSparkPIDController = m_intakeMotorLeft.getPIDController();

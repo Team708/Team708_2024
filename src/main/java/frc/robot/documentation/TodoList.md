@@ -7,8 +7,6 @@
 - Limelight standard deviations
 - test angle of shooter for consistant shots into speaker
 - test Amp shot
-- set intake on after shot
-- set aim on until overridden by joystick
 - re-assign controller buttons
 - add joystick control for arm
 - further than a specified distance to target, turn off shooter and set arm to an angle that the camera can still see the targets

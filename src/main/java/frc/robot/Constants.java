@@ -4,6 +4,7 @@ import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.ReplanningConfig;
 import com.pathplanner.lib.util.PIDConstants;
 
+import edu.wpi.first.apriltag.AprilTag;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
@@ -214,7 +215,7 @@ public final class Constants {
     public static final double kCamOpenPose = 2265.0;
     public static final double kCamClosedPose = 0.0;
     // public static final double kIntakeSpeed = 12.0*.8;
-    public static final double kIntakeRPM = 1000;
+    public static final double kIntakeRPM = 5000;
     
     public static final int kIntakeMode = 1; //0 = Roller, 1 = Clamp
 
@@ -241,12 +242,15 @@ public final class Constants {
     public static final int kFeederStage1MotorID  = 31;
     public static final int kFeederStage2MotorID  = 32;
 
+    public static final double kFeederLoadRPM   = 5000;
+    public static final double kFeederShootRPM  = 5000;  //In the event the load and shoot RPMs are the same, remove this
+
+    
     //PID values
     //make sure the PID values get tuned
-    
     public static final double kFeederStage1Motor_P = 0.00015;
-    public static final double kFeederStage1Motor_I = 0.000001; 
-    public static final double kFeederStage1Motor_D = 0.006;
+    public static final double kFeederStage1Motor_I = 0.0; 
+    public static final double kFeederStage1Motor_D = 0.0;
     public static final double kFeederStage1Motor_FF = 0.0;
     public static final double kFeederStage1Motor_IZone = 0;
     public static final double kFeederStage1Motor_Min = -1;
@@ -256,10 +260,9 @@ public final class Constants {
 
     //PID values
     //make sure the PID values get tuned
-
     public static final double kFeederStage2Motor_P = 0.00015;
-    public static final double kFeederStage2Motor_I = 0.000001; 
-    public static final double kFeederStage2Motor_D = 0.006;
+    public static final double kFeederStage2Motor_I = 0.0; 
+    public static final double kFeederStage2Motor_D = 0.0;
     public static final double kFeederStage2Motor_FF = 0.0;
     public static final double kFeederStage2Motor_IZone = 0;
     public static final double kFeederStage2Motor_Min = -1;
@@ -283,7 +286,7 @@ public final class Constants {
     //arm angles for different shots
     public static final double kBumperShotAngle = 75;
     public static final double kParkAngle = 0;
-    public static final double kAmpAngle = 80;
+    public static final double kAmpAngle = 90;
     public static final double kFartherShotAngle = 35;
     public static final double kThresholdArm = 0.25;
     
@@ -321,7 +324,7 @@ public final class Constants {
     //speed constants
     public static final double kShooterBumperShotRPM = 4000;
     // public static final double kShooterPodiumShotRPM = 4000;
-    public static final double kShooterAmpShotRPM = 4000;
+    public static final double kShooterAmpShotRPM = 1000;
     
     public static final double kThreshhold = 0.98;
     
