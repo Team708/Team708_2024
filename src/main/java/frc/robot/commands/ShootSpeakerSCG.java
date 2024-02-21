@@ -37,7 +37,6 @@ public class ShootSpeakerSCG extends ParallelDeadlineGroup {
           new SetShooterSpeedSpeaker(m_shooter),
           new FeedNoteToShoot(m_feeder, m_PivotArm).withTimeout(2.0),
           new ShooterOff(m_shooter)
-          //new IntakeNote(m_intake, m_feeder)
         )
       )
     );
