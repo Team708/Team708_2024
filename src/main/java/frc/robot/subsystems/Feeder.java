@@ -37,7 +37,7 @@ public class Feeder extends SubsystemBase {
     
     feederStage1Encoder = m_FeederStage1Motor.getEncoder();
     feederStage1PIDController = m_FeederStage1Motor.getPIDController();
-    Helper.setupPIDController(feederStage1PIDController, FeederConstants.kFeederStage1PIDList);
+    Helper.setupPIDController(this.getName()+"feederStage1PIDController", feederStage1PIDController, FeederConstants.kFeederStage1PIDList);
 
     //Feeder motor 2
     m_FeederStage2Motor = new CANSparkMax(FeederConstants.kFeederStage2MotorID, MotorType.kBrushless);
@@ -48,7 +48,7 @@ public class Feeder extends SubsystemBase {
     feederStage2Encoder = m_FeederStage2Motor.getEncoder();
 
     feederStage2PIDController = m_FeederStage2Motor.getPIDController();
-    Helper.setupPIDController(feederStage2PIDController, FeederConstants.kFeederStage2PIDList);
+    Helper.setupPIDController(this.getName()+"feederStage2PIDController", feederStage2PIDController, FeederConstants.kFeederStage2PIDList);
   }
 
   @Override
@@ -105,11 +105,12 @@ public class Feeder extends SubsystemBase {
   }
 
   public void sendToDashboard() {
-		SmartDashboard.putBoolean("feeder1NotePresent", feeder1NotePresent.get());
-    SmartDashboard.putBoolean("feeder2NotePresent", feeder2NotePresent.get());
-    SmartDashboard.putNumber("Feeder Encoder", feederStage1Encoder.getPosition());
-    SmartDashboard.putBoolean("feederIsEmpty", isEmpty());
-    SmartDashboard.putNumber("Feeder 1 RPM", feederStage1Encoder.getVelocity());  
-    SmartDashboard.putNumber("Feeder 2 RPM", feederStage2Encoder.getVelocity());
+    String topic = new String("/"+this.getName()+"/");
+		SmartDashboard.putBoolean(topic+"feeder1NotePresent", feeder1NotePresent.get());
+    SmartDashboard.putBoolean(topic+"feeder2NotePresent", feeder2NotePresent.get());
+    SmartDashboard.putNumber(topic+"Feeder Encoder", feederStage1Encoder.getPosition());
+    SmartDashboard.putBoolean(topic+"feederIsEmpty", isEmpty());
+    SmartDashboard.putNumber(topic+"Feeder 1 RPM", feederStage1Encoder.getVelocity());  
+    SmartDashboard.putNumber(topic+"Feeder 2 RPM", feederStage2Encoder.getVelocity());
 	}
 }

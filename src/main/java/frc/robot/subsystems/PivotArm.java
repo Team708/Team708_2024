@@ -48,7 +48,7 @@ public class PivotArm extends SubsystemBase {
     PivotArmEncoder.setPosition(getAbsolutePosition());
     
     pivotArmPIDController = m_PivotArmLeftLeader.getPIDController();
-    Helper.setupPIDController(pivotArmPIDController, ArmConstants.kPivotArmPIDList);
+    Helper.setupPIDController(this.getName()+"pivotArmPIDController", pivotArmPIDController, ArmConstants.kPivotArmPIDList);
     
     //Follower arm motor
     m_PivotArmRightFollower = new CANSparkMax(ArmConstants.kArmSlaveMotorID, MotorType.kBrushless);
@@ -91,9 +91,10 @@ public class PivotArm extends SubsystemBase {
   }
 
   public void sendToDashboard() {
-    SmartDashboard.putNumber("Arm Encoder Position", getPosition());
-    SmartDashboard.putNumber("Absolute Encoder Position", getAbsolutePosition());
-    SmartDashboard.putBoolean("Arm Forward Limit", forwardLimit.isPressed());
-    SmartDashboard.putBoolean("Arm Reverse Limit", reverseLimit.isPressed());
+    String topic = new String("/"+this.getName()+"/");
+    SmartDashboard.putNumber(topic+"Arm Encoder Position", getPosition());
+    SmartDashboard.putNumber(topic+"Absolute Encoder Position", getAbsolutePosition());
+    SmartDashboard.putBoolean(topic+"Arm Forward Limit", forwardLimit.isPressed());
+    SmartDashboard.putBoolean(topic+"Arm Reverse Limit", reverseLimit.isPressed());
   }
 }

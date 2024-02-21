@@ -116,6 +116,7 @@ import com.pathplanner.lib.util.GeometryUtil;
 
   private Pose2d currentPose = new Pose2d();
   private Pose2d targetPose = new Pose2d();
+  private String topic = new String("/"+this.getName()+"/");
 
   /**
    * Constructs a Drivetrain and resets the Gyro and Keep Angle parameters
@@ -169,8 +170,6 @@ import com.pathplanner.lib.util.GeometryUtil;
    */
   @SuppressWarnings("ParameterName")
   public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative, boolean keepAngle) {
-    // SmartDashboard.putBoolean("fieldRelative", fieldRelative);
-    // SmartDashboard.putBoolean("keepAngle", keepAngle);
 
     if(keepAngle){
       rot = performKeepAngle(xSpeed,ySpeed,rot); //Calls the keep angle function to update the keep angle or rotate depending on driver input
@@ -206,24 +205,6 @@ import com.pathplanner.lib.util.GeometryUtil;
     //m_fieldRelJerk = new FieldRelativeJerk(m_fieldRelAccel, m_lastFieldRelAccel, GlobalConstants.kLoopTime);
     //m_lastFieldRelAccel = m_fieldRelAccel;
     m_lastFieldRelVel = m_fieldRelVel;
-
-    // SmartDashboard.putNumber("RobotSpeedX", getChassisSpeed().vxMetersPerSecond);
-    // SmartDashboard.putNumber("RobotSpeedY", getChassisSpeed().vyMetersPerSecond);
-    // SmartDashboard.putNumber("RobotOmega", getChassisSpeed().omegaRadiansPerSecond);
-
-    // SmartDashboard.putNumber("Robot pitch degrees", pigeon.getPitch().getDegrees());
-    // SmartDashboard.putNumber("Robot roll degrees", pigeon.getRoll().getDegrees());
-
-    // SmartDashboard.putNumber("Accel X", m_fieldRelAccel.ax);
-    // SmartDashboard.putNumber("Accel Y", m_fieldRelAccel.ay);
-    // SmartDashboard.putNumber("Alpha", m_fieldRelAccel.alpha);
-
-    SmartDashboard.putNumber("Front Left Encoder", m_frontLeft.getTurnEncoder());
-    SmartDashboard.putNumber("Front Right Encoder", m_frontRight.getTurnEncoder());
-    SmartDashboard.putNumber("Back Left Encoder", m_backLeft.getTurnEncoder());
-    SmartDashboard.putNumber("Back Right Encoder", m_backRight.getTurnEncoder());
-
-    SmartDashboard.putNumber("Balance Angle", pigeon.getRoll().getDegrees());
 
     //Update swerve drive odometry periodically so robot pose can be tracked
     updatePose();    
@@ -343,19 +324,19 @@ import com.pathplanner.lib.util.GeometryUtil;
    */  
   public Pose2d getPose() {
     Pose2d pose = m_PoseEstimator.getEstimatedPosition();
-    Translation2d position = pose.getTranslation();
+    // Translation2d position = pose.getTranslation();
     //Rotation2d heading = getGyro();
     //SmartDashboard.putNumber("Robot X", position.getX());
     //SmartDashboard.putNumber("Robot Y", position.getY());
     //SmartDashboard.putNumber("Robot Gyro", getGyro().getDegrees());
-    SmartDashboard.putNumber("Robot Angle", pose.getRotation().getDegrees());
+    SmartDashboard.putNumber(topic+"Robot Angle", pose.getRotation().getDegrees());
     return pose;
   }
 
   public Pose2d getAutoPose() {
     updateAutoPose();
     Pose2d pose = m_AutoPoseEstimator.getEstimatedPosition();
-    Translation2d position = pose.getTranslation();
+    // Translation2d position = pose.getTranslation();
     // SmartDashboard.putNumber("Auto X", position.getX());
     // SmartDashboard.putNumber("Auto Y", position.getY());
     return pose;
@@ -583,5 +564,25 @@ rotateToTarget(chassisSpeeds.omegaRadiansPerSecond));
   }
 
   public void sendToDashboard() {
+    // SmartDashboard.putBoolean("fieldRelative", fieldRelative);
+    // SmartDashboard.putBoolean("keepAngle", keepAngle);
+
+    SmartDashboard.putNumber(topic+"Front Left Encoder", m_frontLeft.getTurnEncoder());
+    SmartDashboard.putNumber(topic+"Front Right Encoder", m_frontRight.getTurnEncoder());
+    SmartDashboard.putNumber(topic+"Back Left Encoder", m_backLeft.getTurnEncoder());
+    SmartDashboard.putNumber(topic+"Back Right Encoder", m_backRight.getTurnEncoder());
+
+    SmartDashboard.putNumber(topic+"Balance Angle", pigeon.getRoll().getDegrees());
+
+    // SmartDashboard.putNumber("RobotSpeedX", getChassisSpeed().vxMetersPerSecond);
+    // SmartDashboard.putNumber("RobotSpeedY", getChassisSpeed().vyMetersPerSecond);
+    // SmartDashboard.putNumber("RobotOmega", getChassisSpeed().omegaRadiansPerSecond);
+
+    // SmartDashboard.putNumber("Robot pitch degrees", pigeon.getPitch().getDegrees());
+    // SmartDashboard.putNumber("Robot roll degrees", pigeon.getRoll().getDegrees());
+
+    // SmartDashboard.putNumber("Accel X", m_fieldRelAccel.ax);
+    // SmartDashboard.putNumber("Accel Y", m_fieldRelAccel.ay);
+    // SmartDashboard.putNumber("Alpha", m_fieldRelAccel.alpha);
   }
 }

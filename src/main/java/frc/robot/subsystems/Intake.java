@@ -59,10 +59,10 @@ public class Intake extends SubsystemBase {
 		backSparkPIDController = m_intakeMotorBack.getPIDController();
 		rightSparkPIDController = m_intakeMotorRight.getPIDController();
 		leftSparkPIDController = m_intakeMotorLeft.getPIDController();
-		Helper.setupPIDController(frontSparkPIDController, IntakeConstants.kIntakePIDList);
-		Helper.setupPIDController(backSparkPIDController, IntakeConstants.kIntakePIDList);
-		Helper.setupPIDController(leftSparkPIDController, IntakeConstants.kIntakePIDList);
-		Helper.setupPIDController(rightSparkPIDController, IntakeConstants.kIntakePIDList);
+		Helper.setupPIDController(this.getName()+"frontSparkPIDController", frontSparkPIDController, IntakeConstants.kIntakePIDList);
+		Helper.setupPIDController(this.getName()+"backSparkPIDController", backSparkPIDController, IntakeConstants.kIntakePIDList);
+		Helper.setupPIDController(this.getName()+"leftSparkPIDController", leftSparkPIDController, IntakeConstants.kIntakePIDList);
+		Helper.setupPIDController(this.getName()+"rightSparkPIDController", rightSparkPIDController, IntakeConstants.kIntakePIDList);
 
 	}
 
@@ -127,14 +127,13 @@ public class Intake extends SubsystemBase {
   
 	}
 
-	
-
 	public void simulationPeriodic() {
     //Update elevator simulation
     m_intakeSim.update();
 	}
 
 	public void sendToDashboard() {
+		// String topic = new String("/"+this.getName()+"/");
 		// SmartDashboard.putNumber("intake speed", getRollerSpeed());
 		// SmartDashboard.putNumber("intake Position", getRollerPosition());
 		// SmartDashboard.putString("intake Direction", intakeDirection);
