@@ -331,19 +331,19 @@ public final class Constants {
     //PID constants
     //make sure the PID values get tuned
 
-    public static final double kShooterTop_P = 0.00005;
-    public static final double kShooterTop_I = 0.000001; 
-    public static final double kShooterTop_D = 0.0004;
-    public static final double kShooterTop_FF = 0.0;
+    public static final double kShooterTop_P = 0.0001; //0.00005;
+    public static final double kShooterTop_I = 0.0; //0.000001; 
+    public static final double kShooterTop_D = 0.0; //0.0004;
+    public static final double kShooterTop_FF = 0.003; //0.0;
     public static final double kShooterTop_IZone = 0;
     public static final double kShooterTop_Min = -1;
     public static final double kShooterTop_Max = 1;
     public static final double[] kShooterTopPIDList = {kShooterTop_P,kShooterTop_I,kShooterTop_D,
                                         kShooterTop_FF,kShooterTop_IZone,kShooterTop_Min,kShooterTop_Max};
-    public static final double kShooterAmp_P = 0.00005;
-    public static final double kShooterAmp_I = 0.000001; 
-    public static final double kShooterAmp_D = 0.0004;
-    public static final double kShooterAmp_FF = 0.0;
+    public static final double kShooterAmp_P = 0.0001; //0.00005;
+    public static final double kShooterAmp_I = 0.0; //0.000001; 
+    public static final double kShooterAmp_D = 0.0; //0.0004;
+    public static final double kShooterAmp_FF = 0.003; //0.0;
     public static final double kShooterAmp_IZone = 0;
     public static final double kShooterAmp_Min = -1;
     public static final double kShooterAmp_Max = 1;

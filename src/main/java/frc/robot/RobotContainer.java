@@ -6,6 +6,7 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.revrobotics.SparkPIDController;
 
 import edu.wpi.first.math.geometry.Pose2d;
 
@@ -30,6 +31,7 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.VisionProcessor;
 import frc.robot.subsystems.PivotArm;
 import frc.robot.subsystems.drive.Drivetrain;
+import frc.robot.utilities.Helper;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
@@ -43,16 +45,15 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
 	// The robot's subsystems. Initialize subsystems here.
-	private final Drivetrain m_drive = new Drivetrain();
-	private final VisionProcessor m_vision = new VisionProcessor(m_drive);
-	private final Intake m_intake = new Intake();
-	private final Feeder m_feeder = new Feeder();
-	private final Shooter m_shooter = new Shooter();
-	private final PivotArm m_PivotArm = new PivotArm();
-	
+	private final Drivetrain m_drive;
+	private final VisionProcessor m_vision;
+	private final Intake m_intake;
+	private final Feeder m_feeder;
+	private final Shooter m_shooter;
+	private final PivotArm m_PivotArm;
 	
 	// Initialize controllers
-	private final DriveByController m_driveByController =  new DriveByController(m_drive);
+	private final DriveByController m_driveByController;
 	// private final OperateByController m_operateByController
 	// = new OperateByController(m_shooter); 
 
@@ -63,19 +64,33 @@ public class RobotContainer {
 
 	// public static final SendableChooser<Command> m_chooser = new SendableChooser<>();
     private final SendableChooser<Command> autoChooser;
+	public final SendableChooser<SparkPIDController> m_ControllerChooser;
 
 	/** The container for the robot. Contains subsystems, OI devices, and commands. */
 	public RobotContainer() {
 		// Configure the button bindings
-		configureButtonBindings();
 		
+		m_ControllerChooser = new SendableChooser<>();
+		Helper.getInstance().addChooser(m_ControllerChooser);
+		
+		// The robot's subsystems. Initialize subsystems here.
+		m_drive = new Drivetrain();
+		m_vision = new VisionProcessor(m_drive);
+		m_intake = new Intake();
+		m_feeder = new Feeder();
+		m_shooter = new Shooter();
+		m_PivotArm = new PivotArm();
+		
+		configureButtonBindings();
+		// Initialize controllers
+		m_driveByController =  new DriveByController(m_drive);
+
 		NamedCommands.registerCommand("ShootSpeakerBumperShotSCG", new ShootSpeakerSCG(m_drive, m_feeder, m_shooter, m_PivotArm, m_intake));
 		// configureAutoChooser();
 		// Build an auto chooser. This will use Commands.none() as the default option.
 		autoChooser = AutoBuilder.buildAutoChooser();
 		// autoChooser.addOption("Five Ball", FiveBall);
 		// autoChooser.addOption("Drive Straight", DriveStraight);
-		
 		// getAutonomousCommand();
 		m_drive.setDefaultCommand(m_driveByController);
 
@@ -132,6 +147,7 @@ public class RobotContainer {
 	}
 
 	public void sendToDashboard() {
+		Helper.getInstance().update();
 		m_drive.sendToDashboard();
 		m_intake.sendToDashboard();
 		m_feeder.sendToDashboard();

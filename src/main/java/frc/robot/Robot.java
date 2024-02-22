@@ -6,7 +6,6 @@ package frc.robot;
 
 import com.revrobotics.REVPhysicsSim;
 
-import frc.robot.utilities.Helper;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -49,7 +48,6 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
     m_robotContainer.sendToDashboard();
     CommandScheduler.getInstance().run();
-    Helper.getInstance().update();
   }
 
   /** This function is called once each time the robot enters Disabled mode. */

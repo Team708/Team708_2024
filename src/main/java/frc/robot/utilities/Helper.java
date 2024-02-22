@@ -26,25 +26,16 @@ public class Helper {
         }
         return instance;
     }
+
+    Helper(){
+
+    }
     
     private static SparkPIDController m_PIDController, previousSelection;
-    private final static SendableChooser<SparkPIDController> m_ControllerChooser = new SendableChooser<>();
+    private static SendableChooser<SparkPIDController> m_ControllerChooser;// = new SendableChooser<>();
     
     private static double[] m_PIDList;
     private static boolean PIDListUpdated = false;
-    
-    Helper() {
-        SmartDashboard.putData("/PID/SparkMax Chooser", m_ControllerChooser);
-        previousSelection = new CANSparkMax(0, MotorType.kBrushless).getPIDController();
-        m_ControllerChooser.setDefaultOption("None" , previousSelection);
-        SmartDashboard.putNumber("/PID/P",0);
-        SmartDashboard.putNumber("/PID/I",0);
-        SmartDashboard.putNumber("/PID/D",0);
-        SmartDashboard.putNumber("/PID/FF",0);
-        SmartDashboard.putNumber("/PID/I Zone",0);
-        SmartDashboard.putNumber("/PID/Output Range Min",0);
-        SmartDashboard.putNumber("/PID/Output Range Max",0);
-    }
 
     /**
      * Sets the PID controller values. Still requires the CANSparkMax and the PIDController created beforehand.
@@ -56,11 +47,11 @@ public class Helper {
         m_PIDList = PIDList;
         m_PIDController = PIDController;
         
-        m_ControllerChooser.addOption(name, PIDController);
-        setValues(PIDController, PIDList);
+        m_ControllerChooser.addOption(name, m_PIDController);
+        setValues();
     }
 
-    public static void setValues(SparkPIDController PIDController, double[] PIDList){
+    public static void setValues(){
         m_PIDController.setP(m_PIDList[0]);
         m_PIDController.setI(m_PIDList[1]);
         m_PIDController.setD(m_PIDList[2]);
@@ -74,26 +65,26 @@ public class Helper {
         if (m_PIDController != null){
             if (m_PIDController != previousSelection){
                 System.out.println("3");
-                SmartDashboard.putNumber("/PID/P",m_PIDController.getP());
-                SmartDashboard.putNumber("/PID/I",m_PIDController.getI());
-                SmartDashboard.putNumber("/PID/D",m_PIDController.getD());
-                SmartDashboard.putNumber("/PID/FF",m_PIDController.getFF());
-                SmartDashboard.putNumber("/PID/I Zone",m_PIDController.getIZone());
-                SmartDashboard.putNumber("/PID/Output Range Min",m_PIDController.getOutputMin());
-                SmartDashboard.putNumber("/PID/Output Range Max",m_PIDController.getOutputMax());
+                SmartDashboard.putNumber("PID P",m_PIDController.getP());
+                SmartDashboard.putNumber("PID I",m_PIDController.getI());
+                SmartDashboard.putNumber("PID D",m_PIDController.getD());
+                SmartDashboard.putNumber("PID FF",m_PIDController.getFF());
+                SmartDashboard.putNumber("PID I Zone",m_PIDController.getIZone());
+                SmartDashboard.putNumber("PID Output Range Min",m_PIDController.getOutputMin());
+                SmartDashboard.putNumber("PID Output Range Max",m_PIDController.getOutputMax());
                 previousSelection = m_PIDController;
             }
 
-            storeTuningVal(0, SmartDashboard.getNumber("P",0.0));
-            storeTuningVal(1, SmartDashboard.getNumber("/PID/I",0.0));
-            storeTuningVal(2, SmartDashboard.getNumber("/PID/D",0.0));
-            storeTuningVal(3, SmartDashboard.getNumber("/PID/FF",0.0));
-            storeTuningVal(4, SmartDashboard.getNumber("/PID/I Zone",0.0));
-            storeTuningVal(5, SmartDashboard.getNumber("/PID/Output Range Min",0.0));
-            storeTuningVal(6, SmartDashboard.getNumber("/PID/Output Range Max",0.0));
+            storeTuningVal(0, SmartDashboard.getNumber("PID P",0.0));
+            storeTuningVal(1, SmartDashboard.getNumber("PID I",0.0));
+            storeTuningVal(2, SmartDashboard.getNumber("PID D",0.0));
+            storeTuningVal(3, SmartDashboard.getNumber("PID FF",0.0));
+            storeTuningVal(4, SmartDashboard.getNumber("PID I Zone",0.0));
+            storeTuningVal(5, SmartDashboard.getNumber("PID Output Range Min",0.0));
+            storeTuningVal(6, SmartDashboard.getNumber("PID Output Range Max",0.0));
 
             if (PIDListUpdated){
-                setValues(m_PIDController, m_PIDList);
+                setValues();
                 PIDListUpdated = false;
             }
         }
@@ -104,5 +95,19 @@ public class Helper {
             m_PIDList[index] = tuningVal;
             PIDListUpdated = true;
         }
+    }
+
+    public void addChooser(SendableChooser<SparkPIDController> ControllerChooser){
+        m_ControllerChooser = ControllerChooser;
+        previousSelection = new CANSparkMax(0, MotorType.kBrushless).getPIDController();
+        m_ControllerChooser.setDefaultOption("None" , previousSelection);
+        SmartDashboard.putData("SparkMax Chooser", m_ControllerChooser);
+        SmartDashboard.putNumber("PID P",0);
+        SmartDashboard.putNumber("PID I",0);
+        SmartDashboard.putNumber("PID D",0);
+        SmartDashboard.putNumber("PID FF",0);
+        SmartDashboard.putNumber("PID I Zone",0);
+        SmartDashboard.putNumber("PID Output Range Min",0);
+        SmartDashboard.putNumber("PID Output Range Max",0);
     }
 }

@@ -39,7 +39,9 @@
       "/SmartDashboard/Intake Sim": "Mechanism2d",
       "/SmartDashboard/Intake Trajectory Sim": "Field2d",
       "/SmartDashboard/PID Chooser": "String Chooser",
-      "/SmartDashboard/SendableChooser[0]": "String Chooser"
+      "/SmartDashboard/SendableChooser[0]": "String Chooser",
+      "/SmartDashboard/SparkMax Chooser": "String Chooser",
+      "/SmartDashboard/SparkMaxChooser": "String Chooser"
     },
     "windows": {
       "/SmartDashboard/Field": {
