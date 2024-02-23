@@ -64,7 +64,7 @@ import com.pathplanner.lib.util.GeometryUtil;
   
   private double radius = 1;//0.450;
 
-  private boolean m_readyToShoot = false;
+  private boolean readyToShoot = false;
   private boolean fieldOrient = true;
   private boolean m_autoRotEnabled = false;
 
@@ -434,12 +434,8 @@ import com.pathplanner.lib.util.GeometryUtil;
     keepAngle = getGyro().getRadians();
   }
 
-  public void setReadytoShoot(boolean readyToShoot) {
-    m_readyToShoot = readyToShoot;
-  }
-
   public boolean isReadyToShoot() {
-    return m_readyToShoot;
+    return readyToShoot;
   }
 
   private SwerveModulePosition[] getModulePositions() {
@@ -536,8 +532,10 @@ rotateToTarget(chassisSpeeds.omegaRadiansPerSecond));
         m_field.getObject("Desired Target").setPose(targetPose);
         double output =  controller.calculate(getPose().getRotation().getDegrees(), robotToTarget.getDegrees());
         if(!controller.atSetpoint()){
+          readyToShoot = false;
           return output;
         }else{
+          readyToShoot = true;
           return 0.0;
         }
     }

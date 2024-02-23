@@ -45,10 +45,10 @@ public class RobotContainer {
 	// The robot's subsystems. Initialize subsystems here.
 	private final Drivetrain m_drive = new Drivetrain();
 	private final VisionProcessor m_vision = new VisionProcessor(m_drive);
-	private final Intake m_intake = new Intake();
-	private final Feeder m_feeder = new Feeder();
+	private final PivotArm m_pivotArm = new PivotArm();
+	private final Feeder m_feeder = new Feeder(m_drive, m_pivotArm);
+	private final Intake m_intake = new Intake(m_feeder);
 	private final Shooter m_shooter = new Shooter();
-	private final PivotArm m_PivotArm = new PivotArm();
 	
 	
 	// Initialize controllers
@@ -69,7 +69,7 @@ public class RobotContainer {
 		// Configure the button bindings
 		configureButtonBindings();
 		
-		NamedCommands.registerCommand("ShootSpeakerBumperShotSCG", new ShootSpeakerSCG(m_drive, m_feeder, m_shooter, m_PivotArm, m_intake));
+		NamedCommands.registerCommand("ShootSpeakerBumperShotSCG", new ShootSpeakerSCG(m_drive, m_feeder, m_shooter, m_pivotArm, m_intake));
 		// configureAutoChooser();
 		// Build an auto chooser. This will use Commands.none() as the default option.
 		autoChooser = AutoBuilder.buildAutoChooser();
@@ -100,7 +100,7 @@ public class RobotContainer {
     // new POVButton(OI.driverController, 0)
     //     .onTrue(new InstantCommand(() -> m_drive.resetOdometry(new Rotation2d(0.0))));  //JNP
 
-    OI.configureButtonBindings(m_drive,m_intake,m_feeder,m_shooter,m_PivotArm);
+    OI.configureButtonBindings(m_drive,m_intake,m_feeder,m_shooter,m_pivotArm);
   }
 
 	// private void configureAutoChooser(){
@@ -136,6 +136,6 @@ public class RobotContainer {
 		m_intake.sendToDashboard();
 		m_feeder.sendToDashboard();
 		m_shooter.sendToDashboard();
-		m_PivotArm.sendToDashboard();
+		m_pivotArm.sendToDashboard();
 	}
 }

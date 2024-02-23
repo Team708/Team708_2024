@@ -8,12 +8,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.commands.intake.IntakeAllIn;
 import frc.robot.Constants.CurrentLimit;
 import frc.robot.subsystems.sim.IntakeSimulation;
+import frc.robot.subsystems.Feeder;
 import frc.robot.utilities.Helper;
 
 public class Intake extends SubsystemBase {
-	
+	private Feeder m_feeder;
 	private CANSparkMax m_intakeMotorRight;
 	private CANSparkMax m_intakeMotorLeft;
 	private CANSparkMax m_intakeMotorFront;
@@ -31,7 +33,8 @@ public class Intake extends SubsystemBase {
 
   IntakeSimulation m_intakeSim;
 
-	public Intake() {
+	public Intake(Feeder feeder) {
+		m_feeder = feeder;
 
         m_intakeMotorRight = new CANSparkMax(IntakeConstants.kIntakeMotorRightID, MotorType.kBrushless);
         m_intakeMotorLeft = new CANSparkMax(IntakeConstants.kIntakeMotorLeftID, MotorType.kBrushless);
@@ -117,6 +120,14 @@ public class Intake extends SubsystemBase {
 
 	}
 
+	public void intakeAutomatic() {
+		if(!m_feeder.hasNote()) {
+			intakeAll();
+		}
+		else {
+			intakeOff();
+		}
+	}
 	// public boolean sensorDetected() {
 	// return !m_dIOSensor.get();
 	// }

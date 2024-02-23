@@ -31,12 +31,17 @@ public class SetShooterSpeedSpeaker extends Command {
     
   }
 
+  @Override
   public void execute() {
     m_shooter.setShooterSpeedSpeaker(ShooterConstants.kShooterBumperShotRPM);
   }
   
   @Override
+  public void end(boolean interupted) {
+    m_shooter.off();
+  }
+  @Override
   public boolean isFinished() {
-    return m_shooter.isAtSpeed();
+    return false;
   }
 }

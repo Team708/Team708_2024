@@ -21,7 +21,7 @@ import frc.robot.commands.shooter.ShooterOff;
 import frc.robot.commands.shooter.SetShooterSpeedAmp;
 import frc.robot.commands.shooter.SetShooterSpeedSpeaker;
 import frc.robot.commands.ShootAmpSequence;
-import frc.robot.commands.ShootSpeakerSCG;
+import frc.robot.commands.ShootSpeakerPCG;
 import frc.robot.commands.Feeder.FeedNoteForStorage;
 import frc.robot.commands.Feeder.FeedNoteToShoot;
 import frc.robot.commands.Feeder.ClearJamb;
@@ -121,7 +121,7 @@ public class OI {
 
     new JoystickButton(driverController, Button.kLeftBumper.value)
     		//.whileHeld((new AutoTargetSpeaker(m_drive)));
-        .onTrue(new ShootSpeakerSCG(m_drive, m_feeder, m_shooter, m_PivotArm, m_intake));
+        .onTrue(new ShootSpeakerPCG(m_drive, m_intake, m_feeder, m_PivotArm, m_shooter));
         // .whileFalse(new DisableAutoTargetSpeaker(m_drive));
     
     

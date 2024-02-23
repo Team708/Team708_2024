@@ -35,7 +35,7 @@ public class PivotArm extends SubsystemBase {
     //Leader arm motor
     m_PivotArmLeftLeader = new CANSparkMax(ArmConstants.kArmMasterMotorID, MotorType.kBrushless);
     m_PivotArmLeftLeader.setIdleMode(IdleMode.kBrake);
-    m_PivotArmLeftLeader.setSmartCurrentLimit(40);
+    m_PivotArmLeftLeader.setSmartCurrentLimit(CurrentLimit.kArmAmps);
     m_PivotArmLeftLeader.setInverted(false);
     
     forwardLimit = m_PivotArmLeftLeader.getForwardLimitSwitch(Type.kNormallyOpen);

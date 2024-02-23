@@ -12,11 +12,13 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+// import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import frc.robot.Constants.CurrentLimit;
 import frc.robot.Constants.FeederConstants;
+import frc.robot.subsystems.drive.Drivetrain;
+import frc.robot.subsystems.PivotArm;
 import frc.robot.utilities.Helper;
 
 public class Feeder extends SubsystemBase {
@@ -24,8 +26,13 @@ public class Feeder extends SubsystemBase {
   private RelativeEncoder feederStage1Encoder, feederStage2Encoder;
   private SparkPIDController feederStage1PIDController, feederStage2PIDController;
   private DigitalInput feeder1NotePresent,feeder2NotePresent;
+  private Drivetrain m_drive;
+  private PivotArm m_pivotArm;
 
-  public Feeder() {
+  public Feeder(Drivetrain drive, PivotArm pivotArm) {
+    m_drive = drive;
+    m_pivotArm = pivotArm;
+
     feeder1NotePresent = new DigitalInput(1);
     feeder2NotePresent = new DigitalInput(2);
 
@@ -56,22 +63,31 @@ public class Feeder extends SubsystemBase {
     // This method will be called once per scheduler run
   }
   
-
-  public void feedNotesToStow(boolean enable){
-    if (enable){
-      if (!feeder2NotePresent.get()){
-        feederStage1PIDController.setReference(FeederConstants.kFeederLoadRPM, CANSparkMax.ControlType.kVelocity);
-        feederStage2PIDController.setReference(FeederConstants.kFeederLoadRPM, CANSparkMax.ControlType.kVelocity);
-      }else{ 
-       stop();
-      }
-    }else{
-      setFeeder2Distance();
-      stop();
+  public void feederAutomatic() {
+    if(m_pivotArm.isArmAtPosition() && m_drive.isReadyToShoot()) {
+      runForward();
+    }
+    else {
+      feedNotesToStow();
     }
   }
+  public void feedNotesToStow(){
+    //if (enable){
+      if (!hasNote()){
+        feederStage1PIDController.setReference(FeederConstants.kFeederLoadRPM, CANSparkMax.ControlType.kVelocity);
+        feederStage2PIDController.setReference(FeederConstants.kFeederLoadRPM, CANSparkMax.ControlType.kVelocity);
+      }
+      else{ 
+        setFeeder2Distance(); 
+        stop();
+      }
+    // }else{
+    //   setFeeder2Distance(); 
+    //   stop();
+    // }
+  }
 
-  public void runForward(double speed){
+  public void runForward(){
     feederStage1PIDController.setReference(FeederConstants.kFeederShootRPM, CANSparkMax.ControlType.kVelocity);
     feederStage2PIDController.setReference(FeederConstants.kFeederShootRPM, CANSparkMax.ControlType.kVelocity);
   }
@@ -82,8 +98,11 @@ public class Feeder extends SubsystemBase {
   }
 
   public void stop(){
-    feederStage1PIDController.setReference(0, CANSparkMax.ControlType.kVelocity);
-    feederStage2PIDController.setReference(0, CANSparkMax.ControlType.kVelocity);
+    // Cuts power off from the motors. Unsure if setVoltage or setReference is better for this purpose.
+    m_FeederStage1Motor.setVoltage(0);
+    m_FeederStage2Motor.setVoltage(0);
+    // feederStage1PIDController.setReference(0, CANSparkMax.ControlType.kVelocity);
+    // feederStage2PIDController.setReference(0, CANSparkMax.ControlType.kVelocity);
   }
 
   public void setFeeder2Distance(){
