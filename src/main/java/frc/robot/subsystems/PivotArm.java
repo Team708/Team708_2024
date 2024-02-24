@@ -18,8 +18,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.CurrentLimit;
+import frc.robot.subsystems.drive.Drivetrain;
 import frc.robot.utilities.Helper;
-
+import frc.robot.utilities.MathUtils;
+import frc.robot.OI;
 public class PivotArm extends SubsystemBase {
   private CANSparkMax m_PivotArmLeftLeader, m_PivotArmRightFollower;
   private RelativeEncoder PivotArmEncoder;
@@ -27,8 +29,11 @@ public class PivotArm extends SubsystemBase {
   private SparkPIDController pivotArmPIDController;
   private double targetArmAngle;
   private SparkLimitSwitch forwardLimit, reverseLimit;
-  
-  public PivotArm() {
+  private Drivetrain m_drive;
+
+  public PivotArm(Drivetrain drive) {
+    m_drive = drive;
+
     absEncoder = new DutyCycleEncoder(0);
     absEncoder.reset();
     
@@ -71,7 +76,15 @@ public class PivotArm extends SubsystemBase {
   public double getAbsolutePosition() {
     return (-ArmConstants.kArmClockingOffset-(absEncoder.getAbsolutePosition()*ArmConstants.kArmScalingFactor)-ArmConstants.kArmAbsEncoderOffset);
   }
-  
+  public double inputTransform(double input) {
+        //return MathUtils.singedSquare(MathUtils.applyDeadband(input));
+        return MathUtils.cubicLinear(MathUtils.applyDeadband(input), 0.9, 0.1);
+    }
+  public void operateByController() {
+    double desiredY = -inputTransform(OI.getOperatorLeftY());
+    m_PivotArmLeftLeader.set(desiredY);
+
+  }
   //Determine units for arm as it's not completely tested
   public void setArmAngle(double angle) {
     targetArmAngle = angle;
@@ -79,11 +92,15 @@ public class PivotArm extends SubsystemBase {
   }
   
   public double findArmAngle () {
-    //This is where we add the equations to solve for targetArmAngle
-    
-    targetArmAngle = ArmConstants.kBumperShotAngle; //Using constant temporarily
-    
-    return targetArmAngle;
+    double distance = m_drive.getDistanceToTarget();
+    if(distance < ArmConstants.kMaxShootingDistance) {
+      //This is where we add the equations to solve for targetArmAngle
+      targetArmAngle = 1.86876*Math.pow(distance, 2) -19.9052*distance + 73.639; //Using constant temporarily
+      return targetArmAngle;
+    }
+    else {
+      return 0;
+    }
   }
 
   public boolean isArmAtPosition() {

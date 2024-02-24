@@ -20,6 +20,8 @@ import frc.robot.commands.PivotArm.armToAmpShotAngle;
 import frc.robot.commands.shooter.ShooterOff;
 import frc.robot.commands.shooter.SetShooterSpeedAmp;
 import frc.robot.commands.shooter.SetShooterSpeedSpeaker;
+import frc.robot.commands.AllSystemsOff;
+import frc.robot.commands.AllSystemsOn;
 import frc.robot.commands.ShootAmpSequence;
 import frc.robot.commands.ShootSpeakerPCG;
 import frc.robot.commands.Feeder.FeedNoteForStorage;
@@ -38,7 +40,7 @@ public class OI {
   public final static XboxController driverController = new XboxController(ControllerConstants.kDriverControllerPort); // Driver
   public final static XboxController operatorController = new XboxController(ControllerConstants.kOperatorControllerPort); // Operator
   // public final static XboxController climberController  = new XboxController(ControllerConstants.kClimberControllerPort); // Climber
-  // public final static XboxController adaptiveGamepad = new XboxController(ControllerConstants.kAdaptiveControllerPort); // Adaptive
+  public final static XboxController adaptiveGamepad = new XboxController(ControllerConstants.kAdaptiveControllerPort); // Adaptive
 
   /*
    * Driver JoystickButton
@@ -76,9 +78,9 @@ public class OI {
   // 	return deadBand(operatorController.getRightX(), ControllerConstants.kOperatorDeadBandRightX);
   // }
 
-  // public static double getOperatorLeftY() {
-  // 	return deadBand(operatorController.getLeftY(), ControllerConstants.kOperatorDeadBandLeftY);
-  // }
+  public static double getOperatorLeftY() {
+  	return deadBand(operatorController.getLeftY(), ControllerConstants.kOperatorDeadBandLeftY);
+  }
 
   // public static double getOperatorRightY() {
   // 	return deadBand(operatorController.getRightY(), ControllerConstants.kOperatorDeadBandRightY);
@@ -177,7 +179,7 @@ public class OI {
 
     //testing button
     new JoystickButton(operatorController, Button.kLeftBumper.value)
-        .whileTrue(new EnableArmAutoAim(m_PivotArm,m_drive));
+        .whileTrue(new EnableArmAutoAim(m_PivotArm));
 
     //testing button
     new JoystickButton(operatorController, Button.kRightBumper.value)
@@ -186,7 +188,11 @@ public class OI {
     new JoystickButton(operatorController, Button.kRightStick.value)
     		.onTrue(new SetShooterSpeedAmp(m_shooter));
 
-    
+    //Adaptive Buttons
+    new JoystickButton(adaptiveGamepad, Button.kA.value)
+        .onTrue(new AllSystemsOn(m_intake, m_feeder, m_shooter));
+    new JoystickButton(adaptiveGamepad, Button.kB.value)
+        .onTrue(new AllSystemsOff(m_intake, m_feeder, m_shooter));
 
     //testing button
     // new JoystickButton(operatorController, Button.kRightStick.value)

@@ -13,13 +13,11 @@ import frc.robot.subsystems.drive.Drivetrain;
 
 public class EnableArmAutoAim extends Command {
   
-  PivotArm m_pivotArm;
-  Drivetrain m_drive;
-  double angle;
+  private PivotArm m_pivotArm;
+  private double angle;
   
-  public EnableArmAutoAim(PivotArm pivotArm, Drivetrain drive) {
+  public EnableArmAutoAim(PivotArm pivotArm) {
     m_pivotArm = pivotArm;
-    m_drive = drive;
     // Use addRequirements() here to declare subsystem dependencies.
     //addRequirements(m_pivotArm);
   }
@@ -33,8 +31,8 @@ public class EnableArmAutoAim extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    angle = Units.radiansToDegrees(Math.atan2(1.778, m_drive.getDistanceToTarget()));
-    m_pivotArm.findArmAngle();
+    // angle = Units.radiansToDegrees(Math.atan2(1.9812, m_drive.getDistanceToTarget()));
+    angle = m_pivotArm.findArmAngle();
     m_pivotArm.setArmAngle(angle);
     SmartDashboard.putNumber("commanded angle", angle);
       //replace constant with method from pivotArm subsystem

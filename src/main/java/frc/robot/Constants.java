@@ -32,7 +32,7 @@ public final class Constants {
 
   public static final class CurrentLimit {
     public static final int kIntakeAmps = 40;
-    public static final int kFeederAmps = 25;
+    public static final int kFeederAmps = 40;
     public static final int kArmAmps = 40;
     public static final int kShooterAmps = 40;
 
@@ -119,7 +119,7 @@ public final class Constants {
     public static final Pose2d kBluePoseSpeakerBumperBottom  = new Pose2d(0.69, 4.35, new Rotation2d(Units.degreesToRadians(120)));
     public static final Pose2d kBlueSpeaker = new Pose2d(0.0, 5.55, new Rotation2d(180));//-0.381, 5.55, new Rotation2d(180));
     public static final Pose2d kTestPoint = new Pose2d(2.831, 5.55, new Rotation2d(180));
-    public static final Pose3d kBluePoseSpeaker = new Pose3d(kBlueSpeaker.getX(), kBlueSpeaker.getY(), 1.7272, new Rotation3d(0,0,kBlueSpeaker.getRotation().getRadians()));
+    public static final Pose3d kBluePoseSpeaker = new Pose3d(kBlueSpeaker.getX(), kBlueSpeaker.getY(), 1.9812, new Rotation3d(0,0,kBlueSpeaker.getRotation().getRadians()));
 
     public static final Pose2d kPoseAmpLocation  = new Pose2d(1.82, 7.59, new Rotation2d(Units.degreesToRadians(90)));
     public static final Pose2d kPoseFeederLocationFar  = new Pose2d(15.89,1.36, new Rotation2d(Units.degreesToRadians(-60)));  
@@ -305,9 +305,10 @@ public final class Constants {
     public static final double kArmScalingFactor = 360/3;
     public static final double kArmClockingOffset = -108.5; //Value to correct for absolute encoder clocking 
     public static final double kArmAbsEncoderOffset = 10; // value to offset the arm to horizontal
+    public static final double kMaxShootingDistance = 6.0; //Further distance the arm can make adjustments for
   }
 
- /**
+  /**
    * Shooter constants 
    */
   public static final class ShooterConstants {    
@@ -322,7 +323,7 @@ public final class Constants {
     public static final int kShooterGearRatio = 1;
     
     //speed constants
-    public static final double kShooterBumperShotRPM = 4000;
+    public static final double kShooterBumperShotRPM = 6000;
     // public static final double kShooterPodiumShotRPM = 4000;
     public static final double kShooterAmpShotRPM = 1000;
     
@@ -353,11 +354,18 @@ public final class Constants {
   }
 
   /**
+   * Climber constants
+   */
+  public static final class ClimberConstants {
+    public static final int kClimberMotorID = 91;
+  }
+  /**
     * User Controller constants 
     */
   public static final class ControllerConstants {
     public static final int kDriverControllerPort     = 0;
     public static final int kOperatorControllerPort   = 1;
+    public static final int kAdaptiveControllerPort   = 2;
     
     // Driver
     public static final double kDriverDeadBandLeftX   = 0.1;
@@ -369,7 +377,7 @@ public final class Constants {
     // Operator
     // public static final double kOperatorDeadBandLeftX   = 0.1;
     // public static final double kOperatorDeadBandRightX  = 0.2;
-    // public static final double kOperatorDeadBandLeftY   = 0.1;
+    public static final double kOperatorDeadBandLeftY   = 0.1;
     // public static final double kOperatorDeadBandRightY  = 0.2;
   }
 
@@ -396,6 +404,9 @@ public final class Constants {
 
   }
 
+  /**
+   * Vision Processor constants
+   */
   public static final class VisionProcessorConstants {
 
     public static final int CANdleID = 1;

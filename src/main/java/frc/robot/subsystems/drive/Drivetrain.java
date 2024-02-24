@@ -503,6 +503,7 @@ rotateToTarget(chassisSpeeds.omegaRadiansPerSecond));
     double desiredY = -inputTransform(OI.getDriverLeftX())*maxLinear;
     Translation2d desiredTranslation = new Translation2d(desiredX, desiredY);
     double desiredMag = desiredTranslation.getDistance(new Translation2d());
+
     if(desiredMag >= maxLinear){
       desiredTranslation.times(maxLinear/desiredMag);
     }
@@ -581,5 +582,6 @@ rotateToTarget(chassisSpeeds.omegaRadiansPerSecond));
   }
 
   public void sendToDashboard() {
+    SmartDashboard.putNumber("distance to target", getDistanceToTarget());
   }
 }

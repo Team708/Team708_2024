@@ -15,11 +15,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 // import frc.robot.commands.auto.FiveBall;
 // import frc.robot.commands.auto.DriveStraight;
-import frc.robot.commands.ShootSpeakerSCG;
+// import frc.robot.commands.ShootSpeakerSCG;
 
 import frc.robot.commands.DriveByController;
-// import frc.robot.commands.OperateByController; //TODO uncomment if using Operator Controller
-
+import frc.robot.commands.OperateByController; //TODO uncomment if using Operator Controller
+import frc.robot.commands.ShootSpeakerPCG;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 // import frc.robot.commands.OperateByController; //TODO uncomment if using Operator Controller
@@ -45,7 +45,7 @@ public class RobotContainer {
 	// The robot's subsystems. Initialize subsystems here.
 	private final Drivetrain m_drive = new Drivetrain();
 	private final VisionProcessor m_vision = new VisionProcessor(m_drive);
-	private final PivotArm m_pivotArm = new PivotArm();
+	private final PivotArm m_pivotArm = new PivotArm(m_drive);
 	private final Feeder m_feeder = new Feeder(m_drive, m_pivotArm);
 	private final Intake m_intake = new Intake(m_feeder);
 	private final Shooter m_shooter = new Shooter();
@@ -53,8 +53,7 @@ public class RobotContainer {
 	
 	// Initialize controllers
 	private final DriveByController m_driveByController =  new DriveByController(m_drive);
-	// private final OperateByController m_operateByController
-	// = new OperateByController(m_shooter); 
+	private final OperateByController m_operateByController = new OperateByController(m_pivotArm); 
 
 	// Autonomous Option
 	// private final Command doNothin = new WaitCommand(5);
@@ -69,7 +68,7 @@ public class RobotContainer {
 		// Configure the button bindings
 		configureButtonBindings();
 		
-		NamedCommands.registerCommand("ShootSpeakerBumperShotSCG", new ShootSpeakerSCG(m_drive, m_feeder, m_shooter, m_pivotArm, m_intake));
+		NamedCommands.registerCommand("ShootSpeakerBumperShotPCG", new ShootSpeakerPCG(m_drive, m_intake, m_feeder, m_pivotArm, m_shooter));
 		// configureAutoChooser();
 		// Build an auto chooser. This will use Commands.none() as the default option.
 		autoChooser = AutoBuilder.buildAutoChooser();
@@ -78,6 +77,7 @@ public class RobotContainer {
 		
 		// getAutonomousCommand();
 		m_drive.setDefaultCommand(m_driveByController);
+		m_pivotArm.setDefaultCommand(m_operateByController);
 
 		SmartDashboard.putData("Auto Chooser", autoChooser);
 		

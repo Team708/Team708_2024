@@ -35,7 +35,7 @@ public class ShootSpeakerPCG extends ParallelDeadlineGroup {
       new ParallelCommandGroup(
         new IntakeAllAutomatic(m_intake),
         new FeederAutomatic(m_feeder),
-        new EnableArmAutoAim(m_pivotArm, m_drive),
+        new EnableArmAutoAim(m_pivotArm),
         new SetShooterSpeedSpeaker(m_shooter)
       )
     );
