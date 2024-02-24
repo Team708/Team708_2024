@@ -6,6 +6,7 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.revrobotics.SparkPIDController;
 
 import edu.wpi.first.math.geometry.Pose2d;
 
@@ -32,6 +33,7 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.VisionProcessor;
 import frc.robot.subsystems.PivotArm;
 import frc.robot.subsystems.drive.Drivetrain;
+import frc.robot.utilities.PidHelper;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
@@ -71,6 +73,7 @@ public class RobotContainer {
 		// Configure the button bindings
 		configureButtonBindings();
 		
+		
 		NamedCommands.registerCommand("ShootSpeakerPCG", new ShootSpeakerPCG(m_drive, m_intake, m_feeder, m_pivotArm, m_shooter));
 		NamedCommands.registerCommand("SetShooterSpeedSpeaker", new SetShooterSpeedSpeaker(m_shooter));
 	    // configureAutoChooser();
@@ -78,7 +81,7 @@ public class RobotContainer {
 		autoChooser = AutoBuilder.buildAutoChooser();
 		// autoChooser.addOption("Five Ball", FiveBall);
 		// autoChooser.addOption("Drive Straight", DriveStraight);
-		
+
 		// getAutonomousCommand();
 		m_drive.setDefaultCommand(m_driveByController);
 		m_pivotArm.setDefaultCommand(m_operateByController);
@@ -139,6 +142,7 @@ public class RobotContainer {
 		return m_AllSystemsOff;
 	}
 	public void sendToDashboard() {
+		PidHelper.getInstance().update();
 		m_drive.sendToDashboard();
 		m_intake.sendToDashboard();
 		m_feeder.sendToDashboard();

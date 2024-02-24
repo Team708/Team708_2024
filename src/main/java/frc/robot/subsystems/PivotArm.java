@@ -20,7 +20,7 @@ import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.CurrentLimit;
 import frc.robot.subsystems.drive.Drivetrain;
-import frc.robot.utilities.Helper;
+import frc.robot.utilities.PidHelper;
 import frc.robot.utilities.MathUtils;
 import frc.robot.OI;
 public class PivotArm extends SubsystemBase {
@@ -55,7 +55,7 @@ public class PivotArm extends SubsystemBase {
     PivotArmEncoder.setPosition(getAbsolutePosition());
     
     pivotArmPIDController = m_PivotArmLeftLeader.getPIDController();
-    Helper.setupPIDController(pivotArmPIDController, ArmConstants.kPivotArmPIDList);
+    PidHelper.setupPIDController(this.getName()+"pivotArmPIDController", pivotArmPIDController, ArmConstants.kPivotArmPIDList);
     
     //Follower arm motor
     m_PivotArmRightFollower = new CANSparkMax(ArmConstants.kArmSlaveMotorID, MotorType.kBrushless);
@@ -115,10 +115,11 @@ public class PivotArm extends SubsystemBase {
   
 
   public void sendToDashboard() {
-    SmartDashboard.putNumber("Arm Position", getPosition());
-    SmartDashboard.putNumber("Arm Abs Position", getAbsolutePosition());
-    SmartDashboard.putBoolean("Arm At Position", isArmAtPosition());
-    SmartDashboard.putBoolean("Arm Forward Limit", forwardLimit.isPressed());
-    SmartDashboard.putBoolean("Arm Reverse Limit", reverseLimit.isPressed());
+    String topic = new String(this.getName()+"/");
+    SmartDashboard.putNumber(topic+"Arm Position", getPosition());
+    SmartDashboard.putNumber(topic+"Arm Abs Position", getAbsolutePosition());
+	    SmartDashboard.putBoolean(topic+"Arm At Position", isArmAtPosition());
+    SmartDashboard.putBoolean(topic+"Arm Forward Limit", forwardLimit.isPressed());
+    SmartDashboard.putBoolean(topic+"Arm Reverse Limit", reverseLimit.isPressed());
   }
 }

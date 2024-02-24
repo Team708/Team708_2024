@@ -19,7 +19,7 @@ import frc.robot.Constants.CurrentLimit;
 import frc.robot.Constants.FeederConstants;
 import frc.robot.subsystems.drive.Drivetrain;
 // import frc.robot.subsystems.PivotArm;
-import frc.robot.utilities.Helper;
+import frc.robot.utilities.PidHelper;
 
 public class Feeder extends SubsystemBase {
   private CANSparkMax feederMotor;
@@ -46,8 +46,7 @@ public class Feeder extends SubsystemBase {
     
     feederEncoder = feederMotor.getEncoder();
     feederPIDController = feederMotor.getPIDController();
-    Helper.setupPIDController(feederPIDController, FeederConstants.kFeederStage1PIDList);
-
+    PidHelper.setupPIDController(this.getName()+"feederStage1PIDController", feederPIDController, FeederConstants.kFeederStage1PIDList);
   }
 
   @Override
@@ -108,10 +107,11 @@ public class Feeder extends SubsystemBase {
   // }
 
   public void sendToDashboard() {
-		SmartDashboard.putBoolean("feeder1NotePresent", feederLowNotePresent.get());
-    SmartDashboard.putBoolean("feeder2NotePresent", feederHighNotePresent.get());
-    SmartDashboard.putNumber("Feeder Encoder", feederEncoder.getPosition());
-    // SmartDashboard.putBoolean("feederIsEmpty", isEmpty());
-    SmartDashboard.putNumber("Feeder 1 RPM", feederEncoder.getVelocity());
+    String topic = new String(this.getName()+"/");
+	SmartDashboard.putBoolean(topic+"feeder1NotePresent", feederLowNotePresent.get());
+    SmartDashboard.putBoolean(topic+"feeder2NotePresent", feederHighNotePresent.get());
+    SmartDashboard.putNumber(topic+"Feeder Encoder", feederEncoder.getPosition());
+    SmartDashboard.putBoolean(topic+"feederIsEmpty", isEmpty());
+    SmartDashboard.putNumber(topic+"Feeder 1 RPM", feederEncoder.getVelocity());  
 	}
 }
