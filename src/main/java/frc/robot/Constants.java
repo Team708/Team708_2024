@@ -323,9 +323,9 @@ public final class Constants {
     public static final int kShooterGearRatio = 1;
     
     //speed constants
-    public static final double kShooterBumperShotRPM = 4000;
+    public static final double kShooterSpeakerRPM = 4000;
     // public static final double kShooterPodiumShotRPM = 4000;
-    public static final double kShooterAmpShotRPM = 1000;
+    public static final double kShooterAmpRPM = 1000;
     
     public static final double kThreshhold = 0.98;
     

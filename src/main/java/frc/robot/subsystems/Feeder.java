@@ -102,9 +102,9 @@ public class Feeder extends SubsystemBase {
   //   return (feederLowNotePresent.get() && feederHighNotePresent.get());
   // }
 
-  // public boolean isEmpty() {
-  //   return !(feederLowNotePresent.get() || feederHighNotePresent.get());
-  // }
+  public boolean isEmpty() {
+    return !(feederLowNotePresent.get() || feederHighNotePresent.get());
+  }
 
   public void sendToDashboard() {
     String topic = new String(this.getName()+"/");
