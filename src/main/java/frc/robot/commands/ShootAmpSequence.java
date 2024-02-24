@@ -39,13 +39,6 @@ public class ShootAmpSequence extends SequentialCommandGroup {
           new ShooterOff(m_shooter)
         ) 
       )
-      //  //keep aiming while shooting
-      // new ParallelCommandGroup(
-      //   new EnableAutoTargetSpeaker(m_drive),
-      //   new EnableArmAutoAim(m_PivotArm, m_drive), 
-      //   new SetShooterSpeedBumperShot(m_shooter),
-      //   new FeedNoteToShoot(m_feeder)
-      // ),
     );
   }
 }

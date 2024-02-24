@@ -66,9 +66,9 @@ public final class Constants {
     public static final int kBackLeftTurningEncoderPort = 6;    //Analog Port of the Module Absolute Encoder
     public static final int kBackRightTurningEncoderPort = 7;   //Analog Port of the Module Absolute Encoder
 
-    public static final double kFrontLeftOffset = 0.004;//0.0; //-.2189*-1; //-0.5 to 0.5
+    public static final double kFrontLeftOffset = .003; //0.004;//0.0; //-.2189*-1; //-0.5 to 0.5
     public static final double kFrontRightOffset = -0.334473;//-1.0042; //0.0; //-.1585*-1; //-0.5 to 0.5
-    public static final double kBackLeftOffset = 0.496559;//-3.08; //-.5*-1; //-0.5 to 0.5
+    public static final double kBackLeftOffset =  -.45; //0.496559;//-3.08; //-.5*-1; //-0.5 to 0.5
     public static final double kBackRightOffset = -0.189941;//1.1540; //0.0 //-.1926*-1; //-0.5 to 0.5
     
     //Drive motor PID is best done on the roboRIO currently as the SparkMAX does not allow for static gain values on the PID controller, 

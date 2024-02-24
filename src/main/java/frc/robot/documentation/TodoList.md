@@ -13,4 +13,4 @@
 - Have robot pose update field relative angle
 - Use path planner navigation grid
 - feeder lineup position
-- 
+- Clean up command logic/structure so they behave properly when called
