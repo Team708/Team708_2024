@@ -19,7 +19,7 @@ public class EnableArmAutoAim extends Command {
   public EnableArmAutoAim(PivotArm pivotArm) {
     m_pivotArm = pivotArm;
     // Use addRequirements() here to declare subsystem dependencies.
-    //addRequirements(m_pivotArm);
+    addRequirements(m_pivotArm);
   }
 
   // Called when the command is initially scheduled.

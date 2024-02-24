@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ArmConstants;
+import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.CurrentLimit;
 import frc.robot.subsystems.drive.Drivetrain;
 import frc.robot.utilities.Helper;
@@ -30,12 +31,13 @@ public class PivotArm extends SubsystemBase {
   private double targetArmAngle;
   private SparkLimitSwitch forwardLimit, reverseLimit;
   private Drivetrain m_drive;
+  private Boolean isTargeting = false;
 
   public PivotArm(Drivetrain drive) {
     m_drive = drive;
 
     absEncoder = new DutyCycleEncoder(0);
-    absEncoder.reset();
+    //absEncoder.reset();
     
     //Leader arm motor
     m_PivotArmLeftLeader = new CANSparkMax(ArmConstants.kArmMasterMotorID, MotorType.kBrushless);
@@ -82,8 +84,9 @@ public class PivotArm extends SubsystemBase {
     }
   public void operateByController() {
     double desiredY = -inputTransform(OI.getOperatorLeftY());
-    m_PivotArmLeftLeader.set(desiredY);
-
+    if(Math.abs(desiredY) > ControllerConstants.kOperatorDeadBandLeftY) {
+      setArmAngle(getPosition()+(desiredY*2));
+    }
   }
   //Determine units for arm as it's not completely tested
   public void setArmAngle(double angle) {
@@ -95,21 +98,26 @@ public class PivotArm extends SubsystemBase {
     double distance = m_drive.getDistanceToTarget();
     if(distance < ArmConstants.kMaxShootingDistance) {
       //This is where we add the equations to solve for targetArmAngle
+      isTargeting = true;
       targetArmAngle = 1.86876*Math.pow(distance, 2) -19.9052*distance + 73.639; //Using constant temporarily
       return targetArmAngle;
+      
     }
     else {
+      isTargeting = false;
       return 0;
     }
   }
 
   public boolean isArmAtPosition() {
-    return (targetArmAngle- getPosition()) < ArmConstants.kThresholdArm;
-  }
+      return Math.abs(targetArmAngle - getPosition()) < ArmConstants.kThresholdArm;
+    }
+  
 
   public void sendToDashboard() {
-    SmartDashboard.putNumber("Arm Encoder Position", getPosition());
-    SmartDashboard.putNumber("Absolute Encoder Position", getAbsolutePosition());
+    SmartDashboard.putNumber("Arm Position", getPosition());
+    SmartDashboard.putNumber("Arm Abs Position", getAbsolutePosition());
+    SmartDashboard.putBoolean("Arm At Position", isArmAtPosition());
     SmartDashboard.putBoolean("Arm Forward Limit", forwardLimit.isPressed());
     SmartDashboard.putBoolean("Arm Reverse Limit", reverseLimit.isPressed());
   }

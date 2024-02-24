@@ -14,7 +14,7 @@ public class SetRumble extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    OI.driverController.setRumble(RumbleType.kBothRumble, 1);
+    OI.driverController.setRumble(RumbleType.kBothRumble, 0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -29,6 +29,6 @@ public class SetRumble extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

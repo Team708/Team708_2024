@@ -5,13 +5,15 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.PivotArm.armToAmpShotAngle;
 import frc.robot.commands.shooter.SetShooterSpeedAmp;
 import frc.robot.commands.shooter.SetShooterSpeedSpeaker;
 import frc.robot.commands.shooter.ShooterOff;
-import frc.robot.commands.Feeder.FeedNoteToShoot;
+import frc.robot.commands.Feeder.FeedToShoot;
+import frc.robot.commands.Feeder.FeederForward;
 import frc.robot.commands.drive.DriveToAmp;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.PivotArm;
@@ -34,8 +36,8 @@ public class ShootAmpSequence extends SequentialCommandGroup {
         //new DriveToAmp(m_drive),
         new armToAmpShotAngle(m_PivotArm), 
         new SequentialCommandGroup(
-          new SetShooterSpeedAmp(m_shooter),
-          new FeedNoteToShoot(m_feeder, m_PivotArm).withTimeout(2.0),
+          new SetShooterSpeedAmp(m_shooter),  
+          new FeedToShoot(m_feeder),//.withTimeout(1.0),
           new ShooterOff(m_shooter)
         ) 
       )

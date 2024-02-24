@@ -34,7 +34,7 @@ public class IntakeAllIn extends Command{
     public void end(boolean interrupted) {
         // You can perform any actions when the command ends or is interrupted.
         // For example, stop the intake subsystem.
-        m_intake.intakeOff();
+        // m_intake.intakeOff();
     }
 
     // Returns true when the command should end.

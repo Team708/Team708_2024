@@ -12,6 +12,7 @@ public class FeederAutomatic extends Command {
   /** Creates a new FeederAutomatic. */
   public FeederAutomatic(Feeder feeder) {
     m_feeder = feeder;
+    addRequirements(m_feeder);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -23,7 +24,7 @@ public class FeederAutomatic extends Command {
   @Override
   public void execute() {
     //m_feeder.feederAutomatic();
-    m_feeder.runForward();
+    m_feeder.feederAutomatic();
   }
 
   // Called once the command ends or is interrupted.

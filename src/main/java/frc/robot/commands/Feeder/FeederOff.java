@@ -14,6 +14,7 @@ public class FeederOff extends InstantCommand {
   private Feeder m_feeder;
   public FeederOff(Feeder feeder) {
     m_feeder = feeder;
+    addRequirements(m_feeder);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

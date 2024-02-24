@@ -25,7 +25,7 @@ public class Shooter extends SubsystemBase {
   private RelativeEncoder shooterEncoderTop, shooterEncoderBottom, shooterEncoderAmp;
   private SparkPIDController shooterSpeakerPIDController, shooterAmpPIDController;
 
-  private double targetSpeed = 0;
+  private double targetSpeed = 1000;   // Arbitarily high number
 
   ShooterSimulation m_shootersim;
   
@@ -68,28 +68,29 @@ public class Shooter extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void setShooterSpeedSpeaker(double speed) { 
-    targetSpeed = speed;
-    shooterAmpPIDController.setReference(speed, CANSparkMax.ControlType.kVelocity);
-    shooterSpeakerPIDController.setReference(speed, CANSparkMax.ControlType.kVelocity);
+  public void setShooterSpeedSpeaker() { 
+    targetSpeed = ShooterConstants.kShooterSpeakerRPM;
+    shooterAmpPIDController.setReference(targetSpeed, CANSparkMax.ControlType.kVelocity);
+    shooterSpeakerPIDController.setReference(targetSpeed, CANSparkMax.ControlType.kVelocity);
   }
 
-  public void setShooterSpeedAmp(double speed){
-    targetSpeed = speed;
-    shooterAmpPIDController.setReference(-speed, CANSparkMax.ControlType.kVelocity);
-    shooterSpeakerPIDController.setReference(speed, CANSparkMax.ControlType.kVelocity);
+  public void setShooterSpeedAmp(){
+    targetSpeed = ShooterConstants.kShooterAmpRPM;
+    shooterAmpPIDController.setReference(-targetSpeed, CANSparkMax.ControlType.kVelocity);
+    shooterSpeakerPIDController.setReference(targetSpeed, CANSparkMax.ControlType.kVelocity);
   }
 
   public void off(){
-    shooterAmpPIDController.setReference(0, CANSparkMax.ControlType.kVelocity);
-    shooterSpeakerPIDController.setReference(0, CANSparkMax.ControlType.kVelocity);
+    m_shooterMotorTopLeader.setVoltage(0);
+    m_shooterMotorAmp.setVoltage(0);
+    // shooterAmpPIDController.setReference(0, CANSparkMax.ControlType.kVelocity);
+    // shooterSpeakerPIDController.setReference(0, CANSparkMax.ControlType.kVelocity);
   }
 
   public boolean isAtSpeed() {
-    if (Math.abs(shooterEncoderTop.getVelocity()) > (targetSpeed) * ShooterConstants.kThreshhold &&
-        Math.abs(shooterEncoderBottom.getVelocity()) > (targetSpeed) * ShooterConstants.kThreshhold &&
-        Math.abs(shooterEncoderAmp.getVelocity()) > (targetSpeed) * ShooterConstants.kThreshhold
-        ){
+    if (Math.abs(shooterEncoderTop.getVelocity()) > (targetSpeed) &&
+        Math.abs(shooterEncoderBottom.getVelocity()) > (targetSpeed)&&
+        Math.abs(shooterEncoderAmp.getVelocity()) > (targetSpeed)){
       return true;
     }
     return false;
@@ -98,6 +99,8 @@ public class Shooter extends SubsystemBase {
   public void sendToDashboard() {
     SmartDashboard.putNumber("Shooter Top Velocity", shooterEncoderTop.getVelocity());
     SmartDashboard.putNumber("Shooter Bottom Velocity", shooterEncoderBottom.getVelocity());
+    SmartDashboard.putNumber("Shooter Amp Velocity", shooterEncoderAmp.getVelocity());
+    SmartDashboard.putBoolean("Shooter At Speed", isAtSpeed());
   }
   
   // public void simulationInit() {

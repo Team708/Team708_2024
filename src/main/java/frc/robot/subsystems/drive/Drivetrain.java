@@ -329,6 +329,10 @@ import com.pathplanner.lib.util.GeometryUtil;
     return pigeon.getAngle().getDegrees();
   }
 
+  public void resetGyro() {
+    pigeon.reset();
+  }
+
   public FieldRelativeSpeed getFieldRelativeSpeed() {
     return m_fieldRelVel;
   }

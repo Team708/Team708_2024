@@ -12,14 +12,11 @@ import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
+
 public class AllSystemsOff extends ParallelCommandGroup {
-  /** Creates a new AllSystemsOff. */
+
   public AllSystemsOff(Intake m_intake, Feeder m_feeder, Shooter m_shooter) {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
+
     addCommands(
       new ShooterOff(m_shooter),
       new IntakeOff(m_intake),

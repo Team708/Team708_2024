@@ -28,10 +28,12 @@ public class Feeder extends SubsystemBase {
   private DigitalInput feederLowNotePresent,feederHighNotePresent;
   private Drivetrain m_drive;
   private PivotArm m_pivotArm;
+  private Shooter m_shooter;
 
-  public Feeder(Drivetrain drive, PivotArm pivotArm) {
+  public Feeder(Drivetrain drive, PivotArm pivotArm, Shooter shooter) {
     m_drive = drive;
     m_pivotArm = pivotArm;
+    m_shooter = shooter;
 
     feederLowNotePresent = new DigitalInput(1);
     feederHighNotePresent = new DigitalInput(2);
@@ -53,8 +55,9 @@ public class Feeder extends SubsystemBase {
     // This method will be called once per scheduler run
   }
   
+
   public void feederAutomatic() {
-    if(m_pivotArm.isArmAtPosition() && m_drive.isReadyToShoot()) {
+    if(m_pivotArm.isArmAtPosition() && m_shooter.isAtSpeed()) {
       runForward();
     }
     else {
@@ -64,7 +67,7 @@ public class Feeder extends SubsystemBase {
 
   public void feedNotesToStow() {
       if (!hasNote()){
-        feederPIDController.setReference(FeederConstants.kFeederLoadRPM, CANSparkMax.ControlType.kVelocity);
+        runForward();
       }
       else{ 
         setFeeder2Distance(); 
@@ -88,7 +91,7 @@ public class Feeder extends SubsystemBase {
 
   public void setFeeder2Distance(){
     feederEncoder.setPosition(0);
-    feederPIDController.setReference(5, ControlType.kPosition);
+    feederPIDController.setReference(-5, ControlType.kPosition);
 
   }
 
@@ -96,19 +99,19 @@ public class Feeder extends SubsystemBase {
     return feederHighNotePresent.get();
   }
 
-  public boolean has2Notes() {
-    return (feederLowNotePresent.get() && feederHighNotePresent.get());
-  }
+  // public boolean has2Notes() {
+  //   return (feederLowNotePresent.get() && feederHighNotePresent.get());
+  // }
 
-  public boolean isEmpty() {
-    return !(feederLowNotePresent.get() || feederHighNotePresent.get());
-  }
+  // public boolean isEmpty() {
+  //   return !(feederLowNotePresent.get() || feederHighNotePresent.get());
+  // }
 
   public void sendToDashboard() {
 		SmartDashboard.putBoolean("feeder1NotePresent", feederLowNotePresent.get());
     SmartDashboard.putBoolean("feeder2NotePresent", feederHighNotePresent.get());
     SmartDashboard.putNumber("Feeder Encoder", feederEncoder.getPosition());
-    SmartDashboard.putBoolean("feederIsEmpty", isEmpty());
+    // SmartDashboard.putBoolean("feederIsEmpty", isEmpty());
     SmartDashboard.putNumber("Feeder 1 RPM", feederEncoder.getVelocity());
 	}
 }

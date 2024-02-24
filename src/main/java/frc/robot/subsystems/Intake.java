@@ -84,10 +84,14 @@ public class Intake extends SubsystemBase {
 	}
 
 	public void intakeOff() {
-		frontSparkPIDController.setReference(0, CANSparkMax.ControlType.kVelocity);
-		backSparkPIDController.setReference(0, CANSparkMax.ControlType.kVelocity);
-		rightSparkPIDController.setReference(0, CANSparkMax.ControlType.kVelocity);
-		leftSparkPIDController.setReference(0, CANSparkMax.ControlType.kVelocity);
+		m_intakeMotorFront.setVoltage(0);
+		m_intakeMotorBack.setVoltage(0);
+		m_intakeMotorLeft.setVoltage(0);
+		m_intakeMotorRight.setVoltage(0);
+		// frontSparkPIDController.setReference(0, CANSparkMax.ControlType.kVelocity);
+		// backSparkPIDController.setReference(0, CANSparkMax.ControlType.kVelocity);
+		// rightSparkPIDController.setReference(0, CANSparkMax.ControlType.kVelocity);
+		// leftSparkPIDController.setReference(0, CANSparkMax.ControlType.kVelocity);
 		intakeDirection = "All Off";
 
 	}

@@ -12,7 +12,7 @@ public class IntakeAllAutomatic extends Command {
   private Intake m_intake;
   public IntakeAllAutomatic(Intake intake) {
     m_intake = intake;
-    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(m_intake);
   }
 
   // Called when the command is initially scheduled.

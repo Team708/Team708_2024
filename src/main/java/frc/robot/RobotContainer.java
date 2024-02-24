@@ -21,6 +21,7 @@ import frc.robot.commands.DriveByController;
 import frc.robot.commands.OperateByController; //TODO uncomment if using Operator Controller
 import frc.robot.commands.ShootSpeakerPCG;
 import frc.robot.commands.shooter.SetShooterSpeedSpeaker;
+import frc.robot.commands.AllSystemsOff;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 // import frc.robot.commands.OperateByController; //TODO uncomment if using Operator Controller
@@ -45,17 +46,18 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class RobotContainer {
 	// The robot's subsystems. Initialize subsystems here.
 	private final Drivetrain m_drive = new Drivetrain();
+	private final Shooter m_shooter = new Shooter();
 	private final VisionProcessor m_vision = new VisionProcessor(m_drive);
 	private final PivotArm m_pivotArm = new PivotArm(m_drive);
-	private final Feeder m_feeder = new Feeder(m_drive, m_pivotArm);
+	private final Feeder m_feeder = new Feeder(m_drive, m_pivotArm, m_shooter);
 	private final Intake m_intake = new Intake(m_feeder);
-	private final Shooter m_shooter = new Shooter();
 	
 	
 	// Initialize controllers
 	private final DriveByController m_driveByController =  new DriveByController(m_drive);
 	private final OperateByController m_operateByController = new OperateByController(m_pivotArm); 
 
+	private final AllSystemsOff m_AllSystemsOff = new AllSystemsOff(m_intake, m_feeder, m_shooter);
 	// Autonomous Option
 	// private final Command doNothin = new WaitCommand(5);
 	// private final Command FiveBall = new FiveBall(m_drive, 8);
@@ -133,6 +135,9 @@ public class RobotContainer {
 	  m_intake.simulationPeriodic();
 	}
 
+	public Command allSystemsOff() {
+		return m_AllSystemsOff;
+	}
 	public void sendToDashboard() {
 		m_drive.sendToDashboard();
 		m_intake.sendToDashboard();

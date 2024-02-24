@@ -23,7 +23,7 @@ public class SetShooterSpeedSpeaker extends Command {
     
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    //addRequirements(m_shooter);
+    addRequirements(m_shooter);
   }
 
   @Override
@@ -33,7 +33,7 @@ public class SetShooterSpeedSpeaker extends Command {
 
   @Override
   public void execute() {
-    m_shooter.setShooterSpeedSpeaker(ShooterConstants.kShooterBumperShotRPM);
+    m_shooter.setShooterSpeedSpeaker();
   }
   
   @Override
