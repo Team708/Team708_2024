@@ -179,7 +179,7 @@ public class OI {
 
     //testing button
     new JoystickButton(operatorController, Button.kLeftBumper.value)
-        .whileTrue(new EnableArmAutoAim(m_PivotArm));
+        .onTrue(new EnableArmAutoAim(m_PivotArm));
 
     //testing button
     new JoystickButton(operatorController, Button.kRightBumper.value)

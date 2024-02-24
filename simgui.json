@@ -39,6 +39,7 @@
       "/SmartDashboard/Intake Sim": "Mechanism2d",
       "/SmartDashboard/Intake Trajectory Sim": "Field2d",
       "/SmartDashboard/PID Chooser": "String Chooser",
+      "/SmartDashboard/PID/SparkMax Chooser": "String Chooser",
       "/SmartDashboard/SendableChooser[0]": "String Chooser",
       "/SmartDashboard/SparkMax Chooser": "String Chooser",
       "/SmartDashboard/SparkMaxChooser": "String Chooser"
@@ -111,7 +112,7 @@
             0.0,
             0.8500000238418579
           ],
-          "height": 369,
+          "height": 0,
           "series": [
             {
               "color": [
