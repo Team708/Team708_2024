@@ -215,7 +215,7 @@ public final class Constants {
     public static final double kCamOpenPose = 2265.0;
     public static final double kCamClosedPose = 0.0;
     // public static final double kIntakeSpeed = 12.0*.8;
-    public static final double kIntakeRPM = 5000;
+    public static final double kIntakeRPM = 4100;
     
     public static final int kIntakeMode = 1; //0 = Roller, 1 = Clamp
 
@@ -225,9 +225,9 @@ public final class Constants {
     public static final int kIntakeMotorRightID = 27;
 
     public static final double kIntake_P = 0.00005;
-    public static final double kIntake_I = 0.000001; 
-    public static final double kIntake_D = 0.0004;
-    public static final double kIntake_FF = 0.0;
+    public static final double kIntake_I = 0.0; 
+    public static final double kIntake_D = 0.0;
+    public static final double kIntake_FF = 0.01;
     public static final double kIntake_IZone = 0;
     public static final double kIntake_Min = -1;
     public static final double kIntake_Max = 1;
@@ -242,16 +242,16 @@ public final class Constants {
     public static final int kFeederStage1MotorID  = 31;
     public static final int kFeederStage2MotorID  = 32;
 
-    public static final double kFeederLoadRPM   = 5000;
-    public static final double kFeederShootRPM  = 5000;  //In the event the load and shoot RPMs are the same, remove this
+    public static final double kFeederLoadRPM   = 4200; //4750 max
+    public static final double kFeederShootRPM  = 4200;  //In the event the load and shoot RPMs are the same, remove this
 
     
     //PID values
     //make sure the PID values get tuned
-    public static final double kFeederStage1Motor_P = 0.00015;
+    public static final double kFeederStage1Motor_P = 0.00001;
     public static final double kFeederStage1Motor_I = 0.0; 
     public static final double kFeederStage1Motor_D = 0.0;
-    public static final double kFeederStage1Motor_FF = 0.0;
+    public static final double kFeederStage1Motor_FF = 0.00021;
     public static final double kFeederStage1Motor_IZone = 0;
     public static final double kFeederStage1Motor_Min = -1;
     public static final double kFeederStage1Motor_Max = 1;
@@ -260,10 +260,10 @@ public final class Constants {
 
     //PID values
     //make sure the PID values get tuned
-    public static final double kFeederStage2Motor_P = 0.00015;
+    public static final double kFeederStage2Motor_P = 0.00001;
     public static final double kFeederStage2Motor_I = 0.0; 
     public static final double kFeederStage2Motor_D = 0.0;
-    public static final double kFeederStage2Motor_FF = 0.0;
+    public static final double kFeederStage2Motor_FF = 0.00021;
     public static final double kFeederStage2Motor_IZone = 0;
     public static final double kFeederStage2Motor_Min = -1;
     public static final double kFeederStage2Motor_Max = 1;
@@ -323,7 +323,7 @@ public final class Constants {
     public static final int kShooterGearRatio = 1;
     
     //speed constants
-    public static final double kShooterBumperShotRPM = 6000;
+    public static final double kShooterBumperShotRPM = 4000;
     // public static final double kShooterPodiumShotRPM = 4000;
     public static final double kShooterAmpShotRPM = 1000;
     
@@ -332,19 +332,19 @@ public final class Constants {
     //PID constants
     //make sure the PID values get tuned
 
-    public static final double kShooterTop_P = 0.00005;
-    public static final double kShooterTop_I = 0.000001; 
-    public static final double kShooterTop_D = 0.0004;
-    public static final double kShooterTop_FF = 0.0;
+    public static final double kShooterTop_P = 0.0001; //0.00005;
+    public static final double kShooterTop_I = 0.0; //0.000001; 
+    public static final double kShooterTop_D = 0.0; //0.0004;
+    public static final double kShooterTop_FF = 0.003; //0.0;
     public static final double kShooterTop_IZone = 0;
     public static final double kShooterTop_Min = -1;
     public static final double kShooterTop_Max = 1;
     public static final double[] kShooterTopPIDList = {kShooterTop_P,kShooterTop_I,kShooterTop_D,
                                         kShooterTop_FF,kShooterTop_IZone,kShooterTop_Min,kShooterTop_Max};
-    public static final double kShooterAmp_P = 0.00005;
-    public static final double kShooterAmp_I = 0.000001; 
-    public static final double kShooterAmp_D = 0.0004;
-    public static final double kShooterAmp_FF = 0.0;
+    public static final double kShooterAmp_P = 0.0001; //0.00005;
+    public static final double kShooterAmp_I = 0.0; //0.000001; 
+    public static final double kShooterAmp_D = 0.0; //0.0004;
+    public static final double kShooterAmp_FF = 0.003; //0.0;
     public static final double kShooterAmp_IZone = 0;
     public static final double kShooterAmp_Min = -1;
     public static final double kShooterAmp_Max = 1;

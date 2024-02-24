@@ -4,6 +4,8 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 // import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
@@ -12,7 +14,7 @@ import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.CurrentLimit;
 import frc.robot.subsystems.sim.IntakeSimulation;
 // import frc.robot.subsystems.Feeder;
-import frc.robot.utilities.Helper;
+import frc.robot.utilities.PidHelper;
 
 public class Intake extends SubsystemBase {
 	private Feeder m_feeder;
@@ -62,10 +64,10 @@ public class Intake extends SubsystemBase {
 		backSparkPIDController = m_intakeMotorBack.getPIDController();
 		rightSparkPIDController = m_intakeMotorRight.getPIDController();
 		leftSparkPIDController = m_intakeMotorLeft.getPIDController();
-		Helper.setupPIDController(frontSparkPIDController, IntakeConstants.kIntakePIDList);
-		Helper.setupPIDController(backSparkPIDController, IntakeConstants.kIntakePIDList);
-		Helper.setupPIDController(leftSparkPIDController, IntakeConstants.kIntakePIDList);
-		Helper.setupPIDController(rightSparkPIDController, IntakeConstants.kIntakePIDList);
+		PidHelper.setupPIDController(this.getName()+"frontSparkPIDController", frontSparkPIDController, IntakeConstants.kIntakePIDList);
+		PidHelper.setupPIDController(this.getName()+"backSparkPIDController", backSparkPIDController, IntakeConstants.kIntakePIDList);
+		PidHelper.setupPIDController(this.getName()+"leftSparkPIDController", leftSparkPIDController, IntakeConstants.kIntakePIDList);
+		PidHelper.setupPIDController(this.getName()+"rightSparkPIDController", rightSparkPIDController, IntakeConstants.kIntakePIDList);
 
 	}
 
@@ -138,15 +140,18 @@ public class Intake extends SubsystemBase {
   
 	}
 
-	
-
 	public void simulationPeriodic() {
     //Update elevator simulation
     m_intakeSim.update();
 	}
 
 	public void sendToDashboard() {
-		// SmartDashboard.putNumber("intake speed", getRollerSpeed());
+		String topic = new String(this.getName()+"/");
+		SmartDashboard.putNumber("/Intake/Intake Front Speed", m_intakeMotorFront.getEncoder().getVelocity());
+		SmartDashboard.putNumber("/Intake/Intake Back Speed", m_intakeMotorBack.getEncoder().getVelocity());
+		SmartDashboard.putNumber("/Intake/Intake Left Speed", m_intakeMotorLeft.getEncoder().getVelocity());
+		SmartDashboard.putNumber("/Intake/Intake Right Speed", m_intakeMotorRight.getEncoder().getVelocity());
+
 		// SmartDashboard.putNumber("intake Position", getRollerPosition());
 		// SmartDashboard.putString("intake Direction", intakeDirection);
 

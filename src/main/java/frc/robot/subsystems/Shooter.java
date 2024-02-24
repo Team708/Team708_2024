@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.CurrentLimit;
 import frc.robot.Constants.ShooterConstants;
-import frc.robot.utilities.Helper;
+import frc.robot.utilities.PidHelper;
 // import frc.robot.subsystems.ShooterSimulation;
 
 
@@ -40,7 +40,7 @@ public class Shooter extends SubsystemBase {
     shooterEncoderTop = m_shooterMotorTopLeader.getEncoder();
     
     shooterSpeakerPIDController = m_shooterMotorTopLeader.getPIDController();
-    Helper.setupPIDController(shooterSpeakerPIDController, ShooterConstants.kShooterTopPIDList);
+    PidHelper.setupPIDController(this.getName()+"shooterSpeakerPIDController", shooterSpeakerPIDController, ShooterConstants.kShooterTopPIDList);
 
     //Bottom shooter motor
     m_shooterMotorBottomFollower = new CANSparkMax(ShooterConstants.kShooterMotorBottomID, MotorType.kBrushless);
@@ -59,7 +59,7 @@ public class Shooter extends SubsystemBase {
     shooterEncoderAmp = m_shooterMotorAmp.getEncoder();
     
     shooterAmpPIDController = m_shooterMotorAmp.getPIDController();
-    Helper.setupPIDController(shooterAmpPIDController, ShooterConstants.kShooterAmpPIDList);
+    PidHelper.setupPIDController(this.getName()+"shooterAmpPIDController", shooterAmpPIDController, ShooterConstants.kShooterAmpPIDList);
   }
 
 
@@ -96,8 +96,9 @@ public class Shooter extends SubsystemBase {
   }
 
   public void sendToDashboard() {
-    SmartDashboard.putNumber("Shooter Top Velocity", shooterEncoderTop.getVelocity());
-    SmartDashboard.putNumber("Shooter Bottom Velocity", shooterEncoderBottom.getVelocity());
+    String topic = new String(this.getName()+"/");
+    SmartDashboard.putNumber(topic+"Shooter Top Velocity", shooterEncoderTop.getVelocity());
+    SmartDashboard.putNumber(topic+"Shooter Bottom Velocity", shooterEncoderBottom.getVelocity());
   }
   
   // public void simulationInit() {
