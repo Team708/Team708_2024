@@ -146,7 +146,7 @@ public class Intake extends SubsystemBase {
 	}
 
 	public void sendToDashboard() {
-		String topic = new String("/"+this.getName()+"/");
+		String topic = new String(this.getName()+"/");
 		SmartDashboard.putNumber("/Intake/Intake Front Speed", m_intakeMotorFront.getEncoder().getVelocity());
 		SmartDashboard.putNumber("/Intake/Intake Back Speed", m_intakeMotorBack.getEncoder().getVelocity());
 		SmartDashboard.putNumber("/Intake/Intake Left Speed", m_intakeMotorLeft.getEncoder().getVelocity());

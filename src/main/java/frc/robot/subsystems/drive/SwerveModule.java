@@ -60,7 +60,7 @@ public class SwerveModule extends SubsystemBase {
   private double m_velocity = 0.0;
   private double[] m_lastTime = {0,0,0,0,0,0,0};
   private Timer m_timer = new Timer();  
-  private String topic = new String("/"+this.getName()+"/");
+  private String topic = new String(this.getName()+"/");
 
   // Creates a PIDController for the control of the anglular position of the swerve module
   private final PIDController m_turningPIDController = new PIDController(ModuleConstants.kTurnPID[0],

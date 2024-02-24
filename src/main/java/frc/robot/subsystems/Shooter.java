@@ -96,7 +96,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public void sendToDashboard() {
-    String topic = new String("/"+this.getName()+"/");
+    String topic = new String(this.getName()+"/");
     SmartDashboard.putNumber(topic+"Shooter Top Velocity", shooterEncoderTop.getVelocity());
     SmartDashboard.putNumber(topic+"Shooter Bottom Velocity", shooterEncoderBottom.getVelocity());
   }

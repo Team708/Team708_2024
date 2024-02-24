@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class PidHelper {
     private static PidHelper instance;
-    private static final String topic = "/PID/";
+    private static final String topic = "PID/";
     private static SparkPIDController m_PIDController, previousSelection;
     public static SendableChooser<SparkPIDController> m_ControllerChooser = new SendableChooser<>();
     
@@ -36,7 +36,7 @@ public class PidHelper {
     PidHelper(){
         previousSelection = new CANSparkMax(0, MotorType.kBrushless).getPIDController();
         m_ControllerChooser.setDefaultOption("None" , previousSelection);
-        SmartDashboard.putData("SparkMax Chooser", m_ControllerChooser);
+        SmartDashboard.putData(topic+"SparkMax Chooser", m_ControllerChooser);
         SmartDashboard.putNumber(topic+"PID P",0);
         SmartDashboard.putNumber(topic+"PID I",0);
         SmartDashboard.putNumber(topic+"PID D",0);

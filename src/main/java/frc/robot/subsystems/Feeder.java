@@ -104,7 +104,7 @@ public class Feeder extends SubsystemBase {
   }
 
   public void sendToDashboard() {
-    String topic = new String("/"+this.getName()+"/");
+    String topic = new String(this.getName()+"/");
 		SmartDashboard.putBoolean(topic+"feeder1NotePresent", feederLowNotePresent.get());
     SmartDashboard.putBoolean(topic+"feeder2NotePresent", feederHighNotePresent.get());
     SmartDashboard.putNumber(topic+"Feeder Encoder", feederEncoder.getPosition());

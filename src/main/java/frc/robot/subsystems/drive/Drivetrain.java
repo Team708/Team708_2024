@@ -116,7 +116,7 @@ import com.pathplanner.lib.util.GeometryUtil;
 
   private Pose2d currentPose = new Pose2d();
   private Pose2d targetPose = new Pose2d();
-  private String topic = new String("/"+this.getName()+"/");
+  private String topic = new String(this.getName()+"/");
 
   /**
    * Constructs a Drivetrain and resets the Gyro and Keep Angle parameters

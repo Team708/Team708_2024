@@ -108,7 +108,7 @@ public class PivotArm extends SubsystemBase {
   }
 
   public void sendToDashboard() {
-    String topic = new String("/"+this.getName()+"/");
+    String topic = new String(this.getName()+"/");
     SmartDashboard.putNumber(topic+"Arm Encoder Position", getPosition());
     SmartDashboard.putNumber(topic+"Absolute Encoder Position", getAbsolutePosition());
     SmartDashboard.putBoolean(topic+"Arm Forward Limit", forwardLimit.isPressed());
