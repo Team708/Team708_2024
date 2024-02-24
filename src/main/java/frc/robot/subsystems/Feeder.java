@@ -49,6 +49,7 @@ public class Feeder extends SubsystemBase {
 
     feederStage2PIDController = m_FeederStage2Motor.getPIDController();
     Helper.setupPIDController(this.getName()+"feederStage2PIDController", feederStage2PIDController, FeederConstants.kFeederStage2PIDList);
+    // feederStage1PIDController.setSmartMotionMaxAccel(.1, 0);
   }
 
   @Override
