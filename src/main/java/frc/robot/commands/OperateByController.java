@@ -5,12 +5,13 @@ package frc.robot.commands;
 // import frc.robot.utilities.MathUtils;
 // import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.PivotArm;;
 
   /**
    * Implements a OperateByController command which extends the Command class
    */
 public class OperateByController extends Command {
-
+  private PivotArm m_pivotArm;
   /**
    * Contructs a OperateByController object which applies the driver inputs from the
    * controller to the shooter
@@ -20,11 +21,11 @@ public class OperateByController extends Command {
    * @param controller is the user input controller object for controlling the
    *                   drivetrain
    */
-  // public OperateByController(Shooter shooter) {
-  //   m_shooter = shooter; // Set the private member to the input shooter
-  //   addRequirements(m_shooter); // Because this will be used as a default command, add the subsystem which will
-  //                                  // use this as the default
-  // }
+  public OperateByController(PivotArm pivotArm) {
+    m_pivotArm = pivotArm;
+    addRequirements(m_pivotArm); // Because this will be used as a default command, add the subsystem which will
+                                   // use this as the default
+  }
 
   @Override
   public void initialize() {
@@ -36,17 +37,7 @@ public class OperateByController extends Command {
    */
   @Override
   public void execute() {
-    // double maxLinear = shooterConstants.kMaxSpeedMetersPerSecond;
-    // double desiredX = inputTransform(OI.getOperatorRightX())*maxLinear;
-    // double desiredZ = -inputTransform(OI.getOperatorLeftY())*maxLinear;
-    // Translation2d desiredTranslation = new Translation2d(desiredX, desiredZ);
-    // double desiredMag = desiredTranslation.getDistance(new Translation2d());
-
-    // if(desiredMag >= maxLinear){
-      // desiredTranslation.times(maxLinear/desiredMag);
-    // }
-
-    // m_shooter.commandedVelocity(desiredTranslation.getX(), desiredTranslation.getY());
+    m_pivotArm.operateByController();
   }
 
   @Override

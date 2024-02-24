@@ -4,16 +4,20 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
-import frc.robot.Constants.ShooterConstants;
+// import frc.robot.Constants.ShooterConstants;
+// import frc.robot.commands.intake.IntakeAllIn;
 import frc.robot.Constants.CurrentLimit;
 import frc.robot.subsystems.sim.IntakeSimulation;
-import frc.robot.utilities.Helper;
+// import frc.robot.subsystems.Feeder;
+import frc.robot.utilities.PidHelper;
 
 public class Intake extends SubsystemBase {
-	
+	private Feeder m_feeder;
 	private CANSparkMax m_intakeMotorRight;
 	private CANSparkMax m_intakeMotorLeft;
 	private CANSparkMax m_intakeMotorFront;
@@ -31,7 +35,8 @@ public class Intake extends SubsystemBase {
 
   IntakeSimulation m_intakeSim;
 
-	public Intake() {
+	public Intake(Feeder feeder) {
+		m_feeder = feeder;
 
         m_intakeMotorRight = new CANSparkMax(IntakeConstants.kIntakeMotorRightID, MotorType.kBrushless);
         m_intakeMotorLeft = new CANSparkMax(IntakeConstants.kIntakeMotorLeftID, MotorType.kBrushless);
@@ -59,10 +64,10 @@ public class Intake extends SubsystemBase {
 		backSparkPIDController = m_intakeMotorBack.getPIDController();
 		rightSparkPIDController = m_intakeMotorRight.getPIDController();
 		leftSparkPIDController = m_intakeMotorLeft.getPIDController();
-		Helper.setupPIDController(this.getName()+"frontSparkPIDController", frontSparkPIDController, IntakeConstants.kIntakePIDList);
-		Helper.setupPIDController(this.getName()+"backSparkPIDController", backSparkPIDController, IntakeConstants.kIntakePIDList);
-		Helper.setupPIDController(this.getName()+"leftSparkPIDController", leftSparkPIDController, IntakeConstants.kIntakePIDList);
-		Helper.setupPIDController(this.getName()+"rightSparkPIDController", rightSparkPIDController, IntakeConstants.kIntakePIDList);
+		PidHelper.setupPIDController(this.getName()+"frontSparkPIDController", frontSparkPIDController, IntakeConstants.kIntakePIDList);
+		PidHelper.setupPIDController(this.getName()+"backSparkPIDController", backSparkPIDController, IntakeConstants.kIntakePIDList);
+		PidHelper.setupPIDController(this.getName()+"leftSparkPIDController", leftSparkPIDController, IntakeConstants.kIntakePIDList);
+		PidHelper.setupPIDController(this.getName()+"rightSparkPIDController", rightSparkPIDController, IntakeConstants.kIntakePIDList);
 
 	}
 
@@ -117,6 +122,14 @@ public class Intake extends SubsystemBase {
 
 	}
 
+	public void intakeAutomatic() {
+		if(!m_feeder.hasNote()) {
+			intakeAll();
+		}
+		else {
+			intakeOff();
+		}
+	}
 	// public boolean sensorDetected() {
 	// return !m_dIOSensor.get();
 	// }

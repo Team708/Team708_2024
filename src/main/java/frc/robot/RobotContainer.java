@@ -16,11 +16,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 // import frc.robot.commands.auto.FiveBall;
 // import frc.robot.commands.auto.DriveStraight;
-import frc.robot.commands.ShootSpeakerSCG;
+// import frc.robot.commands.ShootSpeakerSCG;
 
 import frc.robot.commands.DriveByController;
-// import frc.robot.commands.OperateByController; //TODO uncomment if using Operator Controller
-
+import frc.robot.commands.OperateByController; //TODO uncomment if using Operator Controller
+import frc.robot.commands.ShootSpeakerPCG;
+import frc.robot.commands.shooter.SetShooterSpeedSpeaker;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 // import frc.robot.commands.OperateByController; //TODO uncomment if using Operator Controller
@@ -31,7 +32,7 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.VisionProcessor;
 import frc.robot.subsystems.PivotArm;
 import frc.robot.subsystems.drive.Drivetrain;
-import frc.robot.utilities.Helper;
+import frc.robot.utilities.PidHelper;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
@@ -45,17 +46,17 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
 	// The robot's subsystems. Initialize subsystems here.
-	private final Drivetrain m_drive;
-	private final VisionProcessor m_vision;
-	private final Intake m_intake;
-	private final Feeder m_feeder;
-	private final Shooter m_shooter;
-	private final PivotArm m_PivotArm;
+	private final Drivetrain m_drive = new Drivetrain();
+	private final VisionProcessor m_vision = new VisionProcessor(m_drive);
+	private final PivotArm m_pivotArm = new PivotArm(m_drive);
+	private final Feeder m_feeder = new Feeder(m_drive, m_pivotArm);
+	private final Intake m_intake = new Intake(m_feeder);
+	private final Shooter m_shooter = new Shooter();
+	
 	
 	// Initialize controllers
-	private final DriveByController m_driveByController;
-	// private final OperateByController m_operateByController
-	// = new OperateByController(m_shooter); 
+	private final DriveByController m_driveByController =  new DriveByController(m_drive);
+	private final OperateByController m_operateByController = new OperateByController(m_pivotArm); 
 
 	// Autonomous Option
 	// private final Command doNothin = new WaitCommand(5);
@@ -64,35 +65,24 @@ public class RobotContainer {
 
 	// public static final SendableChooser<Command> m_chooser = new SendableChooser<>();
     private final SendableChooser<Command> autoChooser;
-	public final SendableChooser<SparkPIDController> m_ControllerChooser;
 
 	/** The container for the robot. Contains subsystems, OI devices, and commands. */
 	public RobotContainer() {
 		// Configure the button bindings
-		
-		m_ControllerChooser = new SendableChooser<>();
-		Helper.getInstance().addChooser(m_ControllerChooser);
-		
-		// The robot's subsystems. Initialize subsystems here.
-		m_drive = new Drivetrain();
-		m_vision = new VisionProcessor(m_drive);
-		m_intake = new Intake();
-		m_feeder = new Feeder();
-		m_shooter = new Shooter();
-		m_PivotArm = new PivotArm();
-		
 		configureButtonBindings();
-		// Initialize controllers
-		m_driveByController =  new DriveByController(m_drive);
-
-		NamedCommands.registerCommand("ShootSpeakerBumperShotSCG", new ShootSpeakerSCG(m_drive, m_feeder, m_shooter, m_PivotArm, m_intake));
-		// configureAutoChooser();
+		
+		
+		NamedCommands.registerCommand("ShootSpeakerPCG", new ShootSpeakerPCG(m_drive, m_intake, m_feeder, m_pivotArm, m_shooter));
+		NamedCommands.registerCommand("SetShooterSpeedSpeaker", new SetShooterSpeedSpeaker(m_shooter));
+	    // configureAutoChooser();
 		// Build an auto chooser. This will use Commands.none() as the default option.
 		autoChooser = AutoBuilder.buildAutoChooser();
 		// autoChooser.addOption("Five Ball", FiveBall);
 		// autoChooser.addOption("Drive Straight", DriveStraight);
+
 		// getAutonomousCommand();
 		m_drive.setDefaultCommand(m_driveByController);
+		m_pivotArm.setDefaultCommand(m_operateByController);
 
 		SmartDashboard.putData("Auto Chooser", autoChooser);
 		
@@ -115,7 +105,7 @@ public class RobotContainer {
     // new POVButton(OI.driverController, 0)
     //     .onTrue(new InstantCommand(() -> m_drive.resetOdometry(new Rotation2d(0.0))));  //JNP
 
-    OI.configureButtonBindings(m_drive,m_intake,m_feeder,m_shooter,m_PivotArm);
+    OI.configureButtonBindings(m_drive,m_intake,m_feeder,m_shooter,m_pivotArm);
   }
 
 	// private void configureAutoChooser(){
@@ -147,11 +137,11 @@ public class RobotContainer {
 	}
 
 	public void sendToDashboard() {
-		Helper.getInstance().update();
+		PidHelper.getInstance().update();
 		m_drive.sendToDashboard();
 		m_intake.sendToDashboard();
 		m_feeder.sendToDashboard();
 		m_shooter.sendToDashboard();
-		m_PivotArm.sendToDashboard();
+		m_pivotArm.sendToDashboard();
 	}
 }

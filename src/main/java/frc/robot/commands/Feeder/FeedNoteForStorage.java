@@ -23,13 +23,13 @@ public class FeedNoteForStorage extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_feeder.feedNotesToStow(true);
+    m_feeder.feedNotesToStow();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_feeder.feedNotesToStow(false);
+    m_feeder.feedNotesToStow();
   }
 
   // Returns true when the command should end.
