@@ -79,7 +79,7 @@ public class Feeder extends SubsystemBase {
   }
 
   public void runReverse(){
-    feederPIDController.setReference(-FeederConstants.kFeederLoadRPM, CANSparkMax.ControlType.kVelocity);
+    feederPIDController.setReference(-FeederConstants.kFeederLowRPM, CANSparkMax.ControlType.kVelocity);
   }
 
   public void stop(){
@@ -108,10 +108,10 @@ public class Feeder extends SubsystemBase {
 
   public void sendToDashboard() {
     String topic = new String(this.getName()+"/");
-	SmartDashboard.putBoolean(topic+"feeder1NotePresent", feederLowNotePresent.get());
-    SmartDashboard.putBoolean(topic+"feeder2NotePresent", feederHighNotePresent.get());
+	  //SmartDashboard.putBoolean(topic+"feeder1NotePresent", feederLowNotePresent.get());
+    SmartDashboard.putBoolean(topic+"Note Present Top", feederHighNotePresent.get());
     SmartDashboard.putNumber(topic+"Feeder Encoder", feederEncoder.getPosition());
-    SmartDashboard.putBoolean(topic+"feederIsEmpty", isEmpty());
-    SmartDashboard.putNumber(topic+"Feeder 1 RPM", feederEncoder.getVelocity());  
+    SmartDashboard.putBoolean(topic+"Feeder is Empty", isEmpty());
+    SmartDashboard.putNumber(topic+"Feeder RPM", feederEncoder.getVelocity());  
 	}
 }

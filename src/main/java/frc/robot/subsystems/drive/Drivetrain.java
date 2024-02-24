@@ -333,7 +333,7 @@ import com.pathplanner.lib.util.GeometryUtil;
     //SmartDashboard.putNumber("Robot X", position.getX());
     //SmartDashboard.putNumber("Robot Y", position.getY());
     //SmartDashboard.putNumber("Robot Gyro", getGyro().getDegrees());
-    SmartDashboard.putNumber(topic+"Robot Angle", pose.getRotation().getDegrees());
+    //SmartDashboard.putNumber(topic+"Robot Angle", pose.getRotation().getDegrees());
     return pose;
   }
 
@@ -571,12 +571,12 @@ rotateToTarget(chassisSpeeds.omegaRadiansPerSecond));
     // SmartDashboard.putBoolean("fieldRelative", fieldRelative);
     // SmartDashboard.putBoolean("keepAngle", keepAngle);
 
-    SmartDashboard.putNumber(topic+"Front Left Encoder", m_frontLeft.getTurnEncoder());
-    SmartDashboard.putNumber(topic+"Front Right Encoder", m_frontRight.getTurnEncoder());
-    SmartDashboard.putNumber(topic+"Back Left Encoder", m_backLeft.getTurnEncoder());
-    SmartDashboard.putNumber(topic+"Back Right Encoder", m_backRight.getTurnEncoder());
+    // SmartDashboard.putNumber(topic+"Front Left Encoder", m_frontLeft.getTurnEncoder());
+    // SmartDashboard.putNumber(topic+"Front Right Encoder", m_frontRight.getTurnEncoder());
+    // SmartDashboard.putNumber(topic+"Back Left Encoder", m_backLeft.getTurnEncoder());
+    // SmartDashboard.putNumber(topic+"Back Right Encoder", m_backRight.getTurnEncoder());
 
-    SmartDashboard.putNumber(topic+"Balance Angle", pigeon.getRoll().getDegrees());
+    // SmartDashboard.putNumber(topic+"Balance Angle", pigeon.getRoll().getDegrees());
 
     // SmartDashboard.putNumber("RobotSpeedX", getChassisSpeed().vxMetersPerSecond);
     // SmartDashboard.putNumber("RobotSpeedY", getChassisSpeed().vyMetersPerSecond);
