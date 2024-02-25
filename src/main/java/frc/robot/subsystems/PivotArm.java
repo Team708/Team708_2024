@@ -50,7 +50,15 @@ public class PivotArm extends SubsystemBase {
   private SparkLimitSwitch forwardLimit, reverseLimit;
   private Drivetrain m_drive;
 
+  private TreeMap<Double, Double> map;
   private double distance;
+  private double floorKey;
+  private double ceilingKey;
+  private double topElem;
+  private double bottomElem;
+ 
+  private InverseInterpolator<Double> inverseInterpolator;
+  private Interpolator<Double> interpolator;
   private InterpolatingDoubleTreeMap interpolatingTreeMap = new InterpolatingDoubleTreeMap();
 
 
