@@ -66,12 +66,18 @@ public class PivotArm extends SubsystemBase {
     m_PivotArmRightFollower.setSmartCurrentLimit(40);
     m_PivotArmRightFollower.follow(m_PivotArmLeftLeader, true);
 
-    interpolatingTreeMap.put(1.3, 52.0);
-    interpolatingTreeMap.put(2.0, 40.0);
-    interpolatingTreeMap.put(2.77, 32.0);
-    interpolatingTreeMap.put(3.6, 27.0);
-    interpolatingTreeMap.put(4.75, 22.0);
-    interpolatingTreeMap.put(6.0,21.0);
+    //data potins f
+    interpolatingTreeMap.put(1.3, 48.0);
+    interpolatingTreeMap.put(1.94, 38.5);
+    interpolatingTreeMap.put(2.5, 32.4);
+    interpolatingTreeMap.put(2.8, 32.2);
+    interpolatingTreeMap.put(3.3, 30.07);
+    interpolatingTreeMap.put(3.7,25.9);
+    interpolatingTreeMap.put(4.0,24.7);
+    interpolatingTreeMap.put(4.3,24.5);
+    interpolatingTreeMap.put(4.8,23.9);
+    interpolatingTreeMap.put(5.6,23.45);
+    interpolatingTreeMap.put(6.2,23.22);
 
   }
   
