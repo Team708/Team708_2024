@@ -13,6 +13,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkLimitSwitch;
 import com.revrobotics.SparkPIDController;
 
+import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -32,6 +33,8 @@ public class PivotArm extends SubsystemBase {
   private SparkLimitSwitch forwardLimit, reverseLimit;
   private Drivetrain m_drive;
   private Boolean isTargeting = false;
+  private double distance;
+  private InterpolatingDoubleTreeMap interpolatingTreeMap = new InterpolatingDoubleTreeMap();
 
   public PivotArm(Drivetrain drive) {
     m_drive = drive;
@@ -62,6 +65,14 @@ public class PivotArm extends SubsystemBase {
     m_PivotArmRightFollower.setIdleMode(IdleMode.kBrake);
     m_PivotArmRightFollower.setSmartCurrentLimit(40);
     m_PivotArmRightFollower.follow(m_PivotArmLeftLeader, true);
+
+    interpolatingTreeMap.put(1.3, 52.0);
+    interpolatingTreeMap.put(2.0, 40.0);
+    interpolatingTreeMap.put(2.77, 32.0);
+    interpolatingTreeMap.put(3.6, 27.0);
+    interpolatingTreeMap.put(4.75, 22.0);
+    interpolatingTreeMap.put(6.0,21.0);
+
   }
   
   @Override
@@ -94,19 +105,27 @@ public class PivotArm extends SubsystemBase {
     pivotArmPIDController.setReference(angle, CANSparkBase.ControlType.kPosition);    
   }
   
-  public double findArmAngle () {
-    double distance = m_drive.getDistanceToTarget();
-    if(distance < ArmConstants.kMaxShootingDistance) {
-      //This is where we add the equations to solve for targetArmAngle
-      isTargeting = true;
-      targetArmAngle = 1.86876*Math.pow(distance, 2) -19.9052*distance + 73.639; //Using constant temporarily
-      return targetArmAngle;
+  // public double findArmAngle () {
+  //   double distance = m_drive.getDistanceToTarget();
+  //   if(distance < ArmConstants.kMaxShootingDistance) {
+  //     //This is where we add the equations to solve for targetArmAngle
+  //     isTargeting = true;
+  //     targetArmAngle = 1.86876*Math.pow(distance, 2) -19.9052*distance + 73.639; //Using constant temporarily
+  //     return targetArmAngle;
       
+  //   }
+  //   else {
+  //     isTargeting = false;
+  //     return 0;
+  //   }
+  // }
+  
+  public double findArmAngle(){
+    distance = m_drive.getDistanceToTarget();
+    if(distance < ArmConstants.kMaxShootingDistance){
+      return interpolatingTreeMap.get(distance);
     }
-    else {
-      isTargeting = false;
-      return 0;
-    }
+    return 0;
   }
 
   public boolean isArmAtPosition() {
