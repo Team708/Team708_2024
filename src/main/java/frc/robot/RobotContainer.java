@@ -23,11 +23,13 @@ import frc.robot.commands.OperateByController; //TODO uncomment if using Operato
 import frc.robot.commands.ShootSpeakerPCG;
 import frc.robot.commands.shooter.SetShooterSpeedSpeaker;
 import frc.robot.commands.AllSystemsOff;
+import frc.robot.commands.ClimbByController;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 // import frc.robot.commands.OperateByController; //TODO uncomment if using Operator Controller
 
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.VisionProcessor;
@@ -53,11 +55,13 @@ public class RobotContainer {
 	private final PivotArm m_pivotArm = new PivotArm(m_drive);
 	private final Feeder m_feeder = new Feeder(m_drive, m_pivotArm, m_shooter);
 	private final Intake m_intake = new Intake(m_feeder);
+	private final Climber m_climber = new Climber();
 	
 	
 	// Initialize controllers
 	private final DriveByController m_driveByController =  new DriveByController(m_drive);
-	private final OperateByController m_operateByController = new OperateByController(m_pivotArm); 
+	private final OperateByController m_operateByController = new OperateByController(m_pivotArm);
+	private final ClimbByController m_climbByController = new ClimbByController(m_climber); 
 
 	private final AllSystemsOff m_AllSystemsOff = new AllSystemsOff(m_intake, m_feeder, m_shooter);
 	// Autonomous Option
@@ -85,6 +89,7 @@ public class RobotContainer {
 		// getAutonomousCommand();
 		m_drive.setDefaultCommand(m_driveByController);
 		m_pivotArm.setDefaultCommand(m_operateByController);
+		m_climber.setDefaultCommand(m_climbByController);
 
 		SmartDashboard.putData("Auto Chooser", autoChooser);
 		

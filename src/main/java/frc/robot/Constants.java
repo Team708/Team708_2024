@@ -35,6 +35,7 @@ public final class Constants {
     public static final int kFeederAmps = 40;
     public static final int kArmAmps = 25;
     public static final int kShooterAmps = 35;
+    public static final int kClimberAmps = 40;
 
     public static final int kTranslationAmps = 40;
     public static final int kRotationAmps = 25;
@@ -358,7 +359,23 @@ public final class Constants {
    * Climber constants
    */
   public static final class ClimberConstants {
-    public static final int kClimberMotorID = 91;
+    public static final int kClimberMotorID = 61;
+
+    //gearbox ratio
+    public static final double kClimberGearRatio = 45/1; //42*45;
+    public static final double kClimberSpoolDiameter = Units.inchesToMeters(2);
+    public static final double kClimberConversionFactor = kClimberGearRatio*Math.PI*Math.pow(kClimberSpoolDiameter,2)/4;
+
+
+    public static final double kClimber_P = 0.1;
+    public static final double kClimber_I = 0.000001;
+    public static final double kClimber_D = 0.0006;
+    public static final double kClimber_FF = 0.0;
+    public static final double kClimber_IZone = 0;
+    public static final double kClimber_Min = -1;
+    public static final double kClimber_Max = 1;
+    public static final double[] kClimberPIDList = {kClimber_P,kClimber_I,kClimber_D,
+                                        kClimber_FF,kClimber_IZone,kClimber_Min,kClimber_Max};
   }
   /**
     * User Controller constants 
@@ -366,7 +383,9 @@ public final class Constants {
   public static final class ControllerConstants {
     public static final int kDriverControllerPort     = 0;
     public static final int kOperatorControllerPort   = 1;
-    public static final int kAdaptiveControllerPort   = 2;
+    public static final int kClimberControllerPort    = 2;
+    public static final int kAdaptiveControllerPort   = 3;
+
     
     // Driver
     public static final double kDriverDeadBandLeftX   = 0.1;
@@ -380,6 +399,9 @@ public final class Constants {
     // public static final double kOperatorDeadBandRightX  = 0.2;
     public static final double kOperatorDeadBandLeftY   = 0.1;
     // public static final double kOperatorDeadBandRightY  = 0.2;
+
+    // Climber
+        public static final double kClimberDeadBandLeftY = 0.2;
   }
 
   /**

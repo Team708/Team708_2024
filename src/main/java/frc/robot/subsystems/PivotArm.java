@@ -95,16 +95,19 @@ public class PivotArm extends SubsystemBase {
   public double getAbsolutePosition() {
     return (-ArmConstants.kArmClockingOffset-(absEncoder.getAbsolutePosition()*ArmConstants.kArmScalingFactor)-ArmConstants.kArmAbsEncoderOffset);
   }
+
   public double inputTransform(double input) {
         //return MathUtils.singedSquare(MathUtils.applyDeadband(input));
         return MathUtils.cubicLinear(MathUtils.applyDeadband(input), 0.9, 0.1);
     }
+
   public void operateByController() {
     double desiredY = -inputTransform(OI.getOperatorLeftY());
     if(Math.abs(desiredY) > ControllerConstants.kOperatorDeadBandLeftY) {
       setArmAngle(getPosition()+(desiredY*2));
     }
   }
+  
   //Determine units for arm as it's not completely tested
   public void setArmAngle(double angle) {
     targetArmAngle = angle;
