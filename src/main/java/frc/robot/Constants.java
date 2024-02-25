@@ -130,8 +130,8 @@ public final class Constants {
 
 
     //PathPlanner Ending Points
-    public static final Pose2d kRobotToAmp = new Pose2d(2.1, 7.55 - Units.inchesToMeters(30), new Rotation2d(Units.degreesToRadians(-90)));
-    public static final Pose2d kAmpScoringPose = new Pose2d(2.1, 7.55 - Units.inchesToMeters(8), new Rotation2d(Units.degreesToRadians(-90)));
+    public static final Pose2d kRobotToAmp = new Pose2d(2.3, 7.55 - Units.inchesToMeters(30), new Rotation2d(Units.degreesToRadians(-90)));
+    public static final Pose2d kAmpScoringPose = new Pose2d(2.3, 7.55 - Units.inchesToMeters(8), new Rotation2d(Units.degreesToRadians(-90)));
 
     //Auto Rotate PID
     public static final PIDController kAutoRotatePID = new PIDController(0.07, 0.0001,.005);//(0.06, 0.0001, 0.0025);//, //new Constraints(300000, 150000));
