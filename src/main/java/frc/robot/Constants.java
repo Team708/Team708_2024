@@ -32,7 +32,7 @@ public final class Constants {
 
   public static final class CurrentLimit {
     public static final int kIntakeAmps = 25;
-    public static final int kFeederAmps = 25;
+    public static final int kFeederAmps = 30;
     public static final int kArmAmps = 25;
     public static final int kShooterAmps = 25;
 
@@ -327,7 +327,7 @@ public final class Constants {
     public static final double kShooterSpeakerRPM = 4000;
     // public static final double kShooterPodiumShotRPM = 4000;
     public static final double kShooterAmpRPM = 1000;
-    
+    public static final double kShooterLowRPM = 1000;
     public static final double kThreshhold = 0.98;
     
     //PID constants

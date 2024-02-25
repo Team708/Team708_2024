@@ -65,19 +65,25 @@ public class Feeder extends SubsystemBase {
   }
 
   public void feedNotesToStow() {
-      if (!hasNote()){
+    if(!hasNoteHigher()) {
+      if(!hasNoteLower()) {
         runForward();
       }
-      else{ 
-        setFeeder2Distance(); 
-        stop();
+      else {
+        runForwardSlow();
       }
+    }
+    else {
+      stop();
+    }
   }
 
   public void runForward(){
     feederPIDController.setReference(FeederConstants.kFeederShootRPM, CANSparkMax.ControlType.kVelocity);
   }
-
+  public void runForwardSlow() {
+    feederPIDController.setReference(FeederConstants.kFeederLowRPM, CANSparkMax.ControlType.kVelocity);
+  }
   public void runReverse(){
     feederPIDController.setReference(-FeederConstants.kFeederLowRPM, CANSparkMax.ControlType.kVelocity);
   }
@@ -94,13 +100,13 @@ public class Feeder extends SubsystemBase {
 
   }
 
-  public boolean hasNote() {
-    return feederHighNotePresent.get();
+  public boolean hasNoteHigher() {
+    return (feederHighNotePresent.get());
   }
 
-  // public boolean has2Notes() {
-  //   return (feederLowNotePresent.get() && feederHighNotePresent.get());
-  // }
+  public boolean hasNoteLower() {
+    return (feederLowNotePresent.get());
+  }
 
   public boolean isEmpty() {
     return !(feederLowNotePresent.get() || feederHighNotePresent.get());

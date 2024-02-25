@@ -26,6 +26,7 @@ import frc.robot.commands.ShootSpeakerPCG;
 import frc.robot.commands.Feeder.FeederForward;
 import frc.robot.commands.Feeder.FeederOff;
 import frc.robot.commands.Feeder.FeederReverse;
+import frc.robot.commands.shooter.ShooterReverse;
 //Subsysem Imports
 import frc.robot.subsystems.drive.Drivetrain;
 import frc.robot.subsystems.Intake;
@@ -134,7 +135,9 @@ public class OI {
 
     new JoystickButton(operatorController, Button.kX.value)
     		.onTrue(new FeederReverse(m_feeder))
-        .onFalse(new FeederOff(m_feeder));
+        .onTrue(new ShooterReverse(m_shooter))
+        .onFalse(new FeederOff(m_feeder))
+        .onFalse(new ShooterOff(m_shooter));
 
     new JoystickButton(operatorController, Button.kLeftBumper.value)     
       .onTrue(new SetShooterSpeedSpeaker(m_shooter))

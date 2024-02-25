@@ -127,7 +127,7 @@ public class Intake extends SubsystemBase {
 	}
 
 	public void intakeAutomatic() {
-		if(!m_feeder.hasNote()) {
+		if(!m_feeder.hasNoteHigher()) {
 			intakeAll();
 		}
 		else {
