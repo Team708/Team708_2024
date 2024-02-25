@@ -32,9 +32,9 @@ public final class Constants {
 
   public static final class CurrentLimit {
     public static final int kIntakeAmps = 25;
-    public static final int kFeederAmps = 30;
+    public static final int kFeederAmps = 40;
     public static final int kArmAmps = 25;
-    public static final int kShooterAmps = 25;
+    public static final int kShooterAmps = 35;
 
     public static final int kTranslationAmps = 40;
     public static final int kRotationAmps = 25;
@@ -121,7 +121,7 @@ public final class Constants {
     public static final Pose2d kTestPoint = new Pose2d(2.831, 5.55, new Rotation2d(180));
     public static final Pose3d kBluePoseSpeaker = new Pose3d(kBlueSpeaker.getX(), kBlueSpeaker.getY(), 1.9812, new Rotation3d(0,0,kBlueSpeaker.getRotation().getRadians()));
 
-    public static final Pose2d kPoseAmpLocation  = new Pose2d(1.82, 7.59, new Rotation2d(Units.degreesToRadians(90)));
+    public static final Pose2d kPoseAmpLocation  = new Pose2d(1.82, 7.59, new Rotation2d(Units.degreesToRadians(90)));  //X was 1.82
     public static final Pose2d kPoseFeederLocationFar  = new Pose2d(15.89,1.36, new Rotation2d(Units.degreesToRadians(-60)));  
     public static final Pose2d kPoseFeederLocationClose  = new Pose2d(15.08,0.82, new Rotation2d(Units.degreesToRadians(-60)));
 
@@ -130,8 +130,8 @@ public final class Constants {
 
 
     //PathPlanner Ending Points
-    public static final Pose2d kRobotToAmp = new Pose2d(1.82, 7.59 - Units.inchesToMeters(30), new Rotation2d(Units.degreesToRadians(-90)));
-    public static final Pose2d kAmpScoringPose = new Pose2d(1.82, 7.59 - Units.inchesToMeters(8), new Rotation2d(Units.degreesToRadians(-90)));
+    public static final Pose2d kRobotToAmp = new Pose2d(2.1, 7.55 - Units.inchesToMeters(30), new Rotation2d(Units.degreesToRadians(-90)));
+    public static final Pose2d kAmpScoringPose = new Pose2d(2.1, 7.55 - Units.inchesToMeters(8), new Rotation2d(Units.degreesToRadians(-90)));
 
     //Auto Rotate PID
     public static final PIDController kAutoRotatePID = new PIDController(0.07, 0.0001,.005);//(0.06, 0.0001, 0.0025);//, //new Constraints(300000, 150000));
@@ -243,7 +243,7 @@ public final class Constants {
     public static final int kFeederStage2MotorID  = 32;
 
     public static final double kFeederLoadRPM   = 4200; //4750 max
-    public static final double kFeederLowRPM    = 1000;
+    public static final double kFeederLowRPM    = 2000;
     public static final double kFeederShootRPM  = 4200;  //In the event the load and shoot RPMs are the same, remove this
 
     
