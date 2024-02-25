@@ -306,7 +306,7 @@ public final class Constants {
     public static final double kArmScalingFactor = 360/3;
     public static final double kArmClockingOffset = -108.5; //Value to correct for absolute encoder clocking 
     public static final double kArmAbsEncoderOffset = 10; // value to offset the arm to horizontal
-    public static final double kMaxShootingDistance = 6.0; //Further distance the arm can make adjustments for
+    public static final double kMaxShootingDistance = 6.2; //Further distance the arm can make adjustments for
   }
 
   /**
