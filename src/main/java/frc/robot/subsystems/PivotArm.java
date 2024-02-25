@@ -137,7 +137,7 @@ public class PivotArm extends SubsystemBase {
     String topic = new String(this.getName()+"/");
     SmartDashboard.putNumber(topic+"Arm Position", getPosition());
     SmartDashboard.putNumber(topic+"Arm Abs Position", getAbsolutePosition());
-	    SmartDashboard.putBoolean(topic+"Arm At Position", isArmAtPosition());
+	  SmartDashboard.putBoolean(topic+"Arm At Position", isArmAtPosition());
     SmartDashboard.putBoolean(topic+"Arm Forward Limit", forwardLimit.isPressed());
     SmartDashboard.putBoolean(topic+"Arm Reverse Limit", reverseLimit.isPressed());
   }

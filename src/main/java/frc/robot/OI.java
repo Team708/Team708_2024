@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 //Command Imports
 import frc.robot.commands.drive.SetRumble;
+import frc.robot.commands.drive.DriveToAmp;
 import frc.robot.commands.drive.ResetDrive;
 import frc.robot.commands.drive.ResetGyro;
 import frc.robot.commands.groups.IntakeNote;
@@ -68,6 +69,7 @@ public class OI {
     return deadBand(driverController.getRightY(), ControllerConstants.kDriverDeadBandRightY);
   }
 
+  
   // public static double getOperatorLeftX() {
   // 	return deadBand(operatorController.getLeftX(), ControllerConstants.kOperatorDeadBandLeftX);
   // }
@@ -115,6 +117,8 @@ public class OI {
     new JoystickButton(driverController, Button.kLeftBumper.value)
         .onTrue(new ShootSpeakerPCG(m_drive, m_intake, m_feeder, m_PivotArm, m_shooter));
     
+    new JoystickButton(driverController, Button.kRightBumper.value)
+        .onTrue(new DriveToAmp(m_drive));
     
     //OPERATOR//
   

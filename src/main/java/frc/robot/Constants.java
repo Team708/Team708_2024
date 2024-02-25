@@ -31,10 +31,10 @@ public final class Constants {
   }
 
   public static final class CurrentLimit {
-    public static final int kIntakeAmps = 40;
-    public static final int kFeederAmps = 40;
-    public static final int kArmAmps = 40;
-    public static final int kShooterAmps = 40;
+    public static final int kIntakeAmps = 25;
+    public static final int kFeederAmps = 25;
+    public static final int kArmAmps = 25;
+    public static final int kShooterAmps = 25;
 
     public static final int kTranslationAmps = 40;
     public static final int kRotationAmps = 25;
@@ -243,6 +243,7 @@ public final class Constants {
     public static final int kFeederStage2MotorID  = 32;
 
     public static final double kFeederLoadRPM   = 4200; //4750 max
+    public static final double kFeederLowRPM    = 1000;
     public static final double kFeederShootRPM  = 4200;  //In the event the load and shoot RPMs are the same, remove this
 
     
@@ -317,7 +318,7 @@ public final class Constants {
     public static final int kShooterMotorAmpID = 53;
 
     //speeds for different shots
-    public static final int kShooterTargetSpeed = 1000;
+    //public static final int kShooterTargetSpeed = 1000;
 
     //gearbox ratios
     public static final int kShooterGearRatio = 1;
