@@ -567,7 +567,7 @@ rotateToTarget(chassisSpeeds.omegaRadiansPerSecond));
   }
 
   public void sendToDashboard() {
-    SmartDashboard.putNumber("distance to target", getDistanceToTarget());
+    SmartDashboard.putNumber(topic+"distance to target", getDistanceToTarget());
     // SmartDashboard.putBoolean("fieldRelative", fieldRelative);
     // SmartDashboard.putBoolean("keepAngle", keepAngle);
 

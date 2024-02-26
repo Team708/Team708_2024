@@ -66,18 +66,40 @@ public class PivotArm extends SubsystemBase {
     m_PivotArmRightFollower.setSmartCurrentLimit(40);
     m_PivotArmRightFollower.follow(m_PivotArmLeftLeader, true);
 
-    //data potins f
+    //data potints f
+    interpolatingTreeMap.put(1.27,47.8);//smp
     interpolatingTreeMap.put(1.3, 48.0);
+    interpolatingTreeMap.put(1.4,45.5);//smp
     interpolatingTreeMap.put(1.94, 38.5);
-    interpolatingTreeMap.put(2.5, 32.4);
-    interpolatingTreeMap.put(2.8, 32.2);
-    interpolatingTreeMap.put(3.3, 30.07);
+    interpolatingTreeMap.put(2.2,32.8);//smp
+//  interpolatingTreeMap.put(2.5, 32.4);
+    interpolatingTreeMap.put(2.7,27.9);//smp
+//  interpolatingTreeMap.put(2.8, 32.2);
+//  interpolatingTreeMap.put(3.3, 30.07);
+    interpolatingTreeMap.put(3.3,26.9);//smp
+//  interpolatingTreeMap.put(3.5, 28.0);  //Added
+
     interpolatingTreeMap.put(3.7,25.9);
     interpolatingTreeMap.put(4.0,24.7);
     interpolatingTreeMap.put(4.3,24.5);
-    interpolatingTreeMap.put(4.8,23.9);
-    interpolatingTreeMap.put(5.6,23.45);
-    interpolatingTreeMap.put(6.2,23.22);
+    interpolatingTreeMap.put(4.6,21.6);//smp
+//  interpolatingTreeMap.put(4.8,23.9);
+//  interpolatingTreeMap.put(5.6,23.45);
+    interpolatingTreeMap.put(5.7,18.5);//smp
+//    interpolatingTreeMap.put(6.2,23.22);
+
+
+
+   
+  
+  
+   
+    
+    
+  
+    
+
+
 
   }
   
@@ -102,7 +124,10 @@ public class PivotArm extends SubsystemBase {
   public void operateByController() {
     double desiredY = -inputTransform(OI.getOperatorLeftY());
     if(Math.abs(desiredY) > ControllerConstants.kOperatorDeadBandLeftY) {
-      setArmAngle(getPosition()+(desiredY*2));
+      setArmAngle(getPosition()+(desiredY*3));
+    }
+    if(reverseLimit.isPressed()) {
+      PivotArmEncoder.setPosition(getAbsolutePosition());
     }
   }
   //Determine units for arm as it's not completely tested

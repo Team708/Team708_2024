@@ -22,6 +22,7 @@ import frc.robot.commands.DriveByController;
 import frc.robot.commands.OperateByController; //TODO uncomment if using Operator Controller
 import frc.robot.commands.ShootSpeakerPCG;
 import frc.robot.commands.shooter.SetShooterSpeedSpeaker;
+import frc.robot.commands.Feeder.FeederForward;
 import frc.robot.commands.AllSystemsOff;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -76,6 +77,7 @@ public class RobotContainer {
 		
 		NamedCommands.registerCommand("ShootSpeakerPCG", new ShootSpeakerPCG(m_drive, m_intake, m_feeder, m_pivotArm, m_shooter));
 		NamedCommands.registerCommand("SetShooterSpeedSpeaker", new SetShooterSpeedSpeaker(m_shooter));
+		NamedCommands.registerCommand("FeederFoward", new FeederForward(m_feeder));
 	    // configureAutoChooser();
 		// Build an auto chooser. This will use Commands.none() as the default option.
 		autoChooser = AutoBuilder.buildAutoChooser();

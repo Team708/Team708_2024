@@ -114,10 +114,11 @@ public class Feeder extends SubsystemBase {
 
   public void sendToDashboard() {
     String topic = new String(this.getName()+"/");
-	  //SmartDashboard.putBoolean(topic+"feeder1NotePresent", feederLowNotePresent.get());
+	  SmartDashboard.putBoolean(topic+"Note Present Bottom", feederLowNotePresent.get());
     SmartDashboard.putBoolean(topic+"Note Present Top", feederHighNotePresent.get());
     SmartDashboard.putNumber(topic+"Feeder Encoder", feederEncoder.getPosition());
     SmartDashboard.putBoolean(topic+"Feeder is Empty", isEmpty());
-    SmartDashboard.putNumber(topic+"Feeder RPM", feederEncoder.getVelocity());  
+    SmartDashboard.putNumber(topic+"Feeder RPM", feederEncoder.getVelocity());
+    SmartDashboard.putNumber(topic+"Feeder Amps", feederMotor.getOutputCurrent());
 	}
 }

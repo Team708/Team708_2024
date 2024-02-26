@@ -7,7 +7,9 @@ package frc.robot.commands.drive;
 import com.pathplanner.lib.path.PathConstraints;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.OI;
 import frc.robot.subsystems.drive.Drivetrain;
 
 public class DriveToAmp extends Command {
@@ -30,7 +32,6 @@ public class DriveToAmp extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
     // m_drive.runPathfindingCommand();
   }
 
@@ -38,9 +39,12 @@ public class DriveToAmp extends Command {
   @Override
   public void end(boolean interrupted) {}
 
-  // // Returns true when the command should end.
+  // Returns true when the command should end.
   // @Override
   // public boolean isFinished() {
+  //   return (Math.abs(OI.getDriverRightX()) >= ControllerConstants.kDriverDisableAutoTargeting ||
+  //           Math.abs(OI.getDriverLeftX()) >= ControllerConstants.kDriverDisableAutoTargeting  ||
+  //           Math.abs(OI.getDriverLeftY()) >= ControllerConstants.kDriverDisableAutoTargeting);
   //   // Pose2d currTolerance = m_drive.getPose().relativeTo(desiredLocation);
     
   //   // if(Math.abs(currTolerance.getX()) <= Constants.DriveConstants.kPositionTolerance.getX() && 

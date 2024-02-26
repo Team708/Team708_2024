@@ -243,7 +243,7 @@ public final class Constants {
     public static final int kFeederStage2MotorID  = 32;
 
     public static final double kFeederLoadRPM   = 4200; //4750 max
-    public static final double kFeederLowRPM    = 2000;
+    public static final double kFeederLowRPM    = 1000;
     public static final double kFeederShootRPM  = 4200;  //In the event the load and shoot RPMs are the same, remove this
 
     
