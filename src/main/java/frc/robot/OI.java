@@ -39,7 +39,7 @@ public class OI {
   // Gamepads
   public final static XboxController driverController = new XboxController(ControllerConstants.kDriverControllerPort); // Driver
   public final static XboxController operatorController = new XboxController(ControllerConstants.kOperatorControllerPort); // Operator
-  // public final static XboxController climberController  = new XboxController(ControllerConstants.kClimberControllerPort); // Climber
+  public final static XboxController climberController  = new XboxController(ControllerConstants.kClimberControllerPort); // Climber
   public final static XboxController adaptiveGamepad = new XboxController(ControllerConstants.kAdaptiveControllerPort); // Adaptive
 
   /*
@@ -87,10 +87,10 @@ public class OI {
   // 	return deadBand(operatorController.getRightY(), ControllerConstants.kOperatorDeadBandRightY);
   // }
 
-  // public static double getClimberLeftY() {
-  // 	return deadBand(climberController.getLeftY(), ControllerConstants.kClimberDeadBandLeftY);
+  public static double getClimberLeftY() {
+  	return deadBand(climberController.getLeftY(), ControllerConstants.kClimberDeadBandLeftY);
 
-  // }
+  }
 
   // public static double getClimberRightY() {
   // 	return deadBand(climberController.getRightY(), ControllerConstants.kClimberDeadBandRightY);
