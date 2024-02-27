@@ -30,7 +30,7 @@ public class PivotArm extends SubsystemBase {
   private DutyCycleEncoder absEncoder;
   private SparkPIDController pivotArmPIDController;
   private double targetArmAngle;
-  private SparkLimitSwitch forwardLimit, reverseLimit;
+  // private SparkLimitSwitch forwardLimit, reverseLimit;
   private Drivetrain m_drive;
   private Boolean isTargeting = false;
   private double distance;
@@ -48,10 +48,10 @@ public class PivotArm extends SubsystemBase {
     m_PivotArmLeftLeader.setSmartCurrentLimit(CurrentLimit.kArmAmps);
     m_PivotArmLeftLeader.setInverted(false);
     
-    forwardLimit = m_PivotArmLeftLeader.getForwardLimitSwitch(Type.kNormallyOpen);
-    forwardLimit.enableLimitSwitch(true);
-    reverseLimit = m_PivotArmLeftLeader.getReverseLimitSwitch(Type.kNormallyOpen);
-    reverseLimit.enableLimitSwitch(true);
+    // forwardLimit = m_PivotArmLeftLeader.getForwardLimitSwitch(Type.kNormallyOpen);
+    // forwardLimit.enableLimitSwitch(true);
+    // reverseLimit = m_PivotArmLeftLeader.getReverseLimitSwitch(Type.kNormallyOpen);
+    // reverseLimit.enableLimitSwitch(true);
     
     PivotArmEncoder = m_PivotArmLeftLeader.getEncoder();
     PivotArmEncoder.setPositionConversionFactor(ArmConstants.kPivotArmGearRatio);
@@ -128,9 +128,9 @@ public class PivotArm extends SubsystemBase {
     if(Math.abs(desiredY) > ControllerConstants.kOperatorDeadBandLeftY) {
       setArmAngle(getPosition()+(desiredY*3));
     }
-    if(reverseLimit.isPressed()) {
-      PivotArmEncoder.setPosition(getAbsolutePosition());
-    }
+    // if(reverseLimit.isPressed()) {
+    //   PivotArmEncoder.setPosition(getAbsolutePosition());
+    // }
   }
   
   //Determine units for arm as it's not completely tested
@@ -172,7 +172,8 @@ public class PivotArm extends SubsystemBase {
     SmartDashboard.putNumber(topic+"Arm Position", getPosition());
     SmartDashboard.putNumber(topic+"Arm Abs Position", getAbsolutePosition());
 	  SmartDashboard.putBoolean(topic+"Arm At Position", isArmAtPosition());
-    SmartDashboard.putBoolean(topic+"Arm Forward Limit", forwardLimit.isPressed());
-    SmartDashboard.putBoolean(topic+"Arm Reverse Limit", reverseLimit.isPressed());
+    SmartDashboard.putNumber(topic+"Arm Amps", m_PivotArmLeftLeader.getOutputCurrent());
+    // SmartDashboard.putBoolean(topic+"Arm Forward Limit", forwardLimit.isPressed());
+    // SmartDashboard.putBoolean(topic+"Arm Reverse Limit", reverseLimit.isPressed());
   }
 }
