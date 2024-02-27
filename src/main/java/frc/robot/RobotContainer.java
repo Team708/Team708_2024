@@ -10,13 +10,8 @@ import com.revrobotics.SparkPIDController;
 
 import edu.wpi.first.math.geometry.Pose2d;
 
-// import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-// import frc.robot.commands.auto.FiveBall;
-// import frc.robot.commands.auto.DriveStraight;
-// import frc.robot.commands.ShootSpeakerSCG;
 
 import frc.robot.commands.DriveByController;
 import frc.robot.commands.OperateByController; //TODO uncomment if using Operator Controller
@@ -27,7 +22,6 @@ import frc.robot.commands.AllSystemsOff;
 import frc.robot.commands.ClimbByController;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-// import frc.robot.commands.OperateByController; //TODO uncomment if using Operator Controller
 
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Climber;
@@ -66,9 +60,6 @@ public class RobotContainer {
 
 	private final AllSystemsOff m_AllSystemsOff = new AllSystemsOff(m_intake, m_feeder, m_shooter);
 	// Autonomous Option
-	// private final Command doNothin = new WaitCommand(5);
-	// private final Command FiveBall = new FiveBall(m_drive, 8);
-	// private final Command DriveStraight = new DriveStraight(m_drive, 8);
 
 	// public static final SendableChooser<Command> m_chooser = new SendableChooser<>();
     private final SendableChooser<Command> autoChooser;
@@ -85,8 +76,6 @@ public class RobotContainer {
 	    // configureAutoChooser();
 		// Build an auto chooser. This will use Commands.none() as the default option.
 		autoChooser = AutoBuilder.buildAutoChooser();
-		// autoChooser.addOption("Five Ball", FiveBall);
-		// autoChooser.addOption("Drive Straight", DriveStraight);
 
 		// getAutonomousCommand();
 		m_drive.setDefaultCommand(m_driveByController);
@@ -118,7 +107,6 @@ public class RobotContainer {
   }
 
 	// private void configureAutoChooser(){
-	// 	m_chooser.addOption("Five Ball",  FiveBall);
 	// 	m_chooser.addOption("Do Nothing",     doNothin);
 	// 	m_chooser.setDefaultOption("Do Nothing", doNothin);
 	// 	SmartDashboard.putData(m_chooser);
