@@ -17,23 +17,19 @@ import frc.robot.subsystems.sim.IntakeSimulation;
 import frc.robot.utilities.PidHelper;
 
 public class Intake extends SubsystemBase {
-	private Feeder m_feeder;
-	private CANSparkMax m_intakeMotorRight;
-	private CANSparkMax m_intakeMotorLeft;
-	private CANSparkMax m_intakeMotorFront;
-	private CANSparkMax m_intakeMotorBack;
+	String topic = new String(this.getName()+"/");
+	String intakeDirection;
 
-	private String intakeDirection;
-
-	private SparkPIDController frontSparkPIDController, backSparkPIDController, rightSparkPIDController, leftSparkPIDController;
+	CANSparkMax m_intakeMotorRight, m_intakeMotorLeft, m_intakeMotorFront, m_intakeMotorBack;
+	SparkPIDController frontSparkPIDController, backSparkPIDController, rightSparkPIDController, leftSparkPIDController;
+	
+	Feeder m_feeder;
 
 	// private RelativeEncoder m_intakeEncoder;
-	
 	// private boolean isReversed = false;
-
 	// private DigitalInput m_dIOSensor;
 
-  IntakeSimulation m_intakeSim;
+  	IntakeSimulation m_intakeSim;
 
 	public Intake(Feeder feeder) {
 		m_feeder = feeder;
@@ -64,11 +60,11 @@ public class Intake extends SubsystemBase {
 		backSparkPIDController = m_intakeMotorBack.getPIDController();
 		rightSparkPIDController = m_intakeMotorRight.getPIDController();
 		leftSparkPIDController = m_intakeMotorLeft.getPIDController();
+
 		PidHelper.setupPIDController(this.getName()+"frontSparkPIDController", frontSparkPIDController, IntakeConstants.kIntakePIDList);
 		PidHelper.setupPIDController(this.getName()+"backSparkPIDController", backSparkPIDController, IntakeConstants.kIntakePIDList);
 		PidHelper.setupPIDController(this.getName()+"leftSparkPIDController", leftSparkPIDController, IntakeConstants.kIntakePIDList);
 		PidHelper.setupPIDController(this.getName()+"rightSparkPIDController", rightSparkPIDController, IntakeConstants.kIntakePIDList);
-
 	}
 
 	@Override
@@ -123,7 +119,6 @@ public class Intake extends SubsystemBase {
 		rightSparkPIDController.setReference(IntakeConstants.kIntakeRPM, CANSparkMax.ControlType.kVelocity);
 		leftSparkPIDController.setReference(IntakeConstants.kIntakeRPM, CANSparkMax.ControlType.kVelocity);
 		intakeDirection = "eject Back";
-
 	}
 
 	public void intakeAutomatic() {
@@ -134,19 +129,15 @@ public class Intake extends SubsystemBase {
 			intakeOff();
 		}
 	}
-	// public boolean sensorDetected() {
-	// return !m_dIOSensor.get();
-	// }
 
 	public void simulationInit() {
-	  //Setup the simulation
-    m_intakeSim = new IntakeSimulation(this, m_intakeMotorFront, m_intakeMotorBack, m_intakeMotorLeft, m_intakeMotorRight);
-  
+	  	//Setup the simulation
+   		m_intakeSim = new IntakeSimulation(this, m_intakeMotorFront, m_intakeMotorBack, m_intakeMotorLeft, m_intakeMotorRight);
 	}
 
 	public void simulationPeriodic() {
-    //Update elevator simulation
-    m_intakeSim.update();
+		//Update elevator simulation
+		m_intakeSim.update();
 	}
 
 	public void sendToDashboard() {
@@ -155,15 +146,12 @@ public class Intake extends SubsystemBase {
 		SmartDashboard.putNumber(topic+"Back Amps", m_intakeMotorBack.getOutputCurrent());
 		SmartDashboard.putNumber(topic+"Left Amps", m_intakeMotorLeft.getOutputCurrent());
 		SmartDashboard.putNumber(topic+"Right Amps", m_intakeMotorRight.getOutputCurrent());
-	
-		// SmartDashboard.putNumber("/Intake/Intake Front Speed", m_intakeMotorFront.getEncoder().getVelocity());
-		// SmartDashboard.putNumber("/Intake/Intake Back Speed", m_intakeMotorBack.getEncoder().getVelocity());
-		// SmartDashboard.putNumber("/Intake/Intake Left Speed", m_intakeMotorLeft.getEncoder().getVelocity());
-		// SmartDashboard.putNumber("/Intake/Intake Right Speed", m_intakeMotorRight.getEncoder().getVelocity());
-		// SmartDashboard.putNumber("intake Position", getRollerPosition());
-		// SmartDashboard.putString("intake Direction", intakeDirection);
 
+		// SmartDashboard.putNumber(topic+"Intake Front Speed", m_intakeMotorFront.getEncoder().getVelocity());
+		// SmartDashboard.putNumber(topic+"Intake Back Speed", m_intakeMotorBack.getEncoder().getVelocity());
+		// SmartDashboard.putNumber(topic+"Intake Left Speed", m_intakeMotorLeft.getEncoder().getVelocity());
+		// SmartDashboard.putNumber(topic+"Intake Right Speed", m_intakeMotorRight.getEncoder().getVelocity());
+		// SmartDashboard.putNumber(topic+"intake Position", getRollerPosition());
+		// SmartDashboard.putString(topic+"intake Direction", intakeDirection);
 	}
-
-
 }

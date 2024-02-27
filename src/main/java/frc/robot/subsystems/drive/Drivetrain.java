@@ -15,6 +15,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -29,6 +30,8 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
+
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
@@ -106,13 +109,28 @@ import com.pathplanner.lib.util.GeometryUtil;
   private static PigeonTwo pigeon = PigeonTwo.getInstance();
 
   //Creates Odometry object to store the pose of the robot
-  public final SwerveDrivePoseEstimator m_PoseEstimator = new SwerveDrivePoseEstimator(DriveConstants.kDriveKinematics, pigeon.getAngle(), getModulePositions(), DriveConstants.kinitialPoseMeters);
-  private final SwerveDrivePoseEstimator m_AutoPoseEstimator = new SwerveDrivePoseEstimator(DriveConstants.kDriveKinematics, pigeon.getAngle(), getModulePositions(), DriveConstants.kinitialPoseMeters);
+  public final SwerveDrivePoseEstimator m_PoseEstimator = 
+      new SwerveDrivePoseEstimator(
+        DriveConstants.kDriveKinematics, 
+        pigeon.getAngle(),
+        getModulePositions(),
+        DriveConstants.kinitialPoseMeters,
+        VecBuilder.fill(0.05, 0.05, Units.degreesToRadians(5)),
+        VecBuilder.fill(0.5, 0.5, Units.degreesToRadians(30)));
+
+  private final SwerveDrivePoseEstimator m_AutoPoseEstimator = 
+      new SwerveDrivePoseEstimator(
+        DriveConstants.kDriveKinematics, 
+        pigeon.getAngle(), 
+        getModulePositions(), 
+        DriveConstants.kinitialPoseMeters,
+        VecBuilder.fill(0.05, 0.05, Units.degreesToRadians(5)),
+        VecBuilder.fill(0.5, 0.5, Units.degreesToRadians(30)));
 
   ProfiledPIDController thetaController = new ProfiledPIDController(AutoConstants.kPThetaController, 0, 0,
     AutoConstants.kThetaControllerConstraints);
 
-  private final Field2d m_field;
+  public final Field2d m_field;
 
   private Pose2d currentPose = new Pose2d();
   private Pose2d targetPose = new Pose2d();
@@ -213,7 +231,6 @@ import com.pathplanner.lib.util.GeometryUtil;
     currentPose = getPose();
 
     m_field.getRobotObject().setPose(currentPose);
-    
   }
 
   public void setFieldOrient(boolean fieldOrient){
@@ -497,7 +514,7 @@ rotateToTarget(chassisSpeeds.omegaRadiansPerSecond));
     desiredTranslation.getY(),
     -inputTransform(OI.getDriverRightX())* DriveConstants.kMaxAngularSpeedRadPerSec,
     getFieldOrient(),
-    false);
+    true);
   }
   
   public void setAutoRot(boolean autoRotEnabled) {

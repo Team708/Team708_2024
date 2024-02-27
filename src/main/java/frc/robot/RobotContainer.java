@@ -151,9 +151,9 @@ public class RobotContainer {
 	public void sendToDashboard() {
 		PidHelper.getInstance().update();
 		m_drive.sendToDashboard();
-		m_intake.sendToDashboard();
-		m_feeder.sendToDashboard();
-		m_shooter.sendToDashboard();
-		m_pivotArm.sendToDashboard();
+		// m_intake.sendToDashboard();
+		// m_feeder.sendToDashboard();
+		// m_shooter.sendToDashboard();
+		// m_pivotArm.sendToDashboard();
 	}
 }
