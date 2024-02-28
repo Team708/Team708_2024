@@ -28,7 +28,7 @@ public class DriveByController extends Command {
   }
 
   @Override
-  public void initialize(){
+  public void initialize() {
   }
 
   /**
@@ -37,12 +37,12 @@ public class DriveByController extends Command {
    */
   @Override
   public void execute() {
-    m_robotDrive.makeRobotDrive();
+    m_robotDrive.driveByController();
   }
 
   @Override
-  public void end(boolean interrupted){
-
+  public void end(boolean interrupted) {
+    
   }
 
 }

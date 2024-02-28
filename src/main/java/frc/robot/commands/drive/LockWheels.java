@@ -4,15 +4,11 @@
 
 package frc.robot.commands.drive;
 
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.drive.Drivetrain;
 
 public class LockWheels extends Command {
   private final Drivetrain m_drivetrain;
-
-  SwerveModuleState[] preStates;
 
   public LockWheels(Drivetrain drivetrain) {
     m_drivetrain = drivetrain;
@@ -22,25 +18,18 @@ public class LockWheels extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    preStates = m_drivetrain.getModuleStates();
+    m_drivetrain.lockWheels(true);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    SwerveModuleState[] states = {
-      new SwerveModuleState(0, new Rotation2d(-Math.PI / 4)), //LF
-      new SwerveModuleState(0, new Rotation2d(Math.PI / 4)), //RF
-      new SwerveModuleState(0, new Rotation2d(Math.PI / 4)), //LR
-      new SwerveModuleState(0, new Rotation2d(-Math.PI / 4)) //RR
-    };
-    m_drivetrain.setModuleStates(states);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_drivetrain.setModuleStates(preStates);
+    m_drivetrain.lockWheels(false);
   }
 
   // Returns true when the command should end.

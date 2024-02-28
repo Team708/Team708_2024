@@ -23,7 +23,7 @@ public class ResetDriveCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_drivetrain.resetOdometry(new Pose2d(0.0,0.0,m_orientation));
+    m_drivetrain.setPose(new Pose2d(0.0,0.0,m_orientation));
   }
 
   // Called every time the scheduler runs while the command is scheduled.

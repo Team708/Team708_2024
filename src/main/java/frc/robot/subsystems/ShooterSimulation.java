@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.GlobalConstants;
-import frc.robot.subsystems.Shooter;
+// import frc.robot.subsystems.Shooter;
 
 /** Add your docs here. */
 public class ShooterSimulation {
@@ -90,8 +90,8 @@ public class ShooterSimulation {
     // To view the Elevator Sim in the simulator, select Network Tables ->
     // SmartDashboard ->
     // Elevator Sim
-    SmartDashboard.putData("Shooter Sim", m_mech2d);
-    SmartDashboard.putData("Shooter Trajectory Sim", m_shooterTrajectorySim);
+    // SmartDashboard.putData("Shooter Sim", m_mech2d);
+    // SmartDashboard.putData("Shooter Trajectory Sim", m_shooterTrajectorySim);
 
     // m_frontEncoder.setPosition(0.5);
     // m_backEncoder.setPosition(0.5);
