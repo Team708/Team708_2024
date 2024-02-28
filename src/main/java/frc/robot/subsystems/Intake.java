@@ -142,10 +142,10 @@ public class Intake extends SubsystemBase {
 
 	public void sendToDashboard() {
 		String topic = new String(this.getName()+"/");
-		SmartDashboard.putNumber(topic+"Front Amps", m_intakeMotorFront.getOutputCurrent());
-		SmartDashboard.putNumber(topic+"Back Amps", m_intakeMotorBack.getOutputCurrent());
-		SmartDashboard.putNumber(topic+"Left Amps", m_intakeMotorLeft.getOutputCurrent());
-		SmartDashboard.putNumber(topic+"Right Amps", m_intakeMotorRight.getOutputCurrent());
+		// SmartDashboard.putNumber(topic+"Front Amps", m_intakeMotorFront.getOutputCurrent());
+		// SmartDashboard.putNumber(topic+"Back Amps", m_intakeMotorBack.getOutputCurrent());
+		// SmartDashboard.putNumber(topic+"Left Amps", m_intakeMotorLeft.getOutputCurrent());
+		// SmartDashboard.putNumber(topic+"Right Amps", m_intakeMotorRight.getOutputCurrent());
 
 		// SmartDashboard.putNumber(topic+"Intake Front Speed", m_intakeMotorFront.getEncoder().getVelocity());
 		// SmartDashboard.putNumber(topic+"Intake Back Speed", m_intakeMotorBack.getEncoder().getVelocity());

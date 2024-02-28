@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.1387011919417844,
-        "y": 6.436107877765147
+        "x": 2.1019852916509385,
+        "y": 6.491181728201414
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.9556299734131106,
-        "y": 6.775729955455471
+        "x": 3.3319679513942826,
+        "y": 7.032741257491394
       },
       "prevControl": {
-        "x": 2.340638643541438,
-        "y": 6.5187186534195485
+        "x": 2.6343658458682073,
+        "y": 6.7481930302373385
       },
       "nextControl": {
-        "x": 3.570621303284783,
-        "y": 7.032741257491394
+        "x": 3.8529168288948017,
+        "y": 7.245233562787657
       },
       "isLocked": false,
       "linkedName": null
@@ -48,44 +48,28 @@
     },
     {
       "anchor": {
-        "x": 4.41739131694849,
-        "y": 6.2418758789036115
+        "x": 3.4421156522668213,
+        "y": 6.04141194963855
       },
       "prevControl": {
-        "x": 4.2854000255468385,
-        "y": 6.22387706643975
+        "x": 3.31012436086517,
+        "y": 6.023413137174688
       },
       "nextControl": {
-        "x": 4.932668124962876,
-        "y": 6.312140898178302
+        "x": 3.9573924602812083,
+        "y": 6.11167696891324
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.340521559785294,
-        "y": 5.773442417072351
+        "x": 8.270256540513081,
+        "y": 5.775221672529917
       },
       "prevControl": {
-        "x": 7.520763001580589,
-        "y": 5.902261619075947
-      },
-      "nextControl": {
-        "x": 8.706361273629788,
-        "y": 5.7159533191825025
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 1.9112722961512467,
-        "y": 7.530067898939577
-      },
-      "prevControl": {
-        "x": 2.578789979260793,
-        "y": 7.330983677661291
+        "x": 6.746546678442968,
+        "y": 6.059769899783975
       },
       "nextControl": null,
       "isLocked": false,
@@ -94,16 +78,102 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "IntakeFeeder",
+      "waypointRelativePos": 1.35,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "IntakeNote"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "ShooterOn",
+      "waypointRelativePos": 2.3499999999999996,
+      "command": {
+        "type": "deadline",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "SetShooterSpeedSpeaker"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "AutoShoot",
+      "waypointRelativePos": 2.6500000000000004,
+      "command": {
+        "type": "deadline",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "ShootSpeakerPCG"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "IntakeFeeder",
+      "waypointRelativePos": 3.55,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "IntakeNote"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "ShootSpeakerPCG"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 2.0,
+    "maxAcceleration": 1.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0.0,
-    "rotation": -87.39743779750015,
+    "rotation": -156.11350007836523,
     "rotateFast": false
   },
   "reversed": false,

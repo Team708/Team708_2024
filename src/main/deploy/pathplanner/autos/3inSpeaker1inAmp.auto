@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.2483406098887673,
-      "y": 6.371855052256165
+      "x": 1.3401303606158823,
+      "y": 6.114843750220242
     },
-    "rotation": -161.56505117707803
+    "rotation": -144.90418321297403
   },
   "command": {
     "type": "sequential",
@@ -37,7 +37,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 0.5
+                  "waitTime": 0.2
                 }
               },
               {
@@ -56,19 +56,13 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 3.0
+                  "waitTime": 9.0
                 }
               },
               {
                 "type": "path",
                 "data": {
                   "pathName": "3inSpeaker1inAmp"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ShootSpeakerPCG"
                 }
               }
             ]

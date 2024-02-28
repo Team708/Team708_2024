@@ -37,6 +37,6 @@ public class EnableAutoTargetSpeaker extends Command {
   @Override
   public void end(boolean interrupted) {
     m_drive.setAutoRot(false);
-    SmartDashboard.putString("Command", this.getName() + ": End");
+    // SmartDashboard.putString("Command", this.getName() + ": End");
   }
 }

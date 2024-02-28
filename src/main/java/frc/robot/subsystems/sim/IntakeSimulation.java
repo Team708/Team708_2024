@@ -101,8 +101,8 @@ public class IntakeSimulation {
     // To view the Elevator Sim in the simulator, select Network Tables ->
     // SmartDashboard ->
     // Elevator Sim
-    SmartDashboard.putData("/Sim/Intake/"+"Intake Sim", m_mech2d);
-    SmartDashboard.putData("/Sim/Intake/"+"Intake Trajectory Sim", m_intakeTrajectorySim);
+    // SmartDashboard.putData("/Sim/Intake/"+"Intake Sim", m_mech2d);
+    // SmartDashboard.putData("/Sim/Intake/"+"Intake Trajectory Sim", m_intakeTrajectorySim);
 
     // m_frontEncoder.setPosition(0.5);
     // m_backEncoder.setPosition(0.5);

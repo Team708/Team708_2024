@@ -11,10 +11,12 @@ import frc.robot.Constants.ArmConstants;
 
 public class armToParkShotAngle extends Command {
   /** Creates a new moveArm. */
-  PivotArm m_PivotArm;
+  private PivotArm m_PivotArm;
+  private double m_targetAngle;
   
-  public armToParkShotAngle(PivotArm PivotArm) {
+  public armToParkShotAngle(PivotArm PivotArm, double targetAngle) {
     m_PivotArm = PivotArm;
+    m_targetAngle = targetAngle;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_PivotArm);
   }
@@ -22,19 +24,19 @@ public class armToParkShotAngle extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    SmartDashboard.putString("Command", this.getName() + ": Init");
+    // SmartDashboard.putString("Command", this.getName() + ": Init");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_PivotArm.setArmAngle(ArmConstants.kParkAngle);
+    m_PivotArm.setArmAngle(m_targetAngle);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    SmartDashboard.putString("Command", this.getName() + ": End");
+    // SmartDashboard.putString("Command", this.getName() + ": End");
   }
 
   // Returns true when the command should end.

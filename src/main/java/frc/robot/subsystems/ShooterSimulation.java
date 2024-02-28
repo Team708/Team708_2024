@@ -90,8 +90,8 @@ public class ShooterSimulation {
     // To view the Elevator Sim in the simulator, select Network Tables ->
     // SmartDashboard ->
     // Elevator Sim
-    SmartDashboard.putData("Shooter Sim", m_mech2d);
-    SmartDashboard.putData("Shooter Trajectory Sim", m_shooterTrajectorySim);
+    // SmartDashboard.putData("Shooter Sim", m_mech2d);
+    // SmartDashboard.putData("Shooter Trajectory Sim", m_shooterTrajectorySim);
 
     // m_frontEncoder.setPosition(0.5);
     // m_backEncoder.setPosition(0.5);

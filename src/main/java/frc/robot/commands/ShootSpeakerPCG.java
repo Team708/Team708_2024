@@ -4,7 +4,7 @@
 
 package frc.robot.commands;
 //Library imports
-import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 //Command imports
 import frc.robot.commands.drive.EnableAutoTargetSpeaker;
@@ -24,20 +24,21 @@ import frc.robot.subsystems.Shooter;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ShootSpeakerPCG extends ParallelDeadlineGroup {
+public class ShootSpeakerPCG extends ParallelRaceGroup {
   /** Creates a new ShootSpeakerPCG. */
   public ShootSpeakerPCG(Drivetrain m_drive, Intake m_intake, Feeder m_feeder, PivotArm m_pivotArm, Shooter m_shooter) {
     // Add the deadline command in the super() call. Add other commands using
     // addCommands().
-    super(new EnableAutoTargetSpeaker(m_drive));
+    // super(new EnableAutoTargetSpeaker(m_drive));
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new ParallelCommandGroup(
+      // new ParallelCommandGroup(
+        new EnableAutoTargetSpeaker(m_drive),
         new IntakeAllAutomatic(m_intake),
         new FeederAutomatic(m_feeder),
         new EnableArmAutoAim(m_pivotArm),
         new SetShooterSpeedSpeaker(m_shooter)
-      )
+      // )
     );
   }
 }

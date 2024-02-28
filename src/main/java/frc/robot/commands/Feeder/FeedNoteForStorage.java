@@ -29,14 +29,13 @@ public class FeedNoteForStorage extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    // m_feeder.feedNotesToStow();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
       // Return true or false based on your condition
-      // return m_feeder.hasNote();
-      return false;
+      return m_feeder.hasNoteHigher();
+      //return false;
   }
 }

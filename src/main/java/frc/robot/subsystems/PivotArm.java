@@ -66,31 +66,40 @@ public class PivotArm extends SubsystemBase {
     m_PivotArmRightFollower.setSmartCurrentLimit(40);
     m_PivotArmRightFollower.follow(m_PivotArmLeftLeader, true);
 
-    //data potints f
-    interpolatingTreeMap.put(1.27,47.8);//smp
-    interpolatingTreeMap.put(1.3, 48.0);
-    interpolatingTreeMap.put(1.4,45.5);//smp
-    interpolatingTreeMap.put(1.94, 38.5);
-    interpolatingTreeMap.put(2.2,32.8);//smp
-//  interpolatingTreeMap.put(2.5, 32.4);
-    interpolatingTreeMap.put(2.7,27.9);//smp
-//  interpolatingTreeMap.put(2.8, 32.2);
-//  interpolatingTreeMap.put(3.3, 30.07);
-    interpolatingTreeMap.put(3.3,26.9);//smp
-//  interpolatingTreeMap.put(3.5, 28.0);  //Added
+    //data potints outdated 
+//     interpolatingTreeMap.put(1.27,47.8);//smp
+//     interpolatingTreeMap.put(1.3, 48.0);
+//     interpolatingTreeMap.put(1.4,45.5);//smp
+//     interpolatingTreeMap.put(1.94, 38.5);
+//     interpolatingTreeMap.put(2.2,32.8);//smp
+// //  interpolatingTreeMap.put(2.5, 32.4);
+//     interpolatingTreeMap.put(2.7,27.9);//smp
+// //  interpolatingTreeMap.put(2.8, 32.2);
+// //  interpolatingTreeMap.put(3.3, 30.07);
+//     interpolatingTreeMap.put(3.3,26.9);//smp
+// //  interpolatingTreeMap.put(3.5, 28.0);  //Added
 
-    interpolatingTreeMap.put(3.7,25.9);
-    interpolatingTreeMap.put(4.0,24.7);
-    interpolatingTreeMap.put(4.3,24.5);
-    interpolatingTreeMap.put(4.6,21.6);//smp
-//  interpolatingTreeMap.put(4.8,23.9);
-//  interpolatingTreeMap.put(5.6,23.45);
-    interpolatingTreeMap.put(5.7,18.5);//smp
+//     interpolatingTreeMap.put(3.7,25.9);
+//     interpolatingTreeMap.put(4.0,24.7);
+//     interpolatingTreeMap.put(4.3,24.5);
+//     interpolatingTreeMap.put(4.6,21.6);//smp
+// //  interpolatingTreeMap.put(4.8,23.9);
+// //  interpolatingTreeMap.put(5.6,23.45);
+//     interpolatingTreeMap.put(5.7,18.5);//smp
 //    interpolatingTreeMap.put(6.2,23.22);
 
+//Data points maded 02.27 precomp
+interpolatingTreeMap.put(1.33,52.5);
+interpolatingTreeMap.put(1.96,44.5);
+interpolatingTreeMap.put(2.25,42.5);
+interpolatingTreeMap.put(2.85,35.8);
+interpolatingTreeMap.put(3.07,34.5);
+interpolatingTreeMap.put(3.77,30.3);
+interpolatingTreeMap.put(4.06,29.6);
+interpolatingTreeMap.put(4.84,26.4);
+interpolatingTreeMap.put(5.61,25.4);
 
 
-   
   
   
    
@@ -170,9 +179,9 @@ public class PivotArm extends SubsystemBase {
   public void sendToDashboard() {
     String topic = new String(this.getName()+"/");
     SmartDashboard.putNumber(topic+"Arm Position", getPosition());
-    SmartDashboard.putNumber(topic+"Arm Abs Position", getAbsolutePosition());
-	  SmartDashboard.putBoolean(topic+"Arm At Position", isArmAtPosition());
-    SmartDashboard.putNumber(topic+"Arm Amps", m_PivotArmLeftLeader.getOutputCurrent());
+    // SmartDashboard.putNumber(topic+"Arm Abs Position", getAbsolutePosition());
+	  // SmartDashboard.putBoolean(topic+"Arm At Position", isArmAtPosition());
+    // SmartDashboard.putNumber(topic+"Arm Amps", m_PivotArmLeftLeader.getOutputCurrent());
     // SmartDashboard.putBoolean(topic+"Arm Forward Limit", forwardLimit.isPressed());
     // SmartDashboard.putBoolean(topic+"Arm Reverse Limit", reverseLimit.isPressed());
   }

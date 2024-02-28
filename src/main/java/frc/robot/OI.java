@@ -34,6 +34,8 @@ import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.PivotArm;
 import frc.robot.subsystems.Shooter;
 
+import frc.robot.Constants.ArmConstants;
+
 public class OI {
 
   // Gamepads
@@ -131,7 +133,7 @@ public class OI {
         .onTrue(new armToAmpShotAngle(m_PivotArm));
     
     new JoystickButton(operatorController, Button.kA.value)
-        .onTrue(new armToParkShotAngle(m_PivotArm));
+        .onTrue(new armToParkShotAngle(m_PivotArm, ArmConstants.kParkAngle));
 
     new JoystickButton(operatorController, Button.kX.value)
     		.onTrue(new FeederReverse(m_feeder))
@@ -150,6 +152,10 @@ public class OI {
     		.onTrue(new SetShooterSpeedAmp(m_shooter))
         .onFalse(new ShooterOff(m_shooter));
 
+    new JoystickButton(operatorController, Button.kLeftStick.value)
+        .onTrue(new armToParkShotAngle(m_PivotArm, ArmConstants.kDownAngle));
+
+    
     //Adaptive Buttons
     new JoystickButton(adaptiveGamepad, Button.kA.value)
         .onTrue(new AllSystemsOn(m_intake, m_feeder, m_shooter));

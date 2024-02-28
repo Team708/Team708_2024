@@ -25,7 +25,7 @@ public class EnableArmAutoAim extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    SmartDashboard.putString("Command", this.getName() + ": Init");
+    // SmartDashboard.putString("Command", this.getName() + ": Init");
   }
   
   // Called every time the scheduler runs while the command is scheduled.
@@ -34,8 +34,8 @@ public class EnableArmAutoAim extends Command {
     // angle = Units.radiansToDegrees(Math.atan2(1.9812, m_drive.getDistanceToTarget()));
     angle = m_pivotArm.findArmAngle();
     m_pivotArm.setArmAngle(angle);
-    SmartDashboard.putNumber("commanded angle", angle);
-      //replace constant with method from pivotArm subsystem
+    // SmartDashboard.putNumber("commanded angle", angle);
+    //replace constant with method from pivotArm subsystem
     //method would take parameter of distance from speaker, then use regression to get arm angle
   }
 
@@ -43,7 +43,7 @@ public class EnableArmAutoAim extends Command {
   @Override
   public void end(boolean interrupted) {
     // m_drive.setAutoRot(false);
-    SmartDashboard.putString("Command", this.getName() + ": End");
+    // SmartDashboard.putString("Command", this.getName() + ": End");
   }
 
   // // Returns true when the command should end.

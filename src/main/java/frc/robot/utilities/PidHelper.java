@@ -36,14 +36,14 @@ public class PidHelper {
     PidHelper(){
         previousSelection = new CANSparkMax(0, MotorType.kBrushless).getPIDController();
         m_ControllerChooser.setDefaultOption("None" , previousSelection);
-        SmartDashboard.putData(topic+"SparkMax Chooser", m_ControllerChooser);
-        SmartDashboard.putNumber(topic+"PID P",0);
-        SmartDashboard.putNumber(topic+"PID I",0);
-        SmartDashboard.putNumber(topic+"PID D",0);
-        SmartDashboard.putNumber(topic+"PID FF",0);
-        SmartDashboard.putNumber(topic+"PID I Zone",0);
-        SmartDashboard.putNumber(topic+"PID Output Range Min",0);
-        SmartDashboard.putNumber(topic+"PID Output Range Max",0);
+        // SmartDashboard.putData(topic+"SparkMax Chooser", m_ControllerChooser); //TODO Uncomment to tune
+        // SmartDashboard.putNumber(topic+"PID P",0);
+        // SmartDashboard.putNumber(topic+"PID I",0);
+        // SmartDashboard.putNumber(topic+"PID D",0);
+        // SmartDashboard.putNumber(topic+"PID FF",0);
+        // SmartDashboard.putNumber(topic+"PID I Zone",0);
+        // SmartDashboard.putNumber(topic+"PID Output Range Min",0);
+        // SmartDashboard.putNumber(topic+"PID Output Range Max",0);
     }
 
     /**

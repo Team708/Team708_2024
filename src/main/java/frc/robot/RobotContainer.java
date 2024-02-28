@@ -20,6 +20,8 @@ import frc.robot.commands.shooter.SetShooterSpeedSpeaker;
 import frc.robot.commands.Feeder.FeederForward;
 import frc.robot.commands.AllSystemsOff;
 import frc.robot.commands.ClimbByController;
+import frc.robot.commands.groups.IntakeNote;
+import frc.robot.commands.drive.DriveToAmp;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 
@@ -73,6 +75,8 @@ public class RobotContainer {
 		NamedCommands.registerCommand("ShootSpeakerPCG", new ShootSpeakerPCG(m_drive, m_intake, m_feeder, m_pivotArm, m_shooter));
 		NamedCommands.registerCommand("SetShooterSpeedSpeaker", new SetShooterSpeedSpeaker(m_shooter));
 		NamedCommands.registerCommand("FeederFoward", new FeederForward(m_feeder));
+		NamedCommands.registerCommand("IntakeNote", new IntakeNote(m_intake, m_feeder));
+		NamedCommands.registerCommand("DriveToAmp", new DriveToAmp(m_drive));
 	    // configureAutoChooser();
 		// Build an auto chooser. This will use Commands.none() as the default option.
 		autoChooser = AutoBuilder.buildAutoChooser();
@@ -137,11 +141,11 @@ public class RobotContainer {
 		return m_AllSystemsOff;
 	}
 	public void sendToDashboard() {
-		PidHelper.getInstance().update();
+		// PidHelper.getInstance().update(); //TODO Uncomment to tune PID
 		m_drive.sendToDashboard();
-		// m_intake.sendToDashboard();
-		// m_feeder.sendToDashboard();
-		// m_shooter.sendToDashboard();
-		// m_pivotArm.sendToDashboard();
+		m_intake.sendToDashboard();
+		m_feeder.sendToDashboard();
+		m_shooter.sendToDashboard();
+		m_pivotArm.sendToDashboard();
 	}
 }

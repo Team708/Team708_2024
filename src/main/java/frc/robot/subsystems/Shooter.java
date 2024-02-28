@@ -104,11 +104,11 @@ public class Shooter extends SubsystemBase {
   public void sendToDashboard() {
 
     String topic = new String(this.getName()+"/");
-    SmartDashboard.putNumber(topic+"Shooter Top Velocity", shooterEncoderTop.getVelocity());
-    SmartDashboard.putNumber(topic+"Shooter Bottom Velocity", shooterEncoderBottom.getVelocity());
-    SmartDashboard.putNumber(topic+"Shooter Amp Velocity", shooterEncoderAmp.getVelocity());
-    SmartDashboard.putNumber(topic+"Shooter Bottom Amps", m_shooterMotorTopLeader.getOutputCurrent());
-    SmartDashboard.putNumber(topic+"Shooter Top Amps", m_shooterMotorAmp.getOutputCurrent());
+    // SmartDashboard.putNumber(topic+"Shooter Top Velocity", shooterEncoderTop.getVelocity());
+    // SmartDashboard.putNumber(topic+"Shooter Bottom Velocity", shooterEncoderBottom.getVelocity());
+    // SmartDashboard.putNumber(topic+"Shooter Amp Velocity", shooterEncoderAmp.getVelocity());
+    // SmartDashboard.putNumber(topic+"Shooter Bottom Amps", m_shooterMotorTopLeader.getOutputCurrent());
+    // SmartDashboard.putNumber(topic+"Shooter Top Amps", m_shooterMotorAmp.getOutputCurrent());
     SmartDashboard.putBoolean(topic+"Shooter At Speed", isAtSpeed());
 
   }

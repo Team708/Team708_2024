@@ -55,7 +55,7 @@ public class VisionProcessor extends SubsystemBase {
     visionPose = Limelight.getBotPose2d_wpiBlue(VisionConstants.klimelightName);
     Pose2d tagPoseToRobot = Limelight.getTargetPose_RobotSpace(VisionConstants.klimelightName);
     double distanceToTag = Math.abs(Limelight.getTY(VisionConstants.klimelightName));
-    SmartDashboard.putNumber("distanceToTag", distanceToTag);
+    // SmartDashboard.putNumber("distanceToTag", distanceToTag);
     double stDevCameraX = .7;
     double stDevCameraY = .7;
     double stDevCameraRot = .9;
@@ -119,9 +119,9 @@ public class VisionProcessor extends SubsystemBase {
   }
 
   public void sendToDashboard() {
-    SmartDashboard.putBoolean("Vision Has Target", targetFound);
-    SmartDashboard.putNumber("Vision_Distance ", getDistance());
-    SmartDashboard.putNumber("Vision tx", getRotate());
+    // SmartDashboard.putBoolean("Vision Has Target", targetFound);
+    // SmartDashboard.putNumber("Vision_Distance ", getDistance());
+    // SmartDashboard.putNumber("Vision tx", getRotate());
   }
 
 }

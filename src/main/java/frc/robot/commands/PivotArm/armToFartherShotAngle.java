@@ -22,7 +22,7 @@ public class armToFartherShotAngle extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    SmartDashboard.putString("Command", this.getName() + ": Init");
+    // SmartDashboard.putString("Command", this.getName() + ": Init");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -34,7 +34,7 @@ public class armToFartherShotAngle extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    SmartDashboard.putString("Command", this.getName() + ": End");
+    // SmartDashboard.putString("Command", this.getName() + ": End");
   }
 
   // Returns true when the command should end.
