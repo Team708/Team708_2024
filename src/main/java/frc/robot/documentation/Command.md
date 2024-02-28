@@ -6,11 +6,8 @@
 ## Autos
 
 - [DoNothing](../commands/auto/doNothingCommand.java): Does nothing
-- FiveBall: Shoots five NOTES
 - ShootOnePlusThreeClose: Shoots one preloaded, picks up and shoots the three close NOTES
-- PukeFive: Shoot preloaded and move five far notes toward WING without notes crossing WING line
 - DriveStraight: Drives Straight
-- ShootPreloadDriveStraight: Shoots preloaded and drives straight
 
 ## Drivetrain
 - EnableAutoTargetSpeaker
