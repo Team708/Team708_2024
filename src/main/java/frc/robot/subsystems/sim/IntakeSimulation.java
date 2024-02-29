@@ -78,6 +78,7 @@ public class IntakeSimulation {
           , 0, 5, new Color8Bit(Color.kRed)));
 
   public IntakeSimulation(Intake intake, CANSparkMax frontMotor, CANSparkMax backMotor, CANSparkMax leftMotor, CANSparkMax rightMotor) {
+    
     m_intake = intake;
     m_frontMotor = frontMotor;
     m_backMotor = backMotor;
@@ -100,8 +101,8 @@ public class IntakeSimulation {
     // To view the Elevator Sim in the simulator, select Network Tables ->
     // SmartDashboard ->
     // Elevator Sim
-    SmartDashboard.putData("Intake Sim", m_mech2d);
-    SmartDashboard.putData("Intake Trajectory Sim", m_intakeTrajectorySim);
+    // SmartDashboard.putData("/Sim/Intake/"+"Intake Sim", m_mech2d);
+    // SmartDashboard.putData("/Sim/Intake/"+"Intake Trajectory Sim", m_intakeTrajectorySim);
 
     // m_frontEncoder.setPosition(0.5);
     // m_backEncoder.setPosition(0.5);

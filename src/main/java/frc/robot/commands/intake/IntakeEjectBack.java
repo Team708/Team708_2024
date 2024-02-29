@@ -13,6 +13,8 @@ public class IntakeEjectBack extends Command {
   /** Creates a new IntakeRejectBack. */
   public IntakeEjectBack(Intake intake) {
     m_intake = intake;
+
+    // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(intake);
   }
 

@@ -4,6 +4,7 @@
 
 package frc.robot.commands.PivotArm;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.PivotArm;
 import frc.robot.Constants.ArmConstants;
@@ -22,11 +23,12 @@ public class armToAmpShotAngle extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    // SmartDashboard.putString("Command", this.getName() + ": Init");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute(){
+  public void execute() {
     m_PivotArm.setArmAngle(ArmConstants.kAmpAngle); //replace constant with method from pivotArm subsystem
     //method would take parameter of distance from speaker, then use regression to get arm angle
   }
@@ -34,11 +36,12 @@ public class armToAmpShotAngle extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    // SmartDashboard.putString("Command", this.getName() + ": End");
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (m_PivotArm.isArmAtPosition(ArmConstants.kAmpAngle));
+    return (m_PivotArm.isArmAtPosition());
   }
 }

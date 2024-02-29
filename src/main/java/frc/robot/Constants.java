@@ -1,19 +1,16 @@
 package frc.robot;
 
-import javax.crypto.spec.ChaCha20ParameterSpec;
-
-import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.ReplanningConfig;
 import com.pathplanner.lib.util.PIDConstants;
 
+import edu.wpi.first.apriltag.AprilTag;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 // import edu.wpi.first.math.util.Units;
@@ -33,11 +30,12 @@ public final class Constants {
     public static final double kLoopTime = 0.020;
   }
 
-  public static final class CurrentLimit{
-    public static final int kIntake = 25;
-
-    public static final int kArmAmps = 40;
+  public static final class CurrentLimit {
+    public static final int kIntakeAmps = 40;
     public static final int kFeederAmps = 40;
+    public static final int kArmAmps = 25;
+    public static final int kShooterAmps = 35;
+    public static final int kClimberAmps = 40;
 
     public static final int kTranslationAmps = 40;
     public static final int kRotationAmps = 25;
@@ -56,8 +54,8 @@ public final class Constants {
   public static final class DriveConstants {
     public static final int kFrontLeftDriveMotorPort = 11;   //CANID of the Translation SparkMAX
     public static final int kFrontRightDriveMotorPort = 13;  //CANID of the Translation SparkMAX
-    public static final int kRearLeftDriveMotorPort = 15;    //CANID of the Translation SparkMAX
-    public static final int kRearRightDriveMotorPort = 17;   //CANID of the Translation SparkMAX
+    public static final int kBackLeftDriveMotorPort = 15;    //CANID of the Translation SparkMAX
+    public static final int kBackRightDriveMotorPort = 17;   //CANID of the Translation SparkMAX
 
     public static final int kFrontLeftTurningMotorPort = 12;   //CANID of the Rotation SparkMAX
     public static final int kFrontRightTurningMotorPort = 14;  //CANID of the Rotation SparkMAX
@@ -69,11 +67,10 @@ public final class Constants {
     public static final int kBackLeftTurningEncoderPort = 6;    //Analog Port of the Module Absolute Encoder
     public static final int kBackRightTurningEncoderPort = 7;   //Analog Port of the Module Absolute Encoder
 
-    public static final double kFrontLeftOffset = -.2189*-1; //-0.5 to 0.5
-    public static final double kFrontRightOffset = -.1585*-1; //-0.5 to 0.5
-    public static final double kBackLeftOffset = -.5*-1; //-0.5 to 0.5
-    public static final double kBackRightOffset = -.1926*-1; //-0.5 to 0.5
-
+    public static final double kFrontLeftOffset = .003; //0.004;//0.0; //-.2189*-1; //-0.5 to 0.5
+    public static final double kFrontRightOffset = -0.334473;//-1.0042; //0.0; //-.1585*-1; //-0.5 to 0.5
+    public static final double kBackLeftOffset =  -.45; //0.496559;//-3.08; //-.5*-1; //-0.5 to 0.5
+    public static final double kBackRightOffset = -0.189941;//1.1540; //0.0 //-.1926*-1; //-0.5 to 0.5
     
     //Drive motor PID is best done on the roboRIO currently as the SparkMAX does not allow for static gain values on the PID controller, 
     //    these are necessary to have high accuracy when moving at extremely low RPMs
@@ -87,16 +84,12 @@ public final class Constants {
     public static final double[] kBackLeftTuningVals    =   {0.001,0.2850,0.2,2};   //{Static Gain, FeedForward, Proportional Gain, ModuleID for Tuning}
     public static final double[] kBackRightTuningVals   =   {0.001,0.2850,0.2,3};   //{Static Gain, FeedForward, Proportional Gain, ModuleID for Tuning}
     
-    //.324 - sideways
-    //.414 - longways
-    public static final Translation2d kFrontLeftLocation = new Translation2d(0.414,0.324); // +X is forward, +Y is to the right 
-    public static final Translation2d kFrontRightLocation = new Translation2d(0.414,-0.324); // +X is forward, +Y is to the right
-    public static final Translation2d kBackLeftLocation = new Translation2d(-0.414,0.324); // +X is forward, +Y is to the right
-    public static final Translation2d kBackRightLocation = new Translation2d(-0.414,-0.324); // +X is forward, +Y is to the right
-    // public static final Translation2d kFrontLeftLocation = new Translation2d(0.33,-0.264); // +X is forward, +Y is to the right 
-    // public static final Translation2d kFrontRightLocation = new Translation2d(0.33,0.264); // +X is forward, +Y is to the right
-    // public static final Translation2d kBackLeftLocation = new Translation2d(-0.376,-0.264); // +X is forward, +Y is to the right
-    // public static final Translation2d kBackRightLocation = new Translation2d(-0.376,0.264); // +X is forward, +Y is to the right
+    //0.301625 - sideways
+    //0.301625 - longways
+    public static final Translation2d kFrontLeftLocation = new Translation2d(0.301625,0.301625); // +X is forward, +Y is to the right 
+    public static final Translation2d kFrontRightLocation = new Translation2d(0.301625,-0.301625); // +X is forward, +Y is to the right
+    public static final Translation2d kBackLeftLocation = new Translation2d(-0.301625,0.301625); // +X is forward, +Y is to the right
+    public static final Translation2d kBackRightLocation = new Translation2d(-0.301625,-0.301625); // +X is forward, +Y is to the right
     
     public static final double kRadius = kFrontLeftLocation.getDistance(kBackRightLocation)/2;
 
@@ -125,12 +118,11 @@ public final class Constants {
     public static final Pose2d kBluePoseSpeakerBumperTop  = new Pose2d(0.71, 6.74, new Rotation2d(Units.degreesToRadians(-120)));
     public static final Pose2d kBluePoseSpeakerBumperMiddle  = new Pose2d(1.37, 5.55, new Rotation2d(Units.degreesToRadians(180)));
     public static final Pose2d kBluePoseSpeakerBumperBottom  = new Pose2d(0.69, 4.35, new Rotation2d(Units.degreesToRadians(120)));
-    public static final Pose2d kBlueSpeaker = new Pose2d(-0.381, 5.55, new Rotation2d(180));
+    public static final Pose2d kBlueSpeaker = new Pose2d(0.0, 5.55, new Rotation2d(180));//-0.381, 5.55, new Rotation2d(180));
     public static final Pose2d kTestPoint = new Pose2d(2.831, 5.55, new Rotation2d(180));
-    public static final Pose3d kBluePoseSpeaker = new Pose3d(kBlueSpeaker.getX(), kBlueSpeaker.getY(), 1.7272, new Rotation3d(0,0,kBlueSpeaker.getRotation().getRadians()));
+    public static final Pose3d kBluePoseSpeaker = new Pose3d(kBlueSpeaker.getX(), kBlueSpeaker.getY(), 1.9812, new Rotation3d(0,0,kBlueSpeaker.getRotation().getRadians()));
 
-
-    public static final Pose2d kPoseAmpLocation  = new Pose2d(1.82, 7.59, new Rotation2d(Units.degreesToRadians(90)));
+    public static final Pose2d kPoseAmpLocation  = new Pose2d(1.82, 7.59, new Rotation2d(Units.degreesToRadians(90)));  //X was 1.82
     public static final Pose2d kPoseFeederLocationFar  = new Pose2d(15.89,1.36, new Rotation2d(Units.degreesToRadians(-60)));  
     public static final Pose2d kPoseFeederLocationClose  = new Pose2d(15.08,0.82, new Rotation2d(Units.degreesToRadians(-60)));
 
@@ -139,14 +131,11 @@ public final class Constants {
 
 
     //PathPlanner Ending Points
-    public static final Pose2d kRobotToAmp = new Pose2d(1.82, 7.59 - Units.inchesToMeters(30), new Rotation2d(Units.degreesToRadians(-90)));
-    public static final Pose2d kAmpScoringPose = new Pose2d(1.82, 7.59 - Units.inchesToMeters(8), new Rotation2d(Units.degreesToRadians(-90)));
-
+    public static final Pose2d kRobotToAmp = new Pose2d(2.3, 7.55 - Units.inchesToMeters(30), new Rotation2d(Units.degreesToRadians(-90)));
+    public static final Pose2d kAmpScoringPose = new Pose2d(2.3, 7.55 - Units.inchesToMeters(8), new Rotation2d(Units.degreesToRadians(-90)));
 
     //Auto Rotate PID
     public static final PIDController kAutoRotatePID = new PIDController(0.07, 0.0001,.005);//(0.06, 0.0001, 0.0025);//, //new Constraints(300000, 150000));
-
-
 
     //Game piece locations
     public static final Translation2d kNoteCenterFar  = new Translation2d(8.27,7.465);
@@ -165,16 +154,8 @@ public final class Constants {
   
     //On-the-fly Trajectory Generation
 
-
     //Tolerance offests
     public static final Pose2d kPositionTolerance= new Pose2d(Units.feetToMeters(1),Units.feetToMeters(1),new Rotation2d(3));
-    
-    
-  
-  
-  
-  
-
   }
 
   /**
@@ -209,7 +190,6 @@ public final class Constants {
     public static final double kLineupAccuracy = 2.0;
 
     public static final String klimelightName = "limelight";
-
   }
 
   /**
@@ -225,7 +205,7 @@ public final class Constants {
   /**
    * Intake constants 
    */
-    public static final class IntakeConstants  {
+    public static final class IntakeConstants {
 
     public static final int kIntakeEncoderCPR = 42;
 
@@ -235,46 +215,57 @@ public final class Constants {
     public static final double kCamGearRatio = 47915 / 486; // 12/74, 18/74, 18/70
     public static final double kCamOpenPose = 2265.0;
     public static final double kCamClosedPose = 0.0;
-    public static final double kIntakeSpeed = 12.0;
+    // public static final double kIntakeSpeed = 12.0*.8;
+    public static final double kIntakeRPM = 4100;
     
     public static final int kIntakeMode = 1; //0 = Roller, 1 = Clamp
 
-    public static final int kIntakeMotorFrontID = 22;
-    public static final int kIntakeMotorBackID  = 29; //change back to 23
-    public static final int kIntakeMotorRightID = 25;
-    public static final int kIntakeMotorLeftID  = 27;
+    public static final int kIntakeMotorFrontID = 21;
+    public static final int kIntakeMotorBackID  = 23; //change back to 23
+    public static final int kIntakeMotorLeftID  = 25;
+    public static final int kIntakeMotorRightID = 27;
+
+    public static final double kIntake_P = 0.00005;
+    public static final double kIntake_I = 0.0; 
+    public static final double kIntake_D = 0.0;
+    public static final double kIntake_FF = 0.01;
+    public static final double kIntake_IZone = 0;
+    public static final double kIntake_Min = -1;
+    public static final double kIntake_Max = 1;
+    public static final double[] kIntakePIDList = {kIntake_P,kIntake_I,kIntake_D,
+                                        kIntake_FF,kIntake_IZone,kIntake_Min,kIntake_Max};
   }
 
   /**
    * feeder constants 
    */
-  public static final class FeederConstants  {
+  public static final class FeederConstants {
     public static final int kFeederStage1MotorID  = 31;
     public static final int kFeederStage2MotorID  = 32;
 
+    public static final double kFeederLoadRPM   = 5000; //4200; //4750 max
+    public static final double kFeederLowRPM    = 1000;
+    public static final double kFeederShootRPM  = 5000; //4200;  //In the event the load and shoot RPMs are the same, remove this
+
+    
     //PID values
     //make sure the PID values get tuned
-    
-    public static final double kFeederStage1Motor_P = 0.00015;
-    public static final double kFeederStage1Motor_I = 0.000001; 
-    public static final double kFeederStage1Motor_D = 0.006;
-    public static final double kFeederStage1Motor_FF = 0.0;
+    public static final double kFeederStage1Motor_P = 0.00001;
+    public static final double kFeederStage1Motor_I = 0.0; 
+    public static final double kFeederStage1Motor_D = 0.0;
+    public static final double kFeederStage1Motor_FF = 0.00021;
     public static final double kFeederStage1Motor_IZone = 0;
     public static final double kFeederStage1Motor_Min = -1;
     public static final double kFeederStage1Motor_Max = 1;
     public static final double[] kFeederStage1PIDList = {kFeederStage1Motor_P,kFeederStage1Motor_I,kFeederStage1Motor_D,
                                         kFeederStage1Motor_FF,kFeederStage1Motor_IZone,kFeederStage1Motor_Min,kFeederStage1Motor_Max};
 
-
-    
-    
     //PID values
     //make sure the PID values get tuned
-
-    public static final double kFeederStage2Motor_P = 0.00015;
-    public static final double kFeederStage2Motor_I = 0.000001; 
-    public static final double kFeederStage2Motor_D = 0.006;
-    public static final double kFeederStage2Motor_FF = 0.0;
+    public static final double kFeederStage2Motor_P = 0.00001;
+    public static final double kFeederStage2Motor_I = 0.0; 
+    public static final double kFeederStage2Motor_D = 0.0;
+    public static final double kFeederStage2Motor_FF = 0.00021;
     public static final double kFeederStage2Motor_IZone = 0;
     public static final double kFeederStage2Motor_Min = -1;
     public static final double kFeederStage2Motor_Max = 1;
@@ -286,26 +277,27 @@ public final class Constants {
   /**
    * Arm constants 
    */
-  public static final class ArmConstants  {
+  public static final class ArmConstants {
     //arm motor ids
     public static final int kArmMasterMotorID  = 41;
-    public static final int kArmSlaveMotorID    = 42;
+    public static final int kArmSlaveMotorID   = 42;
 
     //gearbox ratios
-    public static final double kPivotArmGearRatio = 360/45; //42*45;
+    public static final double kPivotArmGearRatio = 360/45/3; //42*45;
 
     //arm angles for different shots
     public static final double kBumperShotAngle = 75;
-    public static final double kParkAngle = -10;
+    public static final double kParkAngle = 4; // 0; Safe place for the arm to both drive under the stage and see targets
+    public static final double kDownAngle = 0; 
     public static final double kAmpAngle = 90;
-    public static final double kFartherShotAngle = 45;
-    public static final double kThresholdArm = 0.5;
+    public static final double kFartherShotAngle = 35;
+    public static final double kThresholdArm = 0.25;
     
     //PID values for arm motors
     //make sure the PID values get tuned
-    public static final double kPivotArm_P = 0.015;
-    public static final double kPivotArm_I = 0.000001; 
-    public static final double kPivotArm_D = 0.006;
+    public static final double kPivotArm_P = 0.1;
+    public static final double kPivotArm_I = 0.000001;
+    public static final double kPivotArm_D = 0.0006;
     public static final double kPivotArm_FF = 0.0;
     public static final double kPivotArm_IZone = 0;
     public static final double kPivotArm_Min = -1;
@@ -313,49 +305,49 @@ public final class Constants {
     public static final double[] kPivotArmPIDList = {kPivotArm_P,kPivotArm_I,kPivotArm_D,
                                         kPivotArm_FF,kPivotArm_IZone,kPivotArm_Min,kPivotArm_Max};
 
-    public static final double kArmScalingFactor = -360;
-    public static final double kArmAbsEncoderOffset = -107.0;
+    public static final double kArmScalingFactor = 360/3;
+    public static final double kArmClockingOffset = -108.5; //Value to correct for absolute encoder clocking 
+    public static final double kArmAbsEncoderOffset = 10; // value to offset the arm to horizontal
+    public static final double kMaxShootingDistance = 6.2; //Further distance the arm can make adjustments for
   }
 
- /**
+  /**
    * Shooter constants 
    */
-  public static final class ShooterConstants  {    
-    // public static final int kShooterMotorID = 30; //keep as 30 once move arm testing is done
+  public static final class ShooterConstants {    
     public static final int kShooterMotorTopID = 51;
     public static final int kShooterMotorBottomID = 52;
     public static final int kShooterMotorAmpID = 53;
 
     //speeds for different shots
-    public static final int kShooterTargetSpeed = 1000;
+    //public static final int kShooterTargetSpeed = 1000;
 
     //gearbox ratios
     public static final int kShooterGearRatio = 1;
     
     //speed constants
-    public static final double kShooterBumperShotMPS = 1000;
-    public static final double kShooterPodiumShotMPS = 1250;
-    public static final double kShooterFartherShotMPS = 1500;
-    public static final double kAmpMPS = 500;
-    
-    public static final double kThreshhold = 0.75;
+    public static final double kShooterSpeakerRPM = 4000;
+    // public static final double kShooterPodiumShotRPM = 4000;
+    public static final double kShooterAmpRPM = 1000;
+    public static final double kShooterLowRPM = 1000;
+    public static final double kThreshhold = 0.98;
     
     //PID constants
     //make sure the PID values get tuned
 
-    public static final double kShooterTop_P = 0.00015;
-    public static final double kShooterTop_I = 0.000001; 
-    public static final double kShooterTop_D = 0.006;
-    public static final double kShooterTop_FF = 0.0;
+    public static final double kShooterTop_P = 0.0001; //0.00005;
+    public static final double kShooterTop_I = 0.0; //0.000001; 
+    public static final double kShooterTop_D = 0.0; //0.0004;
+    public static final double kShooterTop_FF = 0.003; //0.0;
     public static final double kShooterTop_IZone = 0;
     public static final double kShooterTop_Min = -1;
     public static final double kShooterTop_Max = 1;
     public static final double[] kShooterTopPIDList = {kShooterTop_P,kShooterTop_I,kShooterTop_D,
                                         kShooterTop_FF,kShooterTop_IZone,kShooterTop_Min,kShooterTop_Max};
-    public static final double kShooterAmp_P = 0.00015;
-    public static final double kShooterAmp_I = 0.000001; 
-    public static final double kShooterAmp_D = 0.006;
-    public static final double kShooterAmp_FF = 0.0;
+    public static final double kShooterAmp_P = 0.0001; //0.00005;
+    public static final double kShooterAmp_I = 0.0; //0.000001; 
+    public static final double kShooterAmp_D = 0.0; //0.0004;
+    public static final double kShooterAmp_FF = 0.003; //0.0;
     public static final double kShooterAmp_IZone = 0;
     public static final double kShooterAmp_Min = -1;
     public static final double kShooterAmp_Max = 1;
@@ -365,23 +357,52 @@ public final class Constants {
   }
 
   /**
+   * Climber constants
+   */
+  public static final class ClimberConstants {
+    public static final int kClimberMotorID = 61;
+
+    //gearbox ratio
+    public static final double kClimberGearRatio = 45/1; //42*45;
+    public static final double kClimberSpoolDiameter = Units.inchesToMeters(2);
+    public static final double kClimberConversionFactor = kClimberGearRatio*Math.PI*Math.pow(kClimberSpoolDiameter,2)/4;
+
+
+    public static final double kClimber_P = 0.1;
+    public static final double kClimber_I = 0.000001;
+    public static final double kClimber_D = 0.0006;
+    public static final double kClimber_FF = 0.0;
+    public static final double kClimber_IZone = 0;
+    public static final double kClimber_Min = -1;
+    public static final double kClimber_Max = 1;
+    public static final double[] kClimberPIDList = {kClimber_P,kClimber_I,kClimber_D,
+                                        kClimber_FF,kClimber_IZone,kClimber_Min,kClimber_Max};
+  }
+  /**
     * User Controller constants 
     */
   public static final class ControllerConstants {
     public static final int kDriverControllerPort     = 0;
     public static final int kOperatorControllerPort   = 1;
+    public static final int kClimberControllerPort    = 2;
+    public static final int kAdaptiveControllerPort   = 3;
+
     
     // Driver
     public static final double kDriverDeadBandLeftX   = 0.1;
     public static final double kDriverDeadBandRightX  = 0.2;
     public static final double kDriverDeadBandLeftY   = 0.1;
     public static final double kDriverDeadBandRightY  = 0.2;
+    public static final double kDriverDisableAutoTargeting = 0.5;
 
     // Operator
     // public static final double kOperatorDeadBandLeftX   = 0.1;
     // public static final double kOperatorDeadBandRightX  = 0.2;
-    // public static final double kOperatorDeadBandLeftY   = 0.1;
+    public static final double kOperatorDeadBandLeftY   = 0.1;
     // public static final double kOperatorDeadBandRightY  = 0.2;
+
+    // Climber
+        public static final double kClimberDeadBandLeftY = 0.2;
   }
 
   /**
@@ -407,6 +428,9 @@ public final class Constants {
 
   }
 
+  /**
+   * Vision Processor constants
+   */
   public static final class VisionProcessorConstants {
 
     public static final int CANdleID = 1;

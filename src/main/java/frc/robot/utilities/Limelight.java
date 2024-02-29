@@ -1,6 +1,6 @@
 //LimelightHelpers v1.2.1 (March 1, 2023)
 
-package frc.robot.subsystems.vision;
+package frc.robot.utilities;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -429,8 +429,8 @@ public class Limelight {
         return getLimelightNTDoubleArray(limelightName, "botpose_wpiblue");
     }
 
-    public static double[] getBotPose_TargetSpace(String limelightName) {
-        return getLimelightNTDoubleArray(limelightName, "botpose_targetspace");
+    public static Pose2d getBotPose_TargetSpace(String limelightName) {
+        return toPose2D(getLimelightNTDoubleArray(limelightName, "botpose_targetspace"));
     }
 
     public static double[] getCameraPose_TargetSpace(String limelightName) {
@@ -441,8 +441,8 @@ public class Limelight {
         return getLimelightNTDoubleArray(limelightName, "targetpose_cameraspace");
     }
 
-    public static double[] getTargetPose_RobotSpace(String limelightName) {
-        return getLimelightNTDoubleArray(limelightName, "targetpose_robotspace");
+    public static Pose2d getTargetPose_RobotSpace(String limelightName) {
+        return toPose2D(getLimelightNTDoubleArray(limelightName, "targetpose_robotspace"));
     }
 
     public static double[] getTargetColor(String limelightName) {

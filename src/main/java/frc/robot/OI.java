@@ -1,41 +1,48 @@
 package frc.robot;
 
 import frc.robot.Constants.ControllerConstants;
-import frc.robot.commands.shooter.SetShooterSpeedBumperShot;
-import frc.robot.commands.PivotArm.EnableArmAutoAim;
-import frc.robot.commands.PivotArm.armToFartherShotAngle;
-import frc.robot.commands.PivotArm.armToParkShotAngle;
-import frc.robot.commands.ShootSpeakerBumperShotSCG;
-import frc.robot.commands.PivotArm.armToAmpShotAngle;
-import frc.robot.commands.shooter.ShooterOff;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.PivotArm;
-import frc.robot.subsystems.Feeder;
-import frc.robot.commands.drive.DisableAutoTargetSpeaker;
-import frc.robot.commands.drive.DriveToAmp;
-import frc.robot.commands.drive.EnableAutoTargetSpeaker;
-import frc.robot.commands.intake.IntakeAllIn;
-import frc.robot.commands.intake.IntakeAllOut;
-import frc.robot.commands.intake.IntakeEjectBack;
-import frc.robot.commands.intake.IntakeOff;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
+//Command Imports
+import frc.robot.commands.drive.SetRumble;
+import frc.robot.commands.drive.DriveToAmp;
+import frc.robot.commands.drive.ResetDrive;
+import frc.robot.commands.drive.ResetGyro;
+import frc.robot.commands.groups.IntakeNote;
+import frc.robot.commands.intake.IntakeAllOut;
+import frc.robot.commands.intake.IntakeOff;
+import frc.robot.commands.PivotArm.armToParkShotAngle;
+import frc.robot.commands.PivotArm.armToAmpShotAngle;
+import frc.robot.commands.shooter.ShooterOff;
+import frc.robot.commands.shooter.SetShooterSpeedAmp;
+import frc.robot.commands.shooter.SetShooterSpeedSpeaker;
+import frc.robot.commands.AllSystemsOff;
+import frc.robot.commands.AllSystemsOn;
+import frc.robot.commands.ShootAmpSequence;
+import frc.robot.commands.ShootSpeakerPCG;
+import frc.robot.commands.Feeder.FeederForward;
+import frc.robot.commands.Feeder.FeederOff;
+import frc.robot.commands.Feeder.FeederReverse;
+import frc.robot.commands.shooter.ShooterReverse;
 //Subsysem Imports
 import frc.robot.subsystems.drive.Drivetrain;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Feeder;
+import frc.robot.subsystems.PivotArm;
 import frc.robot.subsystems.Shooter;
 
-
-import frc.robot.subsystems.Intake;
+import frc.robot.Constants.ArmConstants;
 
 public class OI {
 
   // Gamepads
   public final static XboxController driverController = new XboxController(ControllerConstants.kDriverControllerPort); // Driver
   public final static XboxController operatorController = new XboxController(ControllerConstants.kOperatorControllerPort); // Operator
-  // public final static XboxController climberController  = new XboxController(ControllerConstants.kClimberControllerPort); // Climber
-  // public final static XboxController adaptiveGamepad = new XboxController(ControllerConstants.kAdaptiveControllerPort); // Adaptive
+  public final static XboxController climberController  = new XboxController(ControllerConstants.kClimberControllerPort); // Climber
+  public final static XboxController adaptiveGamepad = new XboxController(ControllerConstants.kAdaptiveControllerPort); // Adaptive
 
   /*
    * Driver JoystickButton
@@ -65,6 +72,7 @@ public class OI {
     return deadBand(driverController.getRightY(), ControllerConstants.kDriverDeadBandRightY);
   }
 
+  
   // public static double getOperatorLeftX() {
   // 	return deadBand(operatorController.getLeftX(), ControllerConstants.kOperatorDeadBandLeftX);
   // }
@@ -73,18 +81,18 @@ public class OI {
   // 	return deadBand(operatorController.getRightX(), ControllerConstants.kOperatorDeadBandRightX);
   // }
 
-  // public static double getOperatorLeftY() {
-  // 	return deadBand(operatorController.getLeftY(), ControllerConstants.kOperatorDeadBandLeftY);
-  // }
+  public static double getOperatorLeftY() {
+  	return deadBand(operatorController.getLeftY(), ControllerConstants.kOperatorDeadBandLeftY);
+  }
 
   // public static double getOperatorRightY() {
   // 	return deadBand(operatorController.getRightY(), ControllerConstants.kOperatorDeadBandRightY);
   // }
 
-  // public static double getClimberLeftY() {
-  // 	return deadBand(climberController.getLeftY(), ControllerConstants.kClimberDeadBandLeftY);
+  public static double getClimberLeftY() {
+  	return deadBand(climberController.getLeftY(), ControllerConstants.kClimberDeadBandLeftY);
 
-  // }
+  }
 
   // public static double getClimberRightY() {
   // 	return deadBand(climberController.getRightY(), ControllerConstants.kClimberDeadBandRightY);
@@ -94,91 +102,65 @@ public class OI {
 
     //DRIVER//
     new JoystickButton(driverController, Button.kA.value) //TODO Change these buttons, current commands only for testing
-    		.onTrue(new IntakeAllOut(m_intake))
+    		.onTrue(new IntakeNote(m_intake, m_feeder));
+
+    // new JoystickButton(driverController, Button.kB.value); //TODO Change these buttons, current commands only for testing
+    		
+    new JoystickButton(driverController, Button.kX.value)
+        .onTrue(new AllSystemsOff(m_intake, m_feeder, m_shooter)); //TODO Change these buttons, current commands only for testing
+
+    new JoystickButton(driverController, Button.kY.value)
+        .whileTrue(new IntakeAllOut(m_intake, m_feeder))
     		.onFalse(new IntakeOff(m_intake));
 
-    new JoystickButton(driverController, Button.kB.value) //TODO Change these buttons, current commands only for testing
-    		.onTrue(new IntakeAllIn(m_intake))
-    		.onFalse(new IntakeOff(m_intake));
-
-    new JoystickButton(driverController, Button.kX.value) //TODO Change these buttons, current commands only for testing
-    		.onTrue(new IntakeEjectBack(m_intake))
-    		.onFalse(new IntakeOff(m_intake));
-
-    // new JoystickButton(driverController, Button.kY.value)
-    // 		.onTrue(new /*Command*/);
-
-    new JoystickButton(driverController, Button.kRightBumper.value)
-     		.toggleOnTrue(new DriveToAmp(m_drive));
-    
-    // new JoystickButton(driverController, Button.kStart.value)
-    // 		.onTrue(new /*Command*/);
-
-    // new JoystickButton(driverController, Button.kBack.value)
-    // 		.onTrue(new /*Command*/)
-    // 		.onTrue(new /*Command*/);
+    new JoystickButton(driverController, Button.kBack.value) //Fix
+        .onTrue(new ResetGyro(m_drive))
+        .onFalse(new SetRumble());
 
     new JoystickButton(driverController, Button.kLeftBumper.value)
-    		//.whileHeld((new AutoTargetSpeaker(m_drive)));
-        .whileTrue(new ShootSpeakerBumperShotSCG(m_drive, m_feeder, m_shooter, m_PivotArm));
-        // .whileFalse(new DisableAutoTargetSpeaker(m_drive));
-
-    // new JoystickButton(driverController, Button.kRightStick.value)
-    // 		.onTrue(new /*Command*/);
-        
-    // new JoystickButton(driverController, Button.kLeftStick.value)
-    // 		.onTrue(new /*Command*/);
-      
-    // new DPadButton(driverController, DPadButton.Direction.UP)
-    // 		.onTrue(new /*Command*/);
-
-    // new DPadButton(driverController, DPadButton.Direction.DOWN)
-    // 		.whileTrue(new /*Command*/);
-
-
+        .onTrue(new ShootSpeakerPCG(m_drive, m_intake, m_feeder, m_PivotArm, m_shooter));
+    
+    new JoystickButton(driverController, Button.kRightBumper.value)
+        .onTrue(new DriveToAmp(m_drive));
+    
     //OPERATOR//
-        
-    // new JoystickButton(operatorController, Button.kA.value)
-    // 		.onTrue(new /*Command*/)
-    // 		.whenReleased(new /*Command*/);
-
-    
-
-    // new JoystickButton(operatorController, Button.kX.value)
-    // 		.onTrue(new /*Command*/)
-    // 		.whenReleased(new /*Command*/);
-
-    // new JoystickButton(driverController, Button.kY.value)
-    // 		.onTrue(new /*Command*/);
-
-    // new JoystickButton(operatorController, Button.kStart.value)
-    // 		.onTrue(new /*Command*/);
-
-    // new JoystickButton(operatorController, Button.kBack.value)
-    // 		.whileTrue(new /*Command*/);
-
-    // new JoystickButton(operatorController, Button.kLeftBumper.value)
-    // 		.onTrue(new /*Command*/);
-    
-    //testing button
-    new JoystickButton(operatorController, Button.kRightBumper.value)
-    		.onTrue(new SetShooterSpeedBumperShot(m_shooter));
-    
-    //testing button
-    new JoystickButton(operatorController, Button.kA.value)
-    		.onTrue(new armToParkShotAngle(m_PivotArm));
-
-    //testing button
+  
     new JoystickButton(operatorController, Button.kB.value)
-    		.onTrue(new armToFartherShotAngle(m_PivotArm));
-    
-    //testing button
-    new JoystickButton(operatorController, Button.kLeftBumper.value)
-    		.whileTrue(new EnableArmAutoAim(m_PivotArm,m_drive));
-    
-    //testing button
+        .onTrue(new FeederForward(m_feeder))
+        .onFalse(new FeederOff(m_feeder));
+
     new JoystickButton(operatorController, Button.kY.value)
-    		.onTrue(new armToAmpShotAngle(m_PivotArm));
+        .onTrue(new armToAmpShotAngle(m_PivotArm));
+    
+    new JoystickButton(operatorController, Button.kA.value)
+        .onTrue(new armToParkShotAngle(m_PivotArm, ArmConstants.kParkAngle));
+
+    new JoystickButton(operatorController, Button.kX.value)
+    		.onTrue(new FeederReverse(m_feeder))
+        .onTrue(new ShooterReverse(m_shooter))
+        .onFalse(new FeederOff(m_feeder))
+        .onFalse(new ShooterOff(m_shooter));
+
+    new JoystickButton(operatorController, Button.kLeftBumper.value)     
+      .onTrue(new SetShooterSpeedSpeaker(m_shooter))
+      .onFalse(new ShooterOff(m_shooter));
+
+    new JoystickButton(operatorController, Button.kRightBumper.value)
+    		.onTrue(new ShootAmpSequence(m_drive, m_feeder, m_shooter, m_PivotArm));
+    
+    new JoystickButton(operatorController, Button.kRightStick.value)
+    		.onTrue(new SetShooterSpeedAmp(m_shooter))
+        .onFalse(new ShooterOff(m_shooter));
+
+    new JoystickButton(operatorController, Button.kLeftStick.value)
+        .onTrue(new armToParkShotAngle(m_PivotArm, ArmConstants.kDownAngle));
+
+    
+    //Adaptive Buttons
+    new JoystickButton(adaptiveGamepad, Button.kA.value)
+        .onTrue(new AllSystemsOn(m_intake, m_feeder, m_shooter));
+    new JoystickButton(adaptiveGamepad, Button.kB.value)
+        .onTrue(new AllSystemsOff(m_intake, m_feeder, m_shooter));
 
     //testing button
     // new JoystickButton(operatorController, Button.kRightStick.value)

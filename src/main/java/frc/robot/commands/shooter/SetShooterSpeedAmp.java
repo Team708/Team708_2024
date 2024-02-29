@@ -11,14 +11,14 @@ import frc.robot.subsystems.Shooter;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class SetShooterSpeedFartherShot extends Command {
-  private Shooter m_shooter;
+public class SetShooterSpeedAmp extends Command {
+  Shooter m_shooter;
 
   /** Creates a new Shoot. */
 
 
-  public SetShooterSpeedFartherShot(Shooter shooter) {
-    this.m_shooter = shooter;
+  public SetShooterSpeedAmp(Shooter shooter) {
+    m_shooter = shooter;
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
@@ -26,16 +26,16 @@ public class SetShooterSpeedFartherShot extends Command {
   }
 
   @Override
-  public void initialize(){
+  public void initialize() {
     
   }
 
-  public void execute(){
-    m_shooter.setShooterSpeedSpeaker(ShooterConstants.kShooterFartherShotMPS);
+  public void execute() {
+    m_shooter.setShooterSpeedAmp();
   }
   
   @Override
-  public boolean isFinished(){
-    return m_shooter.isShooterSpeakerAtSpeed(ShooterConstants.kShooterFartherShotMPS);
+  public boolean isFinished() {
+    return m_shooter.isAtSpeed();
   }
 }

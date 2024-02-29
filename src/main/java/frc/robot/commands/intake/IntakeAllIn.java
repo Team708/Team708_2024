@@ -13,21 +13,20 @@ public class IntakeAllIn extends Command{
     /** Creates a new IntakeOut. */
     public IntakeAllIn(Intake intake) {
         m_intake = intake;
-        addRequirements(m_intake); // This is important to inform the scheduler about the subsystem usage
+        addRequirements(m_intake);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
         // You can perform any initialization here.
+        m_intake.intakeAll();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
         // Call the method from the Intake subsystem to intake all
-        m_intake.intakeAll();
-        System.out.println("Running");
     }
 
     // Called once the command ends or is interrupted.
@@ -35,6 +34,7 @@ public class IntakeAllIn extends Command{
     public void end(boolean interrupted) {
         // You can perform any actions when the command ends or is interrupted.
         // For example, stop the intake subsystem.
+        // m_intake.intakeOff();
     }
 
     // Returns true when the command should end.

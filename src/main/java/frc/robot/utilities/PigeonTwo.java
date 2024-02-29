@@ -1,4 +1,4 @@
-package frc.robot.subsystems.drive;
+package frc.robot.utilities;
 
 // import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix6.StatusCode;
@@ -51,16 +51,16 @@ public class PigeonTwo {
             // config.MountPoseYaw = 0;
 
             //Sets pigeon default mountings to values determined above
-            m_pigeon2.getConfigurator().apply(config); //configAllSettings(config); //TODO
+            m_pigeon2.getConfigurator().apply(config); //configAllSettings(config);
 
             //Gets gravity vectory and assigns it to a_gravityVector
-            // m_pigeon2.getGravityVector(a_gravityVector); //TODO
+            // m_pigeon2.getGravityVector(a_gravityVector);
 
             //Assigns faultLog to record errors
-            // faults = m_pigeon2.getFaults(faultLog); //TODO
+            // faults = m_pigeon2.getFaults(faultLog);
         }catch(Exception e){
             System.out.println("PIGEON INSTANTATION FAILED");
-            // m_pigeon2.DestroyObject();// TODO
+            // m_pigeon2.DestroyObject();
             e.printStackTrace();
         }
     }
@@ -75,7 +75,7 @@ public class PigeonTwo {
     }
 
     public Rotation2d getAngle(){
-        double yaw = m_pigeon2.getYaw().getValue(); //TODO NEGATED YAW FIXES AUTOS
+        double yaw = m_pigeon2.getYaw().getValue();
         return Rotation2d.fromDegrees(yaw);
     }
 

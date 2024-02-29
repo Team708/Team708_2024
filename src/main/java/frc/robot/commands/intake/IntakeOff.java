@@ -13,19 +13,19 @@ public class IntakeOff extends Command {
   public IntakeOff(Intake intake) {
     m_intake = intake;
 
-    addRequirements(m_intake);
-    //TODO Command, Intake 
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(m_intake);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+        m_intake.intakeOff(); 
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_intake.intakeOff(); 
   }
 
   // Called once the command ends or is interrupted.
@@ -35,6 +35,6 @@ public class IntakeOff extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

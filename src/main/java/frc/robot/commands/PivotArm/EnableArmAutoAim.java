@@ -13,13 +13,11 @@ import frc.robot.subsystems.drive.Drivetrain;
 
 public class EnableArmAutoAim extends Command {
   
-  PivotArm m_pivotArm;
-  Drivetrain m_drive;
-  double angle;
+  private PivotArm m_pivotArm;
+  private double angle;
   
-  public EnableArmAutoAim(PivotArm pivotArm, Drivetrain drive) {
+  public EnableArmAutoAim(PivotArm pivotArm) {
     m_pivotArm = pivotArm;
-    m_drive = drive;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_pivotArm);
   }
@@ -27,28 +25,31 @@ public class EnableArmAutoAim extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    // SmartDashboard.putString("Command", this.getName() + ": Init");
   }
   
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute(){
-    angle = Units.radiansToDegrees(Math.atan2(1.7272, m_drive.getDistanceToTarget()));
+  public void execute() {
+    // angle = Units.radiansToDegrees(Math.atan2(1.9812, m_drive.getDistanceToTarget()));
+    angle = m_pivotArm.findArmAngle();
     m_pivotArm.setArmAngle(angle);
-    SmartDashboard.putNumber("commanded angle", angle);
-      //replace constant with method from pivotArm subsystem
+    // SmartDashboard.putNumber("commanded angle", angle);
+    //replace constant with method from pivotArm subsystem
     //method would take parameter of distance from speaker, then use regression to get arm angle
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    // m_drive.disableAutoRot();
+    // m_drive.setAutoRot(false);
+    // SmartDashboard.putString("Command", this.getName() + ": End");
   }
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
+  // // Returns true when the command should end.
+  // @Override
+  // public boolean isFinished() {
+  //   return false;
+  // }
 
 }
