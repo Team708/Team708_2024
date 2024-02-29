@@ -33,8 +33,8 @@ public final class Constants {
   public static final class CurrentLimit {
     public static final int kIntakeAmps = 40;
     public static final int kFeederAmps = 40;
-    public static final int kArmAmps = 25;
-    public static final int kShooterAmps = 35;
+    public static final int kArmAmps = 25;  //25
+    public static final int kShooterAmps = 40; //35
     public static final int kClimberAmps = 40;
 
     public static final int kTranslationAmps = 40;
@@ -162,9 +162,9 @@ public final class Constants {
    * Swerve Module constants 
    */
   public static final class ModuleConstants {
-    public static final double kTranslationRampRate = 3.0;          //Units of %power/s, ie 4.0 means it takes 0.25s to reach 100% power from 0%
-    private static final double kTranslationGearRatio = 5.6111111; //Overall gear ratio of the swerve module
-    private static final double kWheelDiameterMeters = 0.0777*0.98;           //Wheel Diameter in meters, may need to be experimentally determined due to compliance of floor/tread material
+    public static final double kTranslationRampRate = 3.0;            //Units of %power/s, ie 4.0 means it takes 0.25s to reach 100% power from 0%
+    private static final double kTranslationGearRatio = (50*17*45)/(14*27*15);//5.6111111;    //Overall gear ratio of the swerve module
+    private static final double kWheelDiameterMeters = 0.095;//0.0777*0.98;   //Wheel Diameter in meters, may need to be experimentally determined due to compliance of floor/tread material
 
     public static final double kVelocityFactor = (1.0 / kTranslationGearRatio / 60.0) * kWheelDiameterMeters * Math.PI; //Calculates the conversion factor of RPM of the translation motor to m/s at the floor
 
@@ -216,7 +216,7 @@ public final class Constants {
     public static final double kCamOpenPose = 2265.0;
     public static final double kCamClosedPose = 0.0;
     // public static final double kIntakeSpeed = 12.0*.8;
-    public static final double kIntakeRPM = 4100;
+    public static final double kIntakeRPM = 5000; //4100
     
     public static final int kIntakeMode = 1; //0 = Roller, 1 = Clamp
 
@@ -243,9 +243,9 @@ public final class Constants {
     public static final int kFeederStage1MotorID  = 31;
     public static final int kFeederStage2MotorID  = 32;
 
-    public static final double kFeederLoadRPM   = 5000; //4200; //4750 max
+    public static final double kFeederLoadRPM   = 5200; //4200; //4750 max
     public static final double kFeederLowRPM    = 1000;
-    public static final double kFeederShootRPM  = 5000; //4200;  //In the event the load and shoot RPMs are the same, remove this
+    public static final double kFeederShootRPM  = 5200; //4200;  //In the event the load and shoot RPMs are the same, remove this
 
     
     //PID values
