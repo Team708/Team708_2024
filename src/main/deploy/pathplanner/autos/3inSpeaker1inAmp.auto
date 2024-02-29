@@ -54,18 +54,18 @@
           "data": {
             "commands": [
               {
-                "type": "wait",
-                "data": {
-                  "waitTime": 9.0
-                }
-              },
-              {
                 "type": "path",
                 "data": {
                   "pathName": "3inSpeaker1inAmp"
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "DriveToAmp"
           }
         }
       ]

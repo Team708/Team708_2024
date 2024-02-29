@@ -546,7 +546,14 @@ rotateToTarget(chassisSpeeds.omegaRadiansPerSecond));
   }
 
   public double getDistanceToTarget() {
-    return getPose().getTranslation().getDistance(DriveConstants.kBlueSpeaker.getTranslation());
+    if(FMSData.allianceIsRed())
+    {
+      return getPose().getTranslation().getDistance(GeometryUtil.flipFieldPose(DriveConstants.kBlueSpeaker).getTranslation());
+    }
+    else{
+      return getPose().getTranslation().getDistance(DriveConstants.kBlueSpeaker.getTranslation());
+    }
+   
   }
 
   public Trajectory createTrajectory(Pose2d desiredPose) {
