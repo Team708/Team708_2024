@@ -15,6 +15,7 @@ import frc.robot.commands.groups.IntakeNote;
 import frc.robot.commands.intake.IntakeAllOut;
 import frc.robot.commands.intake.IntakeOff;
 import frc.robot.commands.PivotArm.armToParkShotAngle;
+import frc.robot.commands.PivotArm.armToTrapShotAngle;
 import frc.robot.commands.PivotArm.armToAmpShotAngle;
 import frc.robot.commands.shooter.ShooterOff;
 import frc.robot.commands.shooter.SetShooterSpeedAmp;
@@ -168,8 +169,8 @@ public class OI {
     
     //Climber//
 
-    // new JoystickButton(climberController, Button.kY.value)
-    // 	.onTrue(new /*Command*/);
+    new JoystickButton(climberController, Button.kY.value)
+    	.onTrue(new armToTrapShotAngle(m_PivotArm));
 
     // new JoystickButton(climberController, Button.kA.value)
     // 	.onTrue(new /*Command*/);

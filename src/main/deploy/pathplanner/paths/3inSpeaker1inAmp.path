@@ -132,7 +132,7 @@
       "name": "ShooterOn",
       "waypointRelativePos": 3.5,
       "command": {
-        "type": "deadline",
+        "type": "sequential",
         "data": {
           "commands": [
             {
@@ -149,7 +149,7 @@
       "name": "AutoShoot",
       "waypointRelativePos": 3.8000000000000003,
       "command": {
-        "type": "deadline",
+        "type": "sequential",
         "data": {
           "commands": [
             {

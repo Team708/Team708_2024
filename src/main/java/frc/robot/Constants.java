@@ -32,7 +32,7 @@ public final class Constants {
 
   public static final class CurrentLimit {
     public static final int kIntakeAmps = 40;
-    public static final int kFeederAmps = 40;
+    public static final int kFeederAmps = 100;
     public static final int kArmAmps = 25;  //25
     public static final int kShooterAmps = 40; //35
     public static final int kClimberAmps = 40;
@@ -216,7 +216,8 @@ public final class Constants {
     public static final double kCamOpenPose = 2265.0;
     public static final double kCamClosedPose = 0.0;
     // public static final double kIntakeSpeed = 12.0*.8;
-    public static final double kIntakeRPM = 5000; //4100
+
+    public static final double kIntakeRPM = 4000; //5000; //4100
     
     public static final int kIntakeMode = 1; //0 = Roller, 1 = Clamp
 
@@ -243,9 +244,9 @@ public final class Constants {
     public static final int kFeederStage1MotorID  = 31;
     public static final int kFeederStage2MotorID  = 32;
 
-    public static final double kFeederLoadRPM   = 5200; //4200; //4750 max
+    public static final double kFeederLoadRPM   = 4000; //5200; //4200; //4750 max
     public static final double kFeederLowRPM    = 1000;
-    public static final double kFeederShootRPM  = 5200; //4200;  //In the event the load and shoot RPMs are the same, remove this
+    public static final double kFeederShootRPM  = 5000; //4200;  //In the event the load and shoot RPMs are the same, remove this
 
     
     //PID values
@@ -289,6 +290,7 @@ public final class Constants {
     public static final double kBumperShotAngle = 75;
     public static final double kParkAngle = 4; // 0; Safe place for the arm to both drive under the stage and see targets
     public static final double kDownAngle = 0; 
+    public static final double kTrapAngle = 55.7;
     public static final double kAmpAngle = 90;
     public static final double kFartherShotAngle = 35;
     public static final double kThresholdArm = 0.25;
