@@ -330,7 +330,7 @@ public final class Constants {
     //speed constants
     public static final double kShooterSpeakerRPM = 4000;
     // public static final double kShooterPodiumShotRPM = 4000;
-    public static final double kShooterAmpRPM = 1000;
+    public static final double kShooterAmpRPM = 600;  //1000;
     public static final double kShooterLowRPM = 1000;
     public static final double kThreshhold = 0.98;
     

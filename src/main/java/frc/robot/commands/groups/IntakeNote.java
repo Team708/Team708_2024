@@ -10,8 +10,10 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import frc.robot.commands.Feeder.FeedNoteForStorage;
 import frc.robot.commands.intake.IntakeAllAutomatic;
+import frc.robot.commands.shooter.ShooterReverse;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
 
 
 public class IntakeNote extends ParallelDeadlineGroup {
