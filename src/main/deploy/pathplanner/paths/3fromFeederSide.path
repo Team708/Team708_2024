@@ -32,16 +32,16 @@
     },
     {
       "anchor": {
-        "x": 8.524167925528834,
-        "y": 2.399814624190652
+        "x": 8.415348760522082,
+        "y": 2.5993164267030298
       },
       "prevControl": {
-        "x": 6.9890685957623,
-        "y": 1.7830440388611772
+        "x": 7.018836142935443,
+        "y": 2.31820025043559
       },
       "nextControl": {
-        "x": 8.833912546091762,
-        "y": 2.524263490282143
+        "x": 8.742594608075423,
+        "y": 2.66519059082091
       },
       "isLocked": false,
       "linkedName": null
@@ -80,16 +80,16 @@
     },
     {
       "anchor": {
-        "x": 8.551316617610775,
-        "y": 0.7260718658366234
+        "x": 8.950376321805276,
+        "y": 0.7221858303365737
       },
       "prevControl": {
-        "x": 7.820486761950217,
-        "y": 0.4422371552845208
+        "x": 8.219546466144719,
+        "y": 0.43835111978447105
       },
       "nextControl": {
-        "x": 9.136092727884064,
-        "y": 0.9531832197470127
+        "x": 9.535152432078565,
+        "y": 0.949297184246963
       },
       "isLocked": false,
       "linkedName": null
@@ -130,7 +130,7 @@
     },
     {
       "name": "ShooterOn",
-      "waypointRelativePos": 3.4,
+      "waypointRelativePos": 2.75,
       "command": {
         "type": "sequential",
         "data": {
@@ -147,7 +147,7 @@
     },
     {
       "name": "AutoShoot",
-      "waypointRelativePos": 3.7,
+      "waypointRelativePos": 3.95,
       "command": {
         "type": "sequential",
         "data": {
@@ -181,7 +181,7 @@
     },
     {
       "name": "ShooterOn",
-      "waypointRelativePos": 5.699999999999999,
+      "waypointRelativePos": 5.6,
       "command": {
         "type": "sequential",
         "data": {
@@ -198,7 +198,7 @@
     },
     {
       "name": "AutoShoot",
-      "waypointRelativePos": 5.95,
+      "waypointRelativePos": 5.85,
       "command": {
         "type": "sequential",
         "data": {
@@ -215,8 +215,8 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 4.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 4.2,
+    "maxAcceleration": 3.2,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

@@ -97,8 +97,12 @@ public final class Constants {
     public static final SwerveDriveKinematics kDriveKinematics 
     = new SwerveDriveKinematics(kFrontLeftLocation,kFrontRightLocation,kBackLeftLocation,kBackRightLocation);
 
-    public static final double kMaxAccelMetersPerSecSquared = 3.75;
-    public static final double kMaxSpeedMetersPerSec = 3.5; //Maximum Sustainable Drivetrain Speed under Normal Conditions & Battery, Robot will not exceed this speed in closed loop control
+    public static final double kMinAccelMetersPerSecSquared = 2.0; //3.75;
+    public static final double kMinSpeedMetersPerSec = 1.0; //3.5;
+
+    
+    public static final double kMaxAccelMetersPerSecSquared = 5.0; //3.75;
+    public static final double kMaxSpeedMetersPerSec = 4.6; //3.5; //Maximum Sustainable Drivetrain Speed under Normal Conditions & Battery, Robot will not exceed this speed in closed loop control
     public static final double kMaxAngularSpeedRadPerSec = 4.0;      //Maximum Angular Speed desired. NOTE: Robot can exceed this but spinning fast is not particularly useful or driver friendly
     public static final double kMaxAngularAccel = 6.25;      //Maximum Angular Speed desired. NOTE: Robot can exceed this but spinning fast is not particularly useful or driver friendly
 
@@ -245,7 +249,7 @@ public final class Constants {
     public static final int kFeederStage2MotorID  = 32;
 
     public static final double kFeederLoadRPM   = 4000; //5200; //4200; //4750 max
-    public static final double kFeederLowRPM    = 1000;
+    public static final double kFeederLowRPM    = 4000;
     public static final double kFeederShootRPM  = 5000; //4200;  //In the event the load and shoot RPMs are the same, remove this
 
     
