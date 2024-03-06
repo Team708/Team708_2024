@@ -28,6 +28,7 @@ public final class Constants {
     public static final int PCMID = 50;
     public static final int PDPID = 51;
     public static final double kLoopTime = 0.020;
+    public static final boolean competitionMode = false;
   }
 
   public static final class CurrentLimit {

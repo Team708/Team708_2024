@@ -17,9 +17,11 @@ import frc.robot.Constants.CurrentLimit;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.utilities.PidHelper;
 // import frc.robot.subsystems.ShooterSimulation;
+import frc.robot.utilities.logging.Logger;
 
 
 public class Shooter extends SubsystemBase {
+  String topic = new String(this.getName()+"/");
   private CANSparkMax m_shooterMotorTopLeader, m_shooterMotorBottomFollower, m_shooterMotorAmp;
 
   private RelativeEncoder shooterEncoderTop, shooterEncoderBottom, shooterEncoderAmp;
@@ -102,16 +104,26 @@ public class Shooter extends SubsystemBase {
   }
 
   public void sendToDashboard() {
-
-    String topic = new String(this.getName()+"/");
     // SmartDashboard.putNumber(topic+"Shooter Top Velocity", shooterEncoderTop.getVelocity());
     // SmartDashboard.putNumber(topic+"Shooter Bottom Velocity", shooterEncoderBottom.getVelocity());
     // SmartDashboard.putNumber(topic+"Shooter Amp Velocity", shooterEncoderAmp.getVelocity());
-    // SmartDashboard.putNumber(topic+"Shooter Bottom Amps", m_shooterMotorTopLeader.getOutputCurrent());
-    // SmartDashboard.putNumber(topic+"Shooter Top Amps", m_shooterMotorAmp.getOutputCurrent());
+    // SmartDashboard.putNumber(topic+"Shooter Bottom Amps", m_shooterMotorBottomFollower.getOutputCurrent());
+    // SmartDashboard.putNumber(topic+"Shooter Top Amps", m_shooterMotorTopLeader.getOutputCurrent());
     SmartDashboard.putBoolean(topic+"Shooter At Speed", isAtSpeed());
 
   }
+
+  public void logData() {
+    Logger.log(topic+"Shooter At Speed", isAtSpeed());
+
+    Logger.log(topic+"Shooter Top Velocity", shooterEncoderTop.getVelocity());
+    Logger.log(topic+"Shooter Bottom Velocity", shooterEncoderBottom.getVelocity());
+    Logger.log(topic+"Shooter Amp Velocity", shooterEncoderAmp.getVelocity());
+
+    Logger.log(topic+"Shooter Top Amps", m_shooterMotorTopLeader.getOutputCurrent());
+    Logger.log(topic+"Shooter Bottom Amps", m_shooterMotorBottomFollower.getOutputCurrent());
+    Logger.log(topic+"Shooter Amp Amps", m_shooterMotorAmp.getOutputCurrent());
+}
   
   // public void simulationInit() {
 	//   //Setup the simulation

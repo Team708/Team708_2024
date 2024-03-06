@@ -64,7 +64,7 @@ public class RobotContainer {
 	// Autonomous Option
 
 	// public static final SendableChooser<Command> m_chooser = new SendableChooser<>();
-    private final SendableChooser<Command> autoChooser;
+    public final SendableChooser<Command> autoChooser;
 
 	/** The container for the robot. Contains subsystems, OI devices, and commands. */
 	public RobotContainer() {

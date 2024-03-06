@@ -15,6 +15,7 @@ import frc.robot.Constants.CurrentLimit;
 import frc.robot.subsystems.sim.IntakeSimulation;
 // import frc.robot.subsystems.Feeder;
 import frc.robot.utilities.PidHelper;
+import frc.robot.utilities.logging.Logger;
 
 public class Intake extends SubsystemBase {
 	String topic = new String(this.getName()+"/");
@@ -141,7 +142,6 @@ public class Intake extends SubsystemBase {
 	}
 
 	public void sendToDashboard() {
-		String topic = new String(this.getName()+"/");
 		// SmartDashboard.putNumber(topic+"Front Amps", m_intakeMotorFront.getOutputCurrent());
 		// SmartDashboard.putNumber(topic+"Back Amps", m_intakeMotorBack.getOutputCurrent());
 		// SmartDashboard.putNumber(topic+"Left Amps", m_intakeMotorLeft.getOutputCurrent());
@@ -154,4 +154,23 @@ public class Intake extends SubsystemBase {
 		// SmartDashboard.putNumber(topic+"intake Position", getRollerPosition());
 		// SmartDashboard.putString(topic+"intake Direction", intakeDirection);
 	}
+
+	public void logData() {
+        Logger.log(topic+"intake Direction", intakeDirection);
+
+		Logger.log(topic+"Intake Front Speed", m_intakeMotorFront.getEncoder().getVelocity());
+        Logger.log(topic+"Intake Back Speed", m_intakeMotorBack.getEncoder().getVelocity());
+        Logger.log(topic+"Intake Left Speed", m_intakeMotorLeft.getEncoder().getVelocity());
+        Logger.log(topic+"Intake Right Speed", m_intakeMotorRight.getEncoder().getVelocity());
+		
+        Logger.log(topic+"Front Amps", m_intakeMotorFront.getOutputCurrent());
+        Logger.log(topic+"Back Amps", m_intakeMotorBack.getOutputCurrent());
+        Logger.log(topic+"Left Amps", m_intakeMotorLeft.getOutputCurrent());
+        Logger.log(topic+"Right Amps", m_intakeMotorRight.getOutputCurrent());
+
+        Logger.log("/IntakeSubsystem/RollerTemperature", m_intakeMotorFront.getMotorTemperature());
+        Logger.log("/IntakeSubsystem/BeltTemperature", m_intakeMotorBack.getMotorTemperature());
+		Logger.log("/IntakeSubsystem/RollerTemperature", m_intakeMotorLeft.getMotorTemperature());
+        Logger.log("/IntakeSubsystem/BeltTemperature", m_intakeMotorRight.getMotorTemperature());
+    }
 }

@@ -6,12 +6,16 @@ package frc.robot;
 
 import com.revrobotics.REVPhysicsSim;
 
+import edu.wpi.first.wpilibj.DataLogManager;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.AllSystemsOff;
 import frc.robot.utilities.PidHelper;
+import frc.robot.utilities.logging.Logger;
 
 
 /**
@@ -31,10 +35,21 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    // Disable default NetworkTables logging
+    DataLogManager.logNetworkTables(false);
+
+    // Begin controller inputs
+    if (isReal()) {
+        DriverStation.startDataLog(DataLogManager.getLog());
+    }
+
     PidHelper.getInstance();
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+
+    // Prevents the logging of many errors with our controllers
+    DriverStation.silenceJoystickConnectionWarning(true);
   }
 
   /**
@@ -50,8 +65,12 @@ public class Robot extends TimedRobot {
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
-    m_robotContainer.sendToDashboard();
+    // m_robotContainer.sendToDashboard(); // TODO Removed to test logging functionality
     CommandScheduler.getInstance().run();
+
+    Logger.log("/Robot/Battery Voltage", RobotController.getBatteryVoltage());
+
+    Logger.update();
   }
 
   /** This function is called once each time the robot enters Disabled mode. */

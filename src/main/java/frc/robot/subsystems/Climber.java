@@ -20,6 +20,7 @@ import frc.robot.Constants.CurrentLimit;
 import frc.robot.OI;
 import frc.robot.utilities.MathUtils;
 import frc.robot.utilities.PidHelper;
+import frc.robot.utilities.logging.Logger;
 
 public class Climber extends SubsystemBase {
   private CANSparkMax climberMotor;
@@ -69,4 +70,10 @@ public class Climber extends SubsystemBase {
     // }
     climberMotor.set(-desiredY);
   }
+
+  // public void logData() {
+  //   Logger.log("/Climber/position", climberVoltage.currentPosition);
+  //   Logger.log("/Climber/voltageCommanded", voltage);
+  //   Logger.log("/Climber/voltage", climberVoltage.currentVoltage);
+// }
 }
