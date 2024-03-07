@@ -23,7 +23,6 @@ public class FeederAutomatic extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //m_feeder.feederAutomatic();
     m_feeder.feederAutomatic();
   }
 

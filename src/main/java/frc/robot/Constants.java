@@ -255,7 +255,8 @@ public final class Constants {
     public static final double kFeederLowRPM    = 1000; //4000;
     public static final double kFeederShootRPM  = 5000; //4200;  //In the event the load and shoot RPMs are the same, remove this
 
-    
+    public static final double kFeederAmpsToDetectNote  = 4.0;
+
     //PID values
     //make sure the PID values get tuned
     public static final double kFeederStage1_P = 0.00001;

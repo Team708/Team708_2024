@@ -14,6 +14,7 @@ import com.revrobotics.SparkPIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 // import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import frc.robot.Constants.CurrentLimit;
 import frc.robot.Constants.FeederConstants;
@@ -60,7 +61,8 @@ public class Feeder extends SubsystemBase {
       runForward();
     }
     else {
-        stop();
+      if (!isEmpty())
+          stop();
     }                
   }
 
@@ -100,11 +102,11 @@ public class Feeder extends SubsystemBase {
   }
 
   public boolean hasNoteLower() {
-    return (feederLowNotePresent.get());
+    return (feederLowNotePresent.get() || (feederMotor.getOutputCurrent()>=Constants.FeederConstants.kFeederAmpsToDetectNote));
   }
 
   public boolean isEmpty() {
-    return !(feederLowNotePresent.get() || feederHighNotePresent.get());
+    return !(hasNoteLower() || hasNoteHigher());
   }
 
   public void sendToDashboard() {
