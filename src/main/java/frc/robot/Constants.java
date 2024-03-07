@@ -86,10 +86,10 @@ public final class Constants {
     
     //0.301625 - sideways
     //0.301625 - longways
-    public static final Translation2d kFrontLeftLocation = new Translation2d(0.301625,0.301625); // +X is forward, +Y is to the right 
-    public static final Translation2d kFrontRightLocation = new Translation2d(0.301625,-0.301625); // +X is forward, +Y is to the right
-    public static final Translation2d kBackLeftLocation = new Translation2d(-0.301625,0.301625); // +X is forward, +Y is to the right
-    public static final Translation2d kBackRightLocation = new Translation2d(-0.301625,-0.301625); // +X is forward, +Y is to the right
+    public static final Translation2d kFrontLeftLocation = new Translation2d(0.301625,0.301625); // +X is forward, +Y is to the left 
+    public static final Translation2d kFrontRightLocation = new Translation2d(0.301625,-0.301625); // +X is forward, +Y is to the left
+    public static final Translation2d kBackLeftLocation = new Translation2d(-0.301625,0.301625); // +X is forward, +Y is to the left
+    public static final Translation2d kBackRightLocation = new Translation2d(-0.301625,-0.301625); // +X is forward, +Y is to the left
     
     public static final double kRadius = kFrontLeftLocation.getDistance(kBackRightLocation)/2;
 
@@ -238,8 +238,10 @@ public final class Constants {
     public static final double kIntake_IZone = 0;
     public static final double kIntake_Min = -1;
     public static final double kIntake_Max = 1;
+    public static final double kIntake_MaxAccel = kIntakeRPM*10; //RPM/s
     public static final double[] kIntakePIDList = {kIntake_P,kIntake_I,kIntake_D,
-                                        kIntake_FF,kIntake_IZone,kIntake_Min,kIntake_Max};
+                                        kIntake_FF,kIntake_IZone,kIntake_Min,
+                                        kIntake_Max,kIntake_MaxAccel};
   }
 
   /**
@@ -256,27 +258,31 @@ public final class Constants {
     
     //PID values
     //make sure the PID values get tuned
-    public static final double kFeederStage1Motor_P = 0.00001;
-    public static final double kFeederStage1Motor_I = 0.0; 
-    public static final double kFeederStage1Motor_D = 0.0;
-    public static final double kFeederStage1Motor_FF = 0.00021;
-    public static final double kFeederStage1Motor_IZone = 0;
-    public static final double kFeederStage1Motor_Min = -1;
-    public static final double kFeederStage1Motor_Max = 1;
-    public static final double[] kFeederStage1PIDList = {kFeederStage1Motor_P,kFeederStage1Motor_I,kFeederStage1Motor_D,
-                                        kFeederStage1Motor_FF,kFeederStage1Motor_IZone,kFeederStage1Motor_Min,kFeederStage1Motor_Max};
+    public static final double kFeederStage1_P = 0.00001;
+    public static final double kFeederStage1_I = 0.0; 
+    public static final double kFeederStage1_D = 0.0;
+    public static final double kFeederStage1_FF = 0.00021;
+    public static final double kFeederStage1_IZone = 0;
+    public static final double kFeederStage1_Min = -1;
+    public static final double kFeederStage1_Max = 1;
+    public static final double kFeederStage1_MaxAccel = kFeederLowRPM*10;
+    public static final double[] kFeederStage1PIDList = {kFeederStage1_P,kFeederStage1_I,kFeederStage1_D,
+                                        kFeederStage1_FF,kFeederStage1_IZone,kFeederStage1_Min,
+                                        kFeederStage1_Max,kFeederStage1_MaxAccel};
 
     //PID values
     //make sure the PID values get tuned
-    public static final double kFeederStage2Motor_P = 0.00001;
-    public static final double kFeederStage2Motor_I = 0.0; 
-    public static final double kFeederStage2Motor_D = 0.0;
-    public static final double kFeederStage2Motor_FF = 0.00021;
-    public static final double kFeederStage2Motor_IZone = 0;
-    public static final double kFeederStage2Motor_Min = -1;
-    public static final double kFeederStage2Motor_Max = 1;
-    public static final double[] kFeederStage2PIDList = {kFeederStage2Motor_P,kFeederStage2Motor_I,kFeederStage2Motor_D,
-                                        kFeederStage2Motor_FF,kFeederStage2Motor_IZone,kFeederStage2Motor_Min,kFeederStage2Motor_Max};
+    public static final double kFeederStage2_P = 0.00001;
+    public static final double kFeederStage2_I = 0.0; 
+    public static final double kFeederStage2_D = 0.0;
+    public static final double kFeederStage2_FF = 0.00021;
+    public static final double kFeederStage2_IZone = 0;
+    public static final double kFeederStage2_Min = -1;
+    public static final double kFeederStage2_Max = 1;
+    public static final double kFeederStage2_MaxAccel = kFeederShootRPM*10;
+    public static final double[] kFeederStage2PIDList = {kFeederStage2_P,kFeederStage2_I,kFeederStage2_D,
+                                        kFeederStage2_FF,kFeederStage2_IZone,kFeederStage2_Min,
+                                        kFeederStage2_Max,kFeederStage2_MaxAccel};
 
   }
 
@@ -309,8 +315,10 @@ public final class Constants {
     public static final double kPivotArm_IZone = 0;
     public static final double kPivotArm_Min = -1;
     public static final double kPivotArm_Max = 1;
+    public static final double kPivotArm_MaxAccel = 999999;
     public static final double[] kPivotArmPIDList = {kPivotArm_P,kPivotArm_I,kPivotArm_D,
-                                        kPivotArm_FF,kPivotArm_IZone,kPivotArm_Min,kPivotArm_Max};
+                                        kPivotArm_FF,kPivotArm_IZone,kPivotArm_Min,
+                                        kPivotArm_Max, kPivotArm_MaxAccel};
 
     public static final double kArmScalingFactor = 360/3;
     public static final double kArmClockingOffset = -108.5; //Value to correct for absolute encoder clocking 
@@ -349,8 +357,10 @@ public final class Constants {
     public static final double kShooterTop_IZone = 0;
     public static final double kShooterTop_Min = -1;
     public static final double kShooterTop_Max = 1;
+    public static final double kShooterTop_MaxAccel = kShooterSpeakerRPM*10;
     public static final double[] kShooterTopPIDList = {kShooterTop_P,kShooterTop_I,kShooterTop_D,
-                                        kShooterTop_FF,kShooterTop_IZone,kShooterTop_Min,kShooterTop_Max};
+                                        kShooterTop_FF,kShooterTop_IZone,kShooterTop_Min,
+                                        kShooterTop_Max,kShooterTop_MaxAccel};
     public static final double kShooterAmp_P = 0.0001; //0.00005;
     public static final double kShooterAmp_I = 0.0; //0.000001; 
     public static final double kShooterAmp_D = 0.0; //0.0004;
@@ -358,8 +368,10 @@ public final class Constants {
     public static final double kShooterAmp_IZone = 0;
     public static final double kShooterAmp_Min = -1;
     public static final double kShooterAmp_Max = 1;
+    public static final double kShooterAmp_MaxAccel = kShooterSpeakerRPM*10;
     public static final double[] kShooterAmpPIDList = {kShooterAmp_P,kShooterAmp_I,kShooterAmp_D,
-                                        kShooterAmp_FF,kShooterAmp_IZone,kShooterAmp_Min,kShooterAmp_Max};
+                                        kShooterAmp_FF,kShooterAmp_IZone,kShooterAmp_Min,
+                                        kShooterAmp_Max,kShooterAmp_MaxAccel};
     
   }
 
@@ -382,8 +394,10 @@ public final class Constants {
     public static final double kClimber_IZone = 0;
     public static final double kClimber_Min = -1;
     public static final double kClimber_Max = 1;
+    public static final double kClimber_MaxAccel = 999999;
     public static final double[] kClimberPIDList = {kClimber_P,kClimber_I,kClimber_D,
-                                        kClimber_FF,kClimber_IZone,kClimber_Min,kClimber_Max};
+                                        kClimber_FF,kClimber_IZone,kClimber_Min,
+                                        kClimber_Max,kClimber_MaxAccel};
   }
   /**
     * User Controller constants 
