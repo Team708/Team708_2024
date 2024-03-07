@@ -68,9 +68,9 @@ public final class Constants {
     public static final int kBackRightTurningEncoderPort = 7;   //Analog Port of the Module Absolute Encoder
 
     public static final double kFrontLeftOffset = .003; //0.004;//0.0; //-.2189*-1; //-0.5 to 0.5
-    public static final double kFrontRightOffset = -0.334473;//-1.0042; //0.0; //-.1585*-1; //-0.5 to 0.5
+    public static final double kFrontRightOffset = -.363;  //-0.334473;//-1.0042; //0.0; //-.1585*-1; //-0.5 to 0.5
     public static final double kBackLeftOffset =  -.45; //0.496559;//-3.08; //-.5*-1; //-0.5 to 0.5
-    public static final double kBackRightOffset = -0.189941;//1.1540; //0.0 //-.1926*-1; //-0.5 to 0.5
+    public static final double kBackRightOffset = -.1926; //-0.189941;//1.1540; //0.0 //-.1926*-1; //-0.5 to 0.5
     
     //Drive motor PID is best done on the roboRIO currently as the SparkMAX does not allow for static gain values on the PID controller, 
     //    these are necessary to have high accuracy when moving at extremely low RPMs
@@ -255,7 +255,7 @@ public final class Constants {
     public static final double kFeederLowRPM    = 1000; //4000;
     public static final double kFeederShootRPM  = 5000; //4200;  //In the event the load and shoot RPMs are the same, remove this
 
-    public static final double kFeederAmpsToDetectNote  = 4.0;
+    public static final double kFeederAmpsToDetectNote  = 60;
 
     //PID values
     //make sure the PID values get tuned
@@ -266,7 +266,7 @@ public final class Constants {
     public static final double kFeederStage1_IZone = 0;
     public static final double kFeederStage1_Min = -1;
     public static final double kFeederStage1_Max = 1;
-    public static final double kFeederStage1_MaxAccel = kFeederLowRPM*10;
+    public static final double kFeederStage1_MaxAccel = kFeederLowRPM;
     public static final double[] kFeederStage1PIDList = {kFeederStage1_P,kFeederStage1_I,kFeederStage1_D,
                                         kFeederStage1_FF,kFeederStage1_IZone,kFeederStage1_Min,
                                         kFeederStage1_Max,kFeederStage1_MaxAccel};
@@ -342,7 +342,7 @@ public final class Constants {
     public static final int kShooterGearRatio = 1;
     
     //speed constants
-    public static final double kShooterSpeakerRPM = 4000;
+    public static final double kShooterSpeakerRPM = 3000; //4000;
     // public static final double kShooterPodiumShotRPM = 4000;
     public static final double kShooterAmpRPM = 600;  //1000;
     public static final double kShooterLowRPM = 1000;

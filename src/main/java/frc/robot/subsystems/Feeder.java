@@ -36,8 +36,8 @@ public class Feeder extends SubsystemBase {
     m_pivotArm = pivotArm;
     m_shooter = shooter;
 
-    feederLowNotePresent = new DigitalInput(1);
-    feederHighNotePresent = new DigitalInput(2);
+    feederLowNotePresent = new DigitalInput(3);
+    feederHighNotePresent = new DigitalInput(4);
 
     //Feeder motor 1
     feederMotor = new CANSparkMax(FeederConstants.kFeederStage1MotorID, MotorType.kBrushless);
@@ -116,6 +116,6 @@ public class Feeder extends SubsystemBase {
     // SmartDashboard.putNumber(topic+"Feeder Encoder", feederEncoder.getPosition());
     SmartDashboard.putBoolean(topic+"Feeder is Empty", isEmpty());
     // SmartDashboard.putNumber(topic+"Feeder RPM", feederEncoder.getVelocity());
-    // SmartDashboard.putNumber(topic+"Feeder Amps", feederMotor.getOutputCurrent());
+    SmartDashboard.putNumber(topic+"Feeder Amps", feederMotor.getOutputCurrent());
 	}
 }
