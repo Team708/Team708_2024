@@ -32,7 +32,7 @@ public final class Constants {
 
   public static final class CurrentLimit {
     public static final int kIntakeAmps = 40;
-    public static final int kFeederAmps = 100;
+    public static final int kFeederAmps = 60; //40
     public static final int kArmAmps = 25;  //25
     public static final int kShooterAmps = 40; //35
     public static final int kClimberAmps = 40;
@@ -101,7 +101,7 @@ public final class Constants {
     public static final double kMinSpeedMetersPerSec = 1.0; //3.5;
 
     
-    public static final double kMaxAccelMetersPerSecSquared = 5.0; //3.75;
+    public static final double kMaxAccelMetersPerSecSquared = 4.0; //3.75;
     public static final double kMaxSpeedMetersPerSec = 4.6; //3.5; //Maximum Sustainable Drivetrain Speed under Normal Conditions & Battery, Robot will not exceed this speed in closed loop control
     public static final double kMaxAngularSpeedRadPerSec = 4.0;      //Maximum Angular Speed desired. NOTE: Robot can exceed this but spinning fast is not particularly useful or driver friendly
     public static final double kMaxAngularAccel = 6.25;      //Maximum Angular Speed desired. NOTE: Robot can exceed this but spinning fast is not particularly useful or driver friendly
@@ -130,7 +130,7 @@ public final class Constants {
     public static final Pose2d kPoseFeederLocationFar  = new Pose2d(15.89,1.36, new Rotation2d(Units.degreesToRadians(-60)));  
     public static final Pose2d kPoseFeederLocationClose  = new Pose2d(15.08,0.82, new Rotation2d(Units.degreesToRadians(-60)));
 
-    //Holonomic Drivretrain Configuration
+    //Holonomic Drivetrain Configuration
     public static final HolonomicPathFollowerConfig pathFollowingConfig = new HolonomicPathFollowerConfig(kMaxSpeedMetersPerSec, kRadius, new ReplanningConfig());
 
 
@@ -221,8 +221,9 @@ public final class Constants {
     public static final double kCamClosedPose = 0.0;
     // public static final double kIntakeSpeed = 12.0*.8;
 
-    public static final double kIntakeRPM = 4000; //5000; //4100
-    
+    public static final double kIntakeRPM = 4000;  //4000;
+    public static final double kIntakeOUTRPM = 1000;  //4000;
+
     public static final int kIntakeMode = 1; //0 = Roller, 1 = Clamp
 
     public static final int kIntakeMotorFrontID = 21;
@@ -249,7 +250,7 @@ public final class Constants {
     public static final int kFeederStage2MotorID  = 32;
 
     public static final double kFeederLoadRPM   = 4000; //5200; //4200; //4750 max
-    public static final double kFeederLowRPM    = 4000;
+    public static final double kFeederLowRPM    = 1000; //4000;
     public static final double kFeederShootRPM  = 5000; //4200;  //In the event the load and shoot RPMs are the same, remove this
 
     
@@ -297,7 +298,7 @@ public final class Constants {
     public static final double kTrapAngle = 55.7;
     public static final double kAmpAngle = 90;
     public static final double kFartherShotAngle = 35;
-    public static final double kThresholdArm = 0.25;
+    public static final double kThresholdArm = 0.1;  //.25
     
     //PID values for arm motors
     //make sure the PID values get tuned

@@ -24,7 +24,7 @@ import frc.robot.subsystems.Shooter;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ShootSpeakerPCG extends ParallelRaceGroup {
+public class ShootSpeakerPCG extends ParallelCommandGroup {   //ParallelRaceGroup
   /** Creates a new ShootSpeakerPCG. */
   public ShootSpeakerPCG(Drivetrain m_drive, Intake m_intake, Feeder m_feeder, PivotArm m_pivotArm, Shooter m_shooter) {
     // Add the deadline command in the super() call. Add other commands using

@@ -28,7 +28,9 @@ public class IntakeAllAutomatic extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_intake.intakeOff();
+    m_intake.intakeReverse();
+    // m_intake.intakeOff();
+
   }
 
   // Returns true when the command should end.

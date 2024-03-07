@@ -5,12 +5,13 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 //Command Imports
 import frc.robot.commands.drive.SetRumble;
 import frc.robot.commands.drive.DriveToAmp;
 import frc.robot.commands.drive.ResetDrive;
 import frc.robot.commands.drive.ResetGyro;
+import frc.robot.commands.drive.ToggleDriveSpeed;
 import frc.robot.commands.groups.IntakeNote;
 import frc.robot.commands.intake.IntakeAllOut;
 import frc.robot.commands.intake.IntakeOff;
@@ -124,6 +125,9 @@ public class OI {
     new JoystickButton(driverController, Button.kRightBumper.value)
         .onTrue(new DriveToAmp(m_drive));
     
+    new JoystickButton(driverController, Button.kLeftStick.value)
+        .onTrue(new ToggleDriveSpeed(m_drive));
+        
     //OPERATOR//
   
     new JoystickButton(operatorController, Button.kB.value)
@@ -155,6 +159,11 @@ public class OI {
 
     new JoystickButton(operatorController, Button.kLeftStick.value)
         .onTrue(new armToParkShotAngle(m_PivotArm, ArmConstants.kDownAngle));
+
+    new POVButton(operatorController, 0).onTrue(new armToParkShotAngle(m_PivotArm, 100.0));
+    new POVButton(operatorController, 90).onTrue(new armToParkShotAngle(m_PivotArm, 45.0));
+    new POVButton(operatorController, 180).onTrue(new armToParkShotAngle(m_PivotArm, -9.0));
+    new POVButton(operatorController, 270).onTrue(new armToParkShotAngle(m_PivotArm, 68.0));
 
     
     //Adaptive Buttons

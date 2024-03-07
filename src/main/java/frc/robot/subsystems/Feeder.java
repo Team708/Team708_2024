@@ -60,23 +60,18 @@ public class Feeder extends SubsystemBase {
       runForward();
     }
     else {
-      feedNotesToStow();
-    }
+        stop();
+    }                
   }
 
   public void feedNotesToStow() {
-    if(!hasNoteHigher()) {
-      if(!hasNoteLower()) {
-        runForward();
-      }
-      else {
+      if(hasNoteLower()) {
         runForwardSlow();
       }
+      else {
+         runForward();
+      }
     }
-    else {
-      stop();
-    }
-  }
 
   public void runForward(){
     feederPIDController.setReference(FeederConstants.kFeederShootRPM, CANSparkMax.ControlType.kVelocity);

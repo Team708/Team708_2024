@@ -88,6 +88,8 @@ public class PivotArm extends SubsystemBase {
 //     interpolatingTreeMap.put(5.7,18.5);//smp
 //    interpolatingTreeMap.put(6.2,23.22);
 
+
+
 //Data points maded 02.27 precomp
 interpolatingTreeMap.put(1.42,53.0); //51.65  //45.2
 interpolatingTreeMap.put(1.946,45.0); //43.0 //37.6
@@ -100,18 +102,7 @@ interpolatingTreeMap.put(4.06,29.17); //
 interpolatingTreeMap.put(4.84,26.70); //
 interpolatingTreeMap.put(5.61,24.7);  //
 
-
-  
-  
-   
-    
-    
-  
-    
-
-
-
-  }
+}
   
   @Override
   public void periodic() {
@@ -178,10 +169,11 @@ interpolatingTreeMap.put(5.61,24.7);  //
   
 
   public void sendToDashboard() {
-    String topic = new String(this.getName()+"/");
-    SmartDashboard.putNumber(topic+"Arm Position", getPosition());
-    // SmartDashboard.putNumber(topic+"Arm Abs Position", getAbsolutePosition());
-	  // SmartDashboard.putBoolean(topic+"Arm At Position", isArmAtPosition());
+    // String topic = new String(this.getName()+"/");
+    SmartDashboard.putNumber("Arm Position", getPosition());
+    SmartDashboard.putNumber("Arm Abs Position", getAbsolutePosition());
+	  SmartDashboard.putBoolean("Arm At Position", isArmAtPosition());
+    
     // SmartDashboard.putNumber(topic+"Arm Amps", m_PivotArmLeftLeader.getOutputCurrent());
     // SmartDashboard.putBoolean(topic+"Arm Forward Limit", forwardLimit.isPressed());
     // SmartDashboard.putBoolean(topic+"Arm Reverse Limit", reverseLimit.isPressed());
