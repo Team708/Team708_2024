@@ -616,7 +616,7 @@ rotateToTarget(chassisSpeeds.omegaRadiansPerSecond));
     // SmartDashboard.putBoolean("keepAngle", keepAngle);
 
     // SmartDashboard.putNumber(topic+"Front Left Encoder", m_frontLeft.getTurnEncoder());
-    // SmartDashboard.putNumber(topic+"Front Right Encoder", m_frontRight.getTurnEncoder());
+    SmartDashboard.putNumber(topic+"Front Right Encoder", m_frontRight.getTurnEncoder());
     // SmartDashboard.putNumber(topic+"Back Left Encoder", m_backLeft.getTurnEncoder());
     // SmartDashboard.putNumber(topic+"Back Right Encoder", m_backRight.getTurnEncoder());
 
