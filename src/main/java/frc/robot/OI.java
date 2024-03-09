@@ -45,6 +45,8 @@ public class OI {
   public final static XboxController operatorController = new XboxController(ControllerConstants.kOperatorControllerPort); // Operator
   public final static XboxController climberController  = new XboxController(ControllerConstants.kClimberControllerPort); // Climber
   public final static XboxController adaptiveGamepad = new XboxController(ControllerConstants.kAdaptiveControllerPort); // Adaptive
+  
+  public final static XboxController testController = new XboxController(4); // Driver 
 
   /*
    * Driver JoystickButton
@@ -212,5 +214,13 @@ public class OI {
     
     // new JoystickButton(adaptiveGamepad, Button.kA.value)
     // 	.onTrue(new /*Command*/);
+
+    new JoystickButton(testController, Button.kA.value) //TODO Change these buttons, current commands only for testing
+    		.onTrue(new IntakeNote(m_intake, m_feeder));
+
+    // new JoystickButton(driverController, Button.kB.value); //TODO Change these buttons, current commands only for testing
+    		
+    new JoystickButton(testController, Button.kX.value)
+        .onTrue(new AllSystemsOff(m_intake, m_feeder, m_shooter));
   }
 }

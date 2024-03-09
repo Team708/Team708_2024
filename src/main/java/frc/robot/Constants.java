@@ -222,7 +222,7 @@ public final class Constants {
     // public static final double kIntakeSpeed = 12.0*.8;
 
     public static final double kIntakeRPM = 4000;  //4000;
-    public static final double kIntakeOUTRPM = 1000;  //4000;
+    public static final double kIntakeOUTRPM = 500;  //4000;
 
     public static final int kIntakeMode = 1; //0 = Roller, 1 = Clamp
 
@@ -255,11 +255,11 @@ public final class Constants {
     public static final double kFeederLowRPM    = 1000; //4000;
     public static final double kFeederShootRPM  = 5000; //4200;  //In the event the load and shoot RPMs are the same, remove this
 
-    public static final double kFeederAmpsToDetectNote  = 60;
+    public static final double kFeederAmpsToDetectNote  = 100;
 
     //PID values
     //make sure the PID values get tuned
-    public static final double kFeederStage1_P = 0.00001;
+    public static final double kFeederStage1_P = 0.00002; //0.00001;
     public static final double kFeederStage1_I = 0.0; 
     public static final double kFeederStage1_D = 0.0;
     public static final double kFeederStage1_FF = 0.00021;
@@ -322,7 +322,8 @@ public final class Constants {
                                         kPivotArm_Max, kPivotArm_MaxAccel};
 
     public static final double kArmScalingFactor = 360/3;
-    public static final double kArmClockingOffset = -108.5; //Value to correct for absolute encoder clocking 
+    // public static final double kArmClockingOffset = -108.5; //Value to correct for absolute encoder clocking //Previous
+    public static final double kArmClockingOffset = 128.5; //Value to correct for absolute encoder clocking 
     public static final double kArmAbsEncoderOffset = 10; // value to offset the arm to horizontal
     public static final double kMaxShootingDistance = 6.2; //Further distance the arm can make adjustments for
   }

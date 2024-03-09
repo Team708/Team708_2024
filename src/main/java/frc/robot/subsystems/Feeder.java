@@ -114,8 +114,8 @@ public class Feeder extends SubsystemBase {
 	  // SmartDashboard.putBoolean(topic+"Note Present Bottom", feederLowNotePresent.get());
     // SmartDashboard.putBoolean(topic+"Note Present Top", feederHighNotePresent.get());
     // SmartDashboard.putNumber(topic+"Feeder Encoder", feederEncoder.getPosition());
-    SmartDashboard.putBoolean(topic+"Feeder is Empty", isEmpty());
-    // SmartDashboard.putNumber(topic+"Feeder RPM", feederEncoder.getVelocity());
-    SmartDashboard.putNumber(topic+"Feeder Amps", feederMotor.getOutputCurrent());
+    SmartDashboard.putBoolean("Feeder", !isEmpty());
+    // SmartDashboard.putNumber("Feeder RPM", feederEncoder.getVelocity());
+    // SmartDashboard.putNumber("Feeder Amps", feederMotor.getOutputCurrent());
 	}
 }

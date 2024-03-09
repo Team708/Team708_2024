@@ -112,11 +112,14 @@ interpolatingTreeMap.put(5.61,24.7);  //
   //current and voltage limits
   
   public double getPosition() {
-    return PivotArmEncoder.getPosition();
+    return (ArmConstants.kArmClockingOffset-(absEncoder.getAbsolutePosition()*ArmConstants.kArmScalingFactor)-ArmConstants.kArmAbsEncoderOffset);
+    //Replaced to avoid searching for every instance of the method. DO NOT CHANGE WITHOUT APPROVAL FROM JOHN
+    //return PivotArmEncoder.getPosition();
   }
   
   public double getAbsolutePosition() {
-    return (-ArmConstants.kArmClockingOffset-(absEncoder.getAbsolutePosition()*ArmConstants.kArmScalingFactor)-ArmConstants.kArmAbsEncoderOffset);
+    // return (-ArmConstants.kArmClockingOffset-(absEncoder.getAbsolutePosition()*ArmConstants.kArmScalingFactor)-ArmConstants.kArmAbsEncoderOffset);   //Previous 
+    return (ArmConstants.kArmClockingOffset-(absEncoder.getAbsolutePosition()*ArmConstants.kArmScalingFactor)-ArmConstants.kArmAbsEncoderOffset);
   }
 
   public double inputTransform(double input) {
@@ -171,7 +174,7 @@ interpolatingTreeMap.put(5.61,24.7);  //
   public void sendToDashboard() {
     // String topic = new String(this.getName()+"/");
     SmartDashboard.putNumber("Arm Position", getPosition());
-    SmartDashboard.putNumber("Arm Abs Position", getAbsolutePosition());
+    // SmartDashboard.putNumber("Arm Abs Position", getAbsolutePosition());   //Arm position is already abs
 	  SmartDashboard.putBoolean("Arm At Position", isArmAtPosition());
     
     // SmartDashboard.putNumber(topic+"Arm Amps", m_PivotArmLeftLeader.getOutputCurrent());
