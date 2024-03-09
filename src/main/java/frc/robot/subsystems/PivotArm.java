@@ -35,6 +35,7 @@ public class PivotArm extends SubsystemBase {
   private Boolean isTargeting = false;
   private double distance;
   private InterpolatingDoubleTreeMap interpolatingTreeMap = new InterpolatingDoubleTreeMap();
+  private boolean lastIdleModeState = false;
 
   public PivotArm(Drivetrain drive) {
     m_drive = drive;
@@ -169,7 +170,18 @@ interpolatingTreeMap.put(5.61,24.7);  //
   public boolean isArmAtPosition() {
       return Math.abs(targetArmAngle - getPosition()) < ArmConstants.kThresholdArm;
     }
-  
+
+  public void setCoastMode(boolean isCoastMode) {
+    if (isCoastMode == true && lastIdleModeState != isCoastMode){
+      m_PivotArmLeftLeader.setIdleMode(IdleMode.kCoast);
+      m_PivotArmRightFollower.setIdleMode(IdleMode.kCoast);
+      lastIdleModeState = true;
+    }else if (isCoastMode == false && lastIdleModeState != isCoastMode) {
+      m_PivotArmLeftLeader.setIdleMode(IdleMode.kBrake);
+      m_PivotArmRightFollower.setIdleMode(IdleMode.kBrake);
+      lastIdleModeState = false;
+    }
+  }
 
   public void sendToDashboard() {
     // String topic = new String(this.getName()+"/");
