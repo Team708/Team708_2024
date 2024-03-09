@@ -1,5 +1,6 @@
 package frc.robot;
 
+import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.ReplanningConfig;
 import com.pathplanner.lib.util.PIDConstants;
@@ -10,9 +11,14 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform2d;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.math.geometry.Twist2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.trajectory.constraint.TrajectoryConstraint;
 // import edu.wpi.first.math.util.Units;
 import edu.wpi.first.math.util.Units;
 
@@ -130,9 +136,27 @@ public final class Constants {
     public static final Pose2d kPoseFeederLocationFar  = new Pose2d(15.89,1.36, new Rotation2d(Units.degreesToRadians(-60)));  
     public static final Pose2d kPoseFeederLocationClose  = new Pose2d(15.08,0.82, new Rotation2d(Units.degreesToRadians(-60)));
 
-    //Holonomic Drivetrain Configuration
+// <<<<<<< Updated upstream
+//     //Holonomic Drivetrain Configuration
+// =======
+//     //Auto-align with trap configuration
+//     public static final double[] kTrapAprilTags = {11, 12, 13, 14, 15, 16};
+//     public static final Transform3d kDistanceFromTrap = new Transform3d(new Translation3d(Units.inchesToMeters(16), 0.0, 0.0), new Rotation3d(0.0, 0.0, Math.PI));
+    
+//     public static final Pose2d kBlueStageBackTrap = new Pose2d(Units.inchesToMeters(225.48), Units.inchesToMeters(161.62), new Rotation2d(180));
+//     private static final Pose2d kTrapMiddle = new Pose2d(Units.inchesToMeters(191.65), Units.inchesToMeters(161.62), new Rotation2d(0));
+//     private static final Translation2d kTrapRadius = new Translation2d(-33.83, 0);
+//     public static final Pose2d kBlueStageLeftTrap = kTrapMiddle.rotateBy(new Rotation2d(-60)).plus(new Transform2d(kTrapRadius, new Rotation2d()));
+//     public static final Pose2d kBlueStageRightTrap = kTrapMiddle.rotateBy(new Rotation2d(60)).plus(new Transform2d(kTrapRadius, new Rotation2d()));
+    
+//     //Holonomic Drivretrain Configuration
+// >>>>>>> Stashed changes
     public static final HolonomicPathFollowerConfig pathFollowingConfig = new HolonomicPathFollowerConfig(kMaxSpeedMetersPerSec, kRadius, new ReplanningConfig());
-
+    public static final PathConstraints ktrajectoryConstraints = new PathConstraints(
+    DriveConstants.kMaxSpeedMetersPerSec,
+    DriveConstants.kMaxAccelMetersPerSecSquared, 
+    DriveConstants.kMaxAngularSpeedRadPerSec, 
+    DriveConstants.kMaxAngularAccel);
 
     //PathPlanner Ending Points
     public static final Pose2d kRobotToAmp = new Pose2d(2.3, 7.55 - Units.inchesToMeters(30), new Rotation2d(Units.degreesToRadians(-90)));
@@ -306,6 +330,7 @@ public final class Constants {
     public static final double kAmpAngle = 90;
     public static final double kFartherShotAngle = 35;
     public static final double kThresholdArm = 0.1;  //.25
+
     
     //PID values for arm motors
     //make sure the PID values get tuned
@@ -326,6 +351,20 @@ public final class Constants {
     public static final double kArmClockingOffset = 128.5; //Value to correct for absolute encoder clocking 
     public static final double kArmAbsEncoderOffset = 10; // value to offset the arm to horizontal
     public static final double kMaxShootingDistance = 6.2; //Further distance the arm can make adjustments for
+    
+    public static double kDistancePerPulse = 360/8192;
+
+    public static final double kIncrementalArm_P = 0.1;
+    public static final double kIncrementalArm_I = 0.000001;
+    public static final double kIncrementalArm_D = 0.0006;
+    public static final double kIncrementalArm_FF = 0.0;
+    public static final double kIncrementalArm_IZone = 0;
+    public static final double kIncrementalArm_Min = -1;
+    public static final double kIncrementalArm_Max = 1;
+    public static final double kIncrementalArm_MaxAccel = 999999;
+    public static final double[] kIncrementalArmPIDList = {kIncrementalArm_P,kIncrementalArm_I,kIncrementalArm_D,
+                                        kIncrementalArm_FF,kIncrementalArm_IZone,kIncrementalArm_Min,
+                                        kIncrementalArm_Max, kIncrementalArm_MaxAccel};
   }
 
   /**

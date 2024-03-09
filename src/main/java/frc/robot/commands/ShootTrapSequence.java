@@ -1,0 +1,50 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
+package frc.robot.commands;
+
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.commands.PivotArm.armToAmpShotAngle;
+import frc.robot.commands.PivotArm.armToParkShotAngle;
+import frc.robot.commands.PivotArm.armToTrapShotAngle;
+import frc.robot.commands.shooter.SetShooterSpeedAmp;
+import frc.robot.commands.shooter.SetShooterSpeedSpeaker;
+import frc.robot.commands.shooter.ShooterOff;
+import frc.robot.commands.Feeder.FeedToShoot;
+import frc.robot.commands.Feeder.FeederForward;
+import frc.robot.commands.drive.DriveToAmp;
+import frc.robot.commands.drive.LineUpToTrap;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.PivotArm;
+import frc.robot.subsystems.Feeder;
+import frc.robot.subsystems.drive.Drivetrain;
+
+// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
+// information, see:
+// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
+public class ShootTrapSequence extends SequentialCommandGroup {
+  /** Creates a new ShootSpeakerBumperShotSCG. 
+   * @param PivotArm
+   * @param Shooter
+   * @param Feeder
+   * @param Drivetrain */
+  public ShootTrapSequence(Drivetrain m_drivetrain, Feeder m_feeder, Shooter m_shooter, PivotArm m_pivotArm) {
+    addCommands(
+      new ParallelCommandGroup(
+        //new DriveToAmp(m_drive),
+        new armToTrapShotAngle(m_pivotArm), 
+        new LineUpToTrap(m_drivetrain),
+        new SequentialCommandGroup(
+          new SetShooterSpeedSpeaker(m_shooter),  
+          new FeedToShoot(m_feeder),//.withTimeout(1.0),
+          new ShooterOff(m_shooter),
+          new armToParkShotAngle(m_pivotArm, 0)
+        ) 
+      )
+    );
+  }
+}

@@ -13,8 +13,10 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkLimitSwitch;
 import com.revrobotics.SparkPIDController;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ArmConstants;
@@ -26,10 +28,13 @@ import frc.robot.utilities.MathUtils;
 import frc.robot.OI;
 public class PivotArm extends SubsystemBase {
   private CANSparkMax m_PivotArmLeftLeader, m_PivotArmRightFollower;
-  private RelativeEncoder PivotArmEncoder;
+  // private RelativeEncoder PivotArmEncoder;
   private DutyCycleEncoder absEncoder;
+  private Encoder pivotArmEncoder;
   private SparkPIDController pivotArmPIDController;
+  private PIDController incrementalArmPIDController;
   private double targetArmAngle;
+  private double initialAbsolutePosition;
   // private SparkLimitSwitch forwardLimit, reverseLimit;
   private Drivetrain m_drive;
   private Boolean isTargeting = false;
@@ -42,6 +47,9 @@ public class PivotArm extends SubsystemBase {
 
     absEncoder = new DutyCycleEncoder(0);
     //absEncoder.reset();
+    initialAbsolutePosition = getAbsolutePosition();
+
+    pivotArmEncoder = new Encoder(1, 2);
     
     //Leader arm motor
     m_PivotArmLeftLeader = new CANSparkMax(ArmConstants.kArmMasterMotorID, MotorType.kBrushless);
@@ -54,9 +62,14 @@ public class PivotArm extends SubsystemBase {
     // reverseLimit = m_PivotArmLeftLeader.getReverseLimitSwitch(Type.kNormallyOpen);
     // reverseLimit.enableLimitSwitch(true);
     
-    PivotArmEncoder = m_PivotArmLeftLeader.getEncoder();
-    PivotArmEncoder.setPositionConversionFactor(ArmConstants.kPivotArmGearRatio);
-    PivotArmEncoder.setPosition(getAbsolutePosition());
+    // PivotArmEncoder = m_PivotArmLeftLeader.getEncoder();
+    // PivotArmEncoder.setPositionConversionFactor(ArmConstants.kPivotArmGearRatio);
+    // PivotArmEncoder.setPosition(getAbsolutePosition());
+
+    pivotArmEncoder.setDistancePerPulse(ArmConstants.kDistancePerPulse);
+
+    incrementalArmPIDController.setPID(ArmConstants.kIncrementalArm_P, ArmConstants.kIncrementalArm_I, ArmConstants.kIncrementalArm_D);
+    
     
     pivotArmPIDController = m_PivotArmLeftLeader.getPIDController();
     PidHelper.setupPIDController(this.getName()+"pivotArmPIDController", pivotArmPIDController, ArmConstants.kPivotArmPIDList);
@@ -113,9 +126,7 @@ interpolatingTreeMap.put(5.61,24.7);  //
   //current and voltage limits
   
   public double getPosition() {
-    return (ArmConstants.kArmClockingOffset-(absEncoder.getAbsolutePosition()*ArmConstants.kArmScalingFactor)-ArmConstants.kArmAbsEncoderOffset);
-    //Replaced to avoid searching for every instance of the method. DO NOT CHANGE WITHOUT APPROVAL FROM JOHN
-    //return PivotArmEncoder.getPosition();
+    return pivotArmEncoder.getDistance() + initialAbsolutePosition;
   }
   
   public double getAbsolutePosition() {
@@ -141,7 +152,11 @@ interpolatingTreeMap.put(5.61,24.7);  //
   //Determine units for arm as it's not completely tested
   public void setArmAngle(double angle) {
     targetArmAngle = angle;
-    pivotArmPIDController.setReference(angle, CANSparkBase.ControlType.kPosition);    
+    // pivotArmPIDController.setReference(angle, CANSparkBase.ControlType.kPosition); 
+    m_PivotArmLeftLeader.set(incrementalArmPIDController.calculate(getPosition(),targetArmAngle));
+
+      
+    
   }
   
   // public double findArmAngle () {
@@ -186,6 +201,7 @@ interpolatingTreeMap.put(5.61,24.7);  //
   public void sendToDashboard() {
     // String topic = new String(this.getName()+"/");
     SmartDashboard.putNumber("Arm Position", getPosition());
+    SmartDashboard.putNumber("Absolute Encoder intial position", initialAbsolutePosition);
     // SmartDashboard.putNumber("Arm Abs Position", getAbsolutePosition());   //Arm position is already abs
 	  SmartDashboard.putBoolean("Arm At Position", isArmAtPosition());
     

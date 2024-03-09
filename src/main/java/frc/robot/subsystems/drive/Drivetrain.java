@@ -24,6 +24,7 @@ import java.util.List;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.FollowPathHolonomic;
+import com.pathplanner.lib.commands.PathfindHolonomic;
 import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
@@ -37,6 +38,7 @@ import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.*;
+import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants;
@@ -492,14 +494,42 @@ import com.pathplanner.lib.util.GeometryUtil;
         // This will flip the path being followed to the red side of the field.
         // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
 
-        var alliance = DriverStation.getAlliance();
-        if (alliance.isPresent()) {
-            return alliance.get() == DriverStation.Alliance.Red;
-        }
-        return false;
+        // var alliance = DriverStation.getAlliance();
+        // if (alliance.isPresent()) {
+        //     return alliance.get() == DriverStation.Alliance.Red;
+        // }
+        // return false;
+        return FMSData.allianceIsRed();
       },
       this // Reference to this subsystem to set requirements
     );
+  }
+
+  public Command pathfindingCommand(Pose2d targetPose) {
+
+    PathfindHolonomic test = new PathfindHolonomic(
+      targetPose,
+      DriveConstants.ktrajectoryConstraints,
+      this::getPose, // Robot pose supplier
+      this::getChassisSpeed, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+      this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
+      new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
+        new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
+        new PIDConstants(5.0, 0.0, 0.0), // Rotation PID constants
+        4.5, // Max module speed, in m/s
+        0.4, // Drive base radius in meters. Distance from robot center to furthest module.
+        new ReplanningConfig() // Default path replanning config. See the API for the options here
+      ),
+      0.0,
+      this // Reference to this subsystem to set requirements
+    );
+    // @Override
+    // test.isFinished(){
+    //   return (Math.abs(OI.getDriverRightX()) >= ControllerConstants.kDriverDisableAutoTargeting ||
+    //         Math.abs(OI.getDriverLeftX()) >= ControllerConstants.kDriverDisableAutoTargeting  ||
+    //         Math.abs(OI.getDriverLeftY()) >= ControllerConstants.kDriverDisableAutoTargeting);
+    // }
+    return test;
   }
 
   public void driveRobotRelative(ChassisSpeeds chassisSpeeds) {
@@ -607,6 +637,27 @@ rotateToTarget(chassisSpeeds.omegaRadiansPerSecond));
 
     AutoBuilder.followPath(path).schedule();
     AutoBuilder.followPath(path2).schedule();
+    // followPathCommand(path).schedule();
+    // followPathCommand(path2).schedule();
+    System.out.println("ran init");
+  }
+
+  public void driveToTrapPose(Pose2d desiredLocation) {
+    trajectoryConstraints = new PathConstraints(
+    DriveConstants.kMaxSpeedMetersPerSec,
+    DriveConstants.kMaxAccelMetersPerSecSquared, 
+    DriveConstants.kMaxAngularSpeedRadPerSec, 
+    DriveConstants.kMaxAngularAccel);
+    
+    List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(getPose(), desiredLocation.transformBy(new Transform2d(0,0,new Rotation2d(Math.PI))));
+    PathPlannerPath path = new PathPlannerPath(
+      bezierPoints, 
+      trajectoryConstraints,  
+      new GoalEndState(0.0, desiredLocation.getRotation())
+    );
+    AutoBuilder.followPath(path).schedule();
+    // followPathCommand(path).schedule();
+    // followPathCommand(path2).schedule();
     System.out.println("ran init");
   }
 
@@ -616,10 +667,10 @@ rotateToTarget(chassisSpeeds.omegaRadiansPerSecond));
     // SmartDashboard.putBoolean("fieldRelative", fieldRelative);
     // SmartDashboard.putBoolean("keepAngle", keepAngle);
 
-    // SmartDashboard.putNumber(topic+"Front Left Encoder", m_frontLeft.getTurnEncoder());
-    // SmartDashboard.putNumber(topic+"Front Right Encoder", m_frontRight.getTurnEncoder());
-    // SmartDashboard.putNumber(topic+"Back Left Encoder", m_backLeft.getTurnEncoder());
-    // SmartDashboard.putNumber(topic+"Back Right Encoder", m_backRight.getTurnEncoder());
+    SmartDashboard.putNumber(topic+"Front Left Encoder", m_frontLeft.getTurnEncoder());
+    SmartDashboard.putNumber(topic+"Front Right Encoder", m_frontRight.getTurnEncoder());
+    SmartDashboard.putNumber(topic+"Back Left Encoder", m_backLeft.getTurnEncoder());
+    SmartDashboard.putNumber(topic+"Back Right Encoder", m_backRight.getTurnEncoder());
 
     // SmartDashboard.putNumber(topic+"Balance Angle", pigeon.getRoll().getDegrees());
 

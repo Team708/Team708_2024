@@ -1,14 +1,20 @@
 package frc.robot;
 
 import frc.robot.Constants.ControllerConstants;
+
+import com.pathplanner.lib.auto.AutoBuilder;
+
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 //Command Imports
 import frc.robot.commands.drive.SetRumble;
 import frc.robot.commands.drive.DriveToAmp;
+import frc.robot.commands.drive.DriveToAmpSCG;
+import frc.robot.commands.drive.LineUpToTrap;
 import frc.robot.commands.drive.ResetDrive;
 import frc.robot.commands.drive.ResetGyro;
 import frc.robot.commands.drive.ToggleDriveSpeed;
@@ -25,6 +31,7 @@ import frc.robot.commands.AllSystemsOff;
 import frc.robot.commands.AllSystemsOn;
 import frc.robot.commands.ShootAmpSequence;
 import frc.robot.commands.ShootSpeakerPCG;
+import frc.robot.commands.ShootTrapSequence;
 import frc.robot.commands.Feeder.FeederForward;
 import frc.robot.commands.Feeder.FeederOff;
 import frc.robot.commands.Feeder.FeederReverse;
@@ -173,15 +180,18 @@ public class OI {
         .onTrue(new AllSystemsOn(m_intake, m_feeder, m_shooter));
     new JoystickButton(adaptiveGamepad, Button.kB.value)
         .onTrue(new AllSystemsOff(m_intake, m_feeder, m_shooter));
+    // new JoystickButton(climberController, Button.kStart.value)
+    //     .onTrue(new ShootTrapSequence(m_drive,m_feeder,m_shooter,m_PivotArm));
 
     //testing button
     // new JoystickButton(operatorController, Button.kRightStick.value)
     // 		.onTrue(new /*Command*/);
     
     //Climber//
-
     new JoystickButton(climberController, Button.kY.value)
-    	.onTrue(new armToTrapShotAngle(m_PivotArm));
+        // .onTrue(new ShootTrapSequence(m_drive,m_feeder,m_shooter,m_PivotArm));
+        // .onTrue(new LineUpToTrap(m_drive));
+        .onTrue(new armToTrapShotAngle(m_PivotArm));
 
     // new JoystickButton(climberController, Button.kA.value)
     // 	.onTrue(new /*Command*/);

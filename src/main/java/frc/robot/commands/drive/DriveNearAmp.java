@@ -15,49 +15,46 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.OI;
 import frc.robot.Constants.ControllerConstants;
-//import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.DriveConstants;
-//import frc.robot.OI;
+import frc.robot.OI;
 import frc.robot.subsystems.drive.Drivetrain;
 
-public class DriveToAmp extends Command {
+public class DriveNearAmp extends Command {
+  /** Creates a new DriveNearAmp. */
   private Drivetrain m_drive;
   private PathConstraints trajectoryConstraints;
 
   private Command cmd;
-  /** Creates a new SimplerDriveToAmp. */
-  public DriveToAmp(Drivetrain dr) {
+
+  public DriveNearAmp(Drivetrain dr) {
+    // Use addRequirements() here to declare subsystem dependencies.
     m_drive = dr;
     addRequirements(m_drive);
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // m_drive.driveToPose(DriveConstants.kRobotToAmp,DriveConstants.kAmpScoringPose);
     trajectoryConstraints = DriveConstants.ktrajectoryConstraints;
 
-    List<Translation2d> bezierPoints2 = PathPlannerPath.bezierFromPoses(DriveConstants.kRobotToAmp.transformBy(new Transform2d(0,0,new Rotation2d(Math.PI))), DriveConstants.kAmpScoringPose.transformBy(new Transform2d(0,0,new Rotation2d(Math.PI))));
-    PathPlannerPath path2 = new PathPlannerPath(
-      bezierPoints2, 
+    List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(m_drive.getPose(), DriveConstants.kRobotToAmp.transformBy(new Transform2d(0,0,new Rotation2d(Math.PI))));
+    PathPlannerPath path1 = new PathPlannerPath(
+      bezierPoints, 
       trajectoryConstraints,  
-      new GoalEndState(0.0, DriveConstants.kAmpScoringPose.getRotation())
+      new GoalEndState(0.0, DriveConstants.kRobotToAmp.getRotation())
     );
 
-
-    cmd = AutoBuilder.followPath(path2);
-
+    cmd = AutoBuilder.followPath(path1);
+    
     cmd.schedule();
-
+    cmd.cancel();
+    cmd.end(true);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // m_drive.runPathfindingCommand();
     cmd.cancel();
   }
 
