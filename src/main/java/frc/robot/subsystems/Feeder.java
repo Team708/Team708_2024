@@ -14,6 +14,7 @@ import com.revrobotics.SparkPIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 // import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import frc.robot.Constants.CurrentLimit;
 import frc.robot.Constants.FeederConstants;
@@ -35,8 +36,8 @@ public class Feeder extends SubsystemBase {
     m_pivotArm = pivotArm;
     m_shooter = shooter;
 
-    feederLowNotePresent = new DigitalInput(1);
-    feederHighNotePresent = new DigitalInput(2);
+    feederLowNotePresent = new DigitalInput(3);
+    feederHighNotePresent = new DigitalInput(4);
 
     //Feeder motor 1
     feederMotor = new CANSparkMax(FeederConstants.kFeederStage1MotorID, MotorType.kBrushless);
@@ -60,23 +61,19 @@ public class Feeder extends SubsystemBase {
       runForward();
     }
     else {
-      feedNotesToStow();
-    }
+      if (!isEmpty())
+          stop();
+    }                
   }
 
   public void feedNotesToStow() {
-    if(!hasNoteHigher()) {
-      if(!hasNoteLower()) {
-        runForward();
-      }
-      else {
+      if(hasNoteLower()) {
         runForwardSlow();
       }
+      else {
+         runForward();
+      }
     }
-    else {
-      stop();
-    }
-  }
 
   public void runForward(){
     feederPIDController.setReference(FeederConstants.kFeederShootRPM, CANSparkMax.ControlType.kVelocity);
@@ -109,7 +106,7 @@ public class Feeder extends SubsystemBase {
   }
 
   public boolean isEmpty() {
-    return !(feederLowNotePresent.get() || feederHighNotePresent.get());
+    return !(hasNoteLower() || hasNoteHigher());
   }
 
   public void sendToDashboard() {
@@ -117,8 +114,8 @@ public class Feeder extends SubsystemBase {
 	  // SmartDashboard.putBoolean(topic+"Note Present Bottom", feederLowNotePresent.get());
     // SmartDashboard.putBoolean(topic+"Note Present Top", feederHighNotePresent.get());
     // SmartDashboard.putNumber(topic+"Feeder Encoder", feederEncoder.getPosition());
-    SmartDashboard.putBoolean(topic+"Feeder is Empty", isEmpty());
-    // SmartDashboard.putNumber(topic+"Feeder RPM", feederEncoder.getVelocity());
-    // SmartDashboard.putNumber(topic+"Feeder Amps", feederMotor.getOutputCurrent());
+    SmartDashboard.putBoolean("Feeder", !isEmpty());
+    // SmartDashboard.putNumber("Feeder RPM", feederEncoder.getVelocity());
+    // SmartDashboard.putNumber("Feeder Amps", feederMotor.getOutputCurrent());
 	}
 }

@@ -128,6 +128,10 @@ public class RobotContainer {
 		return m_shooter;
 	}
 
+	public PivotArm getPivotArm() {
+		return m_pivotArm;
+	}
+
 	public void simulationInit(){
 	  m_intake.simulationInit();
 	}

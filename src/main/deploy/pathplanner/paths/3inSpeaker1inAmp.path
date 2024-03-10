@@ -3,193 +3,61 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.0280452081436904,
-        "y": 6.58297147892853
+        "x": 3.246438422701407,
+        "y": 6.163144080674127
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.5971416626518047,
-        "y": 6.592150454001242
+        "x": 4.425312710274543,
+        "y": 6.398918938188755
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Amp Side Pt 2"
     },
     {
       "anchor": {
-        "x": 2.3222806933960154,
-        "y": 6.527897628492261
+        "x": 8.315597859268445,
+        "y": 6.580284213203943
       },
       "prevControl": {
-        "x": 1.9930172115406672,
-        "y": 6.488699594938052
+        "x": 8.860236642032534,
+        "y": 6.6297968298188605
       },
       "nextControl": {
-        "x": 2.7077976464498987,
-        "y": 6.573792503855819
+        "x": 7.916594254243691,
+        "y": 6.544011158201693
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.167762965936587,
-        "y": 6.683940204728357
+        "x": 4.6066779852857955,
+        "y": 6.471465048193254
       },
       "prevControl": {
-        "x": 3.7738503104631516,
-        "y": 6.539614630312139
-      },
-      "nextControl": {
-        "x": 6.561675621410023,
-        "y": 6.828265779144575
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 8.453836041967312,
-        "y": 6.895056631400722
-      },
-      "prevControl": {
-        "x": 8.29396482766897,
-        "y": 7.006966481409561
-      },
-      "nextControl": {
-        "x": 8.637415543421543,
-        "y": 6.766550980382761
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 3.4421156522668213,
-        "y": 6.04141194963855
-      },
-      "prevControl": {
-        "x": 3.31012436086517,
-        "y": 6.023413137174688
-      },
-      "nextControl": {
-        "x": 3.9573924602812083,
-        "y": 6.11167696891324
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 8.095856014131563,
-        "y": 5.068440591931129
-      },
-      "prevControl": {
-        "x": 7.636907260495988,
-        "y": 5.509031395421283
-      },
-      "nextControl": {
-        "x": 8.503662488855715,
-        "y": 4.67694637619594
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 7.278927232660237,
-        "y": 6.436107877765147
-      },
-      "prevControl": {
-        "x": 7.820486761950217,
-        "y": 6.417749927619722
+        "x": 5.522572624092617,
+        "y": 6.516806366946068
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Amp Side Pt 3"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "IntakeFeeder",
-      "waypointRelativePos": 2.2,
+      "name": "IntakeOn",
+      "waypointRelativePos": 0.1,
       "command": {
-        "type": "sequential",
+        "type": "parallel",
         "data": {
           "commands": [
             {
               "type": "named",
               "data": {
                 "name": "IntakeNote"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "ShooterOn",
-      "waypointRelativePos": 3.5,
-      "command": {
-        "type": "deadline",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "SetShooterSpeedSpeaker"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "AutoShoot",
-      "waypointRelativePos": 3.8000000000000003,
-      "command": {
-        "type": "deadline",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "ShootSpeakerPCG"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "IntakeFeeder",
-      "waypointRelativePos": 4.35,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "IntakeNote"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "New Event Marker",
-      "waypointRelativePos": 0,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "ShootSpeakerPCG"
               }
             }
           ]
@@ -198,20 +66,20 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 2.5,
-    "maxAcceleration": 2.0,
+    "maxVelocity": 4.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0.0,
-    "rotation": -156.11350007836523,
+    "rotation": -160.42687416958984,
     "rotateFast": false
   },
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": -152.15242174021182,
+    "rotation": -167.79953127261922,
     "velocity": 0
   },
   "useDefaultConstraints": false

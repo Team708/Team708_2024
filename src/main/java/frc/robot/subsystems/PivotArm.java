@@ -35,6 +35,7 @@ public class PivotArm extends SubsystemBase {
   private Boolean isTargeting = false;
   private double distance;
   private InterpolatingDoubleTreeMap interpolatingTreeMap = new InterpolatingDoubleTreeMap();
+  private boolean lastIdleModeState = false;
 
   public PivotArm(Drivetrain drive) {
     m_drive = drive;
@@ -63,7 +64,7 @@ public class PivotArm extends SubsystemBase {
     //Follower arm motor
     m_PivotArmRightFollower = new CANSparkMax(ArmConstants.kArmSlaveMotorID, MotorType.kBrushless);
     m_PivotArmRightFollower.setIdleMode(IdleMode.kBrake);
-    m_PivotArmRightFollower.setSmartCurrentLimit(40);
+    m_PivotArmRightFollower.setSmartCurrentLimit(CurrentLimit.kArmAmps);
     m_PivotArmRightFollower.follow(m_PivotArmLeftLeader, true);
 
     //data potints outdated 
@@ -88,29 +89,22 @@ public class PivotArm extends SubsystemBase {
 //     interpolatingTreeMap.put(5.7,18.5);//smp
 //    interpolatingTreeMap.put(6.2,23.22);
 
+
+
 //Data points maded 02.27 precomp
-interpolatingTreeMap.put(1.42,51.65);
-interpolatingTreeMap.put(1.946,43.0);
-interpolatingTreeMap.put(2.25,41.0);
-interpolatingTreeMap.put(2.85,34.3);
-interpolatingTreeMap.put(3.07,33.0);
-interpolatingTreeMap.put(3.77,31.08);
-interpolatingTreeMap.put(4.06,29.17);
-interpolatingTreeMap.put(4.84,26.70);
-interpolatingTreeMap.put(5.61,24.7);
+interpolatingTreeMap.put(1.22,51.5);//1.42,53.0 //51.65  //45.2
+interpolatingTreeMap.put(1.945,42.44);//1.946,45.0 //43.0 //37.6
+interpolatingTreeMap.put(2.244,39.633); //2.25,43.0 //41.0
+                                                //32.68  @2.5m
+interpolatingTreeMap.put(2.87,33.49); //2.65,34.3 //30.2
+interpolatingTreeMap.put(3.075,31.11);  //3.07, 33.0 //29.1
+interpolatingTreeMap.put(3.61,27.6);
+interpolatingTreeMap.put(3.8,27.395); //3.77,31.08 //25.4
+interpolatingTreeMap.put(4.073,25.73); //4.06, 29.17
+interpolatingTreeMap.put(4.91,24.157); //4.84, 26.70
+interpolatingTreeMap.put(5.92,23.78);  //5.61, 24.70
 
-
-  
-  
-   
-    
-    
-  
-    
-
-
-
-  }
+}
   
   @Override
   public void periodic() {
@@ -120,11 +114,14 @@ interpolatingTreeMap.put(5.61,24.7);
   //current and voltage limits
   
   public double getPosition() {
+    // return (ArmConstants.kArmClockingOffset-(absEncoder.getAbsolutePosition()*ArmConstants.kArmScalingFactor)-ArmConstants.kArmAbsEncoderOffset);
+    //Replaced to avoid searching for every instance of the method. DO NOT CHANGE WITHOUT APPROVAL FROM JOHN
     return PivotArmEncoder.getPosition();
   }
   
   public double getAbsolutePosition() {
-    return (-ArmConstants.kArmClockingOffset-(absEncoder.getAbsolutePosition()*ArmConstants.kArmScalingFactor)-ArmConstants.kArmAbsEncoderOffset);
+    return (-ArmConstants.kArmClockingOffset-(absEncoder.getAbsolutePosition()*ArmConstants.kArmScalingFactor)-ArmConstants.kArmAbsEncoderOffset);   //Previous 
+    // return (ArmConstants.kArmClockingOffset-(absEncoder.getAbsolutePosition()*ArmConstants.kArmScalingFactor)-ArmConstants.kArmAbsEncoderOffset);
   }
 
   public double inputTransform(double input) {
@@ -174,13 +171,25 @@ interpolatingTreeMap.put(5.61,24.7);
   public boolean isArmAtPosition() {
       return Math.abs(targetArmAngle - getPosition()) < ArmConstants.kThresholdArm;
     }
-  
+
+  public void setCoastMode(boolean isCoastMode) {
+    if (isCoastMode == true && lastIdleModeState != isCoastMode){
+      m_PivotArmLeftLeader.setIdleMode(IdleMode.kCoast);
+      m_PivotArmRightFollower.setIdleMode(IdleMode.kCoast);
+      lastIdleModeState = true;
+    }else if (isCoastMode == false && lastIdleModeState != isCoastMode) {
+      m_PivotArmLeftLeader.setIdleMode(IdleMode.kBrake);
+      m_PivotArmRightFollower.setIdleMode(IdleMode.kBrake);
+      lastIdleModeState = false;
+    }
+  }
 
   public void sendToDashboard() {
-    String topic = new String(this.getName()+"/");
-    SmartDashboard.putNumber(topic+"Arm Position", getPosition());
-    // SmartDashboard.putNumber(topic+"Arm Abs Position", getAbsolutePosition());
-	  // SmartDashboard.putBoolean(topic+"Arm At Position", isArmAtPosition());
+    // String topic = new String(this.getName()+"/");
+    SmartDashboard.putNumber("Arm Position", getPosition());
+    // SmartDashboard.putNumber("Arm Abs Position", getAbsolutePosition());   //Arm position is already abs
+	  SmartDashboard.putBoolean("Arm At Position", isArmAtPosition());
+    
     // SmartDashboard.putNumber(topic+"Arm Amps", m_PivotArmLeftLeader.getOutputCurrent());
     // SmartDashboard.putBoolean(topic+"Arm Forward Limit", forwardLimit.isPressed());
     // SmartDashboard.putBoolean(topic+"Arm Reverse Limit", reverseLimit.isPressed());

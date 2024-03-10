@@ -3,6 +3,7 @@ package frc.robot.utilities;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.SparkPIDController.AccelStrategy;
 
 import edu.wpi.first.hal.HAL;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -67,6 +68,8 @@ public class PidHelper {
         m_PIDController.setFF(m_PIDList[3]);
         m_PIDController.setIZone(m_PIDList[4]);
         m_PIDController.setOutputRange(m_PIDList[5], m_PIDList[6]);
+        m_PIDController.setSmartMotionAccelStrategy(AccelStrategy.kSCurve, 0);
+        m_PIDController.setSmartMotionMaxAccel(m_PIDList[7],0);
     }
 
     public void update() {
