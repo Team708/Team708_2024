@@ -64,7 +64,7 @@ public class PivotArm extends SubsystemBase {
     //Follower arm motor
     m_PivotArmRightFollower = new CANSparkMax(ArmConstants.kArmSlaveMotorID, MotorType.kBrushless);
     m_PivotArmRightFollower.setIdleMode(IdleMode.kBrake);
-    m_PivotArmRightFollower.setSmartCurrentLimit(40);
+    m_PivotArmRightFollower.setSmartCurrentLimit(CurrentLimit.kArmAmps);
     m_PivotArmRightFollower.follow(m_PivotArmLeftLeader, true);
 
     //data potints outdated 
@@ -92,16 +92,17 @@ public class PivotArm extends SubsystemBase {
 
 
 //Data points maded 02.27 precomp
-interpolatingTreeMap.put(1.42,53.0); //51.65  //45.2
-interpolatingTreeMap.put(1.946,45.0); //43.0 //37.6
-interpolatingTreeMap.put(2.25,43.0);  //41.0
+interpolatingTreeMap.put(1.22,51.5);//1.42,53.0 //51.65  //45.2
+interpolatingTreeMap.put(1.945,42.44);//1.946,45.0 //43.0 //37.6
+interpolatingTreeMap.put(2.244,39.633); //2.25,43.0 //41.0
                                                 //32.68  @2.5m
-interpolatingTreeMap.put(2.85,34.3);  //30.2
-interpolatingTreeMap.put(3.07,33.0);  //29.1
-interpolatingTreeMap.put(3.77,31.08); //25.4
-interpolatingTreeMap.put(4.06,29.17); //
-interpolatingTreeMap.put(4.84,26.70); //
-interpolatingTreeMap.put(5.61,24.7);  //
+interpolatingTreeMap.put(2.87,33.49); //2.65,34.3 //30.2
+interpolatingTreeMap.put(3.075,31.11);  //3.07, 33.0 //29.1
+interpolatingTreeMap.put(3.61,27.6);
+interpolatingTreeMap.put(3.8,27.395); //3.77,31.08 //25.4
+interpolatingTreeMap.put(4.073,25.73); //4.06, 29.17
+interpolatingTreeMap.put(4.91,24.157); //4.84, 26.70
+interpolatingTreeMap.put(5.92,23.78);  //5.61, 24.70
 
 }
   
@@ -113,14 +114,14 @@ interpolatingTreeMap.put(5.61,24.7);  //
   //current and voltage limits
   
   public double getPosition() {
-    return (ArmConstants.kArmClockingOffset-(absEncoder.getAbsolutePosition()*ArmConstants.kArmScalingFactor)-ArmConstants.kArmAbsEncoderOffset);
+    // return (ArmConstants.kArmClockingOffset-(absEncoder.getAbsolutePosition()*ArmConstants.kArmScalingFactor)-ArmConstants.kArmAbsEncoderOffset);
     //Replaced to avoid searching for every instance of the method. DO NOT CHANGE WITHOUT APPROVAL FROM JOHN
-    //return PivotArmEncoder.getPosition();
+    return PivotArmEncoder.getPosition();
   }
   
   public double getAbsolutePosition() {
-    // return (-ArmConstants.kArmClockingOffset-(absEncoder.getAbsolutePosition()*ArmConstants.kArmScalingFactor)-ArmConstants.kArmAbsEncoderOffset);   //Previous 
-    return (ArmConstants.kArmClockingOffset-(absEncoder.getAbsolutePosition()*ArmConstants.kArmScalingFactor)-ArmConstants.kArmAbsEncoderOffset);
+    return (-ArmConstants.kArmClockingOffset-(absEncoder.getAbsolutePosition()*ArmConstants.kArmScalingFactor)-ArmConstants.kArmAbsEncoderOffset);   //Previous 
+    // return (ArmConstants.kArmClockingOffset-(absEncoder.getAbsolutePosition()*ArmConstants.kArmScalingFactor)-ArmConstants.kArmAbsEncoderOffset);
   }
 
   public double inputTransform(double input) {

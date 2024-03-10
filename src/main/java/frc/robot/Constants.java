@@ -33,7 +33,7 @@ public final class Constants {
   public static final class CurrentLimit {
     public static final int kIntakeAmps = 40;
     public static final int kFeederAmps = 60; //40
-    public static final int kArmAmps = 25;  //25
+    public static final int kArmAmps = 60;  //25
     public static final int kShooterAmps = 40; //35
     public static final int kClimberAmps = 40;
 
@@ -296,14 +296,14 @@ public final class Constants {
     public static final int kArmSlaveMotorID   = 42;
 
     //gearbox ratios
-    public static final double kPivotArmGearRatio = 360/45/3; //42*45;
+    public static final double kPivotArmGearRatio = 360/(45*60.0/15.0); //42*45;
 
     //arm angles for different shots
     public static final double kBumperShotAngle = 75;
-    public static final double kParkAngle = 4; // 0; Safe place for the arm to both drive under the stage and see targets
+    public static final double kParkAngle = 2.0; // 0; Safe place for the arm to both drive under the stage and see targets
     public static final double kDownAngle = 0; 
-    public static final double kTrapAngle = 55.7;
-    public static final double kAmpAngle = 90;
+    public static final double kTrapAngle = 57.2;
+    public static final double kAmpAngle = 95.0;
     public static final double kFartherShotAngle = 35;
     public static final double kThresholdArm = 0.1;  //.25
     
@@ -321,10 +321,12 @@ public final class Constants {
                                         kPivotArm_FF,kPivotArm_IZone,kPivotArm_Min,
                                         kPivotArm_Max, kPivotArm_MaxAccel};
 
-    public static final double kArmScalingFactor = 360/3;
-    // public static final double kArmClockingOffset = -108.5; //Value to correct for absolute encoder clocking //Previous
-    public static final double kArmClockingOffset = 128.5; //Value to correct for absolute encoder clocking 
-    public static final double kArmAbsEncoderOffset = 10; // value to offset the arm to horizontal
+    public static final double kArmScalingFactor = 360*(18.0/60.0);  //360.0/3.0;
+
+    public static final double kArmClockingOffset = -100.5; //Value to correct for absolute encoder clocking //Previous
+    // public static final double kArmClockingOffset = 128.5; //Value to correct for absolute encoder clocking 
+
+    public static final double kArmAbsEncoderOffset = -2.0; //10.0; // value to offset the arm to horizontal
     public static final double kMaxShootingDistance = 6.2; //Further distance the arm can make adjustments for
   }
 
@@ -343,10 +345,12 @@ public final class Constants {
     public static final int kShooterGearRatio = 1;
     
     //speed constants
-    public static final double kShooterSpeakerRPM = 3000; //4000;
+    public static final double kShooterSpeakerRPM = 4000; //3000; //4000;
     // public static final double kShooterPodiumShotRPM = 4000;
     public static final double kShooterAmpRPM = 600;  //1000;
     public static final double kShooterLowRPM = 1000;
+    public static final double kShooterTrapRPM = 300;
+
     public static final double kThreshhold = 0.98;
     
     //PID constants

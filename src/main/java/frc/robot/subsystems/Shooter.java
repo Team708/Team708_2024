@@ -80,6 +80,11 @@ public class Shooter extends SubsystemBase {
     shooterSpeakerPIDController.setReference(targetSpeed, CANSparkMax.ControlType.kVelocity);
   }
 
+  public void setShooterSpeedTrap(){
+    targetSpeed = ShooterConstants.kShooterTrapRPM;
+    shooterAmpPIDController.setReference(targetSpeed, CANSparkMax.ControlType.kVelocity);
+    shooterSpeakerPIDController.setReference(targetSpeed, CANSparkMax.ControlType.kVelocity);
+  }
   public void setShooterSpeedReverse() {
     targetSpeed = ShooterConstants.kShooterLowRPM;
     shooterAmpPIDController.setReference(-targetSpeed, CANSparkMax.ControlType.kVelocity);

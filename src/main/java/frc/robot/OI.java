@@ -25,6 +25,7 @@ import frc.robot.commands.AllSystemsOff;
 import frc.robot.commands.AllSystemsOn;
 import frc.robot.commands.ShootAmpSequence;
 import frc.robot.commands.ShootSpeakerPCG;
+import frc.robot.commands.ShootTrapSequence;
 import frc.robot.commands.Feeder.FeederForward;
 import frc.robot.commands.Feeder.FeederOff;
 import frc.robot.commands.Feeder.FeederReverse;
@@ -164,7 +165,7 @@ public class OI {
 
     new POVButton(operatorController, 0).onTrue(new armToParkShotAngle(m_PivotArm, 100.0));
     new POVButton(operatorController, 90).onTrue(new armToParkShotAngle(m_PivotArm, 45.0));
-    new POVButton(operatorController, 180).onTrue(new armToParkShotAngle(m_PivotArm, -9.0));
+    new POVButton(operatorController, 180).onTrue(new armToParkShotAngle(m_PivotArm, 2.0));
     new POVButton(operatorController, 270).onTrue(new armToParkShotAngle(m_PivotArm, 68.0));
 
     
@@ -181,7 +182,7 @@ public class OI {
     //Climber//
 
     new JoystickButton(climberController, Button.kY.value)
-    	.onTrue(new armToTrapShotAngle(m_PivotArm));
+    	.onTrue(new ShootTrapSequence(m_drive, m_feeder, m_shooter, m_PivotArm));
 
     // new JoystickButton(climberController, Button.kA.value)
     // 	.onTrue(new /*Command*/);
