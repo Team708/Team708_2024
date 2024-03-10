@@ -534,7 +534,7 @@ rotateToTarget(chassisSpeeds.omegaRadiansPerSecond));
     desiredTranslation.getY(),
     -inputTransform(OI.getDriverRightX())* DriveConstants.kMaxAngularSpeedRadPerSec,
     getFieldOrient(),
-    true);
+    true); 
   }
   
   public void setAutoRot(boolean autoRotEnabled) {

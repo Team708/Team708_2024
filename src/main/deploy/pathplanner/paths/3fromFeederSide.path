@@ -33,15 +33,15 @@
     {
       "anchor": {
         "x": 8.415348760522082,
-        "y": 2.5993164267030298
+        "y": 2.4542242066940285
       },
       "prevControl": {
-        "x": 7.018836142935443,
-        "y": 2.31820025043559
+        "x": 7.644546341724262,
+        "y": 1.3388277653748288
       },
       "nextControl": {
-        "x": 8.742594608075423,
-        "y": 2.66519059082091
+        "x": 8.605124593608735,
+        "y": 2.7288410004547163
       },
       "isLocked": false,
       "linkedName": null
@@ -64,44 +64,44 @@
     },
     {
       "anchor": {
-        "x": 2.6343658458682073,
-        "y": 3.150034801734421
+        "x": 1.9587449701215194,
+        "y": 3.914214670534605
       },
       "prevControl": {
-        "x": 2.259171108411695,
-        "y": 3.42902576035593
+        "x": 1.5553216989179433,
+        "y": 4.1505549131066575
       },
       "nextControl": {
-        "x": 3.350325901539706,
-        "y": 2.6176542475171525
+        "x": 2.8039071516739527,
+        "y": 3.419087469753887
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.950376321805276,
-        "y": 0.7221858303365737
+        "x": 8.778079310544587,
+        "y": 0.6133666653298225
       },
       "prevControl": {
-        "x": 8.219546466144719,
-        "y": 0.43835111978447105
+        "x": 8.515099661780228,
+        "y": 0.7947319403449116
       },
       "nextControl": {
-        "x": 9.535152432078565,
-        "y": 0.949297184246963
+        "x": 9.294505215178237,
+        "y": 0.2572108690205691
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.0285534910692467,
-        "y": 3.5263727797155924
+        "x": 2.004086288874332,
+        "y": 4.00489730804023
       },
       "prevControl": {
-        "x": 2.340638643541438,
-        "y": 2.094452668372595
+        "x": 2.3161714413465235,
+        "y": 2.572977196697233
       },
       "nextControl": null,
       "isLocked": false,
@@ -113,7 +113,7 @@
   "eventMarkers": [
     {
       "name": "IntakeFeeder",
-      "waypointRelativePos": 0.5,
+      "waypointRelativePos": 1.5,
       "command": {
         "type": "sequential",
         "data": {
@@ -130,7 +130,7 @@
     },
     {
       "name": "ShooterOn",
-      "waypointRelativePos": 2.75,
+      "waypointRelativePos": 2.45,
       "command": {
         "type": "sequential",
         "data": {
@@ -147,7 +147,7 @@
     },
     {
       "name": "AutoShoot",
-      "waypointRelativePos": 3.95,
+      "waypointRelativePos": 2.75,
       "command": {
         "type": "sequential",
         "data": {
@@ -164,7 +164,7 @@
     },
     {
       "name": "IntakFeeder",
-      "waypointRelativePos": 4.7,
+      "waypointRelativePos": 3.75,
       "command": {
         "type": "sequential",
         "data": {
@@ -181,7 +181,7 @@
     },
     {
       "name": "ShooterOn",
-      "waypointRelativePos": 5.6,
+      "waypointRelativePos": 5.3,
       "command": {
         "type": "sequential",
         "data": {
@@ -198,7 +198,7 @@
     },
     {
       "name": "AutoShoot",
-      "waypointRelativePos": 5.85,
+      "waypointRelativePos": 5.65,
       "command": {
         "type": "sequential",
         "data": {
@@ -207,6 +207,40 @@
               "type": "named",
               "data": {
                 "name": "ShootSpeakerPCG"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "spititout",
+      "waypointRelativePos": 4.1,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "FeederFoward"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "spititout2",
+      "waypointRelativePos": 6.0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "FeederFoward"
               }
             }
           ]

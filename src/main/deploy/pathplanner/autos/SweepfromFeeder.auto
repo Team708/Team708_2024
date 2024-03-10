@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.8433485288023208,
-      "y": 4.449242231817797
+      "x": 0.8252120013011957,
+      "y": 4.4673787593189225
     },
-    "rotation": -155.1363034282481
+    "rotation": 122.90524292298792
   },
   "command": {
     "type": "sequential",
@@ -60,7 +60,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Whole Note"
+                        "pathName": "SweepfromFeeder"
                       }
                     },
                     {
@@ -70,6 +70,12 @@
                       }
                     }
                   ]
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 3.0
                 }
               }
             ]

@@ -102,7 +102,7 @@ public class Feeder extends SubsystemBase {
   }
 
   public boolean hasNoteLower() {
-    return (feederLowNotePresent.get() || (feederMotor.getOutputCurrent()>=Constants.FeederConstants.kFeederAmpsToDetectNote));
+    return (feederLowNotePresent.get());
   }
 
   public boolean isEmpty() {

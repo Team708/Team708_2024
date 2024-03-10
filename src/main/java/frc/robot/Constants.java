@@ -32,7 +32,7 @@ public final class Constants {
 
   public static final class CurrentLimit {
     public static final int kIntakeAmps = 40;
-    public static final int kFeederAmps = 60; //40
+    public static final int kFeederAmps = 80; //40
     public static final int kArmAmps = 60;  //25
     public static final int kShooterAmps = 40; //35
     public static final int kClimberAmps = 40;
@@ -167,7 +167,7 @@ public final class Constants {
    */
   public static final class ModuleConstants {
     public static final double kTranslationRampRate = 3.0;            //Units of %power/s, ie 4.0 means it takes 0.25s to reach 100% power from 0%
-    private static final double kTranslationGearRatio = (50*17*45)/(14*27*15);//5.6111111;    //Overall gear ratio of the swerve module
+    private static final double kTranslationGearRatio = (50.0*17.0*45.0)/(14.0*27.0*15.0);//5.6111111;    //Overall gear ratio of the swerve module
     private static final double kWheelDiameterMeters = 0.095;//0.0777*0.98;   //Wheel Diameter in meters, may need to be experimentally determined due to compliance of floor/tread material
 
     public static final double kVelocityFactor = (1.0 / kTranslationGearRatio / 60.0) * kWheelDiameterMeters * Math.PI; //Calculates the conversion factor of RPM of the translation motor to m/s at the floor
@@ -305,7 +305,7 @@ public final class Constants {
     public static final double kTrapAngle = 57.2;
     public static final double kAmpAngle = 95.0;
     public static final double kFartherShotAngle = 35;
-    public static final double kThresholdArm = 0.1;  //.25
+    public static final double kThresholdArm = 0.15;  //.25
     
     //PID values for arm motors
     //make sure the PID values get tuned
