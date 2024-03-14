@@ -153,8 +153,11 @@ public class OI {
       .onTrue(new SetShooterSpeedSpeaker(m_shooter))
       .onFalse(new ShooterOff(m_shooter));
 
+    // new JoystickButton(operatorController, Button.kRightBumper.value)
+    // 		.onTrue(new ShootAmpSequence(m_drive, m_feeder, m_shooter, m_PivotArm));
+
     new JoystickButton(operatorController, Button.kRightBumper.value)
-    		.onTrue(new ShootAmpSequence(m_drive, m_feeder, m_shooter, m_PivotArm));
+    	.onTrue(new ShootTrapSequence(m_drive, m_feeder, m_shooter, m_PivotArm));
     
     new JoystickButton(operatorController, Button.kRightStick.value)
     		.onTrue(new SetShooterSpeedAmp(m_shooter))
@@ -163,10 +166,11 @@ public class OI {
     new JoystickButton(operatorController, Button.kLeftStick.value)
         .onTrue(new armToParkShotAngle(m_PivotArm, ArmConstants.kDownAngle));
 
-    new POVButton(operatorController, 0).onTrue(new armToParkShotAngle(m_PivotArm, 100.0));
-    new POVButton(operatorController, 90).onTrue(new armToParkShotAngle(m_PivotArm, 45.0));
-    new POVButton(operatorController, 180).onTrue(new armToParkShotAngle(m_PivotArm, 2.0));
-    new POVButton(operatorController, 270).onTrue(new armToParkShotAngle(m_PivotArm, 68.0));
+
+    new POVButton(operatorController, 0).onTrue(new armToParkShotAngle(m_PivotArm, ArmConstants.kAmpAngle));
+    new POVButton(operatorController, 90).onTrue(new armToParkShotAngle(m_PivotArm, ArmConstants.kFartherShotAngle));
+    new POVButton(operatorController, 180).onTrue(new armToParkShotAngle(m_PivotArm, ArmConstants.kParkAngle));
+    new POVButton(operatorController, 270).onTrue(new armToParkShotAngle(m_PivotArm, 100));
 
     
     //Adaptive Buttons
@@ -216,12 +220,12 @@ public class OI {
     // new JoystickButton(adaptiveGamepad, Button.kA.value)
     // 	.onTrue(new /*Command*/);
 
-    new JoystickButton(testController, Button.kA.value) //TODO Change these buttons, current commands only for testing
-    		.onTrue(new IntakeNote(m_intake, m_feeder));
+    // new JoystickButton(testController, Button.kA.value) //TODO Change these buttons, current commands only for testing
+    // 		.onTrue(new IntakeNote(m_intake, m_feeder));
 
     // new JoystickButton(driverController, Button.kB.value); //TODO Change these buttons, current commands only for testing
     		
-    new JoystickButton(testController, Button.kX.value)
-        .onTrue(new AllSystemsOff(m_intake, m_feeder, m_shooter));
+    // new JoystickButton(testController, Button.kX.value)
+    //     .onTrue(new AllSystemsOff(m_intake, m_feeder, m_shooter));
   }
 }
