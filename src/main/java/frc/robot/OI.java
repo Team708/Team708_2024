@@ -44,10 +44,10 @@ public class OI {
   // Gamepads
   public final static XboxController driverController = new XboxController(ControllerConstants.kDriverControllerPort); // Driver
   public final static XboxController operatorController = new XboxController(ControllerConstants.kOperatorControllerPort); // Operator
-  public final static XboxController climberController  = new XboxController(ControllerConstants.kClimberControllerPort); // Climber
-  public final static XboxController adaptiveGamepad = new XboxController(ControllerConstants.kAdaptiveControllerPort); // Adaptive
+  // public final static XboxController climberController  = new XboxController(ControllerConstants.kClimberControllerPort); // Climber
+  // public final static XboxController adaptiveGamepad = new XboxController(ControllerConstants.kAdaptiveControllerPort); // Adaptive
   
-  public final static XboxController testController = new XboxController(4); // Driver 
+  // public final static XboxController testController = new XboxController(4); // Driver 
 
   /*
    * Driver JoystickButton
@@ -94,10 +94,9 @@ public class OI {
   // 	return deadBand(operatorController.getRightY(), ControllerConstants.kOperatorDeadBandRightY);
   // }
 
-  public static double getClimberLeftY() {
-  	return deadBand(climberController.getLeftY(), ControllerConstants.kClimberDeadBandLeftY);
-
-  }
+  // public static double getClimberLeftY() {
+  // 	return deadBand(climberController.getLeftY(), ControllerConstants.kClimberDeadBandLeftY);
+  // }
 
   // public static double getClimberRightY() {
   // 	return deadBand(climberController.getRightY(), ControllerConstants.kClimberDeadBandRightY);
@@ -153,8 +152,11 @@ public class OI {
       .onTrue(new SetShooterSpeedSpeaker(m_shooter))
       .onFalse(new ShooterOff(m_shooter));
 
+    // new JoystickButton(operatorController, Button.kRightBumper.value)
+    // 		.onTrue(new ShootAmpSequence(m_drive, m_feeder, m_shooter, m_PivotArm));
+
     new JoystickButton(operatorController, Button.kRightBumper.value)
-    		.onTrue(new ShootAmpSequence(m_drive, m_feeder, m_shooter, m_PivotArm));
+    	.onTrue(new ShootTrapSequence(m_drive, m_feeder, m_shooter, m_PivotArm));
     
     new JoystickButton(operatorController, Button.kRightStick.value)
     		.onTrue(new SetShooterSpeedAmp(m_shooter))
@@ -163,17 +165,18 @@ public class OI {
     new JoystickButton(operatorController, Button.kLeftStick.value)
         .onTrue(new armToParkShotAngle(m_PivotArm, ArmConstants.kDownAngle));
 
-    new POVButton(operatorController, 0).onTrue(new armToParkShotAngle(m_PivotArm, 100.0));
-    new POVButton(operatorController, 90).onTrue(new armToParkShotAngle(m_PivotArm, 45.0));
-    new POVButton(operatorController, 180).onTrue(new armToParkShotAngle(m_PivotArm, 2.0));
-    new POVButton(operatorController, 270).onTrue(new armToParkShotAngle(m_PivotArm, 68.0));
+
+    new POVButton(operatorController, 0).onTrue(new armToParkShotAngle(m_PivotArm, ArmConstants.kAmpAngle));
+    new POVButton(operatorController, 90).onTrue(new armToParkShotAngle(m_PivotArm, ArmConstants.kFartherShotAngle));
+    new POVButton(operatorController, 180).onTrue(new armToParkShotAngle(m_PivotArm, ArmConstants.kParkAngle));
+    new POVButton(operatorController, 270).onTrue(new armToParkShotAngle(m_PivotArm, 100));
 
     
     //Adaptive Buttons
-    new JoystickButton(adaptiveGamepad, Button.kA.value)
-        .onTrue(new AllSystemsOn(m_intake, m_feeder, m_shooter));
-    new JoystickButton(adaptiveGamepad, Button.kB.value)
-        .onTrue(new AllSystemsOff(m_intake, m_feeder, m_shooter));
+    // new JoystickButton(adaptiveGamepad, Button.kA.value)
+    //     .onTrue(new AllSystemsOn(m_intake, m_feeder, m_shooter));
+    // new JoystickButton(adaptiveGamepad, Button.kB.value)
+    //     .onTrue(new AllSystemsOff(m_intake, m_feeder, m_shooter));
 
     //testing button
     // new JoystickButton(operatorController, Button.kRightStick.value)
@@ -181,8 +184,8 @@ public class OI {
     
     //Climber//
 
-    new JoystickButton(climberController, Button.kY.value)
-    	.onTrue(new ShootTrapSequence(m_drive, m_feeder, m_shooter, m_PivotArm));
+    // new JoystickButton(climberController, Button.kY.value)
+    // 	.onTrue(new ShootTrapSequence(m_drive, m_feeder, m_shooter, m_PivotArm));
 
     // new JoystickButton(climberController, Button.kA.value)
     // 	.onTrue(new /*Command*/);
@@ -216,12 +219,12 @@ public class OI {
     // new JoystickButton(adaptiveGamepad, Button.kA.value)
     // 	.onTrue(new /*Command*/);
 
-    new JoystickButton(testController, Button.kA.value) //TODO Change these buttons, current commands only for testing
-    		.onTrue(new IntakeNote(m_intake, m_feeder));
+    // new JoystickButton(testController, Button.kA.value) //TODO Change these buttons, current commands only for testing
+    // 		.onTrue(new IntakeNote(m_intake, m_feeder));
 
     // new JoystickButton(driverController, Button.kB.value); //TODO Change these buttons, current commands only for testing
     		
-    new JoystickButton(testController, Button.kX.value)
-        .onTrue(new AllSystemsOff(m_intake, m_feeder, m_shooter));
+    // new JoystickButton(testController, Button.kX.value)
+    //     .onTrue(new AllSystemsOff(m_intake, m_feeder, m_shooter));
   }
 }

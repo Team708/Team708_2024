@@ -63,10 +63,10 @@ public class Climber extends SubsystemBase {
     }
 
   public void climbByController() {
-    double desiredY = -inputTransform(OI.getClimberLeftY());
+    // double desiredY = -inputTransform(OI.getClimberLeftY());
     // if(Math.abs(desiredY) > ControllerConstants.kClimberDeadBandLeftY) {
     //   setDistance(getPosition()+(desiredY*2));
     // }
-    climberMotor.set(-desiredY);
+    // climberMotor.set(-desiredY);
   }
 }
