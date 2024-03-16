@@ -109,6 +109,10 @@ public class VisionProcessor extends SubsystemBase {
   // targetFound = true;
   // }
 
+public void setPipeline(int pipeline){
+  Limelight.setPipelineIndex(VisionConstants.klimelightName, pipeline);
+}
+
   public double getDistance() {
     if (seesTarget())
       // return 74/Math.tan(Math.PI*((getNTInfo("ty")+20)/180));

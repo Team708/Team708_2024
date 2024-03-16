@@ -132,6 +132,10 @@ public class RobotContainer {
 		return m_pivotArm;
 	}
 
+	public VisionProcessor getVision() {
+		return m_vision;
+	}
+	
 	public void simulationInit(){
 	  m_intake.simulationInit();
 	}
