@@ -194,6 +194,9 @@ public final class Constants {
     public static final double kLineupAccuracy = 2.0;
 
     public static final String klimelightName = "limelight";
+    
+    public static final int kPipelineMain = 0;
+    public static final int kPipelineNull = 7;    // Pipeline in Limelight made specifically to disable the camera
   }
 
   /**
