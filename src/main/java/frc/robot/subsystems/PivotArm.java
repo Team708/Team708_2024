@@ -92,11 +92,10 @@ public class PivotArm extends SubsystemBase {
 
 
 //Data points maded 02.27 precomp
-interpolatingTreeMap.put(1.22,51.5);//1.42,53.0 //51.65  //45.2
-interpolatingTreeMap.put(1.945,42.44);//1.946,45.0 //43.0 //37.6
-interpolatingTreeMap.put(2.244,39.633); //2.25,43.0 //41.0
-                                                //32.68  @2.5m
-interpolatingTreeMap.put(2.87,33.49); //2.65,34.3 //30.2
+interpolatingTreeMap.put(1.22,53.0);
+interpolatingTreeMap.put(1.945,44.0); //42.5
+interpolatingTreeMap.put(2.244,41.0); //39.8
+interpolatingTreeMap.put(2.87,35.0); //33.5
 interpolatingTreeMap.put(3.075,31.11);  //3.07, 33.0 //29.1
 interpolatingTreeMap.put(3.61,27.6);
 interpolatingTreeMap.put(3.8,27.395); //3.77,31.08 //25.4

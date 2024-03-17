@@ -50,22 +50,15 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "3fromFeederSide"
-                }
-              }
-            ]
+            "pathName": "3fromFeederSide"
           }
         },
         {
-          "type": "wait",
+          "type": "named",
           "data": {
-            "waitTime": 3.0
+            "name": "ShootSpeakerPCG"
           }
         }
       ]

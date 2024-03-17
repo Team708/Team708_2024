@@ -101,8 +101,10 @@ public final class Constants {
     public static final double kMinSpeedMetersPerSec = 1.0; //3.5;
 
     
+
     public static final double kMaxAccelMetersPerSecSquared = 4.0; //3.75;
-    public static final double kMaxSpeedMetersPerSec = 4.6; //3.5; //Maximum Sustainable Drivetrain Speed under Normal Conditions & Battery, Robot will not exceed this speed in closed loop control
+    public static final double kMaxSpeedMetersPerSec = 5.5; //4.6;  //3.5; //Maximum Sustainable Drivetrain Speed under Normal Conditions & Battery, Robot will not exceed this speed in closed loop control
+    
     public static final double kMaxAngularSpeedRadPerSec = 4.0;      //Maximum Angular Speed desired. NOTE: Robot can exceed this but spinning fast is not particularly useful or driver friendly
     public static final double kMaxAngularAccel = 6.25;      //Maximum Angular Speed desired. NOTE: Robot can exceed this but spinning fast is not particularly useful or driver friendly
 
