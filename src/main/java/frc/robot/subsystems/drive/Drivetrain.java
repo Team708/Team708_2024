@@ -351,6 +351,10 @@ import com.pathplanner.lib.util.GeometryUtil;
     pigeon.reset();
   }
 
+  public void setGyroAngle(double angle) {
+    pigeon.setAngle(angle);
+  }
+
   public FieldRelativeSpeed getFieldRelativeSpeed() {
     return m_fieldRelVel;
   }
@@ -397,7 +401,7 @@ import com.pathplanner.lib.util.GeometryUtil;
    */
   public void setPose(Pose2d pose) {
     keepAngle = getGyro().getRadians();
-
+    
     m_PoseEstimator.resetPosition(pigeon.getAngle().times(-1.0), getModulePositions(), pose);
     m_AutoPoseEstimator.resetPosition(pigeon.getAngle().times(-1.0), getModulePositions(), pose);
   }
