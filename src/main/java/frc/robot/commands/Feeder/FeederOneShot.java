@@ -32,7 +32,7 @@ public class FeederOneShot extends Command {
     m_feeder.stop();
   }
 
-  // Returns true when the command should end.
+  // Returns true when the command should end. 
   @Override
   public boolean isFinished() {
     return !m_feeder.hasNoteHigher();
