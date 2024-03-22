@@ -4,22 +4,20 @@
 
 package frc.robot.commands.PivotArm;
 
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.PivotArm;
-import frc.robot.subsystems.drive.Drivetrain;
+import frc.robot.Constants.ArmConstants;
 
+public class armToTrapShotAngle extends Command {
+  /** Creates a new moveArm. */
+  PivotArm m_PivotArm;
+  
 
-public class EnableArmAutoAim extends Command {
-  
-  private PivotArm m_pivotArm;
-  private double angle;
-  
-  public EnableArmAutoAim(PivotArm pivotArm) {
-    m_pivotArm = pivotArm;
+  public armToTrapShotAngle(PivotArm PivotArm) {
+    m_PivotArm = PivotArm;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_pivotArm);
+    addRequirements(m_PivotArm);
   }
 
   // Called when the command is initially scheduled.
@@ -27,29 +25,23 @@ public class EnableArmAutoAim extends Command {
   public void initialize() {
     // SmartDashboard.putString("Command", this.getName() + ": Init");
   }
-  
+
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // angle = Units.radiansToDegrees(Math.atan2(1.9812, m_drive.getDistanceToTarget()));
-    angle = m_pivotArm.findArmAngle();
-    m_pivotArm.setArmAngle(angle);
-    // SmartDashboard.putNumber("commanded angle", angle);
-    //replace constant with method from pivotArm subsystem
+    m_PivotArm.setArmAngle(ArmConstants.kTrapAngle); //replace constant with method from pivotArm subsystem
     //method would take parameter of distance from speaker, then use regression to get arm angle
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    // m_drive.setAutoRot(false);
     // SmartDashboard.putString("Command", this.getName() + ": End");
   }
 
-  // // Returns true when the command should end.
-  // @Override
+  // Returns true when the command should end.
+  @Override
   public boolean isFinished() {
-    return false;
+    return (m_PivotArm.isArmAtPosition());
   }
-
 }

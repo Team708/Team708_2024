@@ -65,6 +65,9 @@ import com.pathplanner.lib.util.GeometryUtil;
   private double timeSinceDrive = 0.0;  //Double to store the time since last translation command
   private double lastDriveTime = 0.0;   //Double to store the time of the last translation command
   
+  private double driveSpeed = DriveConstants.kMaxSpeedMetersPerSec;
+  private double driveAcc = DriveConstants.kMaxAccelMetersPerSecSquared;
+
   private double radius = 1;//0.450;
 
   private boolean readyToShoot = false;
@@ -212,7 +215,7 @@ import com.pathplanner.lib.util.GeometryUtil;
             rot)
         );
 
-    // SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, DriveConstants.kMaxSpeedMetersPerSec); //dupicated -RM
+    // SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, driveSpeed); //dupicated -RM
     setModuleStates(swerveModuleStates);
   }
 
@@ -241,6 +244,23 @@ import com.pathplanner.lib.util.GeometryUtil;
     return fieldOrient;
   }
 
+  public boolean getSpeedSlow(){
+    if (driveSpeed == DriveConstants.kMinSpeedMetersPerSec)
+        return true;
+    else
+        return false;
+  }
+
+  public void setSpeedFast(){  //lookat kMinTranslationCommandMetersPerSec if doesn't work
+       driveSpeed = DriveConstants.kMaxSpeedMetersPerSec;
+       driveAcc = DriveConstants.kMaxAccelMetersPerSecSquared;
+  }
+ 
+  public void setSpeedSlow(){
+      driveSpeed = DriveConstants.kMinSpeedMetersPerSec;
+      driveAcc = DriveConstants.kMinAccelMetersPerSecSquared;
+  }
+
   /**
    * Sets the swerve ModuleStates.
    *
@@ -248,7 +268,7 @@ import com.pathplanner.lib.util.GeometryUtil;
    */
   private void setModuleStates(SwerveModuleState[] desiredStates) {
     //normalize wheel speeds so all individual states are scaled to achievable velocities
-    SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, DriveConstants.kMaxSpeedMetersPerSec);
+    SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, driveSpeed);
     m_frontLeft.setDesiredState(desiredStates[0]);
     m_frontRight.setDesiredState(desiredStates[1]);
     m_backLeft.setDesiredState(desiredStates[2]);
@@ -331,6 +351,10 @@ import com.pathplanner.lib.util.GeometryUtil;
     pigeon.reset();
   }
 
+  public void setGyroAngle(double angle) {
+    pigeon.setAngle(angle);
+  }
+
   public FieldRelativeSpeed getFieldRelativeSpeed() {
     return m_fieldRelVel;
   }
@@ -377,7 +401,7 @@ import com.pathplanner.lib.util.GeometryUtil;
    */
   public void setPose(Pose2d pose) {
     keepAngle = getGyro().getRadians();
-
+    
     m_PoseEstimator.resetPosition(pigeon.getAngle().times(-1.0), getModulePositions(), pose);
     m_AutoPoseEstimator.resetPosition(pigeon.getAngle().times(-1.0), getModulePositions(), pose);
   }
@@ -487,7 +511,7 @@ import com.pathplanner.lib.util.GeometryUtil;
 rotateToTarget(chassisSpeeds.omegaRadiansPerSecond));
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(modifiedChassisSpeeds);
     SwerveDriveKinematics.desaturateWheelSpeeds(
-        swerveModuleStates, DriveConstants.kMaxSpeedMetersPerSec);
+        swerveModuleStates, driveSpeed);
     m_frontLeft.setDesiredState(swerveModuleStates[0]); 
     m_frontRight.setDesiredState(swerveModuleStates[1]);
     m_backLeft.setDesiredState(swerveModuleStates[2]);
@@ -500,7 +524,7 @@ rotateToTarget(chassisSpeeds.omegaRadiansPerSecond));
   }
   
   public void driveByController() {
-    double maxLinear = DriveConstants.kMaxSpeedMetersPerSec;
+    double maxLinear = driveSpeed;
     double desiredX = -inputTransform(OI.getDriverLeftY())*maxLinear;
     double desiredY = -inputTransform(OI.getDriverLeftX())*maxLinear;
     Translation2d desiredTranslation = new Translation2d(desiredX, desiredY);
@@ -514,7 +538,7 @@ rotateToTarget(chassisSpeeds.omegaRadiansPerSecond));
     desiredTranslation.getY(),
     -inputTransform(OI.getDriverRightX())* DriveConstants.kMaxAngularSpeedRadPerSec,
     getFieldOrient(),
-    true);
+    true); 
   }
   
   public void setAutoRot(boolean autoRotEnabled) {
@@ -546,11 +570,18 @@ rotateToTarget(chassisSpeeds.omegaRadiansPerSecond));
   }
 
   public double getDistanceToTarget() {
-    return getPose().getTranslation().getDistance(DriveConstants.kBlueSpeaker.getTranslation());
+    if(FMSData.allianceIsRed())
+    {
+      return getPose().getTranslation().getDistance(GeometryUtil.flipFieldPose(DriveConstants.kBlueSpeaker).getTranslation());
+    }
+    else{
+      return getPose().getTranslation().getDistance(DriveConstants.kBlueSpeaker.getTranslation());
+    }
+   
   }
 
   public Trajectory createTrajectory(Pose2d desiredPose) {
-    TrajectoryConfig config = new TrajectoryConfig(Constants.DriveConstants.kMaxSpeedMetersPerSec, Constants.DriveConstants.kMaxAccelMetersPerSecSquared);
+    TrajectoryConfig config = new TrajectoryConfig(driveSpeed, driveAcc);
     ArrayList<Pose2d> waypoints = new ArrayList<Pose2d>();
     waypoints.add(getPose());
     waypoints.add(desiredPose);
@@ -559,8 +590,8 @@ rotateToTarget(chassisSpeeds.omegaRadiansPerSecond));
 
   public void driveToPose(Pose2d desiredLocation, Pose2d trueEndingLocation) {
     trajectoryConstraints = new PathConstraints(
-    DriveConstants.kMaxSpeedMetersPerSec,
-    DriveConstants.kMaxAccelMetersPerSecSquared, 
+    driveSpeed,
+    driveAcc, 
     DriveConstants.kMaxAngularSpeedRadPerSec, 
     DriveConstants.kMaxAngularAccel);
     
@@ -584,7 +615,8 @@ rotateToTarget(chassisSpeeds.omegaRadiansPerSecond));
   }
 
   public void sendToDashboard() {
-    SmartDashboard.putNumber(topic+"distance to target", getDistanceToTarget());
+    SmartDashboard.putNumber("Distance to target", getDistanceToTarget());
+    SmartDashboard.putBoolean("Facing Target", isReadyToShoot());
     // SmartDashboard.putBoolean("fieldRelative", fieldRelative);
     // SmartDashboard.putBoolean("keepAngle", keepAngle);
 

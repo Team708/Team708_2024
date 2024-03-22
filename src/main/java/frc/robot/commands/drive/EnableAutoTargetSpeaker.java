@@ -4,10 +4,10 @@
 
 package frc.robot.commands.drive;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.OI;
-import frc.robot.Constants.ControllerConstants;
+// import frc.robot.OI;
+// import frc.robot.Constants.ControllerConstants;
 import frc.robot.subsystems.drive.Drivetrain;
 
 
@@ -31,7 +31,8 @@ public class EnableAutoTargetSpeaker extends Command {
 
   @Override
   public boolean isFinished() {
-    return (Math.abs(OI.getDriverRightX()) >= ControllerConstants.kDriverDisableAutoTargeting);
+    // return (Math.abs(OI.getDriverRightX()) >= ControllerConstants.kDriverDisableAutoTargeting);
+    return false;
   }
   // Called once the command ends or is interrupted.
   @Override

@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3401303606158823,
-      "y": 6.114843750220242
+      "x": 0.7798706825483827,
+      "y": 6.625625531952818
     },
-    "rotation": -144.90418321297403
+    "rotation": -118.4956386182449
   },
   "command": {
     "type": "sequential",
@@ -18,7 +18,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 1.0
+                  "waitTime": 0.5
                 }
               },
               {
@@ -37,7 +37,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 0.2
+                  "waitTime": 0.3
                 }
               },
               {
@@ -54,18 +54,74 @@
           "data": {
             "commands": [
               {
-                "type": "wait",
+                "type": "path",
                 "data": {
-                  "waitTime": 9.0
+                  "pathName": "DriveStraightAmpSide"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeNote"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "ShootSpeakerOneShot"
                 }
               },
               {
                 "type": "path",
                 "data": {
-                  "pathName": "3inSpeaker1inAmp"
+                  "pathName": "ShootFromPt1"
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "3inSpeaker1inAmp"
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "ShootFromPt3"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ShootSpeakerOneShot"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "FromPt4to4thNote"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "DriveToAmp"
           }
         }
       ]

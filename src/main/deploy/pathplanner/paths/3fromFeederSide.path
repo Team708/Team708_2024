@@ -3,105 +3,137 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.1969112668610487,
-        "y": 4.543804579763226
+        "x": 0.7893918562531909,
+        "y": 4.4718072122048795
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.2437546130441748,
-        "y": 3.021395828811629
+        "x": 0.8362352024363171,
+        "y": 2.949398461253283
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.105777623822374,
-        "y": 2.3421673091544712
+        "x": 4.30742528151723,
+        "y": 1.5292613041366443
       },
       "prevControl": {
-        "x": 2.273041699162434,
-        "y": 2.547902067011631
+        "x": 3.47468935685729,
+        "y": 1.7349960619938032
       },
       "nextControl": {
-        "x": 4.101198730213804,
-        "y": 2.09623974169306
+        "x": 5.302846387908666,
+        "y": 1.283333736675233
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.492762434881868,
-        "y": 2.4358540015207244
+        "x": 8.388143969270397,
+        "y": 2.363541569188402
       },
       "prevControl": {
-        "x": 7.169437905208558,
-        "y": 2.1313722513304034
+        "x": 7.200201417946696,
+        "y": 1.755967897900709
       },
       "nextControl": {
-        "x": 8.818072607699674,
-        "y": 2.510704129779689
+        "x": 8.685339277822054,
+        "y": 2.5155422231804705
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.377679913703987,
-        "y": 1.9791313762352443
+        "x": 4.506927084029607,
+        "y": 1.7378313703995831
       },
       "prevControl": {
-        "x": 6.092040942996658,
-        "y": 1.9791313762352443
+        "x": 5.1861712394102595,
+        "y": 1.5817887941634883
       },
       "nextControl": {
-        "x": 4.251854879772074,
-        "y": 1.9791313762352443
+        "x": 3.409683713991061,
+        "y": 1.989900793246276
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.3985485374669118,
-        "y": 2.8691549537146392
+        "x": 1.323966507582138,
+        "y": 3.6603032855188524
       },
       "prevControl": {
-        "x": 2.9652475852729956,
-        "y": 3.044817501901362
+        "x": 1.0455596194578842,
+        "y": 4.035931626638879
       },
       "nextControl": {
-        "x": 3.895535161370186,
-        "y": 2.667673889970069
+        "x": 1.8952671238675798,
+        "y": 2.8895008667210327
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.551316617610775,
-        "y": 0.7260718658366234
+        "x": 4.951272007807174,
+        "y": 1.6199439416422696
       },
       "prevControl": {
-        "x": 7.95406395377592,
-        "y": 1.0071319429353802
+        "x": 3.563827653971097,
+        "y": 2.0461523379187114
       },
       "nextControl": {
-        "x": 9.118936344627475,
-        "y": 0.4589567001817045
+        "x": 6.311497027121925,
+        "y": 1.202097040284144
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.489682180504526,
-        "y": 3.1736367039049584
+        "x": 8.515099661778272,
+        "y": 0.7675271490893864
       },
       "prevControl": {
-        "x": 2.4851032868959537,
-        "y": 3.3610100886374648
+        "x": 9.151247053673528,
+        "y": 0.8960417737146904
+      },
+      "nextControl": {
+        "x": 7.617341550472576,
+        "y": 0.5861618740781345
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.7451929289823496,
+        "y": 1.44764693038158
+      },
+      "prevControl": {
+        "x": 5.114500755317298,
+        "y": 0.9760972153523249
+      },
+      "nextControl": {
+        "x": 2.5611910657315415,
+        "y": 1.8553826713686126
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.396512617586639,
+        "y": 4.086511681795294
+      },
+      "prevControl": {
+        "x": 1.2967617163304503,
+        "y": 2.481428997945716
       },
       "nextControl": null,
       "isLocked": false,
@@ -110,22 +142,108 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "IntakeFeeder",
+      "waypointRelativePos": 0.45,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "IntakeNote"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "ShooterOn",
+      "waypointRelativePos": 2.45,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "SetShooterSpeedSpeaker"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "AutoShoot",
+      "waypointRelativePos": 3.6,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "ShootSpeakerPCG"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "IntakFeeder",
+      "waypointRelativePos": 4.55,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "IntakeNote"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "spititout",
+      "waypointRelativePos": 3.95,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "FeederFoward"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 4.5,
+    "maxAcceleration": 3.25,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0.0,
-    "rotation": 180.0,
+    "rotation": 130.91438322002506,
     "rotateFast": false
   },
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": 180.0,
+    "rotation": 123.17851165939271,
     "velocity": 0
   },
   "useDefaultConstraints": false

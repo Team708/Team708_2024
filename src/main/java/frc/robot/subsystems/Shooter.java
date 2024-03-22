@@ -82,6 +82,11 @@ public class Shooter extends SubsystemBase {
     shooterSpeakerPIDController.setReference(targetSpeed, CANSparkMax.ControlType.kVelocity);
   }
 
+  public void setShooterSpeedTrap(){
+    targetSpeed = ShooterConstants.kShooterTrapRPM;
+    shooterAmpPIDController.setReference(targetSpeed, CANSparkMax.ControlType.kVelocity);
+    shooterSpeakerPIDController.setReference(targetSpeed, CANSparkMax.ControlType.kVelocity);
+  }
   public void setShooterSpeedReverse() {
     targetSpeed = ShooterConstants.kShooterLowRPM;
     shooterAmpPIDController.setReference(-targetSpeed, CANSparkMax.ControlType.kVelocity);
@@ -107,9 +112,9 @@ public class Shooter extends SubsystemBase {
     // SmartDashboard.putNumber(topic+"Shooter Top Velocity", shooterEncoderTop.getVelocity());
     // SmartDashboard.putNumber(topic+"Shooter Bottom Velocity", shooterEncoderBottom.getVelocity());
     // SmartDashboard.putNumber(topic+"Shooter Amp Velocity", shooterEncoderAmp.getVelocity());
-    // SmartDashboard.putNumber(topic+"Shooter Bottom Amps", m_shooterMotorBottomFollower.getOutputCurrent());
-    // SmartDashboard.putNumber(topic+"Shooter Top Amps", m_shooterMotorTopLeader.getOutputCurrent());
-    SmartDashboard.putBoolean(topic+"Shooter At Speed", isAtSpeed());
+    // SmartDashboard.putNumber(topic+"Shooter Bottom Amps", m_shooterMotorTopLeader.getOutputCurrent());
+    // SmartDashboard.putNumber(topic+"Shooter Top Amps", m_shooterMotorAmp.getOutputCurrent());
+    SmartDashboard.putBoolean("Shooter At Speed", isAtSpeed());
 
   }
 

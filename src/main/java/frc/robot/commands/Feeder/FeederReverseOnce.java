@@ -7,10 +7,13 @@ package frc.robot.commands.Feeder;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Feeder;
 
-public class FeederAutomatic extends Command {
-  private Feeder m_feeder;
-  /** Creates a new FeederAutomatic. */
-  public FeederAutomatic(Feeder feeder) {
+// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
+// information, see:
+// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
+public class FeederReverseOnce extends Command {
+  Feeder m_feeder;
+
+  public FeederReverseOnce(Feeder feeder) {
     m_feeder = feeder;
     addRequirements(m_feeder);
     // Use addRequirements() here to declare subsystem dependencies.
@@ -18,12 +21,13 @@ public class FeederAutomatic extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_feeder.runReverse();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_feeder.feederAutomatic();
   }
 
   // Called once the command ends or is interrupted.
@@ -31,10 +35,7 @@ public class FeederAutomatic extends Command {
   public void end(boolean interrupted) {
     m_feeder.stop();
   }
-
-  // Returns true when the command should end.
-  @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

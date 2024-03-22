@@ -7,10 +7,10 @@ package frc.robot.commands.Feeder;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Feeder;
 
-public class FeederAutomatic extends Command {
+public class FeederOneShot extends Command {
   private Feeder m_feeder;
   /** Creates a new FeederAutomatic. */
-  public FeederAutomatic(Feeder feeder) {
+  public FeederOneShot(Feeder feeder) {
     m_feeder = feeder;
     addRequirements(m_feeder);
     // Use addRequirements() here to declare subsystem dependencies.
@@ -32,9 +32,9 @@ public class FeederAutomatic extends Command {
     m_feeder.stop();
   }
 
-  // Returns true when the command should end.
+  // Returns true when the command should end. 
   @Override
   public boolean isFinished() {
-    return false;
+    return !m_feeder.hasNoteHigher();
   }
 }

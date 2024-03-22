@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7798706825483827,
-      "y": 6.625625531952818
+      "x": 0.7802128811804795,
+      "y": 4.4718072122048795
     },
-    "rotation": -118.4956386182449
+    "rotation": 121.75948008481271
   },
   "command": {
     "type": "sequential",
@@ -37,7 +37,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 0.3
+                  "waitTime": 0.2
                 }
               },
               {
@@ -50,47 +50,15 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "DriveStraightAmpSide"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "IntakeNote"
-                }
-              }
-            ]
+            "pathName": "3fromFeederSide"
           }
         },
         {
-          "type": "deadline",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 3.0
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "ShootFromPt1"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ShootSpeakerPCG"
-                }
-              }
-            ]
+            "name": "ShootSpeakerPCG"
           }
         }
       ]
