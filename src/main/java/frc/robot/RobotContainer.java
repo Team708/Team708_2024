@@ -16,6 +16,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.DriveByController;
 import frc.robot.commands.OperateByController; //TODO uncomment if using Operator Controller
 import frc.robot.commands.ShootSpeakerPCG;
+import frc.robot.commands.ShootSpeakerOneShot;
+
 import frc.robot.commands.shooter.SetShooterSpeedSpeaker;
 import frc.robot.commands.Feeder.FeederForward;
 import frc.robot.commands.AllSystemsOff;
@@ -77,6 +79,9 @@ public class RobotContainer {
 		NamedCommands.registerCommand("FeederFoward", new FeederForward(m_feeder));
 		NamedCommands.registerCommand("IntakeNote", new IntakeNote(m_intake, m_feeder));
 		NamedCommands.registerCommand("DriveToAmp", new DriveToAmp(m_drive));
+		NamedCommands.registerCommand("ShootSpeakerOneShot", new ShootSpeakerOneShot(m_drive, m_intake, m_feeder, m_pivotArm, m_shooter));
+		// NamedCommands.registerCommand("ResetDrive", new ResetDrive(m_drive, ));
+
 	    // configureAutoChooser();
 		// Build an auto chooser. This will use Commands.none() as the default option.
 		autoChooser = AutoBuilder.buildAutoChooser();

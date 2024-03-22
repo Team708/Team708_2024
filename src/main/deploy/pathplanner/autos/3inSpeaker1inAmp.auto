@@ -73,9 +73,9 @@
           "data": {
             "commands": [
               {
-                "type": "wait",
+                "type": "named",
                 "data": {
-                  "waitTime": 3.0
+                  "name": "ShootSpeakerOneShot"
                 }
               },
               {
@@ -85,9 +85,9 @@
                 }
               },
               {
-                "type": "named",
+                "type": "wait",
                 "data": {
-                  "name": "ShootSpeakerPCG"
+                  "waitTime": 3.0
                 }
               }
             ]
