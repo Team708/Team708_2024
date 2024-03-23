@@ -33,7 +33,7 @@ public final class Constants {
   public static final class CurrentLimit {
     public static final int kIntakeAmps = 40;
     public static final int kFeederAmps = 80; //40
-    public static final int kArmAmps = 60;  //25
+    public static final int kArmAmps = 30;  //25
     public static final int kShooterAmps = 40; //35
     public static final int kClimberAmps = 40;
 
@@ -310,7 +310,7 @@ public final class Constants {
     public static final double kTrapAngle = 57.2;
     public static final double kAmpAngle = 95.0;
     public static final double kFartherShotAngle = 35;
-    public static final double kThresholdArm = 0.15;  //.25
+    public static final double kThresholdArm = 0.2;  //.25
     
     //PID values for arm motors
     //make sure the PID values get tuned

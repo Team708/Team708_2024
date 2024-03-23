@@ -8,48 +8,70 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.425312710274543,
-        "y": 6.398918938188755
-      },
-      "isLocked": false,
-      "linkedName": "Amp Side Pt 2"
-    },
-    {
-      "anchor": {
-        "x": 8.315597859265894,
-        "y": 5.5102290906336195
-      },
-      "prevControl": {
-        "x": 8.300822586400582,
-        "y": 4.963543994617124
-      },
-      "nextControl": {
-        "x": 8.324666123016458,
-        "y": 5.845754849404436
+        "x": 4.071650424002603,
+        "y": 6.525874630696631
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 4.6066779852857955,
-        "y": 6.471465048193254
+        "x": 5.849030119112871,
+        "y": 6.362645883186503
       },
       "prevControl": {
-        "x": 5.522572624092617,
-        "y": 6.516806366946068
+        "x": 4.88362410607306,
+        "y": 6.684447887533106
+      },
+      "nextControl": {
+        "x": 6.937221769180381,
+        "y": 5.999915333164001
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.315597859265894,
+        "y": 5.229112914366179
+      },
+      "prevControl": {
+        "x": 8.090551108930235,
+        "y": 5.322528546580981
+      },
+      "nextControl": {
+        "x": 8.796215838045711,
+        "y": 5.029611111853803
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.1194827301935306,
+        "y": 6.534942894447193
+      },
+      "prevControl": {
+        "x": 4.425312710274537,
+        "y": 6.816059070714633
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Amp Side Pt 3"
+      "linkedName": "AmpEnd3inSpeaker1inAmp"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.7,
+      "rotationDegrees": 145.2042470416422,
+      "rotateFast": true
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [
     {
       "name": "IntakeOn",
-      "waypointRelativePos": 0.1,
+      "waypointRelativePos": 0.2,
       "command": {
         "type": "parallel",
         "data": {
@@ -73,7 +95,7 @@
   },
   "goalEndState": {
     "velocity": 0.0,
-    "rotation": -160.42687416958984,
+    "rotation": -159.90476880809535,
     "rotateFast": false
   },
   "reversed": false,

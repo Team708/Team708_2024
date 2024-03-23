@@ -96,9 +96,9 @@ interpolatingTreeMap.put(1.22,53.0);
 interpolatingTreeMap.put(1.945,44.0); //42.5
 interpolatingTreeMap.put(2.244,41.0); //39.8
 interpolatingTreeMap.put(2.87,35.0); //33.5
-interpolatingTreeMap.put(3.075,31.11);  //3.07, 33.0 //29.1
-interpolatingTreeMap.put(3.61,27.6);
-interpolatingTreeMap.put(3.8,27.395); //3.77,31.08 //25.4
+interpolatingTreeMap.put(3.075,32.0);  //3.07, 33.0 //29.1
+interpolatingTreeMap.put(3.61,30.0);
+interpolatingTreeMap.put(3.8,28.5); //3.77,31.08 //25.4
 interpolatingTreeMap.put(4.073,25.73); //4.06, 29.17
 interpolatingTreeMap.put(4.91,24.157); //4.84, 26.70
 interpolatingTreeMap.put(5.92,23.78);  //5.61, 24.70
@@ -160,7 +160,7 @@ interpolatingTreeMap.put(5.92,23.78);  //5.61, 24.70
   // }
   
   public double findArmAngle(){
-    distance = m_drive.getDistanceToTarget();
+    distance = MathUtils.roundDouble(m_drive.getDistanceToTarget(), 2);
     if(distance < ArmConstants.kMaxShootingDistance){
       return interpolatingTreeMap.get(distance);
     }
@@ -186,6 +186,7 @@ interpolatingTreeMap.put(5.92,23.78);  //5.61, 24.70
   public void sendToDashboard() {
     // String topic = new String(this.getName()+"/");
     SmartDashboard.putNumber("Arm Position", getPosition());
+    SmartDashboard.putNumber("Arm Distance", distance);
     // SmartDashboard.putNumber("Arm Abs Position", getAbsolutePosition());   //Arm position is already abs
 	  SmartDashboard.putBoolean("Arm At Position", isArmAtPosition());
     

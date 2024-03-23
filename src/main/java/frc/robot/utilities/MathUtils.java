@@ -49,5 +49,9 @@ public class MathUtils {
           return input;
         }
       }
+
+    public static double roundDouble(double input, int scale) {
+      return (Math.round(input*Math.pow(10,scale))/Math.pow(10,scale));
+    }
     
 }

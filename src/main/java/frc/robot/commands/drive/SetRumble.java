@@ -14,7 +14,7 @@ public class SetRumble extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    OI.driverController.setRumble(RumbleType.kBothRumble, 100);
+    OI.driverController.setRumble(RumbleType.kBothRumble, 1);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

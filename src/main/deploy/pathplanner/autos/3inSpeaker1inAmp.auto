@@ -94,13 +94,13 @@
           }
         },
         {
-          "type": "sequential",
+          "type": "deadline",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "ShootFromPt3"
+                  "pathName": "FromPt4to4thNote"
                 }
               },
               {
@@ -110,12 +110,6 @@
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "FromPt4to4thNote"
           }
         },
         {
