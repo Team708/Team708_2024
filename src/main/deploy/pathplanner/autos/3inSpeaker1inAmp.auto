@@ -98,18 +98,24 @@
           "data": {
             "commands": [
               {
-                "type": "path",
-                "data": {
-                  "pathName": "FromPt4to4thNote"
-                }
-              },
-              {
                 "type": "named",
                 "data": {
                   "name": "ShootSpeakerOneShot"
                 }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "ShootFromPt4"
+                }
               }
             ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "FromPt4to4thNote"
           }
         },
         {

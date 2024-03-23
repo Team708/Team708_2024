@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.1194827301935306,
+        "y": 6.534942894447193
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.173892312696906,
+        "y": 6.199417135676377
+      },
+      "isLocked": false,
+      "linkedName": "AmpEnd3inSpeaker1inAmp"
+    },
+    {
+      "anchor": {
+        "x": 3.2010971039485945,
+        "y": 6.126871025671877
+      },
+      "prevControl": {
+        "x": 3.083209675191281,
+        "y": 6.598420740701132
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "fromshootpt4"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 2.0,
+    "maxAcceleration": 2.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -176.42366562500268,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": null,
+  "previewStartingState": {
+    "rotation": -159.28450136023824,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}
