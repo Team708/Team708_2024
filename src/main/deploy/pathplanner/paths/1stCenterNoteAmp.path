@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.0015953014362173,
-        "y": 6.643762059453944
+        "x": 2.956253982683404,
+        "y": 7.006492609476448
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.826807302737413,
-        "y": 7.006492609476448
+        "x": 3.7814659839845994,
+        "y": 7.369223159498952
       },
       "isLocked": false,
-      "linkedName": "Amp Side Pt 2"
+      "linkedName": "Amp Side Pt 1"
     },
     {
       "anchor": {

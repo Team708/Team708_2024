@@ -124,7 +124,7 @@ public final class Constants {
     public static final Pose2d kBluePoseSpeakerBumperTop  = new Pose2d(0.71, 6.74, new Rotation2d(Units.degreesToRadians(-120)));
     public static final Pose2d kBluePoseSpeakerBumperMiddle  = new Pose2d(1.37, 5.55, new Rotation2d(Units.degreesToRadians(180)));
     public static final Pose2d kBluePoseSpeakerBumperBottom  = new Pose2d(0.69, 4.35, new Rotation2d(Units.degreesToRadians(120)));
-    public static final Pose2d kBlueSpeaker = new Pose2d(0.0, 5.55, new Rotation2d(180));//-0.381, 5.55, new Rotation2d(180));
+    public static final Pose2d kBlueSpeaker = new Pose2d(0.2, 5.55, new Rotation2d(180));//-0.381, 5.55, new Rotation2d(180));
     public static final Pose2d kTestPoint = new Pose2d(2.831, 5.55, new Rotation2d(180));
     public static final Pose3d kBluePoseSpeaker = new Pose3d(kBlueSpeaker.getX(), kBlueSpeaker.getY(), 1.9812, new Rotation3d(0,0,kBlueSpeaker.getRotation().getRadians()));
 

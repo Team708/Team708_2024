@@ -32,12 +32,6 @@
                 "data": {
                   "name": "ShootSpeakerOneShot"
                 }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "FeederSideLastShoot"
-                }
               }
             ]
           }

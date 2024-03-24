@@ -64,19 +64,19 @@
     },
     {
       "anchor": {
-        "x": 1.813652750112518,
-        "y": 3.7963272417772913
+        "x": 2.4030898938990863,
+        "y": 3.4608014830064753
       },
       "prevControl": {
-        "x": 1.6413557388518287,
-        "y": 4.077443418044731
+        "x": 2.1763833001350217,
+        "y": 3.651235021768289
       },
       "nextControl": {
-        "x": 1.9965088132973876,
-        "y": 3.497983138686189
+        "x": 2.671027022154727,
+        "y": 3.235734295271738
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "feederShot"
     },
     {
       "anchor": {
@@ -128,16 +128,16 @@
     },
     {
       "anchor": {
-        "x": 2.076632398878833,
-        "y": 3.750985923024478
+        "x": 2.4030898938990863,
+        "y": 3.4608014830064753
       },
       "prevControl": {
-        "x": 2.6570012789148385,
-        "y": 3.052729614231159
+        "x": 2.9834587739350935,
+        "y": 2.762545174213156
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "feederEndPoint"
+      "linkedName": "feederShot"
     }
   ],
   "rotationTargets": [
@@ -153,7 +153,7 @@
     },
     {
       "waypointRelativePos": 3.2,
-      "rotationDegrees": 137.9850569502493,
+      "rotationDegrees": 120.41325169633366,
       "rotateFast": false
     },
     {
@@ -168,7 +168,17 @@
     },
     {
       "waypointRelativePos": 7.25,
-      "rotationDegrees": 128.23357026521415,
+      "rotationDegrees": 115.3828814869414,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 4,
+      "rotationDegrees": 120.0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 8,
+      "rotationDegrees": 135.0,
       "rotateFast": false
     }
   ],
@@ -193,7 +203,7 @@
     },
     {
       "name": "ShooterOn",
-      "waypointRelativePos": 2.45,
+      "waypointRelativePos": 2.3,
       "command": {
         "type": "sequential",
         "data": {
@@ -210,7 +220,7 @@
     },
     {
       "name": "AutoShoot",
-      "waypointRelativePos": 3.6,
+      "waypointRelativePos": 3.3,
       "command": {
         "type": "sequential",
         "data": {
@@ -243,8 +253,8 @@
       }
     },
     {
-      "name": "spititout",
-      "waypointRelativePos": 3.95,
+      "name": "ShooterOn",
+      "waypointRelativePos": 6.95,
       "command": {
         "type": "sequential",
         "data": {
@@ -252,7 +262,7 @@
             {
               "type": "named",
               "data": {
-                "name": "FeederFoward"
+                "name": "SetShooterSpeedSpeaker"
               }
             }
           ]
@@ -261,8 +271,8 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 4.5,
-    "maxAcceleration": 3.25,
+    "maxVelocity": 5.0,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

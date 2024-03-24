@@ -45,12 +45,6 @@
                 "data": {
                   "name": "ShootSpeakerOneShot"
                 }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "ShootFromPt1"
-                }
               }
             ]
           }
@@ -58,7 +52,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "3inSpeaker1inAmp"
+            "pathName": "1stCenterNoteAmp"
           }
         },
         {
@@ -69,12 +63,6 @@
                 "type": "named",
                 "data": {
                   "name": "ShootSpeakerOneShot"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "ShootFromPt4"
                 }
               }
             ]

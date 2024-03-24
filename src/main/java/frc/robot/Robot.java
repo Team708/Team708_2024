@@ -38,8 +38,10 @@ public class Robot extends TimedRobot {
     PidHelper.getInstance();
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
+    
     m_robotContainer = new RobotContainer();
     armIdleModeButton = new DigitalInput(9);
+    // m_robotContainer.getVision().setPipeline(7);
   }
 
   /**

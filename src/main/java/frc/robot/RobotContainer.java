@@ -24,6 +24,7 @@ import frc.robot.commands.AllSystemsOff;
 import frc.robot.commands.ClimbByController;
 import frc.robot.commands.groups.IntakeNote;
 import frc.robot.commands.drive.DriveToAmp;
+import frc.robot.commands.drive.TurnToTarget;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 
@@ -79,6 +80,7 @@ public class RobotContainer {
 		NamedCommands.registerCommand("FeederFoward", new FeederForward(m_feeder));
 		NamedCommands.registerCommand("IntakeNote", new IntakeNote(m_intake, m_feeder));
 		NamedCommands.registerCommand("DriveToAmp", new DriveToAmp(m_drive));
+		NamedCommands.registerCommand("TurnToTarget", new TurnToTarget(m_drive));
 		NamedCommands.registerCommand("ShootSpeakerOneShot", new ShootSpeakerOneShot(m_drive, m_intake, m_feeder, m_pivotArm, m_shooter));
 		// NamedCommands.registerCommand("ResetDrive", new ResetDrive(m_drive, ));
 

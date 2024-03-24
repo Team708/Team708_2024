@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 //Command imports
 import frc.robot.commands.drive.EnableAutoTargetSpeaker;
+import frc.robot.commands.drive.TurnToTarget;
 import frc.robot.commands.shooter.SetShooterSpeedSpeaker;
 import frc.robot.commands.Feeder.FeederAutomatic;
 import frc.robot.commands.Feeder.FeederOneShot;
@@ -38,7 +39,8 @@ public class ShootSpeakerOneShot extends ParallelDeadlineGroup {   //ParallelRac
     addCommands(
       // new ParallelCommandGroup(
         // new FeederOneShot(m_feeder),
-        new EnableAutoTargetSpeaker(m_drive),
+        // new EnableAutoTargetSpeaker(m_drive),
+        new TurnToTarget(m_drive),
         new IntakeAllAutomatic(m_intake),
         new EnableArmAutoAim(m_pivotArm),
         new SetShooterSpeedSpeaker(m_shooter)
