@@ -30,6 +30,7 @@ import frc.robot.commands.Feeder.FeederForward;
 import frc.robot.commands.Feeder.FeederOff;
 import frc.robot.commands.Feeder.FeederReverse;
 import frc.robot.commands.shooter.ShooterReverse;
+import frc.robot.commands.drive.TurnToTarget;
 //Subsysem Imports
 import frc.robot.subsystems.drive.Drivetrain;
 import frc.robot.subsystems.Intake;
@@ -129,6 +130,10 @@ public class OI {
     
     new JoystickButton(driverController, Button.kLeftStick.value)
         .onTrue(new ToggleDriveSpeed(m_drive));
+
+    // Test Button: Turns the auto rotate on while in place.
+    new JoystickButton(driverController, Button.kRightStick.value)
+        .whileTrue(new TurnToTarget(m_drive));
         
     //OPERATOR//
   

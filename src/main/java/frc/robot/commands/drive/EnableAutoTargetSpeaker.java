@@ -16,7 +16,7 @@ import frc.robot.subsystems.drive.Drivetrain;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class EnableAutoTargetSpeaker extends Command {
 
-  Drivetrain m_drive;
+  private Drivetrain m_drive;
 
   public EnableAutoTargetSpeaker(Drivetrain drive) {
     m_drive = drive;
