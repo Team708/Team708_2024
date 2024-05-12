@@ -33,7 +33,7 @@ public final class Constants {
   public static final class CurrentLimit {
     public static final int kIntakeAmps = 40;
     public static final int kFeederAmps = 80; //40
-    public static final int kArmAmps = 60;  //25
+    public static final int kArmAmps = 30;  //25
     public static final int kShooterAmps = 40; //35
     public static final int kClimberAmps = 40;
 
@@ -69,8 +69,8 @@ public final class Constants {
 
     public static final double kFrontLeftOffset = .003174; //0.004;//0.0; //-.2189*-1; //-0.5 to 0.5
     public static final double kFrontRightOffset = -.339844;//-.363;  //-0.334473;//-1.0042; //0.0; //-.1585*-1; //-0.5 to 0.5
-    public static final double kBackLeftOffset =  -.44750; //0.496559;//-3.08; //-.5*-1; //-0.5 to 0.5
-    public static final double kBackRightOffset = - .176514; //-0.189941;//1.1540; //0.0 //-.1926*-1; //-0.5 to 0.5
+    public static final double kBackLeftOffset =  0.053; //-.44750; //0.496559;//-3.08; //-.5*-1; //-0.5 to 0.5
+    public static final double kBackRightOffset = - .19;  //.176514; //-0.189941;//1.1540; //0.0 //-.1926*-1; //-0.5 to 0.5
     
     //Drive motor PID is best done on the roboRIO currently as the SparkMAX does not allow for static gain values on the PID controller, 
     //    these are necessary to have high accuracy when moving at extremely low RPMs
@@ -101,8 +101,10 @@ public final class Constants {
     public static final double kMinSpeedMetersPerSec = 1.0; //3.5;
 
     
+
     public static final double kMaxAccelMetersPerSecSquared = 4.0; //3.75;
-    public static final double kMaxSpeedMetersPerSec = 4.6; //3.5; //Maximum Sustainable Drivetrain Speed under Normal Conditions & Battery, Robot will not exceed this speed in closed loop control
+    public static final double kMaxSpeedMetersPerSec = 5.5; //4.6;  //3.5; //Maximum Sustainable Drivetrain Speed under Normal Conditions & Battery, Robot will not exceed this speed in closed loop control
+    
     public static final double kMaxAngularSpeedRadPerSec = 4.0;      //Maximum Angular Speed desired. NOTE: Robot can exceed this but spinning fast is not particularly useful or driver friendly
     public static final double kMaxAngularAccel = 6.25;      //Maximum Angular Speed desired. NOTE: Robot can exceed this but spinning fast is not particularly useful or driver friendly
 
@@ -122,7 +124,7 @@ public final class Constants {
     public static final Pose2d kBluePoseSpeakerBumperTop  = new Pose2d(0.71, 6.74, new Rotation2d(Units.degreesToRadians(-120)));
     public static final Pose2d kBluePoseSpeakerBumperMiddle  = new Pose2d(1.37, 5.55, new Rotation2d(Units.degreesToRadians(180)));
     public static final Pose2d kBluePoseSpeakerBumperBottom  = new Pose2d(0.69, 4.35, new Rotation2d(Units.degreesToRadians(120)));
-    public static final Pose2d kBlueSpeaker = new Pose2d(0.0, 5.55, new Rotation2d(180));//-0.381, 5.55, new Rotation2d(180));
+    public static final Pose2d kBlueSpeaker = new Pose2d(0.2, 5.55, new Rotation2d(180));//-0.381, 5.55, new Rotation2d(180));
     public static final Pose2d kTestPoint = new Pose2d(2.831, 5.55, new Rotation2d(180));
     public static final Pose3d kBluePoseSpeaker = new Pose3d(kBlueSpeaker.getX(), kBlueSpeaker.getY(), 1.9812, new Rotation3d(0,0,kBlueSpeaker.getRotation().getRadians()));
 
@@ -194,6 +196,9 @@ public final class Constants {
     public static final double kLineupAccuracy = 2.0;
 
     public static final String klimelightName = "limelight";
+    
+    public static final int kPipelineMain = 0;
+    public static final int kPipelineNull = 7;    // Pipeline in Limelight made specifically to disable the camera
   }
 
   /**
@@ -305,7 +310,7 @@ public final class Constants {
     public static final double kTrapAngle = 57.2;
     public static final double kAmpAngle = 95.0;
     public static final double kFartherShotAngle = 35;
-    public static final double kThresholdArm = 0.15;  //.25
+    public static final double kThresholdArm = 0.2;  //.25
     
     //PID values for arm motors
     //make sure the PID values get tuned

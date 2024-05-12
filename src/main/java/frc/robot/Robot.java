@@ -38,8 +38,10 @@ public class Robot extends TimedRobot {
     PidHelper.getInstance();
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
+    
     m_robotContainer = new RobotContainer();
     armIdleModeButton = new DigitalInput(9);
+    // m_robotContainer.getVision().setPipeline(7);
   }
 
   /**
@@ -74,6 +76,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    m_robotContainer.getVision().setPipeline(7);
 
     // schedule the autonomous command
     if (m_autonomousCommand != null) {
@@ -94,6 +97,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    m_robotContainer.getVision().setPipeline(0);
   }
 
   /** This function is called periodically during operator control. */

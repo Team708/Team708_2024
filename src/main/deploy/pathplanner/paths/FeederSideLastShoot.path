@@ -3,49 +3,49 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.6066779852857955,
-        "y": 6.471465048193254
+        "x": 2.4847042676541498,
+        "y": 3.4517332192559125
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.171401325258792,
-        "y": 6.317304564433691
+        "x": 2.2670659376406475,
+        "y": 3.732849395523353
       },
       "isLocked": false,
-      "linkedName": "Amp Side Pt 3"
+      "linkedName": "feederEndPoint"
     },
     {
       "anchor": {
-        "x": 3.246438422701407,
-        "y": 6.163144080674127
+        "x": 1.8861988601170188,
+        "y": 3.977692516788543
       },
       "prevControl": {
-        "x": 3.25550668645197,
-        "y": 6.145007553173001
+        "x": 2.2307928826384016,
+        "y": 3.551484120512102
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Amp Side 4"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.5,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 5.0,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -179.23610153907,
+    "rotation": 128.15722658736905,
     "rotateFast": false
   },
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": -179.02897806892082,
+    "rotation": 131.34777721969365,
     "velocity": 0
   },
   "useDefaultConstraints": false

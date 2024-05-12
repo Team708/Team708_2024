@@ -351,6 +351,10 @@ import com.pathplanner.lib.util.GeometryUtil;
     pigeon.reset();
   }
 
+  public void setGyroAngle(double angle) {
+    pigeon.setAngle(angle);
+  }
+
   public FieldRelativeSpeed getFieldRelativeSpeed() {
     return m_fieldRelVel;
   }
@@ -366,11 +370,7 @@ import com.pathplanner.lib.util.GeometryUtil;
   public Pose2d getPose() {
     Pose2d pose = m_PoseEstimator.getEstimatedPosition();
     // Translation2d position = pose.getTranslation();
-    //Rotation2d heading = getGyro();
-    //SmartDashboard.putNumber("Robot X", position.getX());
-    //SmartDashboard.putNumber("Robot Y", position.getY());
-    //SmartDashboard.putNumber("Robot Gyro", getGyro().getDegrees());
-    //SmartDashboard.putNumber(topic+"Robot Angle", pose.getRotation().getDegrees());
+    // Rotation2d heading = getGyro();
     return pose;
   }
 
@@ -378,8 +378,6 @@ import com.pathplanner.lib.util.GeometryUtil;
     updateAutoPose();
     Pose2d pose = m_AutoPoseEstimator.getEstimatedPosition();
     // Translation2d position = pose.getTranslation();
-    // SmartDashboard.putNumber("Auto X", position.getX());
-    // SmartDashboard.putNumber("Auto Y", position.getY());
     return pose;
   }
 
@@ -397,7 +395,7 @@ import com.pathplanner.lib.util.GeometryUtil;
    */
   public void setPose(Pose2d pose) {
     keepAngle = getGyro().getRadians();
-
+    
     m_PoseEstimator.resetPosition(pigeon.getAngle().times(-1.0), getModulePositions(), pose);
     m_AutoPoseEstimator.resetPosition(pigeon.getAngle().times(-1.0), getModulePositions(), pose);
   }
@@ -523,6 +521,7 @@ rotateToTarget(chassisSpeeds.omegaRadiansPerSecond));
     double maxLinear = driveSpeed;
     double desiredX = -inputTransform(OI.getDriverLeftY())*maxLinear;
     double desiredY = -inputTransform(OI.getDriverLeftX())*maxLinear;
+
     Translation2d desiredTranslation = new Translation2d(desiredX, desiredY);
     double desiredMag = desiredTranslation.getDistance(new Translation2d());
 

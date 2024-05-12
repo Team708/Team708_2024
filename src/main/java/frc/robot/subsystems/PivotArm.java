@@ -92,14 +92,14 @@ public class PivotArm extends SubsystemBase {
 
 
 //Data points maded 02.27 precomp
-interpolatingTreeMap.put(1.22,51.5);//1.42,53.0 //51.65  //45.2
-interpolatingTreeMap.put(1.945,42.44);//1.946,45.0 //43.0 //37.6
-interpolatingTreeMap.put(2.244,39.633); //2.25,43.0 //41.0
-                                                //32.68  @2.5m
-interpolatingTreeMap.put(2.87,33.49); //2.65,34.3 //30.2
-interpolatingTreeMap.put(3.075,31.11);  //3.07, 33.0 //29.1
-interpolatingTreeMap.put(3.61,27.6);
-interpolatingTreeMap.put(3.8,27.395); //3.77,31.08 //25.4
+interpolatingTreeMap.put(1.22,53.0);
+interpolatingTreeMap.put(1.945,44.0); //42.5
+interpolatingTreeMap.put(2.244,41.0); //39.8
+interpolatingTreeMap.put(2.6,35.0); //33.5
+interpolatingTreeMap.put(2.9,33.5); //33.5
+interpolatingTreeMap.put(3.36,31.0);  //3.07, 33.0 //29.1
+interpolatingTreeMap.put(3.61,30.0);
+interpolatingTreeMap.put(3.8,28.5); //3.77,31.08 //25.4
 interpolatingTreeMap.put(4.073,25.73); //4.06, 29.17
 interpolatingTreeMap.put(4.91,24.157); //4.84, 26.70
 interpolatingTreeMap.put(5.92,23.78);  //5.61, 24.70
@@ -161,7 +161,7 @@ interpolatingTreeMap.put(5.92,23.78);  //5.61, 24.70
   // }
   
   public double findArmAngle(){
-    distance = m_drive.getDistanceToTarget();
+    distance = MathUtils.roundDouble(m_drive.getDistanceToTarget(), 2);
     if(distance < ArmConstants.kMaxShootingDistance){
       return interpolatingTreeMap.get(distance);
     }
@@ -187,6 +187,7 @@ interpolatingTreeMap.put(5.92,23.78);  //5.61, 24.70
   public void sendToDashboard() {
     // String topic = new String(this.getName()+"/");
     SmartDashboard.putNumber("Arm Position", getPosition());
+    SmartDashboard.putNumber("Arm Distance", distance);
     // SmartDashboard.putNumber("Arm Abs Position", getAbsolutePosition());   //Arm position is already abs
 	  SmartDashboard.putBoolean("Arm At Position", isArmAtPosition());
     

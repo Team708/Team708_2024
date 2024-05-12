@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.956253982683404,
-        "y": 7.006492609476448
+        "x": 3.1194827301935306,
+        "y": 6.534942894447193
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.001595301436217,
-        "y": 6.743512960710133
+        "x": 3.2010971039485945,
+        "y": 6.299168036932566
       },
       "isLocked": false,
-      "linkedName": "Amp Side Pt 1"
+      "linkedName": "AmpEnd3inSpeaker1inAmp"
     },
     {
       "anchor": {
-        "x": 3.0015953014362173,
-        "y": 6.643762059453944
+        "x": 3.173892312696906,
+        "y": 6.308236300683128
       },
       "prevControl": {
-        "x": 3.01066356518678,
-        "y": 6.625625531952818
+        "x": 3.1648240489463437,
+        "y": 6.534942894447194
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Amp Side Pt 2"
+      "linkedName": "fromshootpt4"
     }
   ],
   "rotationTargets": [],
@@ -39,13 +39,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -179.23610153907,
+    "rotation": -176.42366562500268,
     "rotateFast": false
   },
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": -179.02897806892082,
+    "rotation": -159.28450136023824,
     "velocity": 0
   },
   "useDefaultConstraints": false
